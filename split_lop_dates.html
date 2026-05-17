@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PayrollTool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple-deep:    #5B21B6;
+      --purple-main:    #7C3AED;
+      --purple-bright:  #8B5CF6;
+      --purple-light:   #A78BFA;
+      --purple-pale:    #EDE9FE;
+      --purple-ghost:   #F5F3FF;
+      --white:          #FFFFFF;
+      --text-dark:      #1E1B4B;
+      --text-mid:       #4B4585;
+      --text-soft:      #7C74B0;
+      --border:         #DDD6FE;
+      --shadow-sm:      0 2px 8px rgba(124,58,237,0.10);
+      --shadow-md:      0 8px 30px rgba(124,58,237,0.15);
+      --shadow-lg:      0 20px 60px rgba(124,58,237,0.20);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--purple-ghost);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAVBAR ─────────────────────────────────────────── */
+    nav {
+      background: var(--white);
+      border-bottom: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 36px;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--purple-main);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo .heart-icon {
+      width: 36px; height: 36px;
+      background: var(--purple-main);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover { background: var(--purple-pale); color: var(--purple-main); }
+    .nav-links a.active { color: var(--purple-main); font-weight: 700; }
+
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn-login {
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--text-mid);
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-login:hover { border-color: var(--purple-light); color: var(--purple-main); }
+
+    .btn-signup {
+      background: var(--purple-main);
+      border: none;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(124,58,237,0.35);
+    }
+    .btn-signup:hover { background: var(--purple-deep); transform: translateY(-1px); }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 72px 24px 56px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse at center, rgba(167,139,250,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--purple-pale);
+      color: var(--purple-main);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    h1 {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--text-dark);
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    h1 span { color: var(--purple-main); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-soft);
+      max-width: 520px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    /* ─── UPLOAD CARD ─────────────────────────────────────── */
+    .upload-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 0 16px 80px;
+    }
+
+    .upload-card {
+      background: var(--white);
+      border-radius: 28px;
+      box-shadow: var(--shadow-lg);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      border: 1.5px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(167,139,250,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* ─── DROP ZONE CIRCLE ────────────────────────────────── */
+    .drop-circle {
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: var(--purple-ghost);
+      border: 2.5px dashed var(--purple-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .drop-circle:hover,
+    .drop-circle.drag-over {
+      background: var(--purple-pale);
+      border-color: var(--purple-main);
+      box-shadow: 0 0 0 8px rgba(124,58,237,0.08);
+      transform: scale(1.03);
+    }
+
+    /* The click+drag SVG icon from the uploaded image */
+    .drop-icon {
+      width: 72px; height: 72px;
+    }
+
+    .drop-icon svg {
+      width: 100%; height: 100%;
+    }
+
+    .drop-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--purple-main);
+      text-align: center;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+    }
+
+    .drop-hint {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      text-align: center;
+    }
+
+    /* ─── DIVIDER ─────────────────────────────────────────── */
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .or-divider::before, .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── UPLOAD BUTTONS ──────────────────────────────────── */
+    .upload-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .btn-upload-primary {
+      background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-deep) 100%);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 16px 24px;
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.25s;
+      box-shadow: 0 6px 20px rgba(124,58,237,0.38);
+      letter-spacing: 0.01em;
+      width: 100%;
+    }
+    .btn-upload-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(124,58,237,0.45);
+    }
+    .btn-upload-primary:active { transform: translateY(0); }
+
+    .btn-upload-primary svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .source-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-source {
+      flex: 1;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-source:hover {
+      border-color: var(--purple-light);
+      background: var(--purple-ghost);
+      color: var(--purple-main);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-source svg { width: 22px; height: 22px; }
+
+    /* ─── SUPPORTED FORMATS ───────────────────────────────── */
+    .formats {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      text-align: center;
+    }
+    .formats span {
+      font-weight: 600;
+      color: var(--purple-bright);
+    }
+
+    /* ─── FEATURES STRIP ──────────────────────────────────── */
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      padding: 0 24px 60px;
+    }
+
+    .feature-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-mid);
+    }
+
+    .feature-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--purple-main);
+      flex-shrink: 0;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      border-top: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    /* ─── DRAG ACTIVE STATE ───────────────────────────────── */
+    body.dragging .drop-circle {
+      background: var(--purple-pale);
+      border-color: var(--purple-main);
+      box-shadow: 0 0 0 12px rgba(124,58,237,0.10);
+    }
+
+    /* ─── FILE CHOSEN STATE ───────────────────────────────── */
+    .file-chosen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      background: var(--purple-pale);
+      border-radius: 12px;
+      width: 100%;
+      font-size: 0.85rem;
+      color: var(--purple-deep);
+      font-weight: 600;
+      border: 1.5px solid var(--purple-light);
+    }
+    .file-chosen.visible { display: flex; }
+    .file-chosen svg { width: 28px; height: 28px; color: var(--purple-main); }
+
+    /* Hidden file input */
+    #fileInput { display: none; }
+    #fileInputMobile { display: none; }
+    #fileInputCloud { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <div class="heart-icon" style="width:28px;height:28px;border-radius:50%;background:#7C3AED;display:flex;align-items:center;justify-content:center;color:#FFFFFF;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-6-4.35-9-8C1.5 7 4.5 4 8.5 4 11 4 12 6 12 6s1-2 3.5-2C19.5 4 22.5 7 21 12c-3 3.65-9 8-9 8Z" fill="white"/></svg>
+      </div>
+      PayrollTool
+    </div>
+    <h1>Split <span>LOP Dates</span></h1>
+    <p class="hero-sub">
+      Separate one date range or a whole set for easy conversion into independent LOP date files.
+    </p>
+  </section>
+
+  <!-- UPLOAD CARD -->
+  <div class="upload-wrapper">
+    <div class="upload-card" id="uploadCard">
+
+      <!-- DROP CIRCLE -->
+      <div class="drop-circle" id="dropCircle" onclick="document.getElementById('fileInput').click()">
+        <!-- Click + drag icon (recreated as inline SVG matching uploaded image) -->
+        <div class="drop-icon">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Document/card behind -->
+            <rect x="8" y="14" width="38" height="44" rx="6" fill="#EDE9FE" stroke="#A78BFA" stroke-width="2.5" stroke-dasharray="5 3"/>
+            <!-- Hand cursor -->
+            <g transform="translate(28, 30)">
+              <!-- Palm -->
+              <rect x="4" y="12" width="24" height="18" rx="5" fill="white" stroke="#3B82F6" stroke-width="2.2"/>
+              <!-- Fingers -->
+              <rect x="4" y="4" width="5" height="14" rx="2.5" fill="white" stroke="#3B82F6" stroke-width="2"/>
+              <rect x="11" y="1" width="5" height="17" rx="2.5" fill="white" stroke="#3B82F6" stroke-width="2"/>
+              <rect x="18" y="3" width="5" height="15" rx="2.5" fill="white" stroke="#3B82F6" stroke-width="2"/>
+              <rect x="25" y="7" width="5" height="11" rx="2.5" fill="white" stroke="#3B82F6" stroke-width="2"/>
+            </g>
+            <!-- Plus icon (top right) -->
+            <circle cx="60" cy="22" r="9" fill="#EDE9FE" stroke="#3B82F6" stroke-width="2"/>
+            <line x1="60" y1="17" x2="60" y2="27" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"/>
+            <line x1="55" y1="22" x2="65" y2="22" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="drop-label">Drop file here</div>
+        <div class="drop-hint">PDF, Excel, CSV</div>
+      </div>
+
+      <!-- File chosen indicator -->
+      <div class="file-chosen" id="fileChosen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
+        <span id="fileName">file.pdf</span>
+      </div>
+
+      <!-- Hidden inputs -->
+      <input type="file" id="fileInput" accept=".pdf,.xlsx,.xls,.csv" onchange="handleFile(this, 'main')"/>
+      <input type="file" id="fileInputMobile" accept=".pdf,.xlsx,.xls,.csv" capture="environment" onchange="handleFile(this, 'mobile')"/>
+      <input type="file" id="fileInputCloud" accept=".pdf,.xlsx,.xls,.csv" onchange="handleFile(this, 'cloud')"/>
+
+      <!-- OR divider -->
+      <div class="or-divider">or select from</div>
+
+      <!-- UPLOAD BUTTONS -->
+      <div class="upload-buttons">
+        <button class="btn-upload-primary" onclick="document.getElementById('fileInput').click()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Select LOP File
+        </button>
+
+        <div class="source-row">
+          <!-- Mobile / Camera -->
+          <button class="btn-source" onclick="document.getElementById('fileInputMobile').click()" title="Upload from Mobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+              <line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+            Mobile
+          </button>
+
+          <!-- Laptop / PC -->
+          <button class="btn-source" onclick="document.getElementById('fileInput').click()" title="Upload from PC / Laptop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            Laptop / PC
+          </button>
+
+          <!-- Cloud / Drive -->
+          <button class="btn-source" onclick="document.getElementById('fileInputCloud').click()" title="Upload from Cloud">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 16 12 12 8 16"/>
+              <line x1="12" y1="12" x2="12" y2="21"/>
+              <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+            </svg>
+            Cloud
+          </button>
+        </div>
+      </div>
+
+      <p class="formats">Supports <span>PDF</span>, <span>XLSX</span>, <span>CSV</span> &amp; more</p>
+
+    </div>
+  </div>
+
+  <!-- FEATURES STRIP -->
+  <div class="features">
+    <div class="feature-pill"><div class="feature-dot"></div>Split by date range</div>
+    <div class="feature-pill"><div class="feature-dot"></div>Supports bulk files</div>
+    <div class="feature-pill"><div class="feature-dot"></div>100% secure processing</div>
+    <div class="feature-pill"><div class="feature-dot"></div>Instant download</div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; PayrollTool 2026 &mdash; Your Payroll Date Splitter
+  </footer>
+
+  <script>
+    const dropCircle = document.getElementById('dropCircle');
+    const uploadCard = document.getElementById('uploadCard');
+    const fileChosen = document.getElementById('fileChosen');
+    const fileNameEl = document.getElementById('fileName');
+
+    // Drag & drop on the whole card
+    ['dragenter','dragover'].forEach(evt => {
+      uploadCard.addEventListener(evt, e => {
+        e.preventDefault();
+        dropCircle.classList.add('drag-over');
+      });
+    });
+
+    ['dragleave','dragend'].forEach(evt => {
+      uploadCard.addEventListener(evt, e => {
+        dropCircle.classList.remove('drag-over');
+      });
+    });
+
+    uploadCard.addEventListener('drop', e => {
+      e.preventDefault();
+      dropCircle.classList.remove('drag-over');
+      const files = e.dataTransfer.files;
+      if (files.length) showFile(files[0]);
+    });
+
+    function handleFile(input, source) {
+      if (input.files && input.files[0]) showFile(input.files[0]);
+    }
+
+    function showFile(file) {
+      fileNameEl.textContent = file.name;
+      fileChosen.classList.add('visible');
+      dropCircle.style.borderColor = 'var(--purple-main)';
+      dropCircle.style.background = 'var(--purple-pale)';
+    }
+  </script>
+</body>
+</html>
