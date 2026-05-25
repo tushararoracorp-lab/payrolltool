@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Salary Proration Calculator – PayrollTool</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pm:#7C3AED;--pd:#5B21B6;--pl:#A78BFA;--pp:#EDE9FE;--pg:#F5F3FF;
+  --td:#1E1B4B;--tm:#4B4585;--ts:#7C74B0;
+  --bd:#DDD6FE;--bd2:#C4B5FD;
+  --gr:#059669;--grb:#ECFDF5;--grm:#A7F3D0;
+  --rd:#DC2626;--rdb:#FEF2F2;--rdm:#FECACA;
+  --am:#D97706;--amb:#FFFBEB;--amm:#FCD34D;
+  --bl:#2563EB;--blb:#EFF6FF;--blm:#BFDBFE;
+  --sh:0 2px 12px rgba(124,58,237,.10),0 1px 3px rgba(124,58,237,.06);
+  --shl:0 20px 60px rgba(124,58,237,.14),0 4px 16px rgba(124,58,237,.07);
+}
+html,body{min-height:100%;font-family:'DM Sans',sans-serif;background:var(--pg);color:var(--td);overflow-x:hidden}
+.hdr{background:#fff;border-bottom:2px solid var(--bd);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:var(--sh)}
+.brand{display:flex;align-items:center;gap:9px}
+.brand-mark{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--pm);display:flex;align-items:center;justify-content:center}
+.brand-name{font-family:'Sora',sans-serif;font-weight:800;font-size:.95rem;color:var(--pm);letter-spacing:-.4px}
+.hdr-badge{font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--pm);background:var(--pp);padding:4px 11px;border-radius:100px;border:1px solid var(--bd)}
+.hero{text-align:center;padding:28px 20px 18px;background:linear-gradient(135deg,rgba(124,58,237,.07) 0%,transparent 100%)}
+.hero h1{font-family:'Sora',sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:var(--td);letter-spacing:-1px;line-height:1.12;margin-bottom:6px}
+.hero h1 em{color:var(--pm);font-style:normal}
+.hero p{font-size:.8rem;color:var(--ts);max-width:500px;margin:0 auto;line-height:1.6}
+.grid{max-width:1200px;margin:18px auto;padding:0 16px 50px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+
+/* CARD */
+.card{background:#fff;border:1.5px solid var(--bd);border-radius:14px;padding:16px;box-shadow:var(--shl);margin-bottom:10px}
+.card:last-child{margin-bottom:0}
+.card-hd{display:flex;align-items:center;gap:8px;padding-bottom:10px;margin-bottom:12px;border-bottom:1.5px solid var(--bd)}
+.step{width:22px;height:22px;border-radius:50%;background:var(--pp);color:var(--pm);font-family:'Sora',sans-serif;font-size:.64rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-title{font-family:'Sora',sans-serif;font-size:.84rem;font-weight:700;color:var(--td);flex:1;display:flex;align-items:center;gap:6px}
+.card-toggle{background:none;border:1.5px solid var(--bd);color:var(--ts);cursor:pointer;font-size:.7rem;padding:3px 9px;border-radius:20px;transition:all .15s;display:none;white-space:nowrap;font-family:'DM Sans',sans-serif;font-weight:600}
+.card-toggle:hover{background:var(--pp);color:var(--pm);border-color:var(--pl)}
+.card.collapsed .card-body{display:none}
+.card.collapsed .card-hd{padding-bottom:0;margin-bottom:0;border-bottom:none}
+
+/* UPLOAD */
+.dropzone{border:2px dashed var(--pl);border-radius:12px;padding:20px 14px;text-align:center;cursor:pointer;transition:all .2s;background:var(--pg)}
+.dropzone:hover,.dropzone.over{border-color:var(--pm);background:var(--pp)}
+.dz-icon{font-size:1.8rem;margin-bottom:5px;display:block}
+.dz-lbl{font-family:'Sora',sans-serif;font-size:.8rem;font-weight:700;color:var(--pm);margin-bottom:2px}
+.dz-hint{font-size:.67rem;color:var(--ts)}
+input[type=file]{display:none}
+.file-pill{background:var(--grb);border:1.5px solid var(--grm);border-radius:9px;padding:7px 11px;display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.file-pill-name{font-size:.76rem;font-weight:600;color:var(--td);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-pill-rm{background:none;border:none;color:var(--ts);cursor:pointer;font-size:1rem;line-height:1}
+.file-pill-rm:hover{color:var(--rd)}
+
+/* FIELD */
+.field{margin-bottom:9px}
+.field label{display:block;font-size:.6rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ts);margin-bottom:4px}
+.field input,.field select{width:100%;padding:7px 9px;border:1.5px solid var(--bd);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--td);background:#fff;outline:none;transition:border-color .17s,box-shadow .17s}
+.field input:focus,.field select:focus{border-color:var(--pm);box-shadow:0 0 0 3px rgba(124,58,237,.09)}
+.field input[readonly]{background:var(--pg);color:var(--ts);cursor:default}
+/* editable PF inputs from appointment letter */
+.field input.pf-input{background:#fff;color:var(--td);border-color:var(--bd2)}
+.field input.pf-input:focus{border-color:var(--pm)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.row4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+
+/* DAYS */
+.days-wrap{display:flex;align-items:center;border:1.5px solid var(--bd);border-radius:8px;overflow:hidden}
+.day-btn{width:30px;height:32px;border:none;background:none;font-size:1rem;color:var(--pm);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .14s}
+.day-btn:hover{background:var(--pp)}
+.day-inp{flex:1;border:none;background:transparent;text-align:center;font-family:'DM Sans',sans-serif;font-size:.87rem;font-weight:600;color:var(--td);outline:none}
+.days-note{font-size:.62rem;color:var(--ts);margin-top:3px;line-height:1.5}
+
+/* SDIV */
+.sdiv{font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ts);display:flex;align-items:center;gap:7px;margin:10px 0 7px}
+.sdiv::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+/* TABS */
+.tabs{display:grid;gap:6px}
+.tabs.c2{grid-template-columns:1fr 1fr}
+.tab{padding:8px 5px;border-radius:8px;border:1.5px solid var(--bd);background:#fff;font-family:'DM Sans',sans-serif;font-size:.69rem;font-weight:600;color:var(--tm);cursor:pointer;text-align:center;transition:all .16s;line-height:1.4}
+.tab:hover{border-color:var(--pl);color:var(--pm)}
+.tab.on2{border-color:var(--pd);background:var(--pp);color:var(--pd);font-weight:700}
+.tab-sub{font-size:.57rem;display:block;margin-top:1px;opacity:.75;font-weight:400}
+
+/* INFO TOOLTIP */
+.tip-wrap{position:relative;display:inline-block}
+.tip-btn{background:var(--pp);border:1.5px solid var(--bd2);color:var(--pm);border-radius:50%;width:17px;height:17px;font-size:.64rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;line-height:1;margin-left:4px;transition:all .15s}
+.tip-btn:hover{background:var(--pm);color:#fff}
+.tip-box{display:none;position:absolute;z-index:500;left:22px;top:-4px;width:250px;background:#fff;border:1.5px solid var(--bd2);border-radius:10px;padding:10px 12px;font-size:.71rem;line-height:1.7;color:var(--tm);box-shadow:0 8px 24px rgba(124,58,237,.18)}
+.tip-box h5{font-size:.71rem;font-weight:700;color:var(--pm);margin-bottom:5px;border-bottom:1px solid var(--bd);padding-bottom:3px}
+.tip-box p{margin-bottom:4px}
+.tip-box ul{margin-left:12px;margin-bottom:4px}
+.tip-box li{margin-bottom:2px}
+.tip-wrap:hover .tip-box{display:block}
+.tip-left .tip-box{left:auto;right:0;top:22px}
+
+/* PAY HEADS */
+.ph-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.ph-hdr h4{font-size:.59rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ts)}
+.btn-add{display:flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;border:1.5px dashed var(--bd2);background:var(--pg);font-family:'DM Sans',sans-serif;font-size:.66rem;font-weight:700;color:var(--pm);cursor:pointer;transition:all .16s}
+.btn-add:hover{border-style:solid;background:var(--pp)}
+.ph-cols{display:grid;grid-template-columns:1.8fr 1fr 88px 28px;gap:6px;padding-bottom:5px;margin-bottom:4px;border-bottom:1px solid var(--bd)}
+.ph-col-lbl{font-size:.57rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ts)}
+.ph-row{display:grid;grid-template-columns:1.8fr 1fr 88px 28px;gap:6px;align-items:center;margin-bottom:5px;animation:fu .16s ease}
+@keyframes fu{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+.ph-name,.ph-amt{padding:5px 7px;border:1.5px solid var(--bd);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.79rem;color:var(--td);background:#fff;outline:none;width:100%;transition:border-color .17s}
+.ph-name:focus,.ph-amt:focus{border-color:var(--pm)}
+.ph-amt{text-align:right}
+.cat-toggle{display:flex;border-radius:6px;overflow:hidden;border:1.5px solid var(--bd);height:32px}
+.cat-btn{flex:1;border:none;background:#fff;font-family:'DM Sans',sans-serif;font-size:.61rem;font-weight:600;color:var(--ts);cursor:pointer;transition:all .13s;padding:0 2px;white-space:nowrap}
+.cat-btn.active-f{background:var(--blb);color:var(--bl);font-weight:700}
+.cat-btn.active-v{background:var(--amb);color:var(--am);font-weight:700}
+.cat-btn:first-child{border-right:1px solid var(--bd)}
+.ph-del{width:28px;height:28px;border-radius:5px;border:1.5px solid var(--bd);background:#fff;color:var(--ts);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .13s;font-size:.68rem}
+.ph-del:hover{border-color:var(--rd);background:var(--rdb);color:var(--rd)}
+
+/* NOTICES */
+.notice,.info,.warn,.err,.ok{border-radius:8px;padding:7px 10px;font-size:.69rem;line-height:1.6;margin-bottom:8px;display:flex;gap:7px}
+.notice{background:var(--pg);border:1.5px solid var(--bd);color:var(--tm)}
+.info{background:var(--blb);border:1.5px solid var(--blm);color:#1D4ED8}
+.warn{background:var(--amb);border:1.5px solid var(--amm);color:var(--am)}
+.err{background:var(--rdb);border:1.5px solid var(--rdm);color:var(--rd)}
+.ok{background:var(--grb);border:1.5px solid var(--grm);color:var(--gr);font-weight:600}
+
+/* CALC BUTTON */
+.calc-btn{width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--pm),var(--pd));color:#fff;font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 14px rgba(124,58,237,.28);letter-spacing:-.2px}
+.calc-btn:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(124,58,237,.38)}
+.calc-btn:active{transform:translateY(0)}
+
+/* RIGHT PANEL */
+.right-panel{position:sticky;top:64px}
+.empty-panel{background:#fff;border:1.5px solid var(--bd);border-radius:14px;padding:40px 22px;text-align:center;box-shadow:var(--shl)}
+.empty-ico{font-size:2.4rem;margin-bottom:10px;display:block;opacity:.28}
+.empty-txt{font-size:.8rem;color:var(--ts);line-height:1.65}
+
+/* TILES */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:13px}
+.tile{background:#fff;border:1.5px solid var(--bd);border-radius:10px;padding:10px 5px;text-align:center}
+.tile.tg{background:var(--pp);border-color:var(--pl)}
+.tile.tn{background:var(--grb);border-color:var(--grm)}
+.tile-v{font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:800;display:block;color:var(--td);line-height:1}
+.tile.tg .tile-v{color:var(--pm)}
+.tile.tn .tile-v{color:var(--gr)}
+.tile-l{font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ts);margin-top:3px}
+
+/* RESULT TABLE */
+.res-hdr{display:flex;align-items:center;gap:7px;padding-bottom:10px;margin-bottom:11px;border-bottom:1.5px solid var(--bd)}
+.res-title{font-family:'Sora',sans-serif;font-size:.85rem;font-weight:700;color:var(--td);flex:1}
+.res-emp{font-size:.69rem;color:var(--ts)}
+.rtbl{width:100%;border-collapse:collapse;font-size:.76rem}
+.rtbl th{background:var(--pp);padding:6px 8px;text-align:left;font-size:.56rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--pm);border-bottom:2px solid var(--bd)}
+.rtbl th:not(:first-child){text-align:right}
+.rtbl td{padding:6px 8px;border-bottom:1px solid var(--bd);color:var(--tm)}
+.rtbl td:not(:first-child){text-align:right;font-weight:600;color:var(--td)}
+.rtbl tr:last-child td{border-bottom:none}
+.rtbl .s-hdr td{background:var(--pg);font-size:.57rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--pm);border-top:1.5px solid var(--bd);padding:5px 8px}
+.rtbl .sub td{color:var(--ts)!important;font-weight:400!important}
+.rtbl .earn-tot td{background:var(--pp);color:var(--pm)!important;font-weight:700;border-top:2px solid var(--bd2)}
+.rtbl .ded td{color:var(--rd)!important}
+.rtbl .ded-tot td{background:var(--rdb);color:var(--rd)!important;font-weight:700;border-top:2px solid var(--rdm)}
+.rtbl .net td{background:var(--grb);color:var(--gr)!important;font-weight:700;font-size:.84rem;border-top:3px solid var(--grm);font-family:'Sora',sans-serif}
+.itnote{font-size:.56rem;font-style:italic;font-weight:400;color:var(--am);margin-left:3px}
+
+/* TAX CMP */
+.cmp-title{font-family:'Sora',sans-serif;font-size:.81rem;font-weight:700;color:var(--td);margin-bottom:10px;display:flex;align-items:center;gap:7px;padding-bottom:8px;border-bottom:1.5px solid var(--bd)}
+.rtbl .winner td{background:var(--grb);color:var(--gr)!important;font-weight:700}
+.rtbl .loser td{background:var(--rdb);color:var(--rd)!important}
+
+/* LOADER */
+.loader{width:11px;height:11px;border:2px solid rgba(124,58,237,.2);border-top-color:var(--pm);border-radius:50%;animation:spin .75s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PF SOURCE HINT */
+.pf-hint{font-size:.6rem;color:var(--ts);margin-top:2px;line-height:1.4}
+.pf-hint strong{color:var(--pm)}
+
+footer{text-align:center;padding:11px;font-size:.64rem;color:var(--ts);border-top:1.5px solid var(--bd);background:#fff}
+@media(max-width:840px){.grid{grid-template-columns:1fr}.right-panel{position:static}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Salary <em>Proration</em> Calculator</h1>
+  <p>Fill in your salary structure and get a precise prorated salary - with EPF, ESI, PT and TDS computed automatically.</p>
+</div>
+
+<div class="grid">
+<!-- ═══════════════ LEFT ═══════════════ -->
+<div id="leftPanel">
+
+  <!-- STEP 1: Upload -->
+  <div class="card" id="card1">
+    <div class="card-hd">
+      <div class="step">1</div>
+      <div class="card-title">Appointment Letter (PDF)
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>📄 PDF Upload</h5>
+            <p>Upload the appointment letter to auto-fill pay heads and EPF amounts. Gratuity, insurance lines are excluded automatically.</p>
+            <p><strong>Optional</strong> — skip and fill in manually.</p>
+          </div>
+        </div>
+      </div>
+      <button class="card-toggle" id="t1" onclick="toggleCard('card1','t1')">▼ Collapse</button>
+    </div>
+    <div class="card-body">
+      <div id="filePill" style="display:none"></div>
+      <div id="extractMsg" style="display:none;margin-bottom:8px"></div>
+      <div class="dropzone" id="dz" ondrop="onDrop(event)" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" onclick="document.getElementById('fi').click()">
+        <span class="dz-icon">📄</span>
+        <div class="dz-lbl">Drop PDF here or click to browse</div>
+        <div class="dz-hint">Auto-extracts pay heads &amp; EPF amounts · scanned PDFs require manual entry</div>
+      </div>
+      <input type="file" id="fi" accept=".pdf" onchange="onFile(this.files[0])"/>
+    </div>
+  </div>
+
+  <!-- STEP 2: Employee -->
+  <div class="card" id="card2">
+    <div class="card-hd">
+      <div class="step">2</div>
+      <div class="card-title">Employee Details
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>👤 Employee Details</h5>
+            <p><strong>Gender</strong> is needed for Professional Tax — in Maharashtra, women earning ≤ ₹25,000/month are exempt.</p>
+            <p><strong>Payable Days</strong> are auto-calculated from Date of Joining using calendar days.</p>
+          </div>
+        </div>
+      </div>
+      <button class="card-toggle" id="t2" onclick="toggleCard('card2','t2')">▼ Collapse</button>
+    </div>
+    <div class="card-body">
+      <div class="row3">
+        <div class="field"><label>Employee Name</label><input type="text" id="empName" placeholder="Full name"/></div>
+        <div class="field"><label>Gender</label>
+          <select id="gender">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="O">Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Date of Joining</label><input type="date" id="doj" onchange="autoDays()"/></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Proration Month</label><input type="month" id="proMonth" onchange="autoDays()"/></div>
+        <div class="field">
+          <label>Payable Days <span style="text-transform:none;letter-spacing:0;font-weight:400">(calendar · editable)</span></label>
+          <div class="days-wrap">
+            <button class="day-btn" onclick="chgDays(-1)">−</button>
+            <input class="day-inp" type="number" id="payDays" min="0" max="31"/>
+            <button class="day-btn" onclick="chgDays(1)">+</button>
+          </div>
+          <div class="days-note" id="daysNote">Select DOJ and month to auto-fill.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Pay Heads -->
+  <div class="card" id="card3">
+    <div class="card-hd">
+      <div class="step">3</div>
+      <div class="card-title">Earnings
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>💰 Pay Heads</h5>
+            <p>Enter monthly amounts from the salary structure.</p>
+            <ul>
+              <li><strong>Fixed</strong> — Basic, HRA, allowances (form PF base)</li>
+              <li><strong>Variable</strong> — reimbursements, bonus, incentives (excluded from PF base)</li>
+            </ul>
+            <p>Mark Medical, Internet, Telephone reimbursements as <strong>Variable</strong>.</p>
+          </div>
+        </div>
+      </div>
+      <button class="card-toggle" id="t3" onclick="toggleCard('card3','t3')">▼ Collapse</button>
+    </div>
+    <div class="card-body">
+      <div id="extractErr" style="display:none"></div>
+      <div class="ph-hdr"><h4>Monthly Pay Heads</h4><button class="btn-add" onclick="addRow()">＋ Add</button></div>
+      <div class="ph-cols">
+        <div class="ph-col-lbl">Description</div>
+        <div class="ph-col-lbl" style="text-align:right">Monthly (₹)</div>
+        <div class="ph-col-lbl" style="text-align:center">Type</div>
+        <div></div>
+      </div>
+      <div id="phList"></div>
+    </div>
+  </div>
+
+  <!-- STEP 4: Statutory -->
+  <div class="card" id="card4">
+    <div class="card-hd">
+      <div class="step">4</div>
+      <div class="card-title">Statutory &amp; Tax
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>⚖️ Statutory Deductions</h5>
+            <p>All statutory items are mandatory by law. PT and LWF are deducted on this month's prorated earnings. ESI eligibility is checked on full monthly gross.</p>
+          </div>
+        </div>
+      </div>
+      <button class="card-toggle" id="t4" onclick="toggleCard('card4','t4')">▼ Collapse</button>
+    </div>
+    <div class="card-body">
+
+      <!-- ── EPF — from appointment letter ── -->
+      <div class="sdiv">Employee &amp; Employer PF
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>🏦 EPF — from Appointment Letter</h5>
+            <p>Enter the EPF amounts exactly as shown in your appointment letter. These are <strong>fixed monthly figures</strong> and will not be auto-calculated.</p>
+            <p>The <strong>This Month</strong> column shows the prorated PF for joining month, calculated as: 12% of (prorated Gross − prorated HRA − prorated Variable pay).</p>
+            <p><strong>VPF</strong> is an additional voluntary % of Basic on top of EPF. 80C benefit applies.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row4">
+        <div class="field">
+          <label>Employee EPF (₹/mo)</label>
+          <input type="number" class="pf-input" id="empPFInput" min="0" placeholder="e.g. 1800" oninput="updatePreviews()"/>
+          <div class="pf-hint">From appointment letter</div>
+        </div>
+        <div class="field">
+          <label>Employer EPF (₹/mo)</label>
+          <input type="number" class="pf-input" id="erPFInput" min="0" placeholder="e.g. 1800" oninput="updatePreviews()"/>
+          <div class="pf-hint">From appointment letter</div>
+        </div>
+        <div class="field">
+          <label>VPF % (of Basic)</label>
+          <input type="number" id="vpfPct" min="0" max="100" placeholder="0" value="0" oninput="updatePreviews()"/>
+        </div>
+        <div class="field">
+          <label>VPF Amount</label>
+          <input type="text" id="vpfDisp" readonly placeholder="After Calculate"/>
+        </div>
+      </div>
+
+      <!-- ── NPS ── -->
+      <div class="sdiv">NPS — Employer Contribution
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>🏛️ Employer NPS</h5>
+            <p>Employer NPS is a CTC component — added to gross and shown as a deduction (net-neutral to take-home). Tax-exempt u/s 80CCD(2) up to 14% of Basic (New Regime) / 10% (Old Regime).</p>
+          </div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Employer NPS % (of Basic)</label><input type="number" id="npsPct" min="0" max="20" placeholder="0" value="0" oninput="updatePreviews()"/></div>
+        <div class="field"><label>NPS Amount — Monthly</label><input type="text" id="npsDisp" readonly placeholder="After Calculate"/></div>
+      </div>
+
+      <!-- ── ESI ── -->
+      <div class="sdiv">ESI
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>🏥 ESI</h5>
+            <p>Applies when monthly gross ≤ ₹21,000. ESI deduction amount is calculated on <strong>this month's prorated earnings</strong>.</p>
+            <p>Employee: 0.75% &nbsp;|&nbsp; Employer: 3.25%</p>
+          </div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Employee ESI</label><input type="text" id="esiEmpDisp" readonly placeholder="After Calculate"/></div>
+        <div class="field"><label>Employer ESI (info)</label><input type="text" id="esiErDisp" readonly placeholder="After Calculate"/></div>
+      </div>
+
+      <!-- ── PT & LWF ── -->
+      <div class="sdiv">Professional Tax &amp; LWF
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>🗺️ PT &amp; LWF</h5>
+            <p><strong>PT</strong> is looked up from the monthly gross slab but deducted on this month's prorated earnings amount.</p>
+            <p><strong>LWF</strong> is a flat ₹ amount, deducted only in applicable months (monthly / half-yearly Jun+Dec / annual Dec).</p>
+            <p>Odisha: PT abolished w.e.f. 1 Apr 2026. &nbsp;Haryana LWF: ₹35/emp revised w.e.f. 1 Jan 2026.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row3">
+        <div class="field"><label>State</label>
+          <select id="stateSelect" onchange="onStateChange()">
+            <option value="NONE">— Select State —</option>
+            <option value="AP">Andhra Pradesh</option>
+            <option value="AS">Assam</option>
+            <option value="BR">Bihar</option>
+            <option value="CG">Chhattisgarh</option>
+            <option value="GJ">Gujarat</option>
+            <option value="HR">Haryana</option>
+            <option value="JH">Jharkhand</option>
+            <option value="KA">Karnataka</option>
+            <option value="KL">Kerala</option>
+            <option value="MP">Madhya Pradesh</option>
+            <option value="MH">Maharashtra</option>
+            <option value="MN">Manipur</option>
+            <option value="ML">Meghalaya</option>
+            <option value="MZ">Mizoram</option>
+            <option value="NL">Nagaland</option>
+            <option value="OR">Odisha (PT abolished Apr 2026)</option>
+            <option value="PB">Punjab</option>
+            <option value="PY">Puducherry</option>
+            <option value="SK">Sikkim</option>
+            <option value="TN">Tamil Nadu</option>
+            <option value="TG">Telangana</option>
+            <option value="TR">Tripura</option>
+            <option value="WB">West Bengal</option>
+          </select>
+        </div>
+        <div class="field"><label>Professional Tax</label><input type="text" id="ptDisp" readonly placeholder="Select state"/></div>
+        <div class="field"><label>LWF (this month)</label><input type="text" id="lwfDisp" readonly placeholder="Select state"/></div>
+      </div>
+
+      <!-- ── Tax Regime ── -->
+      <div class="sdiv">Income Tax Regime — FY 2026-27
+        <div class="tip-wrap tip-left">
+          <button class="tip-btn">?</button>
+          <div class="tip-box">
+            <h5>📊 Tax Regime</h5>
+            <p><strong>New Regime:</strong> Std deduction ₹75,000. Zero tax if annual taxable ≤ ₹12L.</p>
+            <p><strong>Old Regime:</strong> Std deduction ₹50,000. 80C/HRA/80D deductions allowed. Zero tax if ≤ ₹5L.</p>
+            <p>TDS shown is an estimate based on gross only.</p>
+          </div>
+        </div>
+      </div>
+      <div class="tabs c2">
+        <button class="tab on2" id="btnNew" onclick="setRegime('new')">New Regime (Default)<span class="tab-sub">₹75k std ded · 87A ≤₹12L</span></button>
+        <button class="tab" id="btnOld" onclick="setRegime('old')">Old Regime<span class="tab-sub">80C/HRA etc · ₹50k std ded</span></button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CALCULATE -->
+  <div class="card" style="padding:13px" id="cardCalc">
+    <button class="calc-btn" id="calcBtn" onclick="calculate()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/><line x1="15" y1="17" x2="15" y2="13"/><line x1="13" y1="15" x2="17" y2="15"/></svg>
+      Calculate Prorated Salary
+    </button>
+  </div>
+
+</div><!-- /left -->
+
+<!-- ═══════════════ RIGHT ═══════════════ -->
+<div class="right-panel">
+  <div class="empty-panel" id="emptyPanel">
+    <span class="empty-ico">🧮</span>
+    <div class="empty-txt">Fill details on the left and tap<br><strong>Calculate Prorated Salary</strong><br><br>Results: Earnings · EPF+VPF · NPS · ESI<br>PT · LWF · TDS · Net Take-Home<br>+ <strong>Tax Regime Comparison</strong></div>
+  </div>
+
+  <div class="card" id="resultCard" style="display:none">
+    <div class="res-hdr">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--pm)" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <div class="res-title">Proration Result</div>
+      <span class="res-emp" id="resEmp"></span>
+    </div>
+    <div class="tiles" id="resTiles"></div>
+    <table class="rtbl">
+      <thead><tr><th>Description</th><th>Monthly (₹)</th><th>This Month (₹)</th></tr></thead>
+      <tbody id="resBody"></tbody>
+    </table>
+    <div class="warn" id="resWarn" style="display:none;margin-top:9px;font-size:.68rem"></div>
+  </div>
+
+  <div class="card" id="taxCmpCard" style="display:none;margin-top:0">
+    <div class="cmp-title">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--pm)" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      Tax Regime Comparison — FY 2026-27
+    </div>
+    <table class="rtbl" id="taxCmpTable"></table>
+    <div id="taxCmpVerdict" style="margin-top:9px"></div>
+  </div>
+</div>
+
+</div><!-- /grid -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions=pdfjsLib.GlobalWorkerOptions||{};
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// ══ STATE ══
+let regime='new', rows=[], rid=0, calcDone=false;
+
+// ══════════════════════════════════════════════════════
+// PT SLABS — read-only, backend-managed
+// Basis: Monthly Gross (for slab lookup only)
+// Deduction: applied on THIS MONTH'S prorated earnings (change #2)
+// Odisha (OR): abolished w.e.f. 1 Apr 2026 → all zeros (change #4)
+// Maharashtra Feb rule: top slab ₹300 instead of ₹200
+// Karnataka Feb rule: top slab ₹300 instead of ₹200
+// Maharashtra gender rule: women ≤ ₹25k/mo → exempt
+// ══════════════════════════════════════════════════════
+const PT_SLABS = {
+  AP:[{from:0,to:15000,tax:0},{from:15001,to:20000,tax:150},{from:20001,to:Infinity,tax:200}],
+  AS:[{from:0,to:10000,tax:0},{from:10001,to:15000,tax:150},{from:15001,to:24999,tax:180},{from:25000,to:Infinity,tax:208}],
+  BR:[{from:0,to:25000,tax:0},{from:25001,to:41667,tax:83},{from:41668,to:83333,tax:167},{from:83334,to:Infinity,tax:208}],
+  CG:[{from:0,to:8333,tax:0},{from:8334,to:12500,tax:130},{from:12501,to:16667,tax:150},{from:16668,to:20833,tax:200},{from:20834,to:Infinity,tax:208}],
+  GJ:[{from:0,to:11999,tax:0},{from:12000,to:Infinity,tax:200}],
+  HR:[{from:0,to:Infinity,tax:0}],
+  JH:[{from:0,to:25000,tax:0},{from:25001,to:41667,tax:100},{from:41668,to:66667,tax:150},{from:66668,to:83333,tax:175},{from:83334,to:Infinity,tax:208}],
+  KA:[{from:0,to:24999,tax:0},{from:25000,to:Infinity,tax:200}],
+  KL:[{from:0,to:11999,tax:0},{from:12000,to:17999,tax:120},{from:18000,to:29999,tax:180},{from:30000,to:44999,tax:300},{from:45000,to:59999,tax:450},{from:60000,to:74999,tax:600},{from:75000,to:99999,tax:750},{from:100000,to:124999,tax:1000},{from:125000,to:Infinity,tax:1250}],
+  MP:[{from:0,to:18750,tax:0},{from:18751,to:25000,tax:125},{from:25001,to:33333,tax:167},{from:33334,to:Infinity,tax:208}],
+  MH:[{from:0,to:7500,tax:0},{from:7501,to:10000,tax:175},{from:10001,to:Infinity,tax:200}],
+  MN:[{from:0,to:4167,tax:0},{from:4168,to:6250,tax:17},{from:6251,to:8333,tax:25},{from:8334,to:12500,tax:42},{from:12501,to:16667,tax:63},{from:16668,to:20833,tax:83},{from:20834,to:25000,tax:104},{from:25001,to:29167,tax:125},{from:29168,to:33333,tax:150},{from:33334,to:37500,tax:175},{from:37501,to:41667,tax:200},{from:41668,to:Infinity,tax:208}],
+  ML:[{from:0,to:25000,tax:0},{from:25001,to:33333,tax:125},{from:33334,to:Infinity,tax:208}],
+  MZ:[{from:0,to:13333,tax:0},{from:13334,to:25000,tax:125},{from:25001,to:Infinity,tax:208}],
+  NL:[{from:0,to:Infinity,tax:0}],
+  OR:[{from:0,to:Infinity,tax:0}], // ABOLISHED w.e.f. 1 April 2026 (Gazette 21 Apr 2026)
+  PB:[{from:0,to:Infinity,tax:0}],
+  PY:[{from:0,to:1000,tax:0},{from:1001,to:2000,tax:20},{from:2001,to:3000,tax:30},{from:3001,to:4000,tax:40},{from:4001,to:5000,tax:50},{from:5001,to:6000,tax:60},{from:6001,to:7000,tax:80},{from:7001,to:8000,tax:90},{from:8001,to:9000,tax:100},{from:9001,to:10000,tax:110},{from:10001,to:12000,tax:130},{from:12001,to:14000,tax:150},{from:14001,to:16000,tax:180},{from:16001,to:Infinity,tax:200}],
+  SK:[{from:0,to:8333,tax:0},{from:8334,to:12500,tax:42},{from:12501,to:16667,tax:83},{from:16668,to:20833,tax:125},{from:20834,to:25000,tax:167},{from:25001,to:Infinity,tax:208}],
+  TN:[{from:0,to:21000,tax:0},{from:21001,to:30000,tax:135},{from:30001,to:45000,tax:315},{from:45001,to:60000,tax:440},{from:60001,to:75000,tax:600},{from:75001,to:100000,tax:810},{from:100001,to:125000,tax:1040},{from:125001,to:Infinity,tax:1250}],
+  TG:[{from:0,to:15000,tax:0},{from:15001,to:20000,tax:150},{from:20001,to:Infinity,tax:200}],
+  TR:[{from:0,to:13333,tax:0},{from:13334,to:25000,tax:125},{from:25001,to:Infinity,tax:208}],
+  WB:[{from:0,to:10000,tax:0},{from:10001,to:15000,tax:110},{from:15001,to:25000,tax:130},{from:25001,to:40000,tax:150},{from:40001,to:75000,tax:174},{from:75001,to:Infinity,tax:208}],
+};
+
+// ══════════════════════════════════════════════════════
+// LWF DATA — read-only, backend-managed
+// emp/er = flat ₹ per applicable period
+// freq: 'monthly'|'halfyearly'|'annual'|'nil'
+// Haryana: revised to emp=35, er=70 w.e.f. 1 Jan 2026
+//   (HLWB/REV/2026/3436 dated 08 May 2026; previously 34/68)
+// LWF is deducted on THIS MONTH'S prorated earnings (change #3)
+// ══════════════════════════════════════════════════════
+const LWF_DATA = {
+  AP:{emp:20,er:40,freq:'annual'},
+  AS:{emp:20,er:20,freq:'annual'},
+  GJ:{emp:6,er:12,freq:'halfyearly'},
+  HR:{emp:35,er:70,freq:'monthly'}, // Updated w.e.f. 1 Jan 2026
+  KA:{emp:50,er:100,freq:'annual'},
+  KL:{emp:40,er:160,freq:'annual'},
+  MH:{emp:25,er:75,freq:'halfyearly'},
+  MP:{emp:20,er:40,freq:'annual'},
+  OR:{emp:20,er:40,freq:'annual'},
+  PB:{emp:40,er:160,freq:'monthly'},
+  TN:{emp:20,er:40,freq:'annual'},
+  TG:{emp:2,er:5,freq:'halfyearly'},
+  WB:{emp:3,er:30,freq:'halfyearly'},
+};
+
+// ══ CARD COLLAPSE ══
+function toggleCard(id,btnId){
+  const card=document.getElementById(id),btn=document.getElementById(btnId);
+  const c=card.classList.toggle('collapsed');
+  btn.textContent=c?'▶ Expand':'▼ Collapse';
+}
+function showToggles(){document.querySelectorAll('.card-toggle').forEach(b=>b.style.display='inline-flex');}
+
+// ══ INIT ══
+document.addEventListener('DOMContentLoaded',()=>{
+  const n=new Date();
+  document.getElementById('proMonth').value=`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+  addRow('Basic Salary','','fixed');
+  addRow('HRA','','fixed');
+  addRow('Special Allowance','','fixed');
+});
+
+// ══ PDF EXTRACTION ══
+function onDrop(e){e.preventDefault();document.getElementById('dz').classList.remove('over');if(e.dataTransfer.files[0])onFile(e.dataTransfer.files[0]);}
+async function onFile(file){
+  if(!file||file.type!=='application/pdf'){showMsg('err','Please upload a valid PDF.');return;}
+  const pill=document.getElementById('filePill');
+  pill.innerHTML=`<div class="file-pill"><span>📄</span><span class="file-pill-name">${file.name}</span><button class="file-pill-rm" onclick="resetUpload()">×</button></div>`;
+  pill.style.display='block';showMsg('load','Reading PDF…');
+  try{const tokens=await getPDFTokens(file);doExtract(tokens);}
+  catch(e){showMsg('err','Error reading PDF: '+e.message);}
+}
+async function getPDFTokens(file){
+  const buf=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+  const tokens=[];
+  for(let p=1;p<=pdf.numPages;p++){
+    const pg=await pdf.getPage(p);const vp=pg.getViewport({scale:1});
+    const ct=await pg.getTextContent({normalizeWhitespace:true});
+    ct.items.forEach(it=>{const s=(it.str||'').replace(/\s+/g,' ').trim();if(!s)return;tokens.push({s,x:Math.round(it.transform[4]),y:Math.round(vp.height-it.transform[5])});});
+  }
+  return tokens;
+}
+function bucketRows(tokens){
+  const sorted=[...tokens].sort((a,b)=>a.y-b.y||a.x-b.x);const groups=[];
+  for(const t of sorted){const g=groups.find(g=>Math.abs(g.y-t.y)<=5);if(g)g.items.push(t);else groups.push({y:t.y,items:[t]});}
+  groups.forEach(g=>g.items.sort((a,b)=>a.x-b.x));return groups;
+}
+function isAmt(s){return /^[\d,]+(\.\d+)?$/.test(s.replace(/\s/g,''))&&!/[A-Za-z]/.test(s);}
+function parseA(s){return parseFloat(s.replace(/,/g,''));}
+const SKIP=new Set(['total','gross','ctc','cost to company','sub total','subtotal','grand total','annual','per annum','per year','monthly','comments','particulars','title','salary sheet','salary structure','fixed salary','retiral','retirement benefits','retiral benefits','variable','note','notes','annexure','ref','name','designation','department','date of joining','grade','performance','amount','inr','rs','rs.','a.','b.','c.','d.','earnings','deductions','benefits','compensation','emoluments','fixed compensation','total fixed','total fixed compensation','total variable','total reimbursements','gross salary','gross earnings','ctc( a + b )','ctc(a + b)','total ctc','retirement benefit']);
+function isSkip(s){const l=s.toLowerCase().trim();if(SKIP.has(l))return true;if(l.length<=1)return true;if(/^[\d\s\.,\-\*\(\)]+$/.test(l))return true;if(/^(a|b|c|d)\s*[\.\)]/.test(l))return true;return false;}
+function isGrat(s){return /gratuity/i.test(s);}
+// PF rows — also try to extract EPF amount for the input boxes
+function isPFRow(s){return /provident\s*fund|employer.*pf|employee.*pf|\bepf\b|\bpf\b/i.test(s);}
+function isESI(s){return /\besi\b|employee.*state.*insurance/i.test(s);}
+function isInsurance(s){return /\binsurance\b/i.test(s)&&!/allowance/i.test(s);}
+function isReimb(s){return /reimb|reimbursement/i.test(s);}
+
+function doExtract(tokens){
+  rows=[];rid=0;
+  const groups=bucketRows(tokens);const candidates=[];const pfCandidates=[];const seen=new Set();
+  for(const g of groups){
+    const textP=g.items.filter(it=>/[A-Za-z]{2,}/.test(it.s)&&!isAmt(it.s));
+    const numP=g.items.filter(it=>isAmt(it.s)&&parseA(it.s)>0);
+    if(!textP.length||!numP.length)continue;
+    const label=textP.map(t=>t.s).join(' ').replace(/\s+/g,' ').trim();
+    if(label.length<3)continue;
+    numP.sort((a,b)=>a.x-b.x);let amt=null;
+    for(const ni of numP){const v=parseA(ni.s);if(v>=100&&v<9999999){amt=v;break;}}
+    if(!amt)continue;
+    const key=label.toLowerCase();
+    // Capture PF rows separately to populate EPF input boxes
+    if(isPFRow(label)){
+      if(!seen.has(key)){seen.add(key);pfCandidates.push({name:label,amount:amt});}
+      continue;
+    }
+    if(isSkip(label))continue;
+    if(!seen.has(key)){seen.add(key);candidates.push({name:label,amount:amt});}
+  }
+  // Fallback regex extraction
+  if(candidates.length<2){
+    const flat=tokens.map(t=>t.s).join(' ');
+    [['Basic',/Basic[\s\S]{0,80}?([\d,]{4,})/i],['HRA',/\bHRA\b[\s\S]{0,80}?([\d,]{4,})/i],['Special Allowance',/Special\s+Allowance[\s\S]{0,80}?([\d,]{4,})/i],['Transport Allowance',/Transport(?:ation)?\s*(?:Allowance)?[\s\S]{0,60}?([\d,]{4,})/i],['Medical Reimbursement',/Medical\s+Reimb[\s\S]{0,60}?([\d,]{4,})/i],['Statutory Bonus',/Statutory\s+Bonus[\s\S]{0,60}?([\d,]{4,})/i],['Conveyance',/Conveyance[\s\S]{0,60}?([\d,]{4,})/i],['Other Allowance',/Other\s+Allowance[\s\S]{0,60}?([\d,]{4,})/i],['Internet Reimbursement',/Internet\s+Reimb[\s\S]{0,60}?([\d,]{4,})/i],['Telephone Reimbursement',/Telephone\s+Reimb[\s\S]{0,60}?([\d,]{4,})/i]].forEach(([name,pat])=>{
+      const key=name.toLowerCase();if(seen.has(key))return;
+      const m=flat.match(pat);if(m){const v=parseA(m[1]);if(!isNaN(v)&&v>=100){seen.add(key);candidates.push({name,amount:v});}}
+    });
+    // Fallback PF extraction
+    const pfMatch=flat.match(/(?:employee\s+)?(?:epf|provident\s+fund|pf)[\s\S]{0,60}?([\d,]{3,})/i);
+    if(pfMatch&&!pfCandidates.length){const v=parseA(pfMatch[1]);if(!isNaN(v)&&v>=100)pfCandidates.push({name:'EPF',amount:v});}
+  }
+  // Populate EPF input boxes from extracted PF rows
+  const empPFRow=pfCandidates.find(p=>/employee|emp\b/i.test(p.name));
+  const erPFRow=pfCandidates.find(p=>/employer|er\b/i.test(p.name));
+  if(empPFRow)document.getElementById('empPFInput').value=Math.round(empPFRow.amount);
+  else if(pfCandidates.length>0)document.getElementById('empPFInput').value=Math.round(pfCandidates[0].amount);
+  if(erPFRow)document.getElementById('erPFInput').value=Math.round(erPFRow.amount);
+  else if(pfCandidates.length>1)document.getElementById('erPFInput').value=Math.round(pfCandidates[1].amount);
+
+  const filtered=candidates.filter(c=>!isGrat(c.name)&&!isPFRow(c.name)&&!isESI(c.name)&&!isInsurance(c.name));
+  document.getElementById('extractErr').style.display='none';
+  if(!filtered.length){
+    showMsg('err','Could not auto-extract pay heads. PDF may be scanned. Please enter manually.');
+    addRow('Basic Salary','','fixed');addRow('HRA','','fixed');addRow('Special Allowance','','fixed');
+  } else {
+    filtered.forEach(c=>addRow(c.name,String(Math.round(c.amount)),isReimb(c.name)?'variable':'fixed'));
+    const pfMsg=pfCandidates.length?` EPF amounts prefilled.`:'';
+    showMsg('ok',`✓ Extracted ${filtered.length} pay head${filtered.length>1?'s':''}.${pfMsg} Verify EPF fields in Step 4.`);
+  }
+  renderRows();onStateChange();updatePreviews();
+}
+function resetUpload(){
+  document.getElementById('fi').value='';
+  document.getElementById('filePill').style.display='none';
+  document.getElementById('extractMsg').style.display='none';
+  document.getElementById('extractErr').style.display='none';
+  document.getElementById('empPFInput').value='';
+  document.getElementById('erPFInput').value='';
+  rows=[];rid=0;
+  addRow('Basic Salary','','fixed');addRow('HRA','','fixed');addRow('Special Allowance','','fixed');
+}
+function showMsg(type,html){
+  const el=document.getElementById('extractMsg');
+  const cls={load:'notice',ok:'ok',err:'err',warn:'warn'}[type]||'notice';
+  const ico={load:'<div class="loader"></div>',ok:'✓',err:'⚠',warn:'⚠'}[type]||'ℹ';
+  el.innerHTML=`<div class="${cls}" style="margin-bottom:0"><span>${ico}</span><div>${html}</div></div>`;
+  el.style.display='block';
+}
+
+// ══ PAY HEADS ══
+function addRow(name='',amount='',cat='fixed'){rows.push({id:++rid,name,amount,cat});renderRows();}
+function updRow(id,f,v){const r=rows.find(r=>r.id===id);if(r)r[f]=v;updatePreviews();}
+function delRow(id){rows=rows.filter(r=>r.id!==id);renderRows();updatePreviews();}
+function setCat(id,cat){
+  const r=rows.find(r=>r.id===id);if(r)r.cat=cat;
+  const row=document.querySelector(`.ph-row[data-id="${id}"]`);
+  if(row){
+    row.querySelector('.cat-btn-f').className='cat-btn cat-btn-f'+(cat==='fixed'?' active-f':'');
+    row.querySelector('.cat-btn-v').className='cat-btn cat-btn-v'+(cat==='variable'?' active-v':'');
+  }
+  updatePreviews();
+}
+function renderRows(){
+  const ul=document.getElementById('phList');
+  if(!rows.length){ul.innerHTML='<div style="text-align:center;padding:14px;font-size:.78rem;color:var(--ts)">No pay heads. Add one above.</div>';return;}
+  ul.innerHTML='';
+  rows.forEach(r=>{
+    const d=document.createElement('div');
+    d.className='ph-row';d.dataset.id=r.id;
+    const cat=r.cat||'fixed';
+    d.innerHTML=`
+      <input class="ph-name" type="text" placeholder="Pay head name" value="${eH(r.name)}" oninput="updRow(${r.id},'name',this.value)"/>
+      <input class="ph-amt" type="number" min="0" placeholder="0" value="${r.amount}" oninput="updRow(${r.id},'amount',this.value)"/>
+      <div class="cat-toggle">
+        <button class="cat-btn cat-btn-f${cat==='fixed'?' active-f':''}" onclick="setCat(${r.id},'fixed')">Fixed</button>
+        <button class="cat-btn cat-btn-v${cat==='variable'?' active-v':''}" onclick="setCat(${r.id},'variable')">Var</button>
+      </div>
+      <button class="ph-del" onclick="delRow(${r.id})">✕</button>`;
+    ul.appendChild(d);
+  });
+}
+function eH(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
+
+// ══ HELPERS ══
+function getBasic(){const r=rows.find(r=>/basic/i.test(r.name));return r?R(parseFloat(r.amount)||0):0;}
+function getHRA(){const r=rows.find(r=>/\bhra\b/i.test(r.name));return r?R(parseFloat(r.amount)||0):0;}
+function getGross(){return R(rows.reduce((s,r)=>s+(parseFloat(r.amount)||0),0));}
+function getReimbs(){return R(rows.filter(r=>r.cat==='variable').reduce((s,r)=>s+(parseFloat(r.amount)||0),0));}
+function R(n){return Math.round(n);}
+function fmt(n){return R(n).toLocaleString('en-IN');}
+
+// ══════════════════════════════════════════════════════
+// PF LOGIC — Change #1 & #5
+//
+// Monthly (fixed rate column) = what appointment letter says (user input)
+//   → empPF_monthly = user's empPFInput value (unchanged fixed rate)
+//   → erPF_monthly  = user's erPFInput value  (unchanged fixed rate)
+//
+// This Month (calculated column) = 12% of (prorated Gross − prorated HRA − prorated Variable)
+//   → applies to ALL cases (whether Basic > 15k or ≤ 15k)
+//   → label says "12% of Gross less HRA less Variable"
+//
+// VPF = vpfPct% × Monthly Basic (always on monthly basic, never prorated)
+// ══════════════════════════════════════════════════════
+function calcPF(vpfPct, proratedGross, proratedHRA, proratedReimbs){
+  const basic=getBasic();
+  const vpf=R(basic*(vpfPct||0)/100);
+
+  // Monthly column — straight from appointment letter inputs
+  const empPF_monthly=R(parseFloat(document.getElementById('empPFInput').value)||0)+vpf;
+  const erPF_monthly =R(parseFloat(document.getElementById('erPFInput').value)||0);
+
+  // This Month column — always 12% of (prorated Gross − prorated HRA − prorated Variable)
+  const proratedBase=Math.max(0, proratedGross - proratedHRA - proratedReimbs);
+  const mandPF_thisMonth=R(proratedBase*0.12);
+  const empPF_thisMonth=mandPF_thisMonth+vpf;
+  const erPF_thisMonth=mandPF_thisMonth;
+
+  return{empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,vpf};
+}
+
+// ══════════════════════════════════════════════════════
+// ESI — Change #3
+// Eligibility: monthly gross ≤ ₹21,000
+// Monthly column: 0.75% of monthly gross
+// This Month column: 0.75% of prorated gross (this month's earnings)
+// ══════════════════════════════════════════════════════
+function calcESI(proratedGross){
+  const monthlyGross=getGross();
+  if(monthlyGross>21000)return{esiEmp_monthly:0,esiEmp_thisMonth:0,esiEr_monthly:0,esiEr_thisMonth:0,applies:false};
+  return{
+    esiEmp_monthly:R(monthlyGross*0.0075),
+    esiEmp_thisMonth:R(proratedGross*0.0075),
+    esiEr_monthly:R(monthlyGross*0.0325),
+    esiEr_thisMonth:R(proratedGross*0.0325),
+    applies:true
+  };
+}
+
+// ══════════════════════════════════════════════════════
+// PT — Change #2
+// Slab lookup: on monthly gross (to find the applicable PT rate)
+// Deduction: PT flat amount deducted on THIS month's prorated earnings
+//   i.e. if PT slab says ₹200 but prorated gross is only ₹12,000,
+//   the actual deduction is ₹200 (PT is a flat amount, not a %)
+//   — PT remains flat in "this month" column because it is a flat slab amount
+//   — But it is only deducted if this month's earnings exceed the slab minimum
+// Note: PT is a fixed slab amount, so "deducting on earnings" means:
+//   we use the slab based on monthly gross, but only apply it if
+//   prorated earnings ≥ the slab's lower bound.
+// ══════════════════════════════════════════════════════
+function getPT(state, monthlyGross, proratedGross, month, gender){
+  if(!state||state==='NONE')return{ptMonthly:0,ptThisMonth:0};
+  const slabs=PT_SLABS[state];if(!slabs)return{ptMonthly:0,ptThisMonth:0};
+  // Maharashtra women exemption
+  if(state==='MH'&&gender==='F'&&monthlyGross<=25000)return{ptMonthly:0,ptThisMonth:0};
+  // Find slab from monthly gross
+  const slab=slabs.find(s=>monthlyGross>=s.from&&monthlyGross<=s.to);
+  if(!slab||slab.tax===0)return{ptMonthly:0,ptThisMonth:0};
+  // Feb special rules
+  let taxAmt=slab.tax;
+  if(state==='MH'&&month&&parseInt(month.split('-')[1])===2&&taxAmt===200)taxAmt=300;
+  if(state==='KA'&&month&&parseInt(month.split('-')[1])===2&&taxAmt===200)taxAmt=300;
+  // PT is a flat amount — deducted in full if employee is in applicable slab
+  // In proration month, PT is deducted only if prorated earnings ≥ slab lower bound
+  const ptThisMonth=(proratedGross>=slab.from)?taxAmt:0;
+  return{ptMonthly:taxAmt,ptThisMonth};
+}
+
+// ══════════════════════════════════════════════════════
+// LWF — Change #3
+// LWF is a flat ₹ amount per applicable period
+// Monthly column: shows full LWF amount if applicable this month
+// This Month column: shows same flat amount (LWF is not a %, it's flat)
+// Both columns show the same value — LWF is always flat
+// ══════════════════════════════════════════════════════
+function getLWF(state,month){
+  if(!state||state==='NONE')return{emp:0,er:0,active:false};
+  const d=LWF_DATA[state];if(!d||d.freq==='nil')return{emp:0,er:0,active:false};
+  if(d.freq==='monthly')return{emp:d.emp,er:d.er,active:true};
+  const mo=month?parseInt(month.split('-')[1]):0;
+  if(d.freq==='halfyearly'&&(mo===6||mo===12))return{emp:d.emp,er:d.er,active:true};
+  if(d.freq==='annual'&&mo===12)return{emp:d.emp,er:d.er,active:true};
+  return{emp:0,er:0,active:false};
+}
+
+// ══ NPS Employer — % of Basic, net-neutral ══
+function calcNPS(npsPct){return R(getBasic()*(npsPct||0)/100);}
+
+// ══ INCOME TAX FY 2026-27 ══
+function calcAnnualTax(taxable,r){
+  let tax=0;
+  if(r==='new'){
+    const s=[[400000,0],[800000,.05],[1200000,.10],[1600000,.15],[2000000,.20],[2400000,.25],[Infinity,.30]];
+    let p=0;for(const[c,rt]of s){if(taxable<=p)break;tax+=Math.min(taxable-p,c-p)*rt;p=c;}
+    if(taxable<=1200000)tax=0;
+  }else{
+    const s=[[250000,0],[500000,.05],[1000000,.20],[Infinity,.30]];
+    let p=0;for(const[c,rt]of s){if(taxable<=p)break;tax+=Math.min(taxable-p,c-p)*rt;p=c;}
+    if(taxable<=500000)tax=0;
+  }
+  return R(tax*1.04);
+}
+function monthlyTDS(grossM,r,npsErM,basicM){
+  const stdDed=r==='new'?75000:50000;
+  const capPct=r==='new'?0.14:0.10;
+  const npsExempt=Math.min(npsErM*12,R(basicM*12*capPct));
+  const taxable=Math.max(0,grossM*12-stdDed-npsExempt);
+  return R(calcAnnualTax(taxable,r)/12);
+}
+
+// ══ PREVIEWS ══
+function updatePreviews(){
+  const vpf=parseFloat(document.getElementById('vpfPct').value)||0;
+  const nps=parseFloat(document.getElementById('npsPct').value)||0;
+  const state=document.getElementById('stateSelect').value;
+  const mv=document.getElementById('proMonth').value;
+  const gender=document.getElementById('gender').value;
+  const basic=getBasic();
+  const vpfAmt=R(basic*(vpf||0)/100);
+  document.getElementById('vpfDisp').value=vpfAmt?`₹${fmt(vpfAmt)}/mo`:'—';
+  const npsAmt=calcNPS(nps);
+  document.getElementById('npsDisp').value=npsAmt?`₹${fmt(npsAmt)}/mo`:'—';
+  const monthlyGross=getGross();
+  const esi=calcESI(monthlyGross);
+  document.getElementById('esiEmpDisp').value=esi.applies?`₹${fmt(esi.esiEmp_monthly)}/mo (0.75%)`:'Not applicable (Gross > ₹21k)';
+  document.getElementById('esiErDisp').value=esi.applies?`₹${fmt(esi.esiEr_monthly)}/mo (3.25%)`:'—';
+  if(state==='NONE'){document.getElementById('ptDisp').value='—';document.getElementById('lwfDisp').value='—';return;}
+  const pt=getPT(state,monthlyGross,monthlyGross,mv,gender);
+  document.getElementById('ptDisp').value=pt.ptMonthly?`₹${fmt(pt.ptMonthly)}/mo`:'₹0 (exempt/nil)';
+  const lwf=getLWF(state,mv);
+  document.getElementById('lwfDisp').value=lwf.active?`₹${fmt(lwf.emp)} this month`:`₹0 (not applicable)`;
+}
+function onStateChange(){updatePreviews();}
+
+// ══ REGIME ══
+function setRegime(r){
+  regime=r;
+  document.getElementById('btnNew').className='tab'+(r==='new'?' on2':'');
+  document.getElementById('btnOld').className='tab'+(r==='old'?' on2':'');
+}
+
+// ══ DAYS ══
+function autoDays(){
+  const dv=document.getElementById('doj').value,mv=document.getElementById('proMonth').value;
+  const note=document.getElementById('daysNote');
+  if(!dv||!mv)return;
+  const doj=new Date(dv);const[yr,mo]=mv.split('-').map(Number);
+  const mS=new Date(yr,mo-1,1),mE=new Date(yr,mo,0),total=mE.getDate();
+  if(doj>mE){note.textContent='⚠ DOJ is after the selected month.';document.getElementById('payDays').value='';return;}
+  let pay;
+  if(doj<=mS){pay=total;note.textContent=`Joined before month — full ${total} calendar days.`;}
+  else{pay=total-doj.getDate()+1;note.textContent=`Joined ${doj.getDate()} ${mS.toLocaleString('default',{month:'short'})} → ${pay} of ${total} calendar days.`;}
+  document.getElementById('payDays').value=pay;updatePreviews();
+}
+function chgDays(d){
+  const inp=document.getElementById('payDays'),mv=document.getElementById('proMonth').value;
+  let max=31;if(mv){const[yr,mo]=mv.split('-').map(Number);max=new Date(yr,mo,0).getDate();}
+  inp.value=Math.min(max,Math.max(0,(parseInt(inp.value)||0)+d));
+}
+
+// ══ CALCULATE ══
+function calculate(){
+  const emp=document.getElementById('empName').value.trim()||'Employee';
+  const mv=document.getElementById('proMonth').value;
+  const payable=parseFloat(document.getElementById('payDays').value);
+  const state=document.getElementById('stateSelect').value;
+  const gender=document.getElementById('gender').value;
+  const vpfPct=parseFloat(document.getElementById('vpfPct').value)||0;
+  const npsPct=parseFloat(document.getElementById('npsPct').value)||0;
+
+  if(!mv){flash('Select a proration month.');return;}
+  if(isNaN(payable)||payable<0){flash('Enter valid payable days.');return;}
+  const vRows=rows.filter(r=>r.name.trim()&&parseFloat(r.amount)>0);
+  if(!vRows.length){flash('Add at least one pay head with an amount.');return;}
+
+  const[yr,mo]=mv.split('-').map(Number);
+  const calDays=new Date(yr,mo,0).getDate();
+  const monthName=new Date(yr,mo-1,1).toLocaleString('default',{month:'long',year:'numeric'});
+  const sEl=document.getElementById('stateSelect');
+  const stateName=state==='NONE'?'N/A':sEl.options[sEl.selectedIndex].text.replace(' (PT abolished Apr 2026)','');
+
+  // ── Earnings ──
+  let totM=0,totP=0;const earnR=[];
+  vRows.forEach(r=>{
+    const am=R(parseFloat(r.amount));
+    const pr=R(am/calDays*payable);
+    totM+=am;totP+=pr;
+    earnR.push({name:r.name,m:am,p:pr,cat:r.cat||'fixed'});
+  });
+  totM=R(totM);totP=R(totP);
+  const basicM=getBasic();
+
+  // ── Prorated HRA and Variable (reimbursements) ──
+  const hraRow=rows.find(r=>/\bhra\b/i.test(r.name));
+  const proratedHRA=hraRow?R((parseFloat(hraRow.amount)||0)/calDays*payable):0;
+  const proratedReimbs=R(rows.filter(r=>r.cat==='variable').reduce((s,r)=>s+((parseFloat(r.amount)||0)/calDays*payable),0));
+
+  // ── NPS ──
+  const npsM=calcNPS(npsPct);
+  const grossWithNPS_M=totM+npsM;
+  const grossWithNPS_P=R(totP+npsM);
+
+  // ── PF (Change #1/#5) ──
+  // Monthly: from appointment letter inputs (fixed rate)
+  // This Month: 12% of (prorated Gross − prorated HRA − prorated Variable)
+  const pfRes=calcPF(vpfPct,totP,proratedHRA,proratedReimbs);
+  const{empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,vpf}=pfRes;
+
+  // Update PF display fields
+  document.getElementById('vpfDisp').value=vpf?`₹${fmt(vpf)}/mo`:'—';
+  document.getElementById('npsDisp').value=npsM?`₹${fmt(npsM)}/mo (${npsPct}% of Basic)`:'—';
+
+  // ── ESI (Change #3) ──
+  const esiRes=calcESI(totP);
+  const{esiEmp_monthly,esiEmp_thisMonth,esiEr_monthly,esiEr_thisMonth,applies:esiApplies}=esiRes;
+  document.getElementById('esiEmpDisp').value=esiApplies?`₹${fmt(esiEmp_monthly)}/mo (0.75%)`:'Not applicable (Gross > ₹21k)';
+  document.getElementById('esiErDisp').value=esiApplies?`₹${fmt(esiEr_monthly)}/mo (3.25%)`:'—';
+
+  // ── PT (Change #2) — slab on monthly gross, deduct on prorated earnings ──
+  const ptRes=getPT(state,totM,totP,mv,gender);
+  const{ptMonthly,ptThisMonth}=ptRes;
+
+  // ── LWF — flat amount ──
+  const lwfR=getLWF(state,mv);
+  const lwfEm=lwfR.emp;const lwfErm=lwfR.er;
+
+  // ── TDS ──
+  const tdsM=monthlyTDS(totM,regime,npsM,basicM);
+
+  // ── Totals — both columns ──
+  const dedM=empPF_monthly+(esiApplies?esiEmp_monthly:0)+ptMonthly+lwfEm+npsM+tdsM;
+  const dedP=empPF_thisMonth+(esiApplies?esiEmp_thisMonth:0)+ptThisMonth+lwfEm+npsM+tdsM;
+
+  const netM=R(grossWithNPS_M-dedM);
+  const netP=R(grossWithNPS_P-dedP);
+
+  // ── Tiles ──
+  document.getElementById('resTiles').innerHTML=`
+    <div class="tile"><span class="tile-v">${payable}/${calDays}</span><div class="tile-l">Payable Days</div></div>
+    <div class="tile tg"><span class="tile-v">₹${fmt(grossWithNPS_P)}</span><div class="tile-l">Gross This Month</div></div>
+    <div class="tile tn"><span class="tile-v">₹${fmt(netP)}</span><div class="tile-l">Net Take-Home</div></div>`;
+
+  // ── Result Table ──
+  let tb='';
+  tb+=`<tr class="s-hdr"><td colspan="3">Earnings — Prorated by Calendar Days</td></tr>`;
+  earnR.forEach(r=>{
+    const badge=r.cat==='variable'?`<span class="itnote">variable</span>`:'';
+    tb+=`<tr><td>${eH(r.name)}${badge}</td><td>₹${fmt(r.m)}</td><td>₹${fmt(r.p)}</td></tr>`;
+  });
+  if(npsM>0)tb+=`<tr><td>Employer NPS<span class="itnote">${npsPct}% of Basic · CTC component</span></td><td>₹${fmt(npsM)}</td><td>₹${fmt(npsM)}</td></tr>`;
+  tb+=`<tr class="earn-tot"><td><strong>Gross Earnings</strong></td><td><strong>₹${fmt(grossWithNPS_M)}</strong></td><td><strong>₹${fmt(grossWithNPS_P)}</strong></td></tr>`;
+
+  tb+=`<tr class="s-hdr"><td colspan="3">Deductions</td></tr>`;
+
+  // PF row — Monthly = appointment letter, This Month = 12% of prorated base
+  const pfMonthlyNote=`from appt. letter`;
+  const pfThisNote=`12% of prorated (Gross−HRA−Var)`;
+  const pfLabel=vpf>0?`EPF + VPF`:` EPF`;
+  tb+=`<tr class="ded"><td>${pfLabel}</td><td>₹${fmt(empPF_monthly)}<span class="itnote">${pfMonthlyNote}</span></td><td>₹${fmt(empPF_thisMonth)}<span class="itnote">${pfThisNote}</span></td></tr>`;
+
+  if(esiApplies)tb+=`<tr class="ded"><td>Employee ESI (0.75%)</td><td>₹${fmt(esiEmp_monthly)}</td><td>₹${fmt(esiEmp_thisMonth)}</td></tr>`;
+
+  if(state!=='NONE'&&ptMonthly>0)tb+=`<tr class="ded"><td>Professional Tax — ${eH(stateName)}</td><td>₹${fmt(ptMonthly)}</td><td>₹${fmt(ptThisMonth)}</td></tr>`;
+  else if(state==='OR')tb+=`<tr class="sub"><td>Professional Tax — Odisha<span class="itnote">abolished Apr 2026</span></td><td>₹0</td><td>₹0</td></tr>`;
+
+  if(lwfEm>0)tb+=`<tr class="ded"><td>Labour Welfare Fund — ${eH(stateName)}</td><td>₹${fmt(lwfEm)}</td><td>₹${fmt(lwfEm)}</td></tr>`;
+  if(npsM>0)tb+=`<tr class="ded"><td>Employer NPS<span class="itnote">net-neutral</span></td><td>₹${fmt(npsM)}</td><td>₹${fmt(npsM)}</td></tr>`;
+  tb+=`<tr class="ded"><td>Income Tax / TDS<span class="itnote">${regime==='new'?'New':'Old'} Regime · estimated</span></td><td>₹${fmt(tdsM)}</td><td>₹${fmt(tdsM)}</td></tr>`;
+
+  tb+=`<tr class="ded-tot"><td><strong>Total Deductions</strong></td><td><strong>₹${fmt(dedM)}</strong></td><td><strong>₹${fmt(dedP)}</strong></td></tr>`;
+  tb+=`<tr class="net"><td><strong>Net Take-Home</strong></td><td><strong>₹${fmt(netM)}</strong></td><td><strong>₹${fmt(netP)}</strong></td></tr>`;
+
+  tb+=`<tr class="s-hdr"><td colspan="3">Employer Costs — Informational Only</td></tr>`;
+  tb+=`<tr class="sub"><td>Employer PF<span class="itnote">from appt. letter</span></td><td>₹${fmt(erPF_monthly)}</td><td>₹${fmt(erPF_thisMonth)}</td></tr>`;
+  if(esiApplies)tb+=`<tr class="sub"><td>Employer ESI (3.25%)</td><td>₹${fmt(esiEr_monthly)}</td><td>₹${fmt(esiEr_thisMonth)}</td></tr>`;
+  if(lwfErm>0)tb+=`<tr class="sub"><td>Employer LWF — ${eH(stateName)}</td><td>₹${fmt(lwfErm)}</td><td>₹${fmt(lwfErm)}</td></tr>`;
+
+  document.getElementById('resBody').innerHTML=tb;
+  document.getElementById('resEmp').textContent=`${emp} · ${monthName}`;
+
+  const w=document.getElementById('resWarn');
+  w.innerHTML=`<span>⚠</span><div><strong>Note:</strong> TDS of ₹${fmt(tdsM)}/month is estimated (gross minus std deduction only). Actual TDS varies with 80C/80D/HRA declarations. Gratuity is excluded. PT and LWF not deducted in non-applicable months.</div>`;
+  w.style.display='flex';
+
+  buildTaxCmp(totM,npsM,basicM,empPF_monthly,esiApplies,esiEmp_monthly,ptMonthly,lwfEm,totP,empPF_thisMonth,esiApplies?esiEmp_thisMonth:0,ptThisMonth);
+
+  if(!calcDone){calcDone=true;showToggles();}
+  document.getElementById('emptyPanel').style.display='none';
+  document.getElementById('resultCard').style.display='block';
+  document.getElementById('taxCmpCard').style.display='block';
+  document.getElementById('resultCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function buildTaxCmp(totM,npsM,basicM,empPF_monthly,esiApplies,esiEmp_monthly,ptMonthly,lwfEm,totP,empPF_thisMonth,esiEmp_thisMonth,ptThisMonth){
+  const regimes=['new','old'];const labels=['New Regime','Old Regime'];
+  const results=regimes.map((r)=>{
+    const tds=monthlyTDS(totM,r,npsM,basicM);
+    const dedMonth=empPF_monthly+(esiApplies?esiEmp_monthly:0)+ptMonthly+lwfEm+npsM+tds;
+    const dedThis=empPF_thisMonth+(esiApplies?esiEmp_thisMonth:0)+ptThisMonth+lwfEm+npsM+tds;
+    const netM=R(totM+npsM-dedMonth);
+    const netP=R(totP+npsM-dedThis);
+    const stdDed=r==='new'?75000:50000;
+    const capPct=r==='new'?0.14:0.10;
+    const npsExempt=Math.min(npsM*12,R(basicM*12*capPct));
+    const taxable=Math.max(0,totM*12-stdDed-npsExempt);
+    const annTax=calcAnnualTax(taxable,r);
+    return{tds,annTax,taxable,netM,netP};
+  });
+  const best=results[0].netM>=results[1].netM?0:1;
+  let tbl=`<thead><tr><th>Parameter</th><th>New Regime</th><th>Old Regime</th></tr></thead><tbody>`;
+  tbl+=`<tr><td>Std Deduction</td><td>₹75,000</td><td>₹50,000</td></tr>`;
+  tbl+=`<tr><td>Annual Taxable</td><td>₹${fmt(results[0].taxable)}</td><td>₹${fmt(results[1].taxable)}</td></tr>`;
+  tbl+=`<tr><td>Annual Tax (incl. 4% cess)</td><td>₹${fmt(results[0].annTax)}</td><td>₹${fmt(results[1].annTax)}</td></tr>`;
+  tbl+=`<tr><td>Monthly TDS</td><td>₹${fmt(results[0].tds)}</td><td>₹${fmt(results[1].tds)}</td></tr>`;
+  tbl+=`<tr><td>Monthly Net Take-Home</td><td class="${best===0?'winner':'loser'}">₹${fmt(results[0].netM)}</td><td class="${best===1?'winner':'loser'}">₹${fmt(results[1].netM)}</td></tr>`;
+  tbl+=`<tr><td>This Month Net</td><td class="${best===0?'winner':'loser'}">₹${fmt(results[0].netP)}</td><td class="${best===1?'winner':'loser'}">₹${fmt(results[1].netP)}</td></tr>`;
+  const diff=Math.abs(results[0].annTax-results[1].annTax);
+  tbl+=`<tr><td><strong>Annual Tax Saving</strong></td><td colspan="2" style="text-align:center;font-weight:700;color:var(--pm)">${results[0].annTax<results[1].annTax?'New':'Old'} Regime saves ₹${fmt(diff)}/yr (₹${fmt(R(diff/12))}/mo)</td></tr>`;
+  tbl+=`</tbody>`;
+  document.getElementById('taxCmpTable').innerHTML=tbl;
+  const isOptimal=(regime==='new'&&best===0)||(regime==='old'&&best===1);
+  const betterLabel=labels[best];
+  document.getElementById('taxCmpVerdict').innerHTML=`<div class="${isOptimal?'ok':'warn'}"><span>${isOptimal?'✓':'⚠'}</span><div><strong>${isOptimal?'You are on the optimal regime.':'Consider switching!'}</strong> ${betterLabel} gives ₹${fmt(diff)}/year (₹${fmt(R(diff/12))}/month) more take-home.<span style="display:block;margin-top:3px;font-size:.62rem;opacity:.8">Old regime savings may be higher with 80C/80D/HRA declarations not included here.</span></div></div>`;
+}
+
+function flash(msg){
+  const btn=document.getElementById('calcBtn'),orig=btn.innerHTML;
+  btn.innerHTML=`⚠ ${msg}`;btn.style.background='linear-gradient(135deg,#DC2626,#EF4444)';
+  setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';},2800);
+}
+</script>
+</body>
+<script>
+  function sendHeight() {
+    window.parent.postMessage(
+      { type: "iframeHeight", height: document.documentElement.scrollHeight },
+      "*"
+    );
+  }
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+  new MutationObserver(sendHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+</script>
+</html>
