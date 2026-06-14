@@ -694,31 +694,33 @@ export default function Home() {
 
         {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
 
-        {/* ── NAVBAR ── */}
-<Header />
+  <Header />
 
         {/* ── HERO ── */}
-        <div id="lop-top" className="pt-6 pb-4 px-4 max-w-5xl mx-auto w-full scroll-mt-24">
-          <div className="relative flex items-start justify-center">
-            <div className="absolute right-0 top-0 flex items-center gap-2">
-              <button type="button" onClick={handleDownloadTemplate}
-                className="rounded-full border border-violet-200 bg-white px-4 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-50 transition shadow-sm">
-                ⬇ Generate Template
-              </button>
-              <Tooltip position="top" text="Download the official LOP Uploader template (.xlsx) - Employee ID, DOJ, DOL, Start Date, Days.">
-                <InfoIcon />
-              </Tooltip>
-            </div>
-            <div className="text-center">
-              <h1 className="text-5xl font-bold tracking-tight text-gray-900">
-                Split <span className="text-violet-500">LOP Dates</span>
-              </h1>
-              <p className="mt-3 text-sm text-gray-500 max-w-xs mx-auto leading-relaxed">
-                Upload your payroll sheet and get individual LOP date rows - ready for HRMS import.
-              </p>
-            </div>
-          </div>
-        </div>
+<div id="lop-top" className="pt-6 pb-4 px-4 max-w-lg mx-auto w-full scroll-mt-24">
+  <div className="flex flex-col items-center text-center">
+    <h1 className="text-5xl font-bold tracking-tight text-gray-900">
+      Split <span className="text-violet-500">LOP Dates</span>
+    </h1>
+    <p className="mt-3 text-sm text-gray-500 max-w-xs mx-auto leading-relaxed">
+      Upload your payroll sheet and get individual LOP date rows - ready for HRMS import.
+    </p>
+    <div className="w-full flex justify-end mt-3 pr-1">
+      <div className="flex items-center gap-1">
+        <button
+          type="button"
+          onClick={handleDownloadTemplate}
+          className="rounded-full border border-violet-200 bg-white px-4 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-50 transition shadow-sm"
+        >
+          ⬇ Generate Template
+        </button>
+        <Tooltip position="bottom" text="Download the official LOP Uploader template (.xlsx) - Employee ID, DOJ, DOL, Start Date, Days.">
+          <InfoIcon />
+        </Tooltip>
+      </div>
+    </div>
+  </div>
+</div>
 
         {/* ── MAIN CARD ── */}
         <main className="flex-1 flex flex-col items-center justify-start px-4 pb-8">
@@ -908,7 +910,7 @@ export default function Home() {
           </div>
         </main>
 
-<Footer />
+        <Footer />
       </div>
     </>
   );

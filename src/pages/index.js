@@ -3,7 +3,6 @@ import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-
 export default function Home() {
   return (
     <>
@@ -124,10 +123,10 @@ export default function Home() {
               <Link href="/salary-proration" className="tool-btn">Try Now →</Link>
             </div>
 
-            {/* PF ECR MAKER */}
+            {/* PF ECR CREATOR */}
             <div className="tool-card">
-              <div className="tool-icon">📝</div>
-              <div className="tool-badge coming">○ Coming Soon</div>
+              <div className="tool-icon">📋</div>
+              <div className="tool-badge">● Live</div>
               <h3 className="tool-name">PF ECR File Generator</h3>
               <p className="tool-desc">Generate PF ECR files instantly. Perfect format, EPFO compliant.</p>
               <ul className="tool-features">
@@ -136,7 +135,7 @@ export default function Home() {
                 <li>Auto-validation</li>
                 <li>Download ready</li>
               </ul>
-              <button className="tool-btn coming">Coming Soon</button>
+              <Link href="/pf-ecr-creator" className="tool-btn">Try Now →</Link>
             </div>
 
             {/* FINAL SETTLEMENT */}
