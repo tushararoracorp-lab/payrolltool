@@ -15,14 +15,14 @@ export default function Home() {
         <meta name="author" content="PayrollTool" />
 
         {/* Canonical */}
-        <link rel="canonical" href="https://payrolltool.in/" />
+        <link rel="canonical" href="https://www.payrolltool.in/" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://payrolltool.in/" />
+        <meta property="og:url" content="https://www.payrolltool.in/" />
         <meta property="og:title" content="PayrollTool – Free Payroll Tools for HR Professionals in India" />
         <meta property="og:description" content="LOP Splitter, Salary Proration Calculator with EPF/ESI/PT/TDS. Built for payroll teams. Free, fast, browser-based." />
-        <meta property="og:image" content="https://payrolltool.in/og-image.png" />
+        <meta property="og:image" content="https://www.payrolltool.in/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="PayrollTool" />
@@ -30,10 +30,10 @@ export default function Home() {
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://payrolltool.in/" />
+        <meta name="twitter:url" content="https://www.payrolltool.in/" />
         <meta name="twitter:title" content="PayrollTool – Free Payroll Tools for HR Teams" />
         <meta name="twitter:description" content="LOP Splitter, Salary Proration with EPF/ESI/PT. Free, browser-based, no login needed." />
-        <meta name="twitter:image" content="https://payrolltool.in/og-image.png" />
+        <meta name="twitter:image" content="https://www.payrolltool.in/og-image.png" />
 
         {/* Favicon */}
         <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='%237C3AED'/><path d='M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z' fill='white'/></svg>" />
@@ -57,6 +57,57 @@ export default function Home() {
             }),
           }}
         />
+        <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is LOP (Loss of Pay) in salary calculation?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Loss of Pay (LOP) refers to the salary deduction applied when an employee takes leave beyond their allotted leave balance or is absent without approval. PayrollTool's LOP Splitter helps calculate and split these deductions accurately across pay periods for HRMS uploads.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How is salary proration calculated for a mid-month joining or exit date?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Salary proration calculates an employee's pay for a partial month based on the number of days worked, using methods like calendar days or actual working days. PayrollTool's Salary Proration Calculator supports multiple proration methods with EPF, ESI, PT, and TDS considerations.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is a PF ECR file and why is it needed?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "PF ECR (Electronic Challan cum Return) is the standard file format required by EPFO for monthly Provident Fund contribution filings. PayrollTool's PF ECR Generator creates EPFO-compliant ECR files instantly for bulk employee processing.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is PayrollTool free to use?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, all PayrollTool calculators including the LOP Splitter, Salary Proration Calculator, and PF ECR Generator are completely free, browser-based, and require no sign-up or downloads.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do I need to create an account to use these tools?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No account or login is required. All PayrollTool calculators run directly in your browser, and your data is processed locally without being uploaded to any server.",
+          },
+        },
+      ],
+    }),
+  }}
+/>
       </Head>
 
 
