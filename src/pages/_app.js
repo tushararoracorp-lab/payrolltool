@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
 
-const GA_ID = G-YZKNE00CWX;
+const GA_ID = "G-YZKNE00CWX";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
