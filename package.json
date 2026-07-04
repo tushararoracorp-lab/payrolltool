@@ -10,15 +10,19 @@
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",
+    "gray-matter": "^4.0.3",
     "jose": "^6.2.3",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^3.8.1",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
     "resend": "^6.12.4",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
