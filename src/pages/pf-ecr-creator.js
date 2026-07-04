@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useState, useRef, useCallback } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
+import FeedbackWidget from "../components/FeedbackWidget";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
 const C = {
@@ -925,6 +926,8 @@ export default function PfEcrCreator() {
                 </button>
               </div>
 
+              <FeedbackWidget toolName="PF ECR Creator" />
+              
             </div>
           )}
 

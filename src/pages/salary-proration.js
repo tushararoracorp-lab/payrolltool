@@ -2,6 +2,7 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEffect, useRef } from "react";
+import FeedbackWidget from "../components/FeedbackWidget";
 
 export default function SalaryProration() {
   const iframeRef = useRef(null);
@@ -44,6 +45,10 @@ export default function SalaryProration() {
           }}
           title="Salary Proration Calculator"
         />
+
+        <div className="max-w-3xl mx-auto px-4">
+          <FeedbackWidget toolName="Salary Proration" />
+        </div>
 
         <Footer />
       </div>

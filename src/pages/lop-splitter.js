@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useState, useRef, useCallback } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
+import FeedbackWidget from "../components/FeedbackWidget";
 
 // ─── DATE UTILITIES ───────────────────────────────────────────────────────────
 
@@ -888,6 +889,8 @@ export default function Home() {
                 >
                   ↺ Process another file
                 </button>
+
+                <FeedbackWidget toolName="LOP Splitter" />
               </div>
             )}
           </div>
