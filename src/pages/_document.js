@@ -4,7 +4,9 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <link rel="icon" href="/icon.png" type="image/png" />
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZKNE00CWX" />
         <script dangerouslySetInnerHTML={{
@@ -13,7 +15,6 @@ export default function Document() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-YZKNE00CWX');
-          <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
           `
         }} />
       </Head>
