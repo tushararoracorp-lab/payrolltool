@@ -21,7 +21,11 @@ export default function FeedbackWidget({ toolName }) {
     setShowText(true);
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleTextSubmit = async () => {
+    if (isSubmitting) return; // guard against double-clicks
+    setIsSubmitting(true);
     try {
       await fetch("/api/feedback", {
         method: "POST",
@@ -35,6 +39,7 @@ export default function FeedbackWidget({ toolName }) {
     } catch (err) {
       console.error("Feedback submission failed:", err);
     }
+    setIsSubmitting(false);
     setSubmitted(true);
   };
 

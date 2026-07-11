@@ -16,18 +16,25 @@ export default async function handler(req, res) {
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
-    const sheets = google.sheets({ version: "v4", auth });
+  const sheets = google.sheets({ version: "v4", auth });
 
-    await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "Sheet1!A:D",
-      valueInputOption: "USER_ENTERED",
-      requestBody: {
-        values: [[new Date().toISOString(), tool || "", rating || "", feedback || ""]],
-      },
-    });
+  const istTimestamp = new Date().toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "numeric", minute: "2-digit", second: "2-digit",
+    hour12: true,
+  });
 
-    res.status(200).json({ success: true });
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: process.env.GOOGLE_SHEET_ID,
+    range: "Sheet1!A:D",
+    valueInputOption: "USER_ENTERED",
+    requestBody: {
+      values: [[istTimestamp, tool || "", rating || "", feedback || ""]],
+    },
+  });
+
+  res.status(200).json({ success: true });
   } catch (error) {
     console.error("Sheet write failed:", error);
     res.status(500).json({ error: "Failed to save feedback" });

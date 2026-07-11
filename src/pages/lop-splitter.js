@@ -766,20 +766,6 @@ export default function Home() {
 
             <input ref={fileInputRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={onSelectFile} />
 
-          <button
-            onClick={() => {
-              downloadExport();
-              if (typeof window !== "undefined" && window.gtag) {
-                window.gtag("event", "tool_download_completed", { tool_name: "LOP Splitter", file_type: "export" });
-              }
-            }}
-            className="w-full py-3 rounded-xl font-semibold text-sm text-white mb-2 transition-all active:scale-95"
-            style={{ background: "linear-gradient(135deg,#6D28D9 0%,#7C3AED 100%)" }}
-          >
-            ⬇ Download Export (.xlsx)
-          </button>
-
-
             <p className="text-center text-xs text-gray-400 mt-3">
               Supports <span className="font-semibold text-gray-500">.XLSX</span> &amp; <span className="font-semibold text-gray-500">.XLS</span>
               <Tooltip text="Use the official LOP Uploader template. Columns: Employee ID, DOJ, DOL (optional), Start Date, Days.">
