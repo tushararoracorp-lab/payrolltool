@@ -1973,6 +1973,11 @@ function downloadPayslip(){
       pdf.save(filename);
       btn.textContent=origText; btn.style.opacity='1';
 
+      // Notify parent page that a payslip download completed
+      if (window.parent) {
+        window.parent.postMessage({ type: "toolDownloadCompleted", tool: "Salary Proration", fileType: "pdf" }, "*");
+      }
+
     } catch(err){
       console.error(err);
       btn.textContent=origText; btn.style.opacity='1';

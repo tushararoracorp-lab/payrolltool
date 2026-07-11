@@ -12,6 +12,14 @@ export default function SalaryProration() {
       if (e.data?.type === "iframeHeight" && iframeRef.current) {
         iframeRef.current.style.height = e.data.height + "px";
       }
+      if (e.data?.type === "toolDownloadCompleted") {
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "tool_download_completed", {
+            tool_name: e.data.tool,
+            file_type: e.data.fileType,
+          });
+        }
+      }
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);

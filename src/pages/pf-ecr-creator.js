@@ -904,14 +904,24 @@ export default function PfEcrCreator() {
               <div className="flex flex-col items-center gap-3 pt-1">
                 <div className="flex gap-3 justify-center">
                   <button
-                    onClick={() => buildExcelOutput(result.ecrData, result.obsData, month || "Month", year || "Year")}
+                    onClick={() => {
+                      buildExcelOutput(result.ecrData, result.obsData, month || "Month", year || "Year");
+                      if (typeof window !== "undefined" && window.gtag) {
+                        window.gtag("event", "tool_download_completed", { tool_name: "PF ECR Creator", file_type: "xlsx" });
+                      }
+                    }}
                     className="px-8 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95"
                     style={{ background: "linear-gradient(135deg,#059669 0%,#10B981 100%)" }}
                   >
                     ⬇ Download .xlsx
                   </button>
                   <button
-                    onClick={() => buildTxtOutput(result.ecrData, month || "Month", year || "Year")}
+                    onClick={() => {
+                      buildTxtOutput(result.ecrData, month || "Month", year || "Year");
+                      if (typeof window !== "undefined" && window.gtag) {
+                        window.gtag("event", "tool_download_completed", { tool_name: "PF ECR Creator", file_type: "txt" });
+                      }
+                    }}
                     className="px-8 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95"
                     style={{ background: "linear-gradient(135deg,#6D28D9 0%,#7C3AED 100%)" }}
                   >

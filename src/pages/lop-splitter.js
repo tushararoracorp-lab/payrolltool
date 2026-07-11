@@ -766,17 +766,18 @@ export default function Home() {
 
             <input ref={fileInputRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={onSelectFile} />
 
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="w-full py-3.5 rounded-xl font-semibold text-sm text-white transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#6D28D9 0%,#7C3AED 100%)" }}
-            >
-              <svg className="inline mr-2 -mt-0.5" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8 2v9M5 5l3-3 3 3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 13h12" stroke="white" strokeWidth="1.6" strokeLinecap="round"/>
-              </svg>
-              Select LOP File
-            </button>
+          <button
+            onClick={() => {
+              downloadExport();
+              if (typeof window !== "undefined" && window.gtag) {
+                window.gtag("event", "tool_download_completed", { tool_name: "LOP Splitter", file_type: "export" });
+              }
+            }}
+            className="w-full py-3 rounded-xl font-semibold text-sm text-white mb-2 transition-all active:scale-95"
+            style={{ background: "linear-gradient(135deg,#6D28D9 0%,#7C3AED 100%)" }}
+          >
+            ⬇ Download Export (.xlsx)
+          </button>
 
 
             <p className="text-center text-xs text-gray-400 mt-3">
@@ -875,7 +876,12 @@ export default function Home() {
                       </div>
                     )}
                     <button
-                      onClick={downloadObs}
+                      onClick={() => {
+                        downloadObs();
+                        if (typeof window !== "undefined" && window.gtag) {
+                          window.gtag("event", "tool_download_completed", { tool_name: "LOP Splitter", file_type: "observation_report" });
+                        }
+                      }}
                       className="w-full py-2.5 rounded-lg text-xs font-semibold text-amber-800 bg-amber-100 hover:bg-amber-200 transition-colors border border-amber-200"
                     >
                       ⬇ Download Observation Report (.xlsx)
