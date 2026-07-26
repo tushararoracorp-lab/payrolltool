@@ -3,12 +3,31 @@ import path from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
+import Head from 'next/head'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
-export default function BlogPost({ frontmatter, contentHtml }) {
+export default function BlogPost({ frontmatter, contentHtml, slug }) {
+  const canonicalUrl = `https://www.payrolltool.in/blog/${slug}`
+
   return (
     <>
+      <Head>
+        <title>{frontmatter.title} | PayrollTool Blog</title>
+        <meta name="description" content={frontmatter.description} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={frontmatter.title} />
+        <meta property="og:description" content={frontmatter.description} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content="https://www.payrolltool.in/icon.png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={frontmatter.title} />
+        <meta name="twitter:description" content={frontmatter.description} />
+      </Head>
+
       <Header />
       <main className="max-w-3xl mx-auto px-4 py-16">
         <span className="text-xs font-bold text-violet-700 bg-violet-50 px-3 py-1 rounded-full">
@@ -48,5 +67,5 @@ export async function getStaticProps({ params }) {
   const processedContent = await remark().use(html).process(content)
   const contentHtml = processedContent.toString()
 
-  return { props: { frontmatter: data, contentHtml } }
+  return { props: { frontmatter: data, contentHtml, slug: params.slug } }
 }

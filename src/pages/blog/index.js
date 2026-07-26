@@ -2,12 +2,38 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import Link from 'next/link'
+import Head from 'next/head'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
 export default function BlogIndex({ posts }) {
   return (
     <>
+      <Head>
+        <title>Payroll Guides & Resources | PayrollTool</title>
+        <meta
+          name="description"
+          content="Practical, free guides on LOP calculation, salary proration, PF ECR filing, and Indian payroll compliance."
+        />
+        <link rel="canonical" href="https://www.payrolltool.in/blog" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Payroll Guides & Resources | PayrollTool" />
+        <meta
+          property="og:description"
+          content="Practical, free guides on LOP calculation, salary proration, PF ECR filing, and Indian payroll compliance."
+        />
+        <meta property="og:url" content="https://www.payrolltool.in/blog" />
+        <meta property="og:image" content="https://www.payrolltool.in/icon.png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Payroll Guides & Resources | PayrollTool" />
+        <meta
+          name="twitter:description"
+          content="Practical, free guides on LOP calculation, salary proration, PF ECR filing, and Indian payroll compliance."
+        />
+      </Head>
+
       <Header />
       <main className="max-w-3xl mx-auto px-4 py-16">
         <div className="mb-10">
@@ -49,7 +75,7 @@ export async function getStaticProps() {
     const filePath = path.join(postsDir, filename)
     const fileContent = fs.readFileSync(filePath, 'utf8')
     const { data } = matter(fileContent)
-    return { ...data }
+    return { ...data, slug: data.slug || filename.replace('.md', '') }
   })
 
   posts.sort((a, b) => new Date(b.date) - new Date(a.date))
