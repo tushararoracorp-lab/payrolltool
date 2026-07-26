@@ -166,11 +166,6 @@ function processWorkbook(buffer) {
       const { uan: dupUAN, others } = dupUANSameName.get(i);
       remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: Duplicate UAN <strong>${dupUAN}</strong> - also at data row(s) ${others}. Included but please verify.` });
     }
-    if (dupNameRows.has(i)) {
-      const { others } = dupNameRows.get(i);
-      const otherLabel = others.map(x => x + 2).join(", ");
-      remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: Same name found at row(s) ${otherLabel} under a different UAN. Included but please verify.` });
-    }
     if (!uan || !/^\d{12}$/.test(uan)) {
       remarks.push({ type: "error", text: `<span class="font-semibold">${name}</span>: Missing or invalid UAN (must be 12 digits) - excluded.` });
       status = "ERROR"; cntError++;
@@ -324,25 +319,6 @@ function buildExcelOutput(ecrData, obsData, month, year) {
 
   XLSX.utils.book_append_sheet(wb, ws1, "ECR Data");
 
-  // ── Legend sheet ──
-  const legendData = [
-    { "Highlight Color": "Yellow (#FFF9C4)",     Meaning: "Duplicate UAN - same UAN appears more than once" },
-    { "Highlight Color": "Orange (#FFE0B2)",     Meaning: "Duplicate Name - same employee name appears more than once under different UANs" },
-    { "Highlight Color": "Red-Orange (#FFCCBC)", Meaning: "Both duplicate UAN and duplicate Name" },
-    { "Highlight Color": "Pink (#FFC0CB)",       Meaning: "Row has modifications - NCP days rounded, EPS/EDLI wages adjusted, etc." },
-  ];
-  const wsLegend = XLSX.utils.json_to_sheet(legendData);
-  wsLegend["!cols"] = [{ wch: 26 }, { wch: 70 }];
-  XLSX.utils.book_append_sheet(wb, wsLegend, "Legend");
-
-  // ── Observations sheet ──
-  if (obsData.length > 0) {
-    const wsObs = XLSX.utils.json_to_sheet(
-      obsData.map(o => ({ Type: { error: "ERROR", warn: "WARNING" }[o.type] || o.type.toUpperCase(), Remark: stripHtml(o.text) }))
-    );
-    wsObs["!cols"] = [{ wch: 10 }, { wch: 90 }];
-    XLSX.utils.book_append_sheet(wb, wsObs, "Observations");
-  }
 
   XLSX.writeFile(wb, `ECR_${month}_${year}.xlsx`);
 }
@@ -523,6 +499,8 @@ export default function PfEcrCreator() {
 
   // Contribution sums
   const sum = (k) => result?.ecrData?.reduce((a, r) => a + r[k], 0) ?? 0;
+  const totalAdminCharge = rnd(sum("epfWages") * 0.005);
+  const totalEdliCharge  = rnd(sum("edliWages") * 0.005);
 
   return (
     <>
@@ -826,8 +804,8 @@ export default function PfEcrCreator() {
                           ["EPF Contribution",   sum("epfCont")],
                           ["EPS Contribution",   sum("epsCont")],
                           ["EPF–EPS Difference", sum("epfDiff")],
-                          ["Admin Charges",      sum("adminCharge")],
-                          ["EDLI Contribution",  sum("edliCharge")],
+                          ["Admin Charges",      totalAdminCharge],
+                          ["EDLI Contribution",  totalEdliCharge],
                         ].map(([label, val]) => (
                           <tr key={label} className="border-b border-gray-50 last:border-0">
                             <td className="py-1.5 text-gray-500">{label}</td>
