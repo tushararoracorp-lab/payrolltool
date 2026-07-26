@@ -22,8 +22,6 @@ export default function FeedbackWidget({ toolName }) {
     setShowText(true);
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleTextSubmit = async () => {
     if (isSubmitting) return; // guard against double-clicks
     setIsSubmitting(true);
