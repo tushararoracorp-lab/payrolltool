@@ -5,6 +5,7 @@ export default function FeedbackWidget({ toolName }) {
   const [showText, setShowText] = useState(false);
   const [feedbackText, setFeedbackText] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const sendGA4Event = (eventName, params) => {
     if (typeof window !== "undefined" && window.gtag) {
