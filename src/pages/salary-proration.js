@@ -34,7 +34,7 @@ export default function SalaryProration() {
         <meta property="og:title" content="Salary Proration Calculator – PayrollTool" />
         <meta property="og:url" content="https://payrolltool.in/salary-proration" />
         <meta property="og:type" content="website" />
-        <link rel="canonical" href="https://payrolltool.in/salary-proration" />
+        <link rel="canonical" href="https://www.payrolltool.in/salary-proration" />
       </Head>
 
       <div style={{ fontFamily: "'DM Sans', sans-serif", background: "#EEEAF8" }}>

@@ -688,7 +688,7 @@ export default function Home() {
         <meta property="og:site_name" content="PayrollTool" />
         <meta property="og:image" content="https://www.payrolltool.in/preview.png" />
         <meta name="author" content="PayrollTool" />
-        <link rel="canonical" href="https://www.payrolltool.in/" />
+        <link rel="canonical" href="https://www.payrolltool.in/lop-splitter" />
       </Head>
 
       <div className="min-h-screen flex flex-col" style={{ fontFamily: "'DM Sans', sans-serif", background: "#EEEAF8" }}>
