@@ -683,7 +683,7 @@ export default function Home() {
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="PayrollTool – LOP Splitter" />
         <meta property="og:description" content="Upload payroll sheets and generate HRMS-ready LOP rows instantly." />
-        <meta property="og:url" content="https://www.payrolltool.in/" />
+        <meta property="og:url" content="https://www.payrolltool.in/lop-splitter" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="PayrollTool" />
         <meta property="og:image" content="https://www.payrolltool.in/preview.png" />

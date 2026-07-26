@@ -509,6 +509,17 @@ export default function PfEcrCreator() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Generate EPFO-compliant PF ECR files instantly. Bulk import, auto-validation, Excel & TXT export. Free, browser-based." />
         <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.payrolltool.in/pf-ecr-creator" />
+
+        <meta property="og:title" content="PF ECR File Generator - PayrollTool" />
+        <meta property="og:description" content="Generate EPFO-compliant PF ECR files instantly. Bulk import, auto-validation, Excel & TXT export. Free, browser-based." />
+        <meta property="og:url" content="https://www.payrolltool.in/pf-ecr-creator" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.payrolltool.in/icon.png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="PF ECR File Generator - PayrollTool" />
+        <meta name="twitter:description" content="Generate EPFO-compliant PF ECR files instantly. Bulk import, auto-validation, Excel & TXT export. Free, browser-based." />
       </Head>
 
       <div className="min-h-screen flex flex-col" style={{ fontFamily: "'DM Sans', sans-serif", background: "#EEEAF8" }}>
