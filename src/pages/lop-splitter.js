@@ -614,17 +614,30 @@ export default function Home() {
       const buffer = await file.arrayBuffer();
       const wb_in  = XLSX.read(buffer, { type: "array", cellDates: false });
 
-      // Token validation
+      // Token validation (fast path) — only trusts files with the hidden marker.
       const tokenSheet = wb_in.Sheets?.["__lop_token__"];
       const tokenCell  = tokenSheet?.["A1"];
-      if (!tokenSheet || !tokenCell || tokenCell.v !== "PAYROLLTOOLS_V1_SECURE") {
-        alert("This file was not generated from PayrollTools. Please download the official template from the portal.");
+      const hasToken   = !!tokenSheet && !!tokenCell && tokenCell.v === "PAYROLLTOOLS_V1_SECURE";
+
+      const ws  = wb_in.Sheets[wb_in.SheetNames[0]];
+      const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "", blankrows: true });
+
+      // Fallback header validation — the hidden sheet is often stripped by
+      // Google Sheets / LibreOffice re-saves even when the data itself is fine.
+      const EXPECTED_HEADERS = ["Employee ID", "DOJ", "DOL", "Start Date", "Days"];
+      const actualHeaders = (aoa[0] || []).map(h => String(h ?? "").trim());
+      const headersMatch = EXPECTED_HEADERS.every((h, i) => actualHeaders[i] === h);
+
+      if (!hasToken && !headersMatch) {
+        alert(
+          "This file's columns don't match the official LOP Uploader template " +
+          "(Employee ID, DOJ, DOL, Start Date, Days). Please download the official " +
+          "template from the portal and use it as-is."
+        );
         setProcessing(false);
         return;
       }
 
-      const ws      = wb_in.Sheets[wb_in.SheetNames[0]];
-      const aoa     = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "", blankrows: true });
       const dataRows = aoa.slice(1);
       const rows    = dataRows.map(rowArr => ({
         "Employee ID": rowArr[0] ?? "",
