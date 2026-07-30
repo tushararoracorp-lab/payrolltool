@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <Head>
         {/* Primary */}
-        <title>PayrollTool – Free Payroll Calculator for HR Teams | LOP Splitter & Salary Proration</title>
+        <title>PayrollTool ï¿½ Free Payroll Calculator for HR Teams | LOP Splitter & Salary Proration</title>
         <meta name="description" content="Free payroll tools for HR & Payroll professionals in India. LOP Splitter, Salary Proration Calculator with EPF, ESI, PT, TDS. No login. No downloads. 100% browser-based." />
         <meta name="keywords" content="payroll calculator India, LOP splitter tool, salary proration calculator, loss of pay calculator, EPF calculator, ESI calculator, payroll software free, HRMS upload tool, HR payroll tools" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -20,7 +20,7 @@ export default function Home() {
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.payrolltool.in/" />
-        <meta property="og:title" content="PayrollTool – Free Payroll Tools for HR Professionals in India" />
+        <meta property="og:title" content="PayrollTool ï¿½ Free Payroll Tools for HR Professionals in India" />
         <meta property="og:description" content="LOP Splitter, Salary Proration Calculator with EPF/ESI/PT/TDS. Built for payroll teams. Free, fast, browser-based." />
         <meta property="og:image" content="https://www.payrolltool.in/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
@@ -31,7 +31,7 @@ export default function Home() {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.payrolltool.in/" />
-        <meta name="twitter:title" content="PayrollTool – Free Payroll Tools for HR Teams" />
+        <meta name="twitter:title" content="PayrollTool ï¿½ Free Payroll Tools for HR Teams" />
         <meta name="twitter:description" content="LOP Splitter, Salary Proration with EPF/ESI/PT. Free, browser-based, no login needed." />
         <meta name="twitter:image" content="https://www.payrolltool.in/og-image.jpg" />
 
