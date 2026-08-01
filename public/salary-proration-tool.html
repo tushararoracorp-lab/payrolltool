@@ -995,7 +995,7 @@ function calcAnnualTax(taxable,r){
   let tax=calcBaseSlabTax(taxable,r);
   // FIX13: proper 87A rebate - up to ₹12,500 off tax (not a cliff)
   if(r==='new'&&taxable<=1200000)tax=0; // New: full rebate ≤₹12L
-  if(r==='old')tax=Math.max(0,tax-Math.min(tax,12500)); // Old: 87A rebate ≤₹12,500
+  if(r==='old'&&taxable<=500000)tax=Math.max(0,tax-Math.min(tax,12500));
   // FIX12: Surcharge on income >₹50L
   let surcharge=0;
   if(taxable>10000000)     surcharge=tax*0.15; // 15% above ₹1Cr
@@ -1255,11 +1255,10 @@ function calculate(){
     ? Math.min(R(empPF_thisMonth + empPF_monthly*fullMos), 150000)
     : 0;
   const tdsRes=calcTDS(totM,regime,npsM,basicM,erPF_monthly,ptAnnual,tdsGrossP,tdsNpsErP,tdsErEPFP,tdsBasicP,fullMos,totalMos,pfAnnual80C);
-  const tdsM=tdsRes.tdsM; // TDS for this month (prorated basis)
-  // Projected TDS for full months (full salary annualised ÷ 12)
-  const pf80CProjected=pfRes.pfMode!=='none'?Math.min(R(empPF_monthly*12),150000):0;
-  const tdsProjected=calcTDS(totM,''+regime,npsM,basicM,erPF_monthly,ptAnnual,totM,npsM,erPF_monthly,basicM,11,12,pf80CProjected).tdsM;
-  // Flag if they differ meaningfully
+  const tdsM=tdsRes.tdsM; // this month's actual TDS deduction
+  const tdsProjected = fullMos > 0
+    ? R((tdsRes.annualTax - tdsM) / fullMos)
+    : tdsM; // last month of FY — nothing left to spread, charge remaining balance now
   const tdsDiffers=Math.abs(tdsM-tdsProjected)>1;
 
   // ── Totals - both columns ──
@@ -1405,8 +1404,10 @@ function buildTaxCmp(o){
 
     // Monthly deductions for net calc
     const ptForDed=r==='old'?ptMonthly:0;
-    const tdsForMonth=resProj.tdsM;
-    const tdsForThis=res.tdsM;
+    const tdsForThis = res.tdsM; // this month's actual TDS
+    const tdsForMonth = fullMos > 0
+      ? R((res.annualTax - tdsForThis) / fullMos)
+      : tdsForThis;
     // #5: Use amortised LWF for monthly column (annual/half-yearly states should spread cost)
     // lwfEm is the this-month amount; for annual states this is 0 in most months
     // We use lwfAnnual/12 for comparison table monthly net to give a realistic monthly picture
@@ -1421,7 +1422,7 @@ function buildTaxCmp(o){
       stdDed,npsExempt,ptExempt,perqAdd,
       annualTaxable:res.taxable,
       projectedTaxable:resProj.taxable,
-      annTax:resProj.annualTax, // annual tax on projected basis
+      annTax:res.annualTax, // DOJ-exact FY liability — matches Excel (114745 old / 0 new)
       tdsMonthly:tdsForMonth,
       tdsThisMonth:tdsForThis,
       netMonthly,netThisMonth,
