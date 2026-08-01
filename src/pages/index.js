@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <Head>
         {/* Primary */}
-        <title>PayrollTool � Free Payroll Calculator for HR Teams | LOP Splitter & Salary Proration</title>
+        <title>PayrollTool – Free Payroll Calculator for HR Teams | LOP Splitter & Salary Proration</title>
         <meta name="description" content="Free payroll tools for HR & Payroll professionals in India. LOP Splitter, Salary Proration Calculator with EPF, ESI, PT, TDS. No login. No downloads. 100% browser-based." />
         <meta name="keywords" content="payroll calculator India, LOP splitter tool, salary proration calculator, loss of pay calculator, EPF calculator, ESI calculator, payroll software free, HRMS upload tool, HR payroll tools" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -20,7 +20,7 @@ export default function Home() {
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.payrolltool.in/" />
-        <meta property="og:title" content="PayrollTool � Free Payroll Tools for HR Professionals in India" />
+        <meta property="og:title" content="PayrollTool – Free Payroll Tools for HR Professionals in India" />
         <meta property="og:description" content="LOP Splitter, Salary Proration Calculator with EPF/ESI/PT/TDS. Built for payroll teams. Free, fast, browser-based." />
         <meta property="og:image" content="https://www.payrolltool.in/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
@@ -31,7 +31,7 @@ export default function Home() {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.payrolltool.in/" />
-        <meta name="twitter:title" content="PayrollTool � Free Payroll Tools for HR Teams" />
+        <meta name="twitter:title" content="PayrollTool – Free Payroll Tools for HR Teams" />
         <meta name="twitter:description" content="LOP Splitter, Salary Proration with EPF/ESI/PT. Free, browser-based, no login needed." />
         <meta name="twitter:image" content="https://www.payrolltool.in/og-image.jpg" />
 
@@ -130,9 +130,9 @@ export default function Home() {
             <Link href="#tools" className="btn-secondary">Learn More</Link>
           </div>
           <div className="benefits">
-            <div className="benefit-item"><span className="benefit-icon">??</span> 100% Secure</div>
-            <div className="benefit-item"><span className="benefit-icon">?</span> Browser Based</div>
-            <div className="benefit-item"><span className="benefit-icon">??</span> Your Data, Your Control</div>
+            <div className="benefit-item"><span className="benefit-icon">🔒</span> 100% Secure</div>
+            <div className="benefit-item"><span className="benefit-icon">🌐</span> Browser Based</div>
+            <div className="benefit-item"><span className="benefit-icon">🛡️</span> Your Data, Your Control</div>
           </div>
         </div>
       </section>
@@ -146,8 +146,8 @@ export default function Home() {
 
             {/* LOP SPLITTER */}
             <div className="tool-card">
-              <div className="tool-icon">??</div>
-              <div className="tool-badge">? Live</div>
+              <div className="tool-icon">📊</div>
+              <div className="tool-badge">🟢 Live</div>
               <h3 className="tool-name">LOP Splitter</h3>
               <p className="tool-desc">Split Loss of Pay for multiple date ranges in seconds. HRMS upload ready.</p>
               <ul className="tool-features">
@@ -156,13 +156,13 @@ export default function Home() {
                 <li>Decimal day support</li>
                 <li>Observation report</li>
               </ul>
-              <Link href="/lop-splitter" className="tool-btn">Try Now ?</Link>
+              <Link href="/lop-splitter" className="tool-btn">Try Now →</Link>
             </div>
 
             {/* SALARY PRORATION */}
             <div className="tool-card">
-              <div className="tool-icon">??</div>
-              <div className="tool-badge">? Live</div>
+              <div className="tool-icon">💰</div>
+              <div className="tool-badge">🟢 Live</div>
               <h3 className="tool-name">Salary Proration Calculator</h3>
               <p className="tool-desc">Calculate precise salary for partial months, mid-month joining or exit.</p>
               <ul className="tool-features">
@@ -171,13 +171,13 @@ export default function Home() {
                 <li>Fully editable structure</li>
                 <li>3 proration methods</li>
               </ul>
-              <Link href="/salary-proration" className="tool-btn">Try Now ?</Link>
+              <Link href="/salary-proration" className="tool-btn">Try Now →</Link>
             </div>
 
             {/* PF ECR CREATOR */}
             <div className="tool-card">
-              <div className="tool-icon">??</div>
-              <div className="tool-badge">? Live</div>
+              <div className="tool-icon">📄</div>
+              <div className="tool-badge">🟢 Live</div>
               <h3 className="tool-name">PF ECR File Generator</h3>
               <p className="tool-desc">Generate PF ECR files instantly. Perfect format, EPFO compliant.</p>
               <ul className="tool-features">
@@ -186,13 +186,13 @@ export default function Home() {
                 <li>Auto-validation</li>
                 <li>Download ready</li>
               </ul>
-              <Link href="/pf-ecr-creator" className="tool-btn">Try Now ?</Link>
+              <Link href="/pf-ecr-creator" className="tool-btn">Try Now →</Link>
             </div>
 
             {/* FINAL SETTLEMENT */}
             <div className="tool-card">
-              <div className="tool-icon">?</div>
-              <div className="tool-badge coming">? Coming Soon</div>
+              <div className="tool-icon">✅</div>
+              <div className="tool-badge coming">🟡 Coming Soon</div>
               <h3 className="tool-name">Final Settlement Calculator</h3>
               <p className="tool-desc">Full & final settlement computation. Gratuity, notice, arrears in one place.</p>
               <ul className="tool-features">
@@ -200,21 +200,6 @@ export default function Home() {
                 <li>Notice period recovery</li>
                 <li>Leave encashment</li>
                 <li>Compliance ready</li>
-              </ul>
-              <button className="tool-btn coming">Coming Soon</button>
-            </div>
-
-            {/* NOTICE RECOVERY */}
-            <div className="tool-card">
-              <div className="tool-icon">??</div>
-              <div className="tool-badge coming">? Coming Soon</div>
-              <h3 className="tool-name">Notice Recovery Calculator</h3>
-              <p className="tool-desc">Calculate notice pay recovery with accuracy and ease.</p>
-              <ul className="tool-features">
-                <li>Short notice recovery</li>
-                <li>Legal compliance</li>
-                <li>Instant calculation</li>
-                <li>Report generation</li>
               </ul>
               <button className="tool-btn coming">Coming Soon</button>
             </div>
@@ -229,22 +214,22 @@ export default function Home() {
           <p className="section-sub">Built with the real needs of payroll and HR teams in mind.</p>
           <div className="why-grid">
             <div className="why-item">
-              <div className="why-icon">??</div>
+              <div className="why-icon">🔒</div>
               <h3 className="why-title">Private & Secure</h3>
               <p className="why-text">Your files never leave your device. All processing happens in your browser.</p>
             </div>
             <div className="why-item">
-              <div className="why-icon">?</div>
+              <div className="why-icon">⚡</div>
               <h3 className="why-title">Fast & Accurate</h3>
               <p className="why-text">Built for precision. Calculations you can trust. Every time.</p>
             </div>
             <div className="why-item">
-              <div className="why-icon">??</div>
+              <div className="why-icon">👤</div>
               <h3 className="why-title">Payroll Expert Built</h3>
               <p className="why-text">Real-world experience. Real solutions. Built by someone in your shoes.</p>
             </div>
             <div className="why-item">
-              <div className="why-icon">??</div>
+              <div className="why-icon">❤️</div>
               <h3 className="why-title">Made for Humans</h3>
               <p className="why-text">No clutter. No fluff. Just what you need. Clear and simple.</p>
             </div>
