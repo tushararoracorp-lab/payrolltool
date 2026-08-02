@@ -335,7 +335,7 @@ export default function FinalSettlement() {
                       Monthly Dearness Allowance (₹) <span className="req-tag">optional</span>
                     </label>
                     <input inputMode="decimal" type="number" id="da" value={fields.da} onChange={set("da")} min="0" max="50000000" />
-                    <div className="help">If DA is a separate line on your payslip, enter it here - it's combined with Basic for gratuity and leave encashment.</div>
+                    <div className="help">If DA is a separate line on your payslip, enter it here - it&apos;s combined with Basic for gratuity and leave encashment.</div>
                   </div>
                   <div className="field field-full">
                     <label htmlFor="gross">
@@ -372,7 +372,7 @@ export default function FinalSettlement() {
                       Notice period served (days) <span className="auto-badge">auto</span>
                     </label>
                     <input inputMode="decimal" type="number" id="served" value={fields.served} onChange={set("served")} min="0" max="3650" />
-                    <div className="help">Calculated from resignation → last working day. Edit if it doesn't match.</div>
+                    <div className="help">Calculated from resignation → last working day. Edit if it doesn&apos;t match.</div>
                   </div>
                   <div className="field field-full">
                     <label htmlFor="noticeBasis">Notice pay is based on</label>
@@ -483,16 +483,16 @@ export default function FinalSettlement() {
                   </p>
                   <p>
                     <b>Leave encashment</b> - <code>(Basic + DA) ÷ 30 × unused leave days</code>. Only Earned/Privilege Leave is encashable in most
-                    states - casual and sick leave typically aren't.
+                    states - casual and sick leave typically aren&apos;t.
                   </p>
                   <p>
-                    <b>Notice shortfall</b> - served days are worked out from your resignation and last working day; if that's less than the
+                    <b>Notice shortfall</b> - served days are worked out from your resignation and last working day; if that&apos;s less than the
                     required notice, the shortfall is deducted at <code>(Basic+DA or Gross) ÷ 30</code> per day, based on whichever your appointment
-                    letter specifies. If you select Gross but don't enter it, this falls back to Basic + DA.
+                    letter specifies. If you select Gross but don&apos;t enter it, this falls back to Basic + DA.
                   </p>
                   <p>
                     <b>Tax</b> - Gratuity above is capped at the same figure as its tax-exemption limit (Sec 10(10)), so it stays tax-free by
-                    construction. Leave encashment isn't capped here, so a high salary plus a large leave balance can push it past the Sec 10(10AA)
+                    construction. Leave encashment isn&apos;t capped here, so a high salary plus a large leave balance can push it past the Sec 10(10AA)
                     exemption (a lifetime limit shared across employers) - anything above that limit is taxable, so treat that figure as pre-tax.
                   </p>
                 </div>
@@ -500,8 +500,8 @@ export default function FinalSettlement() {
               {results && (
               <>
               <div className="next-step">
-                💡 Once you have this number, ask HR for a written FnF statement and compare it line by line - if anything doesn't match, ask which
-                formula or dates they used. It's a completely normal question to ask.
+                💡 Once you have this number, ask HR for a written FnF statement and compare it line by line - if anything doesn&apos;t match, ask which
+                formula or dates they used. It&apos;s a completely normal question to ask.
               </div>
               <div className="closing-note">Whatever comes next, we hope it goes well for you. 🤝</div>
               </>
