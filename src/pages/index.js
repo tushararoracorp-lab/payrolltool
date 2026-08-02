@@ -192,16 +192,16 @@ export default function Home() {
             {/* FINAL SETTLEMENT */}
             <div className="tool-card">
               <div className="tool-icon">✅</div>
-              <div className="tool-badge coming">🟡 Coming Soon</div>
+              <div className="tool-badge">🟢 Live</div>
               <h3 className="tool-name">Final Settlement Calculator</h3>
-              <p className="tool-desc">Full & final settlement computation. Gratuity, notice, arrears in one place.</p>
+              <p className="tool-desc">Calculate your gratuity, notice pay, and leave encashment in one place.</p>
               <ul className="tool-features">
                 <li>Gratuity calculation</li>
-                <li>Notice period recovery</li>
+                <li>Notice period shortfall</li>
                 <li>Leave encashment</li>
-                <li>Compliance ready</li>
+                <li>Instant estimate</li>
               </ul>
-              <button className="tool-btn coming">Coming Soon</button>
+              <Link href="/final-settlement" className="tool-btn">Try Now →</Link>
             </div>
 
           </div>

@@ -15,6 +15,7 @@ export default function Header() {
 
   const moreLinks = [
     { href: "/pf-ecr-creator", label: "📋 PF ECR Creator" },
+    { href: "/final-settlement", label: "✅ Final Settlement Calculator" },
   ];
 
   return (
