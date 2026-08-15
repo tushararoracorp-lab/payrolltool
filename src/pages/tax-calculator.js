@@ -188,7 +188,7 @@ function dash(v) {
 /* ================= page ================= */
 
 const INITIAL_FIELDS = {
-  grossIncome: "1900000",
+  grossIncome: "",
   salaried: true,
   ageBand: "general",
   nps1b: "0",
