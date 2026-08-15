@@ -7,14 +7,17 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
 
+  // Ordered by Search Console performance: PF ECR Creator carries the highest
+  // CTR on the site (9.9%), Tax Calculator is the newest and highest-intent tool.
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/lop-splitter", label: "LOP Splitter" },
-    { href: "/salary-proration", label: "Salary Proration" },
+    { href: "/pf-ecr-creator", label: "PF ECR Creator" },
+    { href: "/tax-calculator", label: "Tax Calculator" },
   ];
 
   const moreLinks = [
-    { href: "/pf-ecr-creator", label: "📋 PF ECR Creator" },
+    { href: "/salary-proration", label: "📅 Salary Proration" },
+    { href: "/lop-splitter", label: "✂️ LOP Splitter" },
     { href: "/final-settlement", label: "✅ Final Settlement Calculator" },
   ];
 
