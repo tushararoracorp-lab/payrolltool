@@ -8,9 +8,9 @@ export default function Home() {
     <>
       <Head>
         {/* Primary */}
-        <title>PayrollTool – Free Payroll Calculator for HR Teams | LOP Splitter & Salary Proration</title>
-        <meta name="description" content="Free payroll tools for HR & Payroll professionals in India. LOP Splitter, Salary Proration Calculator with EPF, ESI, PT, TDS. No login. No downloads. 100% browser-based." />
-        <meta name="keywords" content="payroll calculator India, LOP splitter tool, salary proration calculator, loss of pay calculator, EPF calculator, ESI calculator, payroll software free, HRMS upload tool, HR payroll tools" />
+        <title>PayrollTool – Free Payroll Calculators for HR Teams India | Tax Regime, PF ECR & Salary Proration</title>
+        <meta name="description" content="Free payroll tools for HR &amp; Payroll professionals in India. Old vs New Tax Regime Calculator, PF ECR Generator, Salary Proration, LOP Splitter and Final Settlement. No login, no downloads, 100% browser-based." />
+        <meta name="keywords" content="income tax calculator 2026-27, old vs new tax regime calculator, payroll calculator India, PF ECR generator, salary proration calculator, LOP splitter tool, loss of pay calculator, final settlement calculator, EPF calculator, ESI calculator, HR payroll tools" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta name="author" content="PayrollTool" />
 
@@ -21,7 +21,7 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.payrolltool.in/" />
         <meta property="og:title" content="PayrollTool – Free Payroll Tools for HR Professionals in India" />
-        <meta property="og:description" content="LOP Splitter, Salary Proration Calculator with EPF/ESI/PT/TDS. Built for payroll teams. Free, fast, browser-based." />
+        <meta property="og:description" content="Old vs New Tax Regime Calculator, PF ECR Generator, Salary Proration and more. Built for payroll teams. Free, fast, browser-based." />
         <meta property="og:image" content="https://www.payrolltool.in/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -32,7 +32,7 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.payrolltool.in/" />
         <meta name="twitter:title" content="PayrollTool – Free Payroll Tools for HR Teams" />
-        <meta name="twitter:description" content="LOP Splitter, Salary Proration with EPF/ESI/PT. Free, browser-based, no login needed." />
+        <meta name="twitter:description" content="Tax Regime Calculator, PF ECR Generator, Salary Proration and more. Free, browser-based, no login needed." />
         <meta name="twitter:image" content="https://www.payrolltool.in/og-image.jpg" />
 
         {/* Favicon */}
@@ -46,14 +46,14 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
               name: "PayrollTool",
-              description: "Free online payroll calculator and HRMS tools for HR professionals in India. LOP Splitter, Salary Proration with EPF, ESI, PT, TDS.",
+              description: "Free online payroll calculators and HRMS tools for HR professionals in India. Old vs New Tax Regime comparison, PF ECR generation, Salary Proration, LOP splitting and Final Settlement with EPF, ESI, PT and TDS.",
               url: "https://payrolltool.in/",
               applicationCategory: "BusinessApplication",
               operatingSystem: "Web Browser",
               inLanguage: "en-IN",
               offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
               creator: { "@type": "Organization", name: "PayrollTool", url: "https://payrolltool.in/" },
-              featureList: ["LOP Splitter", "Salary Proration Calculator", "EPF Calculator", "ESI Calculator", "PT Calculator"],
+              featureList: ["Tax Regime Calculator", "PF ECR File Generator", "Salary Proration Calculator", "LOP Splitter", "Final Settlement Calculator", "EPF Calculator", "ESI Calculator", "PT Calculator"],
             }),
           }}
         />
@@ -86,6 +86,14 @@ export default function Home() {
           acceptedAnswer: {
             "@type": "Answer",
             text: "PF ECR (Electronic Challan cum Return) is the standard file format required by EPFO for monthly Provident Fund contribution filings. PayrollTool's PF ECR Generator creates EPFO-compliant ECR files instantly for bulk employee processing.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Which is better, the old tax regime or the new tax regime?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "It depends on how much you claim in deductions. The new regime has wider slabs and a higher standard deduction but allows almost none of the old regime's exemptions, so it usually wins for people with few deductions. The old regime can still be better if you claim substantial HRA, Section 123 investments and health insurance. PayrollTool's Tax Regime Calculator computes both side by side for Tax Year 2026-27 so you can compare your own numbers.",
           },
         },
         {
@@ -144,19 +152,34 @@ export default function Home() {
 
           <div className="tools-grid">
 
-            {/* LOP SPLITTER */}
+            {/* PF ECR CREATOR */}
             <div className="tool-card">
-              <div className="tool-icon">📊</div>
+              <div className="tool-icon">📄</div>
               <div className="tool-badge">🟢 Live</div>
-              <h3 className="tool-name">LOP Splitter</h3>
-              <p className="tool-desc">Split Loss of Pay for multiple date ranges in seconds. HRMS upload ready.</p>
+              <h3 className="tool-name">PF ECR File Generator</h3>
+              <p className="tool-desc">Generate PF ECR files instantly. Perfect format, EPFO compliant.</p>
               <ul className="tool-features">
-                <li>Capped to month boundaries</li>
-                <li>DOJ & DOL aware</li>
-                <li>Decimal day support</li>
-                <li>Observation report</li>
+                <li>Bulk employee processing</li>
+                <li>EPFO standard format</li>
+                <li>Auto-validation</li>
+                <li>Download ready</li>
               </ul>
-              <Link href="/lop-splitter" className="tool-btn">Try Now →</Link>
+              <Link href="/pf-ecr-creator" className="tool-btn">Try Now →</Link>
+            </div>
+
+            {/* TAX CALCULATOR */}
+            <div className="tool-card">
+              <div className="tool-icon">🧾</div>
+              <div className="tool-badge">🟢 Live</div>
+              <h3 className="tool-name">Tax Regime Calculator</h3>
+              <p className="tool-desc">Compare Old and New Tax Regimes for 2026-27 under the Income Tax Act, 2025.</p>
+              <ul className="tool-features">
+                <li>Side-by-side comparison</li>
+                <li>HRA, Sec. 123 &amp; NPS</li>
+                <li>Surcharge &amp; cess included</li>
+                <li>Monthly TDS estimate</li>
+              </ul>
+              <Link href="/tax-calculator" className="tool-btn">Try Now →</Link>
             </div>
 
             {/* SALARY PRORATION */}
@@ -174,19 +197,19 @@ export default function Home() {
               <Link href="/salary-proration" className="tool-btn">Try Now →</Link>
             </div>
 
-            {/* PF ECR CREATOR */}
+            {/* LOP SPLITTER */}
             <div className="tool-card">
-              <div className="tool-icon">📄</div>
+              <div className="tool-icon">📊</div>
               <div className="tool-badge">🟢 Live</div>
-              <h3 className="tool-name">PF ECR File Generator</h3>
-              <p className="tool-desc">Generate PF ECR files instantly. Perfect format, EPFO compliant.</p>
+              <h3 className="tool-name">LOP Splitter</h3>
+              <p className="tool-desc">Split Loss of Pay for multiple date ranges in seconds. HRMS upload ready.</p>
               <ul className="tool-features">
-                <li>Bulk employee processing</li>
-                <li>EPFO standard format</li>
-                <li>Auto-validation</li>
-                <li>Download ready</li>
+                <li>Capped to month boundaries</li>
+                <li>DOJ &amp; DOL aware</li>
+                <li>Decimal day support</li>
+                <li>Observation report</li>
               </ul>
-              <Link href="/pf-ecr-creator" className="tool-btn">Try Now →</Link>
+              <Link href="/lop-splitter" className="tool-btn">Try Now →</Link>
             </div>
 
             {/* FINAL SETTLEMENT */}
@@ -241,7 +264,7 @@ export default function Home() {
       <div className="container">
         <div className="cta-section">
           <h2>Ready to save time on payroll?</h2>
-          <p>Start with LOP Splitter or Salary Proration. No sign-up. No credit card. No downloads.</p>
+          <p>Start with the Tax Regime Calculator or PF ECR Generator. No sign-up. No credit card. No downloads.</p>
           <Link href="/lop-splitter" className="btn-white">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
