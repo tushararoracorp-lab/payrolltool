@@ -1,6 +1,6 @@
 ---
 title: "Final Settlement Calculator: How to Calculate Gratuity, Leave Encashment & Notice Pay"
-description: "A guide to calculating your full and final settlement: gratuity (₹20L cap), leave encashment (₹25L Sec 10(10AA)), and notice period shortfall under Indian law."
+description: "Complete guide to calculating full & final settlement in India: gratuity (₹20L cap), leave encashment (₹25L Sec 10(10AA)), and notice period shortfall."
 date: "07-08-2026"
 slug: "final-settlement-calculator"
 ---

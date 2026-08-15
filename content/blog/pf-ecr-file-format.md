@@ -1,6 +1,6 @@
 ---
-title: "PF ECR File Format: A Complete Guide for EPFO Filing"
-description: "Understand the EPFO ECR file format, common rejection reasons, and how to generate a compliant ECR file for your monthly PF filing."
+title: "How to Fill & Format PF ECR File in EPFO Portal 2026-27 | Guide"
+description: "Step-by-step guide to the PF ECR file format for EPFO Unified Portal uploads. Field structure, common rejection reasons, and how to generate a valid ECR."
 date: "04-07-2026"
 slug: "pf-ecr-file-format"
 ---
@@ -17,7 +17,7 @@ Since EPFO switched fully to the ECR 2.0 format, employers no longer file separa
 
 Most rejections come down to a handful of recurring issues:
 
-- **Wrong field order or delimiter** - EPFO expects a strict pipe-delimited (`#~#`) text format with a fixed sequence of fields. A misplaced column breaks the entire row.
+- **Wrong field order or delimiter** - EPFO expects a strict `#~#`-delimited text format with a fixed sequence of fields. A misplaced column breaks the entire row.
 - **Mismatched UAN and member details** - if the UAN in your file doesn't match what's registered with EPFO for that employee, the row is rejected.
 - **Incorrect wage ceiling application** - PF is calculated on wages up to the statutory wage ceiling unless the employee/employer has opted for contribution on higher wages. Applying the wrong base leads to mismatched contribution amounts.
 - **Rounding inconsistencies** - EPFO expects contribution amounts rounded in a specific way (typically to the nearest rupee), and small paisa-level mismatches across rows can trigger validation failures.

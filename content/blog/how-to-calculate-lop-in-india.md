@@ -1,6 +1,6 @@
 ---
-title: "How to Calculate LOP (Loss of Pay) in India: A Practical Guide"
-description: "Learn how Loss of Pay is calculated in Indian payroll, common formulas used, and mistakes that lead to salary disputes."
+title: "LOP (Loss of Pay) Meaning & Calculation in India | Complete Formula Guide"
+description: "Understand Loss of Pay (LOP) meaning and calculation in Indian payroll. Learn formula, common mistakes, and how LOP affects EPF, ESI, and PT deductions."
 date: "05-07-2026"
 slug: "how-to-calculate-lop-in-india"
 ---

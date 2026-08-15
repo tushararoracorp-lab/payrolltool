@@ -1,6 +1,6 @@
 ---
-title: "Salary Proration Calculator: How First-Month Salary Is Calculated in India"
-description: "A guide to how salary is prorated for new joiners in India, covering EPF, ESI, Professional Tax, and TDS on a partial month."
+title: "Prorated CTC Calculation India 2026-27 | Complete Formula & Guide"
+description: "Learn how to calculate prorated salary for new joiners and exits in India. Covers EPF, ESI, PT, TDS, and statutory deductions on partial month salary."
 date: "05-07-2026"
 slug: "salary-proration-india"
 ---
