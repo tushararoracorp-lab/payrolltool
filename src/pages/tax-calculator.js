@@ -352,8 +352,16 @@ export default function TaxCalculator() {
         />
         <meta property="og:url" content={SHARE_URL} />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://www.payrolltool.in/icon.png" />
+        <meta property="og:image" content="https://www.payrolltool.in/tax-calculator-og-card.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Income Tax Calculator 2026-27 – Old vs New Regime | PayrollTool" />
+        <meta
+          name="twitter:description"
+          content="Compare Old and New Tax Regime for FY 2026-27 instantly. Free, private, no sign-up."
+        />
+        <meta name="twitter:image" content="https://www.payrolltool.in/tax-calculator-og-card.jpg" />
         <link rel="canonical" href={SHARE_URL} />
       </Head>
 

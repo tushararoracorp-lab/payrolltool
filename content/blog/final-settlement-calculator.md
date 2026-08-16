@@ -1,11 +1,11 @@
 ---
 title: "Final Settlement Calculator: How to Calculate Gratuity, Leave Encashment & Notice Pay"
-description: "Complete guide to calculating full & final settlement in India: gratuity (₹20L cap), leave encashment (₹25L Sec 10(10AA)), and notice period shortfall."
+description: "A guide to calculating your full and final settlement: gratuity (₹20L cap), leave encashment (₹25L Sec 10(10AA)), and notice period shortfall under Indian law."
 date: "07-08-2026"
 slug: "final-settlement-calculator"
 ---
 
-When you resign from a job in India, your employer owes you a full and final settlement - a lump sum covering gratuity, unused leave, and any notice period shortfall. But the math is rarely straightforward, and employers often get individual components wrong.
+When you resign from a job in India, your employer owes you a full and final settlement. A lump sum covering gratuity, unused leave, and any notice period shortfall. But the math is rarely straightforward, and employers often get individual components wrong.
 
 ## What makes up your final settlement?
 
