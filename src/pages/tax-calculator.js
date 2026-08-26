@@ -204,6 +204,25 @@ const INITIAL_FIELDS = {
 };
 
 export default function TaxCalculator() {
+  // Mirror the <html data-theme> attribute (set by Header.js's toggle) onto
+  // this component's own wrapper element. The previous approach relied on a
+  // CSS selector spanning <html> and .tc together (html[data-theme="dark"]
+  // .tc) inside a *scoped* styled-jsx block — that depends on exactly how
+  // styled-jsx rewrites multi-element selectors, which isn't something to
+  // gamble on. This sidesteps that entirely: the theme lives directly on
+  // .tc as its own attribute, so the CSS rule only ever needs to match one
+  // real, unambiguous element.
+  const [theme, setTheme] = useState("light");
+  useEffect(() => {
+    const root = document.documentElement;
+    setTheme(root.getAttribute("data-theme") || "light");
+    const observer = new MutationObserver(() => {
+      setTheme(root.getAttribute("data-theme") || "light");
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
   const [f, setF] = useState(INITIAL_FIELDS);
   const [sec123, setSec123] = useState(() => SEC123_ITEMS.map(() => "0"));
   const [otherItems, setOtherItems] = useState([]);
@@ -298,6 +317,22 @@ export default function TaxCalculator() {
     });
   };
 
+  // LinkedIn's share-offsite endpoint only ever accepts a url= param — it
+  // has never supported pre-filling post text (deliberately, to stop sites
+  // auto-stuffing promotional copy into people's posts). It only reads the
+  // target URL's Open Graph tags for the preview card, which is why the
+  // card looks right but the compose box is empty. The best available fix
+  // is copying the message first so it's ready to paste.
+  const [liCopied, setLiCopied] = useState(false);
+  const handleLinkedInShare = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(shareMsg).then(() => {
+        setLiCopied(true);
+        setTimeout(() => setLiCopied(false), 4000);
+      });
+    }
+  };
+
   // Smooth scrolling - scoped to this page only, destroyed on unmount.
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -339,33 +374,69 @@ export default function TaxCalculator() {
   return (
     <>
       <Head>
-        <title>Income Tax Calculator 2026-27 – Old vs New Regime | PayrollTool</title>
+        <title>Income Tax Calculator 2026‑27 – Old vs New Regime | PayrollTool.in</title>
         <meta
           name="description"
-          content="Compare Old and New Tax Regime for FY 2026-27 under the Income Tax Act, 2025. Free browser-based calculator with HRA, Section 123, NPS and health insurance deductions. No login."
+          content="Compare Old and New Tax Regime for FY 2026‑27 under the Income Tax Act, 2025. Browser-based calculator with HRA, Section 123, NPS and health insurance deductions. No login."
         />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Income Tax Calculator 2026-27 – Old vs New Regime | PayrollTool" />
+        <meta property="og:title" content="Income Tax Calculator 2026‑27 – Old vs New Regime | PayrollTool.in" />
         <meta
           property="og:description"
-          content="Compare Old and New Tax Regime for FY 2026-27 instantly. Free, private, no sign-up."
+          content="Compare Old and New Tax Regime for FY 2026‑27 instantly. Private, no sign-up."
         />
         <meta property="og:url" content={SHARE_URL} />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="PayrollTool.in" />
+        <meta property="og:locale" content="en_IN" />
         <meta property="og:image" content="https://www.payrolltool.in/tax-calculator-og-card.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Income Tax Calculator 2026-27 – Old vs New Regime | PayrollTool" />
+        <meta name="twitter:title" content="Income Tax Calculator 2026‑27 – Old vs New Regime | PayrollTool.in" />
         <meta
           name="twitter:description"
-          content="Compare Old and New Tax Regime for FY 2026-27 instantly. Free, private, no sign-up."
+          content="Compare Old and New Tax Regime for FY 2026‑27 instantly. Private, no sign-up."
         />
         <meta name="twitter:image" content="https://www.payrolltool.in/tax-calculator-og-card.jpg" />
         <link rel="canonical" href={SHARE_URL} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "Tax Regime Calculator",
+              url: "https://www.payrolltool.in/tax-calculator",
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Any (browser-based)",
+              description: "Compares Old vs New income tax regimes for FY 2026-27, including HRA, Section 123 deductions, NPS, health insurance, surcharge, and cess.",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "Which is better, the old tax regime or the new tax regime?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "It depends on how much you claim in deductions. The new regime has wider slabs and a higher standard deduction but allows almost none of the old regime's exemptions, so it usually wins for people with few deductions. The old regime can still be better if you claim substantial HRA, Section 123 investments and health insurance. This calculator computes both side by side for FY 2026-27 so you can compare your own numbers.",
+                  },
+                },
+              ],
+            }),
+          }}
+        />
       </Head>
 
-      <div className="tc" style={{ fontFamily: "'DM Sans', sans-serif", background: "#EEEAF8" }}>
+      <div className="tc" data-theme={theme} style={{ fontFamily: "'DM Sans', sans-serif", background: "var(--page-bg)" }}>
         <Header />
 
         <div className="wrap">
@@ -915,13 +986,24 @@ export default function TaxCalculator() {
                     <a className="share-btn" href={xHref} target="_blank" rel="noopener noreferrer">
                       X
                     </a>
-                    <a className="share-btn" href={liHref} target="_blank" rel="noopener noreferrer">
-                      LinkedIn
+                    <a
+                      className="share-btn"
+                      href={liHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleLinkedInShare}
+                    >
+                      {liCopied ? "Message copied!" : "LinkedIn"}
                     </a>
                     <button type="button" className="share-btn" onClick={copyShare}>
                       {copied ? "Copied!" : "Copy message + link"}
                     </button>
                   </div>
+                  {liCopied && (
+                    <p style={{ fontSize: "12.5px", color: "var(--ink-soft)", marginTop: "8px" }}>
+                      LinkedIn doesn&apos;t support pre-filled post text — your message is copied, just paste it into the box that opened.
+                    </p>
+                  )}
                 </div>
               )}
             </div>
@@ -958,13 +1040,34 @@ export default function TaxCalculator() {
           --purple: #7c3aed;
           --purple-deep: #5b21b6;
           --purple-soft: #f1ebfd;
+          --surface: #fbfafe;
+          --surface-alt: #f3f1fb;
           --green: #059669;
           --green-soft: #e4f5ee;
           --ink: #1e1b2e;
           --ink-soft: #726c87;
+          --muted: #c4bedb;
           --line: #e6e1f5;
           --danger: #c0392b;
+          --danger-soft: #fbeaea;
+          --page-bg: #eeeaf8;
           color: var(--ink);
+        }
+        .tc[data-theme="dark"] {
+          --purple: #9163f2;
+          --purple-deep: #a47df5;
+          --purple-soft: #2c2147;
+          --surface: #1c1730;
+          --surface-alt: #221c3a;
+          --green: #34d399;
+          --green-soft: #123027;
+          --ink: #f3f0fa;
+          --ink-soft: #b3aac7;
+          --muted: #5b5470;
+          --line: #2a2536;
+          --danger: #f87171;
+          --danger-soft: #3d1f1f;
+          --page-bg: #15111f;
         }
         .wrap {
           max-width: 1080px;
@@ -981,13 +1084,13 @@ export default function TaxCalculator() {
           font-weight: 700;
           margin: 0 0 6px;
           line-height: 1.2;
-          color: #1e1b4b;
+          color: var(--ink);
         }
         .tc-hero h1 span {
-          color: #7c3aed;
+          color: var(--purple);
         }
         .tc-hero p {
-          color: #6b7280;
+          color: var(--ink-soft);
           font-size: 14.5px;
           max-width: 540px;
           margin: 0 auto;
@@ -1004,7 +1107,7 @@ export default function TaxCalculator() {
           gap: 16px;
         }
         .card {
-          background: #fff;
+          background: var(--surface);
           border: 1px solid var(--line);
           border-radius: 16px;
           overflow: hidden;
@@ -1131,7 +1234,7 @@ export default function TaxCalculator() {
         }
         .toggle-pair {
           display: flex;
-          background: #f3f1fb;
+          background: var(--surface-alt);
           border-radius: 10px;
           padding: 3px;
           gap: 3px;
@@ -1150,7 +1253,7 @@ export default function TaxCalculator() {
           border-radius: 8px;
         }
         .toggle-pair button.active {
-          background: #fff;
+          background: var(--surface);
           color: var(--purple-deep);
           font-weight: 600;
           box-shadow: 0 1px 3px rgba(90, 40, 200, 0.1);
@@ -1227,7 +1330,7 @@ export default function TaxCalculator() {
           font-size: 11px;
           color: var(--ink-soft);
           border-top: 1px solid var(--line);
-          background: #fbfafe;
+          background: var(--surface);
           line-height: 1.6;
         }
         .sub-item {
@@ -1255,7 +1358,7 @@ export default function TaxCalculator() {
           margin-top: 10px;
         }
         .cap-note.over {
-          background: #fbeaea;
+          background: var(--danger-soft);
           color: var(--danger);
         }
         .exempt-row {
@@ -1267,7 +1370,7 @@ export default function TaxCalculator() {
         }
         .exempt-row button.remove {
           border: 1.5px solid var(--line);
-          background: #fff;
+          background: var(--surface);
           color: var(--danger);
           border-radius: 8px;
           min-height: 44px;
@@ -1282,7 +1385,7 @@ export default function TaxCalculator() {
         }
         .chip {
           border: 1.5px solid var(--line);
-          background: #fff;
+          background: var(--surface);
           padding: 10px 14px;
           border-radius: 20px;
           font-size: 12px;
@@ -1326,7 +1429,7 @@ export default function TaxCalculator() {
           color: var(--ink-soft);
         }
         .compare {
-          background: #fff;
+          background: var(--surface);
           border: 1px solid var(--line);
           border-radius: 16px;
           overflow: hidden;
@@ -1337,7 +1440,7 @@ export default function TaxCalculator() {
           justify-content: space-between;
           gap: 10px;
           padding: 14px 22px;
-          background: #fbfafe;
+          background: var(--surface);
           border-bottom: 1px solid var(--line);
           flex-wrap: wrap;
         }
@@ -1361,7 +1464,7 @@ export default function TaxCalculator() {
           font-family: inherit;
         }
         .edit-link:hover {
-          background: #fff;
+          background: var(--surface);
         }
         .table-scroll {
           width: 100%;
@@ -1380,7 +1483,7 @@ export default function TaxCalculator() {
           font-size: 11.5px;
           font-weight: 600;
           color: var(--purple-deep);
-          background: #fbfafe;
+          background: var(--surface);
           border-bottom: 1px solid var(--line);
         }
         table.compare-table th:first-child {
@@ -1432,7 +1535,7 @@ export default function TaxCalculator() {
           border-bottom: none;
         }
         table.compare-table td.muted {
-          color: #c4bedb;
+          color: var(--muted);
         }
         .compare-savings {
           text-align: center;
@@ -1487,7 +1590,7 @@ export default function TaxCalculator() {
           resize: vertical;
           border: 1.5px solid var(--line);
           border-radius: 10px;
-          background: #fbfafe;
+          background: var(--surface);
           color: var(--ink);
           padding: 10px 12px;
           font-size: 12.5px;
@@ -1497,7 +1600,7 @@ export default function TaxCalculator() {
         .share-preview:focus {
           outline: none;
           border-color: var(--purple);
-          background: #fff;
+          background: var(--surface);
         }
         .share-row {
           display: flex;
@@ -1510,7 +1613,7 @@ export default function TaxCalculator() {
           display: inline-flex;
           align-items: center;
           border: 1.5px solid var(--line);
-          background: #fff;
+          background: var(--surface);
           border-radius: 10px;
           padding: 0 14px;
           font-size: 12.5px;
@@ -1528,7 +1631,7 @@ export default function TaxCalculator() {
           margin: 22px auto 0;
           border: 1px solid var(--line);
           border-left: 3px solid var(--purple);
-          background: #fbfafe;
+          background: var(--surface);
           border-radius: 12px;
           padding: 14px 18px;
         }
@@ -1560,7 +1663,7 @@ export default function TaxCalculator() {
           min-height: 44px;
           border: 1.5px solid var(--line);
           border-radius: 10px;
-          background: #fbfafe;
+          background: var(--surface);
           color: var(--ink);
           font-variant-numeric: tabular-nums;
           -webkit-appearance: none;
@@ -1571,7 +1674,7 @@ export default function TaxCalculator() {
         .tc :global(textarea:focus) {
           outline: none;
           border-color: var(--purple);
-          background: #fff;
+          background: var(--surface);
         }
         .tc :global(input[type="number"]) {
           -moz-appearance: textfield;

@@ -1,7 +1,7 @@
 ---
 title: "Employer NPS Contribution (Section 124): The Only Deduction Both Regimes Allow"
 description: "How employer NPS contribution works under Section 124 (formerly 80CCD(2)), the percentage-of-salary limit, and why it is the one deduction that survives under the new tax regime."
-date: "15-08-2026"
+date: "2026-08-15"
 slug: "employer-nps-contribution"
 ---
 

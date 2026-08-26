@@ -1,7 +1,7 @@
 ﻿import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
 import FeedbackWidget from "../components/FeedbackWidget";
@@ -483,7 +483,7 @@ function AboutModal({ onClose }) {
                 <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z" />
               </svg>
             </div>
-            <span className="text-white font-extrabold text-2xl tracking-tight">PayrollTool</span>
+            <span className="text-white font-extrabold text-2xl tracking-tight">PayrollTool<span style={{opacity:0.7}}>.in</span></span>
           </div>
           <p className="text-white/85 text-base leading-relaxed relative z-10 max-w-md">
             Built for the people who make payroll happen.
@@ -494,14 +494,24 @@ function AboutModal({ onClose }) {
         <div className="px-10 py-8 flex flex-col gap-8">
           {[
             {
-              icon: "💡", title: "Why We're Here",
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
+                  <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z" />
+                </svg>
+              ),
+              title: "Why We're Here",
               content: [
                 "Every month, payroll and HR professionals spend hours doing repetitive, error-prone calculations in Excel — splitting LOP dates, computing proration, calculating notice recoveries and final settlements. These aren't complex problems. They just need the right tool.",
-                "PayrollTool was built to solve exactly that - turning what used to be a 30-minute spreadsheet exercise into a 30-second task.",
+                "PayrollTool.in was built to solve exactly that - turning what used to be a 30-minute spreadsheet exercise into a 30-second task.",
               ],
             },
             {
-              icon: "🎯", title: "Our Purpose",
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
+                  <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.2" fill="#7C3AED" />
+                </svg>
+              ),
+              title: "Our Purpose",
               content: ["We are here to help payroll and HR teams skip the manual hurdles and be more effective and efficient in their day-to-day work. No macros. No complex formulas. No errors. Just upload, process, and download."],
             },
           ].map(({ icon, title, content }) => (
@@ -516,7 +526,12 @@ function AboutModal({ onClose }) {
 
           {/* Who It's For */}
           <div className="flex gap-4 items-start">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 border border-purple-100" style={{ background: "#F5F3FF" }}>👥</div>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 border border-purple-100" style={{ background: "#F5F3FF" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+              </svg>
+            </div>
             <div>
               <h3 className="font-bold text-gray-900 mb-3">Who It&apos;s For</h3>
               <div className="flex flex-wrap gap-2">
@@ -529,10 +544,16 @@ function AboutModal({ onClose }) {
 
           {/* Roadmap */}
           <div className="flex gap-4 items-start">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 border border-purple-100" style={{ background: "#F5F3FF" }}>🚀</div>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 border border-purple-100" style={{ background: "#F5F3FF" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
+                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
+                <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
+                <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+              </svg>
+            </div>
             <div className="flex-1">
               <h3 className="font-bold text-gray-900 mb-1">What&apos;s Coming Next</h3>
-              <p className="text-sm text-gray-400 mb-3">PayrollTool is growing. Here&apos;s what we&apos;re building for you:</p>
+              <p className="text-sm text-gray-400 mb-3">PayrollTool.in is growing. Here&apos;s what we&apos;re building for you:</p>
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { name: "LOP Splitter",                  desc: "Split Loss of Pay dates into daily rows",   live: true  },
@@ -556,7 +577,11 @@ function AboutModal({ onClose }) {
 
           {/* Promise */}
           <div className="flex gap-4 items-start rounded-2xl p-4 border border-purple-100" style={{ background: "linear-gradient(135deg, #F5F3FF 0%, #F0ECFF 100%)" }}>
-            <span className="text-2xl flex-shrink-0 mt-0.5">🔒</span>
+            <span className="flex-shrink-0 mt-0.5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
+            </span>
             <div>
               <p className="text-sm font-bold text-purple-800 mb-1">Our Promise</p>
               <p className="text-sm text-gray-500 leading-relaxed">All processing happens in your browser. No data is sent to any server. Your payroll data stays private, always.</p>
@@ -565,7 +590,7 @@ function AboutModal({ onClose }) {
         </div>
 
         <div className="px-10 py-5 border-t border-gray-100 flex items-center justify-center rounded-b-[32px] bg-white">
-          <span className="text-xs text-gray-400">© PayrollTool 2026 - Your Payroll Helper</span>
+          <span className="text-xs text-gray-400">© PayrollTool.in 2026 - Your Payroll Helper</span>
         </div>
       </div>
     </div>
@@ -574,6 +599,19 @@ function AboutModal({ onClose }) {
 
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
 export default function Home() {
+  // Mirror <html data-theme> onto this page's own wrapper - see PF ECR
+  // Creator, Tax Calculator, and Salary Proration for the same pattern.
+  const [theme, setTheme] = useState("light");
+  useEffect(() => {
+    const root = document.documentElement;
+    setTheme(root.getAttribute("data-theme") || "light");
+    const observer = new MutationObserver(() => {
+      setTheme(root.getAttribute("data-theme") || "light");
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
   const [file,       setFile]       = useState(null);
   const [dragOver,   setDragOver]   = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -689,22 +727,46 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>LOP Splitter for Payroll &amp; HRMS Uploads | PayrollTool</title>
+        <title>LOP Splitter for Payroll &amp; HRMS Uploads | PayrollTool.in</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Free LOP Splitter tool for payroll and HR teams. Upload Excel sheets and instantly generate HRMS-ready LOP rows securely in your browser." />
+        <meta name="description" content="LOP Splitter tool for payroll and HR teams. Upload Excel sheets and instantly generate HRMS-ready LOP rows securely in your browser." />
         <meta name="keywords" content="LOP splitter, payroll tool, HRMS upload, salary proration, payroll automation, payroll excel utility, loss of pay calculator" />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="PayrollTool – LOP Splitter" />
+        <meta property="og:title" content="LOP Splitter for Payroll &amp; HRMS Uploads | PayrollTool.in" />
         <meta property="og:description" content="Upload payroll sheets and generate HRMS-ready LOP rows instantly." />
         <meta property="og:url" content="https://www.payrolltool.in/lop-splitter" />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="PayrollTool" />
+        <meta property="og:site_name" content="PayrollTool.in" />
+        <meta property="og:locale" content="en_IN" />
         <meta property="og:image" content="https://www.payrolltool.in/preview.png" />
-        <meta name="author" content="PayrollTool" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="LOP Splitter for Payroll &amp; HRMS Uploads | PayrollTool.in" />
+        <meta name="twitter:description" content="Upload payroll sheets and generate HRMS-ready LOP rows instantly." />
+        <meta name="twitter:image" content="https://www.payrolltool.in/preview.png" />
+        <meta name="author" content="PayrollTool.in" />
         <link rel="canonical" href="https://www.payrolltool.in/lop-splitter" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "LOP Splitter",
+              url: "https://www.payrolltool.in/lop-splitter",
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Any (browser-based)",
+              description: "Calculates Loss of Pay for partial-month absences, including month-boundary and multi-employee bulk cases.",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+            }),
+          }}
+        />
       </Head>
 
-      <div className="min-h-screen flex flex-col" style={{ fontFamily: "'DM Sans', sans-serif", background: "#EEEAF8" }}>
+      <div
+        className="lop-wrapper min-h-screen flex flex-col"
+        data-theme={theme}
+        style={{ fontFamily: "'DM Sans', sans-serif", background: theme === "dark" ? "#15111F" : "#EEEAF8" }}
+      >
 
         {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
 
@@ -794,14 +856,26 @@ export default function Home() {
                 className="w-full mt-4 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95 disabled:opacity-60"
                 style={{ background: "linear-gradient(135deg,#059669 0%,#10B981 100%)" }}
               >
-                {processing ? "Processing…" : "⚡ Generate LOP Export"}
+                {processing ? "Processing…" : (
+                  <>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ display: "inline", verticalAlign: "-2px", marginRight: "6px" }}>
+                      <path d="M13 2L3 14h7v8l11-14h-7z" />
+                    </svg>
+                    Generate LOP Export
+                  </>
+                )}
               </button>
             )}
 
             {/* Validation errors */}
             {hasErrors && (
               <div className="mt-4 rounded-xl bg-red-50 border border-red-200 p-4">
-                <p className="text-xs font-bold text-red-600 mb-2">⚠ Validation Errors</p>
+                <p className="text-xs font-bold text-red-600 mb-2" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                    <path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                  </svg>
+                  Validation Errors
+                </p>
                 {result.errors.map((e, i) => (
                   <p key={i} className="text-xs text-red-500">{e}</p>
                 ))}
@@ -812,7 +886,7 @@ export default function Home() {
             {hasResult && !hasErrors && (
               <div className="mt-5 rounded-2xl border border-violet-100 bg-violet-50/50 p-5">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-green-500 text-lg">✓</span>
+                  <span className="text-green-500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 6L9 17l-5-5" /></svg></span>
                   <span className="text-sm font-bold text-gray-800">Export Ready</span>
                 </div>
 
@@ -920,6 +994,87 @@ export default function Home() {
 
         <Footer />
       </div>
+
+      <style jsx>{`
+        /* Dark-mode overrides for this page's Tailwind utility classes.
+           Written directly as [class~="..."] attribute selectors for any
+           class containing a colon (hover:/focus:) or slash (opacity
+           suffix), never as escaped class selectors (.hover\\:bg-x) -
+           that approach failed three separate times on PF ECR Creator
+           despite verifiably-correct CSS escaping, pointing to styled-jsx's
+           own internal CSS parser mishandling those characters during its
+           scoping pre-processing step. Attribute-selector values need no
+           escaping at all, which avoids the whole category of bug rather
+           than re-risking it. !important is used because Tailwind's own
+           utility-layer specificity has been unreliable to predict exactly
+           in this codebase. */
+        .lop-wrapper[data-theme="dark"] .bg-white { background: #1c1730 !important; }
+        .lop-wrapper[data-theme="dark"] .bg-gray-100 { background: #221c3a !important; }
+        .lop-wrapper[data-theme="dark"] .bg-gray-900 { background: #0d0b14 !important; }
+        .lop-wrapper[data-theme="dark"] .text-gray-400 { color: #b3aac7 !important; }
+        .lop-wrapper[data-theme="dark"] .text-gray-500 { color: #b3aac7 !important; }
+        .lop-wrapper[data-theme="dark"] .text-gray-600 { color: #d6cfe8 !important; }
+        .lop-wrapper[data-theme="dark"] .text-gray-700 { color: #f3f0fa !important; }
+        .lop-wrapper[data-theme="dark"] .text-gray-800 { color: #f3f0fa !important; }
+        .lop-wrapper[data-theme="dark"] .text-gray-900 { color: #f3f0fa !important; }
+        .lop-wrapper[data-theme="dark"] .border-gray-100 { border-color: #2a2536 !important; }
+        .lop-wrapper[data-theme="dark"] .border-gray-200 { border-color: #2a2536 !important; }
+
+        .lop-wrapper[data-theme="dark"] .bg-violet-50 { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
+        .lop-wrapper[data-theme="dark"] [class~="bg-violet-50/50"] { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
+        .lop-wrapper[data-theme="dark"] .text-violet-400 { color: #9163f2 !important; }
+        .lop-wrapper[data-theme="dark"] .text-violet-500 { color: #9163f2 !important; }
+        .lop-wrapper[data-theme="dark"] .text-violet-600 { color: #9163f2 !important; }
+        .lop-wrapper[data-theme="dark"] .text-violet-700 { color: #a47df5 !important; }
+        .lop-wrapper[data-theme="dark"] .border-violet-100 { border-color: #3d3654 !important; }
+        .lop-wrapper[data-theme="dark"] .border-violet-200 { border-color: #3d3654 !important; }
+        .lop-wrapper[data-theme="dark"] .border-violet-400 { border-color: #9163f2 !important; }
+        .lop-wrapper[data-theme="dark"] [class~="hover:bg-violet-50"]:hover { background: #2c2147 !important; }
+        .lop-wrapper[data-theme="dark"] [class~="hover:bg-violet-50/30"]:hover { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
+        .lop-wrapper[data-theme="dark"] [class~="hover:border-violet-300"]:hover { border-color: #9163f2 !important; }
+        .lop-wrapper[data-theme="dark"] [class~="hover:text-violet-600"]:hover { color: #9163f2 !important; }
+
+        /* purple-* is a second brand-color family used only in the About
+           modal, distinct from violet-* used everywhere else. Same dark
+           mapping, kept as its own block since Tailwind's purple and
+           violet palettes are not the same underlying colors. */
+        .lop-wrapper[data-theme="dark"] .bg-purple-50 { background: #2c2147 !important; }
+        .lop-wrapper[data-theme="dark"] .bg-purple-100 { background: #3d3654 !important; }
+        .lop-wrapper[data-theme="dark"] .text-purple-600 { color: #9163f2 !important; }
+        .lop-wrapper[data-theme="dark"] .text-purple-700 { color: #a47df5 !important; }
+        .lop-wrapper[data-theme="dark"] .text-purple-800 { color: #a47df5 !important; }
+        .lop-wrapper[data-theme="dark"] .border-purple-100 { border-color: #3d3654 !important; }
+        .lop-wrapper[data-theme="dark"] .border-purple-200 { border-color: #3d3654 !important; }
+        /* hover:bg-purple-600 intentionally left unmapped - solid vivid
+           brand-purple CTA hover state, reads fine on both themes, same
+           treatment as bg-violet-600 elsewhere. */
+
+        .lop-wrapper[data-theme="dark"] .bg-amber-50 { background: #332411 !important; --tw-bg-opacity: 1 !important; }
+        .lop-wrapper[data-theme="dark"] [class~="bg-amber-50/60"] { background: #332411 !important; --tw-bg-opacity: 1 !important; }
+        .lop-wrapper[data-theme="dark"] .bg-amber-100 { background: #4a3618 !important; }
+        .lop-wrapper[data-theme="dark"] .text-amber-600 { color: #fbbf54 !important; }
+        .lop-wrapper[data-theme="dark"] .text-amber-700 { color: #fbbf54 !important; }
+        .lop-wrapper[data-theme="dark"] .text-amber-800 { color: #fbbf54 !important; }
+        .lop-wrapper[data-theme="dark"] .border-amber-100 { border-color: #5c4a1f !important; }
+        .lop-wrapper[data-theme="dark"] .border-amber-200 { border-color: #5c4a1f !important; }
+        .lop-wrapper[data-theme="dark"] [class~="hover:bg-amber-200"]:hover { background: #5c4a1f !important; }
+
+        .lop-wrapper[data-theme="dark"] .bg-red-50 { background: #3d1f1f !important; }
+        .lop-wrapper[data-theme="dark"] .text-red-500 { color: #f87171 !important; }
+        .lop-wrapper[data-theme="dark"] .text-red-600 { color: #f87171 !important; }
+        .lop-wrapper[data-theme="dark"] .border-red-200 { border-color: #5c2e2e !important; }
+        .lop-wrapper[data-theme="dark"] [class~="hover:text-red-500"]:hover { color: #f87171 !important; }
+
+        .lop-wrapper[data-theme="dark"] .text-green-500 { color: #34d399 !important; }
+        .lop-wrapper[data-theme="dark"] .text-green-600 { color: #34d399 !important; }
+
+        /* bg-gray-50/50 and bg-gray-50/80 are two distinct literal Tailwind
+           classes (different opacity percentages = different class names
+           entirely) - each needs its own rule, one can't stand in for
+           the other. */
+        .lop-wrapper[data-theme="dark"] [class~="bg-gray-50/50"] { background: #16131c !important; --tw-bg-opacity: 1 !important; }
+        .lop-wrapper[data-theme="dark"] [class~="bg-gray-50/80"] { background: #16131c !important; --tw-bg-opacity: 1 !important; }
+      `}</style>
     </>
   );
 }

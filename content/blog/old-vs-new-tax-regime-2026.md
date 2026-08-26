@@ -1,7 +1,7 @@
 ---
 title: "Old vs New Tax Regime 2026-27: Which One Should You Pick?"
 description: "Compare the old and new tax regimes for FY 2026-27 with real numbers. Find the deduction level where each one wins, and why most salaried people now default to the new regime."
-date: "15-08-2026"
+date: "2026-08-15"
 slug: "old-vs-new-tax-regime-2026"
 ---
 

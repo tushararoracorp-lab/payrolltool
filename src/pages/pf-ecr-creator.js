@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
 import FeedbackWidget from "../components/FeedbackWidget";
@@ -59,7 +59,7 @@ function getRaw(row, aliases) {
 }
 function num(v)  { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
 function rnd(v)  { return Math.round(v); }
-function fmt(v)  { return "₹" + rnd(v).toLocaleString("en-IN"); }
+function fmt(v)  { return "Rs. " + rnd(v).toLocaleString("en-IN"); }
 function stripHtml(h) { return h.replace(/<[^>]+>/g, ""); }
 
 // ─── CORE PROCESSING ──────────────────────────────────────────────────────────
@@ -171,28 +171,28 @@ function processWorkbook(buffer) {
       status = "ERROR"; cntError++;
     }
     if (status !== "ERROR" && gross > 0 && epfWages > gross) {
-      remarks.push({ type: "error", text: `<span class="font-semibold">${name}</span>: EPF Wages (₹${epfWages.toLocaleString()}) exceeds Gross (₹${gross.toLocaleString()}) - excluded.` });
+      remarks.push({ type: "error", text: `<span class="font-semibold">${name}</span>: EPF Wages (Rs. ${epfWages.toLocaleString()}) exceeds Gross (Rs. ${gross.toLocaleString()}) - excluded.` });
       status = "ERROR"; cntError++;
     }
     if (status !== "ERROR") {
       // ── Check if EPS or EDLI > EPF ──
       if (epsWages > epfWages) {
-        remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPS Wages (₹${epsWages.toLocaleString()}) exceeds EPF Wages (₹${epfWages.toLocaleString()}) - adjusted to EPF Wages.` });
+        remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPS Wages (Rs. ${epsWages.toLocaleString()}) exceeds EPF Wages (Rs. ${epfWages.toLocaleString()}) - adjusted to EPF Wages.` });
         epsWages = epfWages;
         hasModification = true;
       }
       if (edliWages > epfWages) {
-        remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EDLI Wages (₹${edliWages.toLocaleString()}) exceeds EPF Wages (₹${epfWages.toLocaleString()}) - adjusted to EPF Wages.` });
+        remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EDLI Wages (Rs. ${edliWages.toLocaleString()}) exceeds EPF Wages (Rs. ${epfWages.toLocaleString()}) - adjusted to EPF Wages.` });
         edliWages = epfWages;
         hasModification = true;
       }
 
       let ec = Math.min(epsWages, EPS_CEIL);
-      if (epsWages > EPS_CEIL) remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPS Wages capped ₹${epsWages.toLocaleString()} → ₹${EPS_CEIL.toLocaleString()}.` });
+      if (epsWages > EPS_CEIL) remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPS Wages capped Rs. ${epsWages.toLocaleString()} → Rs. ${EPS_CEIL.toLocaleString()}.` });
       let epfC  = rnd(epfWages * 0.12);
       let epsC  = rnd(ec * 0.0833);
       let epfD  = epfC - epsC;
-      if (empPFin > 0 && empPFin !== epfC) remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPF Contribution adjusted ₹${empPFin.toLocaleString()} → ₹${epfC.toLocaleString()}.` });
+      if (empPFin > 0 && empPFin !== epfC) remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPF Contribution adjusted Rs. ${empPFin.toLocaleString()} → Rs. ${epfC.toLocaleString()}.` });
       let epfCF   = epfC + volPF;
       let adminC  = rnd(epfWages * 0.005);
       let edliC   = rnd(edliWages * 0.005);
@@ -430,6 +430,22 @@ function InfoIcon() {
 
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
 export default function PfEcrCreator() {
+  // Mirror <html data-theme> onto this page's own wrapper. This file is
+  // built entirely with Tailwind utility classes (bg-white, text-gray-500,
+  // etc.) with no CSS-variable system of its own, so nothing here can
+  // respond to a theme change without an explicit override layer scoped
+  // to this wrapper - see the .pf-wrapper[data-theme="dark"] rules below.
+  const [theme, setTheme] = useState("light");
+  useEffect(() => {
+    const root = document.documentElement;
+    setTheme(root.getAttribute("data-theme") || "light");
+    const observer = new MutationObserver(() => {
+      setTheme(root.getAttribute("data-theme") || "light");
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
   const [file,        setFileState]  = useState(null);
   const [dragOver,    setDragOver]   = useState(false);
   const [processing,  setProcessing] = useState(false);
@@ -505,24 +521,47 @@ export default function PfEcrCreator() {
   return (
     <>
       <Head>
-        <title>PF ECR File Generator - PayrollTool</title>
+        <title>PF ECR File Generator - PayrollTool.in</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Generate EPFO-compliant PF ECR files instantly. Bulk import, auto-validation, Excel & TXT export. Free, browser-based." />
+        <meta name="description" content="Generate PF ECR files for upload to the EPFO Unified Portal. Bulk import, auto-validation, Excel & TXT export. Browser-based." />
         <meta name="robots" content="index, follow" />
+        <meta name="author" content="PayrollTool.in" />
         <link rel="canonical" href="https://www.payrolltool.in/pf-ecr-creator" />
 
-        <meta property="og:title" content="PF ECR File Generator - PayrollTool" />
-        <meta property="og:description" content="Generate EPFO-compliant PF ECR files instantly. Bulk import, auto-validation, Excel & TXT export. Free, browser-based." />
+        <meta property="og:title" content="PF ECR File Generator - PayrollTool.in" />
+        <meta property="og:description" content="Generate PF ECR files for upload to the EPFO Unified Portal. Bulk import, auto-validation, Excel & TXT export. Browser-based." />
         <meta property="og:url" content="https://www.payrolltool.in/pf-ecr-creator" />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="PayrollTool.in" />
+        <meta property="og:locale" content="en_IN" />
         <meta property="og:image" content="https://www.payrolltool.in/icon.png" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="PF ECR File Generator - PayrollTool" />
-        <meta name="twitter:description" content="Generate EPFO-compliant PF ECR files instantly. Bulk import, auto-validation, Excel & TXT export. Free, browser-based." />
+        <meta name="twitter:title" content="PF ECR File Generator - PayrollTool.in" />
+        <meta name="twitter:description" content="Generate PF ECR files for upload to the EPFO Unified Portal. Bulk import, auto-validation, Excel & TXT export. Browser-based." />
+        <meta name="twitter:image" content="https://www.payrolltool.in/icon.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "PF ECR Creator",
+              url: "https://www.payrolltool.in/pf-ecr-creator",
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Any (browser-based)",
+              description: "Prepares PF ECR files for upload to the EPFO Unified Portal from an uploaded Excel spreadsheet.",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+            }),
+          }}
+        />
       </Head>
 
-      <div className="min-h-screen flex flex-col" style={{ fontFamily: "'DM Sans', sans-serif", background: "#EEEAF8" }}>
+      <div
+        className="pf-wrapper min-h-screen flex flex-col"
+        data-theme={theme}
+        style={{ fontFamily: "'DM Sans', sans-serif", background: theme === "dark" ? "#15111F" : "#EEEAF8" }}
+      >
         <Header />
 
         {/* ── HERO ── */}
@@ -935,7 +974,7 @@ export default function PfEcrCreator() {
             {[
               { label: "EPFO-compliant format",   tip: "Output matches the official ECR #~# delimited format accepted by the EPFO unified portal." },
               { label: "Duplicate UAN guard",      tip: "Detects and flags duplicate UANs, names, or UAN+Name combos before generating the ECR." },
-              { label: "EPS wage auto-cap",        tip: "EPS wages are automatically capped at ₹15,000 as per EPFO rules." },
+              { label: "EPS wage auto-cap",        tip: "EPS wages are automatically capped at Rs. 15,000 as per EPFO rules." },
               { label: "100% browser processing",  tip: "All processing happens in your browser. No data sent to any server." },
             ].map(({ label, tip }) => (
               <span key={label} className="flex items-center gap-1">
@@ -948,6 +987,92 @@ export default function PfEcrCreator() {
 
         <Footer />
       </div>
+
+      <style jsx>{`
+        /* Dark-mode overrides for this page's Tailwind utility classes.
+           This file has no CSS-variable system of its own (unlike
+           Tax Calculator's .tc or Salary Proration's Shadow DOM), so
+           rather than rewriting ~100 individual className/style props
+           by hand, these rules target the exact class names Tailwind
+           generates - same visual result, far less error-prone, and it
+           automatically covers every occurrence including ones nested
+           in conditional JSX. !important is used because Tailwind's own
+           utility-layer specificity has been unreliable to predict
+           exactly in this codebase (see Tax Calculator's fix history) -
+           it's a deliberate forcing mechanism here, not an oversight. */
+        .pf-wrapper[data-theme="dark"] .bg-white { background: #1c1730 !important; }
+        .pf-wrapper[data-theme="dark"] .bg-gray-50 { background: #16131c !important; }
+        .pf-wrapper[data-theme="dark"] .bg-gray-100 { background: #221c3a !important; }
+        .pf-wrapper[data-theme="dark"] .text-gray-400 { color: #b3aac7 !important; }
+        .pf-wrapper[data-theme="dark"] .text-gray-500 { color: #b3aac7 !important; }
+        .pf-wrapper[data-theme="dark"] .text-gray-600 { color: #d6cfe8 !important; }
+        .pf-wrapper[data-theme="dark"] .text-gray-700 { color: #f3f0fa !important; }
+        .pf-wrapper[data-theme="dark"] .text-gray-800 { color: #f3f0fa !important; }
+        .pf-wrapper[data-theme="dark"] .text-gray-900 { color: #f3f0fa !important; }
+        .pf-wrapper[data-theme="dark"] .border-gray-50 { border-color: #2a2536 !important; }
+        .pf-wrapper[data-theme="dark"] .border-gray-100 { border-color: #2a2536 !important; }
+        .pf-wrapper[data-theme="dark"] .border-gray-200 { border-color: #2a2536 !important; }
+        .pf-wrapper[data-theme="dark"] .bg-violet-50 { background: #2c2147 !important; }
+        .pf-wrapper[data-theme="dark"] .text-violet-500 { color: #9163f2 !important; }
+        .pf-wrapper[data-theme="dark"] .text-violet-600 { color: #9163f2 !important; }
+        .pf-wrapper[data-theme="dark"] .text-violet-700 { color: #a47df5 !important; }
+        .pf-wrapper[data-theme="dark"] .border-violet-300 { border-color: #9163f2 !important; }
+        .pf-wrapper[data-theme="dark"] .border-violet-400 { border-color: #9163f2 !important; }
+        .pf-wrapper[data-theme="dark"] .bg-amber-50,
+        .pf-wrapper[data-theme="dark"] [class~="bg-amber-50/60"] { background: #332411 !important; --tw-bg-opacity: 1 !important; }
+        .pf-wrapper[data-theme="dark"] .text-amber-600 { color: #fbbf54 !important; }
+        .pf-wrapper[data-theme="dark"] .text-amber-700 { color: #fbbf54 !important; }
+        .pf-wrapper[data-theme="dark"] .text-amber-800 { color: #fbbf54 !important; }
+        .pf-wrapper[data-theme="dark"] .border-amber-100 { border-color: #5c4a1f !important; }
+        .pf-wrapper[data-theme="dark"] .border-amber-200 { border-color: #5c4a1f !important; }
+        .pf-wrapper[data-theme="dark"] .bg-red-50 { background: #3d1f1f !important; }
+        .pf-wrapper[data-theme="dark"] .text-red-500 { color: #f87171 !important; }
+        .pf-wrapper[data-theme="dark"] .text-red-800 { color: #f87171 !important; }
+        .pf-wrapper[data-theme="dark"] .border-red-100 { border-color: #5c2e2e !important; }
+
+        /* Tailwind compiles hover:, focus:, and opacity-slash (/NN)
+           modifiers into entirely distinct literal class names (e.g.
+           "hover:bg-gray-50" and "bg-gray-50/50" are NOT the same class
+           as "bg-gray-50" with a state applied) - each needs its own rule.
+           These are written as [class~="..."] attribute selectors rather
+           than escaped class selectors (e.g. .hover\:bg-gray-50) - the
+           escaped-class approach has now failed three separate times
+           despite verifiably-correct CSS escaping, which points to
+           styled-jsx's own internal CSS parser mishandling these specific
+           characters during its scoping pre-processing step, before the
+           browser ever sees the final rule. Attribute-selector values
+           need no character escaping at all, which sidesteps that
+           category of bug entirely rather than re-attempting it. */
+        .pf-wrapper[data-theme="dark"] [class~="bg-gray-50/50"] { background: #16131c !important; --tw-bg-opacity: 1 !important; }
+        .pf-wrapper[data-theme="dark"] [class~="bg-violet-50/30"] { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
+        .pf-wrapper[data-theme="dark"] [class~="hover:bg-gray-50"]:hover { background: #221c3a !important; }
+        .pf-wrapper[data-theme="dark"] [class~="hover:bg-violet-50"]:hover { background: #2c2147 !important; }
+        .pf-wrapper[data-theme="dark"] [class~="hover:bg-violet-50/30"]:hover { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
+        .pf-wrapper[data-theme="dark"] [class~="hover:border-violet-300"]:hover { border-color: #9163f2 !important; }
+        .pf-wrapper[data-theme="dark"] [class~="hover:text-red-500"]:hover { color: #f87171 !important; }
+        .pf-wrapper[data-theme="dark"] [class~="hover:text-violet-600"]:hover { color: #9163f2 !important; }
+
+        /* Same discovery, different state prefix - focus: also compiles to
+           its own distinct class name, same as hover:. Form select rings
+           and focus borders were still using their light-mode values. */
+        .pf-wrapper[data-theme="dark"] [class~="focus:border-violet-400"]:focus { border-color: #9163f2 !important; }
+        .pf-wrapper[data-theme="dark"] [class~="focus:ring-violet-100"]:focus { --tw-ring-color: rgba(145, 99, 242, 0.35) !important; }
+
+        .pf-wrapper[data-theme="dark"] .text-gray-900 { color: #f3f0fa !important; }
+        .pf-wrapper[data-theme="dark"] .border-violet-200 { border-color: #3d3654 !important; }
+        .pf-wrapper[data-theme="dark"] .text-green-500 { color: #34d399 !important; }
+        .pf-wrapper[data-theme="dark"] .text-green-600 { color: #34d399 !important; }
+        .pf-wrapper[data-theme="dark"] .text-red-600 { color: #f87171 !important; }
+        .pf-wrapper[data-theme="dark"] .border-red-200 { border-color: #5c2e2e !important; }
+
+        /* blue was never part of any earlier color-family sweep at all -
+           used only in the info banners, easy to miss entirely if you're
+           checking gray/violet/amber/red/green and stop there. */
+        .pf-wrapper[data-theme="dark"] .bg-blue-50 { background: #172033 !important; }
+        .pf-wrapper[data-theme="dark"] .border-blue-200 { border-color: #2d4a6b !important; }
+        .pf-wrapper[data-theme="dark"] .text-blue-500 { color: #60a5fa !important; }
+        .pf-wrapper[data-theme="dark"] .text-blue-700 { color: #60a5fa !important; }
+      `}</style>
     </>
   );
 }

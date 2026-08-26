@@ -1,7 +1,7 @@
 ---
 title: "HRA Exemption Calculation: The Least-of-Three Rule Explained with Examples"
 description: "How HRA exemption is calculated in India under the old tax regime: the three-way least-of test, metro vs non-metro rates, rent receipts, and the mistakes that cost employees money."
-date: "15-08-2026"
+date: "2026-08-15"
 slug: "hra-exemption-guide"
 ---
 

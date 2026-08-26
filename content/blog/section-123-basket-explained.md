@@ -1,7 +1,7 @@
 ---
 title: "Section 123 Basket (Formerly 80C): What Counts Towards the ₹1,50,000 Cap"
 description: "A guide to the Section 123 deduction basket under the Income Tax Act, 2025: what qualifies, what the ₹1,50,000 cap really covers, and the additional ₹50,000 NPS deduction that sits outside it."
-date: "15-08-2026"
+date: "2026-08-15"
 slug: "section-123-basket-explained"
 ---
 

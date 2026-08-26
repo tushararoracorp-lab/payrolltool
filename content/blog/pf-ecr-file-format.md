@@ -1,7 +1,7 @@
 ---
 title: "How to Fill & Format PF ECR File in EPFO Portal 2026-27 | Guide"
 description: "Step-by-step guide to the PF ECR file format for EPFO Unified Portal uploads. Field structure, common rejection reasons, and how to generate a valid ECR."
-date: "04-07-2026"
+date: "2026-07-04"
 slug: "pf-ecr-file-format"
 ---
 
