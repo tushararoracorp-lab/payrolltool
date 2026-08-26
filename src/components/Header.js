@@ -185,9 +185,9 @@ export default function Header() {
             </div>
 
             <div className={`nav-item${blogActive ? " active" : ""}${openMenu === "blog" ? " mega-open" : ""}`} ref={blogRef}>
-              <a href="/blog" className="nav-link" onClick={handleBlogClick}>
+              <Link href="/blog" className="nav-link" onClick={handleBlogClick}>
                 Blog {ICONS.chevron}
-              </a>
+              </Link>
               <div className="mega">
                 <div className="mega-col">
                   <h5>Guides</h5>
