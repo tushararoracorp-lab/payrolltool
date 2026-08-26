@@ -44,58 +44,92 @@ export default function FeedbackWidget({ toolName }) {
 
   if (submitted) {
     return (
-      <div className="mt-8 p-4 rounded-xl bg-violet-50 text-center text-sm text-violet-700">
+      <div
+        className="mt-8 p-4 rounded-xl text-center text-sm"
+        style={{ background: "var(--brand-50)", color: "var(--brand-700)" }}
+      >
         Thanks for the feedback 🙏
       </div>
     );
   }
 
   return (
-    <div className="mt-8 p-5 rounded-xl border border-gray-100 bg-white">
-      <p className="text-sm font-medium text-gray-700 mb-3">Was this helpful?</p>
-      <div className="flex gap-3">
-        <button
-          onClick={() => handleRating("helpful")}
-          className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
-            rated === "helpful"
-              ? "bg-violet-600 text-white border-violet-600"
-              : "border-gray-200 text-gray-600 hover:border-violet-300 hover:text-violet-700"
-          }`}
-        >
-          👍 Yes
-        </button>
-        <button
-          onClick={() => handleRating("not_helpful")}
-          className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
-            rated === "not_helpful"
-              ? "bg-violet-600 text-white border-violet-600"
-              : "border-gray-200 text-gray-600 hover:border-violet-300 hover:text-violet-700"
-          }`}
-        >
-          👎 No
-        </button>
-      </div>
-
-      {showText && (
-        <div className="mt-4">
-          <label className="text-sm text-gray-600 mb-2 block">
-            What would make this even better for you? <span className="text-gray-400">(optional)</span>
-          </label>
-          <textarea
-            value={feedbackText}
-            onChange={(e) => setFeedbackText(e.target.value)}
-            rows={3}
-            className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-300"
-            placeholder="Type your thoughts..."
-          />
+    <>
+      <div
+        className="feedback-widget mt-8 p-5 rounded-xl"
+        style={{ border: "1px solid var(--line)", background: "var(--card)" }}
+      >
+        <p className="text-sm font-medium mb-3" style={{ color: "var(--ink)" }}>
+          Was this helpful?
+        </p>
+        <div className="flex gap-3">
           <button
-            onClick={handleTextSubmit}
-            className="mt-2 px-4 py-2 rounded-lg text-sm font-medium bg-violet-600 text-white hover:bg-violet-700"
+            onClick={() => handleRating("helpful")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
+              rated === "helpful" ? "" : "fw-btn-unselected"
+            }`}
+            style={
+              rated === "helpful"
+                ? { background: "var(--brand-600)", color: "#fff", borderColor: "var(--brand-600)" }
+                : { borderColor: "var(--line)", color: "var(--ink-soft)" }
+            }
           >
-            Submit
+            👍 Yes
+          </button>
+          <button
+            onClick={() => handleRating("not_helpful")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
+              rated === "not_helpful" ? "" : "fw-btn-unselected"
+            }`}
+            style={
+              rated === "not_helpful"
+                ? { background: "var(--brand-600)", color: "#fff", borderColor: "var(--brand-600)" }
+                : { borderColor: "var(--line)", color: "var(--ink-soft)" }
+            }
+          >
+            👎 No
           </button>
         </div>
-      )}
-    </div>
+
+        {showText && (
+          <div className="mt-4">
+            <label className="text-sm mb-2 block" style={{ color: "var(--ink-soft)" }}>
+              What would make this even better for you?{" "}
+              <span style={{ color: "var(--ink-soft)", opacity: 0.7 }}>(optional)</span>
+            </label>
+            <textarea
+              value={feedbackText}
+              onChange={(e) => setFeedbackText(e.target.value)}
+              rows={3}
+              className="fw-textarea w-full rounded-lg p-3 text-sm"
+              style={{ border: "1px solid var(--line)", background: "var(--paper)", color: "var(--ink)" }}
+              placeholder="Type your thoughts..."
+            />
+            <button
+              onClick={handleTextSubmit}
+              className="mt-2 px-4 py-2 rounded-lg text-sm font-medium fw-submit"
+              style={{ background: "var(--brand-600)", color: "#fff" }}
+            >
+              Submit
+            </button>
+          </div>
+        )}
+      </div>
+
+      <style jsx>{`
+        .fw-btn-unselected:hover {
+          border-color: var(--brand-600) !important;
+          color: var(--brand-600) !important;
+        }
+        .fw-textarea:focus {
+          outline: none;
+          box-shadow: 0 0 0 3px var(--brand-50);
+          border-color: var(--brand-600) !important;
+        }
+        .fw-submit:hover {
+          background: var(--brand-700) !important;
+        }
+      `}</style>
+    </>
   );
 }

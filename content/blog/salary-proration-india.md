@@ -1,7 +1,7 @@
 ---
 title: "Prorated CTC Calculation India 2026-27 | Complete Formula & Guide"
 description: "Learn how to calculate prorated salary for new joiners and exits in India. Covers EPF, ESI, PT, TDS, and statutory deductions on partial month salary."
-date: "05-07-2026"
+date: "2026-07-05"
 slug: "salary-proration-india"
 ---
 

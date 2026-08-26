@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import FeedbackWidget from "../components/FeedbackWidget";
 
 const INFO_CARDS = [
@@ -18,7 +18,7 @@ const INFO_CARDS = [
   {
     icon: "📝",
     title: "Worked Example",
-    body: "Joined 15 Aug on ₹60,000/month. August has 31 days, so 17 are payable: (₹60,000 ÷ 31) × 17 = ₹32,903 gross for that month.",
+    body: "Joined 15 Aug on Rs. 60,000/month. August has 31 days, so 17 are payable: (Rs. 60,000 ÷ 31) × 17 = Rs. 32,903 gross for that month.",
   },
   {
     icon: "⚖️",
@@ -84,7 +84,7 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip2" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip2">
             <h5>👤 Employee Details</h5>
-            <p><strong>Gender</strong> is needed for Professional Tax - in Maharashtra, women earning ≤ ₹25,000/month are exempt. Gender <em>Other</em> is treated as male for PT purposes until statutory guidance specifies otherwise.</p>
+            <p><strong>Gender</strong> is needed for Professional Tax - in Maharashtra, women earning ≤ Rs. 25,000/month are exempt. Gender <em>Other</em> is treated as male for PT purposes until statutory guidance specifies otherwise.</p>
             <p><strong>Payable Days</strong> are auto-calculated from Date of Joining using calendar days.</p>
           </div>
         </div>
@@ -141,7 +141,7 @@ const TOOL_BODY_HTML = `
       <div class="ph-hdr"><h4>Monthly Pay Heads</h4><button class="btn-add" onclick="addRow()">＋ Add</button></div>
       <div class="ph-cols">
         <div class="ph-col-lbl">Description</div>
-        <div class="ph-col-lbl" style="text-align:right">Monthly (₹)</div>
+        <div class="ph-col-lbl" style="text-align:right">Monthly (Rs.)</div>
         <div class="ph-col-lbl" style="text-align:center">Type</div>
         <div></div>
       </div>
@@ -180,12 +180,12 @@ const TOOL_BODY_HTML = `
       </div>
       <div class="row4">
         <div class="field">
-          <label>Employee EPF (₹/mo)</label>
+          <label>Employee EPF (Rs./mo)</label>
           <input type="number" class="pf-input" id="empPFInput" min="0" placeholder="e.g. 1800" oninput="syncErPF();updatePreviews()"/>
           <div class="pf-hint">From appointment letter</div>
         </div>
         <div class="field">
-          <label>Employer EPF (₹/mo)</label>
+          <label>Employer EPF (Rs./mo)</label>
           <input type="text" id="erPFInput" readonly placeholder="Same as Employee EPF"/>
           <div class="pf-hint">Mirrors employee EPF</div>
         </div>
@@ -220,7 +220,7 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip7" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip7">
             <h5>🏥 ESI</h5>
-            <p>Applies when monthly gross ≤ ₹21,000. ESI deduction amount is calculated on <strong>this month's prorated earnings</strong>.</p>
+            <p>Applies when monthly gross ≤ Rs. 21,000. ESI deduction amount is calculated on <strong>this month's prorated earnings</strong>.</p>
             <p>Employee: 0.75% &nbsp;|&nbsp; Employer: 3.25%</p>
           </div>
         </div>
@@ -237,8 +237,8 @@ const TOOL_BODY_HTML = `
           <div class="tip-box" id="tip8">
             <h5>🗺️ PT &amp; LWF</h5>
             <p><strong>PT</strong> is looked up from the monthly gross slab but deducted on this month's prorated earnings amount.</p>
-            <p><strong>LWF</strong> is a flat ₹ amount, deducted only in applicable months (monthly / half-yearly Jun+Dec / annual Dec).</p>
-            <p>Odisha: PT abolished w.e.f. 1 Apr 2026. &nbsp;Haryana LWF: ₹35/emp revised w.e.f. 1 Jan 2026.</p>
+            <p><strong>LWF</strong> is a flat Rs. amount, deducted only in applicable months (monthly / half-yearly Jun+Dec / annual Dec).</p>
+            <p>Odisha: PT abolished w.e.f. 1 Apr 2026. &nbsp;Haryana LWF: Rs. 35/emp revised w.e.f. 1 Jan 2026.</p>
           </div>
         </div>
       </div>
@@ -292,15 +292,15 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip9" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip9">
             <h5>📊 Tax Regime</h5>
-            <p><strong>New Regime:</strong> Std deduction ₹75,000. Zero tax if annual taxable ≤ ₹12L.</p>
-            <p><strong>Old Regime:</strong> Std deduction ₹50,000. 80C/HRA/80D deductions allowed. Zero tax if ≤ ₹5L.</p>
+            <p><strong>New Regime:</strong> Std deduction Rs. 75,000. Zero tax if annual taxable ≤ Rs. 12L.</p>
+            <p><strong>Old Regime:</strong> Std deduction Rs. 50,000. 80C/HRA/80D deductions allowed. Zero tax if ≤ Rs. 5L.</p>
             <p>TDS shown is an estimate based on gross only.</p>
           </div>
         </div>
       </div>
       <div class="tabs c2">
-        <button class="tab on2" id="btnNew" onclick="setRegime('new')">New Regime (Default)<span class="tab-sub">₹75k std ded · 87A ≤₹12L</span></button>
-        <button class="tab" id="btnOld" onclick="setRegime('old')">Old Regime<span class="tab-sub">80C/HRA etc · ₹50k std ded</span></button>
+        <button class="tab on2" id="btnNew" onclick="setRegime('new')">New Regime (Default)<span class="tab-sub">Rs. 75k std ded · 87A ≤Rs. 12L</span></button>
+        <button class="tab" id="btnOld" onclick="setRegime('old')">Old Regime<span class="tab-sub">80C/HRA etc · Rs. 50k std ded</span></button>
       </div>
 
     </div>
@@ -336,7 +336,7 @@ const TOOL_BODY_HTML = `
     </div>
     <div class="tiles" id="resTiles"></div>
     <table class="rtbl">
-      <thead><tr><th>Description</th><th>Monthly (₹)</th><th>This Month (₹)</th></tr></thead>
+      <thead><tr><th>Description</th><th>Monthly (Rs.)</th><th>This Month (Rs.)</th></tr></thead>
       <tbody id="resBody"></tbody>
     </table>
     <div class="warn" id="resWarn" style="display:none;margin-top:9px;font-size:.68rem"></div>
@@ -381,6 +381,28 @@ const TOOL_BODY_HTML = `
 
 export default function SalaryProration() {
   const hostRef = useRef(null);
+
+  // Mirror <html data-theme> (set by Header.js's toggle) onto the shadow
+  // host element itself. A shadow tree has no visibility into the outer
+  // document at all - it can't see html[data-theme="dark"] no matter how
+  // that selector is written, since the shadow boundary blocks it entirely.
+  // :host([data-theme="dark"]) in the CSS is the correct, Shadow-DOM-native
+  // way to react to this: it matches based on an attribute present on the
+  // host element in the light DOM, which is exactly what this sets.
+  const [theme, setTheme] = useState("light");
+  useEffect(() => {
+    const root = document.documentElement;
+    setTheme(root.getAttribute("data-theme") || "light");
+    const observer = new MutationObserver(() => {
+      setTheme(root.getAttribute("data-theme") || "light");
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (hostRef.current) hostRef.current.setAttribute("data-theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -453,7 +475,7 @@ export default function SalaryProration() {
         <link rel="canonical" href="https://www.payrolltool.in/salary-proration" />
       </Head>
 
-      <div className="sp-wrapper">
+      <div className="sp-wrapper" data-theme={theme}>
         <Header />
 
         <div className="sp-host" ref={hostRef} />
@@ -480,6 +502,9 @@ export default function SalaryProration() {
           font-family: "DM Sans", sans-serif;
           background: #eeeaf8;
         }
+        .sp-wrapper[data-theme="dark"] {
+          background: #15111f;
+        }
 
         .sp-host {
           display: block;
@@ -501,6 +526,11 @@ export default function SalaryProration() {
           padding: 14px 15px;
           box-shadow: 0 2px 10px rgba(124, 58, 237, 0.07);
         }
+        .sp-wrapper[data-theme="dark"] .sp-info-card {
+          background: #1c1730;
+          border-color: #2a2536;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
 
         .sp-info-icon {
           font-size: 18px;
@@ -514,12 +544,18 @@ export default function SalaryProration() {
           color: #5b21b6;
           margin: 0 0 6px;
         }
+        .sp-wrapper[data-theme="dark"] .sp-info-card h2 {
+          color: #a47df5;
+        }
 
         .sp-info-card p {
           font-size: 11.8px;
           line-height: 1.6;
           color: #726c87;
           margin: 0;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-info-card p {
+          color: #b3aac7;
         }
 
         @media (max-width: 980px) {

@@ -5,14 +5,14 @@ import Footer from "../components/Footer";
 import FeedbackWidget from "../components/FeedbackWidget";
 import Lenis from "lenis";
 
-const MONEY_CAP = 5e7; // ₹5,00,00,000
+const MONEY_CAP = 5e7; // Rs. 5,00,00,000
 const DAYS_CAP = 3650;
-const LEAVE_EXEMPT_LIMIT = 2500000; // ₹25L lifetime limit, Sec 10(10AA)
+const LEAVE_EXEMPT_LIMIT = 2500000; // Rs. 25L lifetime limit, Sec 10(10AA)
 
 function fmt(n) {
   const neg = n < 0;
   n = Math.round(Math.abs(n));
-  return (neg ? "−₹" : "₹") + n.toLocaleString("en-IN");
+  return (neg ? "-Rs. " : "Rs. ") + n.toLocaleString("en-IN");
 }
 function daysBetween(a, b) {
   return Math.max(0, Math.floor((b - a) / (1000 * 60 * 60 * 24)));
@@ -29,7 +29,7 @@ function calculate(f) {
   const capWarnings = [];
   function clampMoney(raw, label) {
     const n = parseFloat(raw) || 0;
-    if (n > MONEY_CAP) capWarnings.push(`${label} capped at ₹5,00,00,000.`);
+    if (n > MONEY_CAP) capWarnings.push(`${label} capped at Rs. 5,00,00,000.`);
     return clamp(n, MONEY_CAP);
   }
   function clampDays(raw, label, max) {
@@ -104,7 +104,7 @@ function calculate(f) {
       }.`;
       if (gratuity > gratuityCap) {
         gratuity = gratuityCap;
-        explain += ` Capped at the statutory ${f.sector === "government" ? "₹25L" : "₹20L"} limit.`;
+        explain += ` Capped at the statutory ${f.sector === "government" ? "Rs. 25L" : "Rs. 20L"} limit.`;
       }
       lines.push({ label: "Gratuity", amount: gratuity, explain });
     } else {
@@ -120,7 +120,7 @@ function calculate(f) {
   let leaveExplain = `${leaveDays} unused leave day(s) paid out.`;
   let leaveTaxFlag = null;
   if (leaveAmt > LEAVE_EXEMPT_LIMIT) {
-    leaveTaxFlag = "⚠ This alone exceeds the ₹25L lifetime tax-exemption limit (assuming no prior use) - the excess is likely taxable.";
+    leaveTaxFlag = "This alone exceeds the Rs. 25L lifetime tax-exemption limit (assuming no prior use) - the excess is likely taxable.";
   }
   lines.push({ label: "Leave encashment", amount: leaveAmt, explain: leaveExplain, taxFlag: leaveTaxFlag });
 
@@ -172,6 +172,17 @@ function autoServed(dor, dol) {
 }
 
 export default function FinalSettlement() {
+  const [theme, setTheme] = useState("light");
+  useEffect(() => {
+    const root = document.documentElement;
+    setTheme(root.getAttribute("data-theme") || "light");
+    const observer = new MutationObserver(() => {
+      setTheme(root.getAttribute("data-theme") || "light");
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
   const [fields, setFields] = useState(() => ({
     ...initialFields,
     served: autoServed(initialFields.dor, initialFields.dol),
@@ -243,19 +254,47 @@ export default function FinalSettlement() {
   return (
     <>
       <Head>
-        <title>Final Settlement Calculator – PayrollTool</title>
+        <title>Final Settlement Calculator – Gratuity, Leave Encashment | PayrollTool.in</title>
         <meta
           name="description"
-          content="Calculate your full and final settlement - gratuity, notice pay, and leave encashment - free, browser-based, no login required."
+          content="Calculate your full and final settlement - gratuity, notice pay, and leave encashment - browser-based, no login required."
         />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Final Settlement Calculator – PayrollTool" />
+        <meta name="author" content="PayrollTool.in" />
+        <meta property="og:title" content="Final Settlement Calculator – PayrollTool.in" />
+        <meta
+          property="og:description"
+          content="Calculate your full and final settlement - gratuity, notice pay, and leave encashment - browser-based, no login required."
+        />
         <meta property="og:url" content="https://www.payrolltool.in/final-settlement" />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="PayrollTool.in" />
+        <meta property="og:locale" content="en_IN" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Final Settlement Calculator – PayrollTool.in" />
+        <meta
+          name="twitter:description"
+          content="Calculate your full and final settlement - gratuity, notice pay, and leave encashment - browser-based, no login required."
+        />
         <link rel="canonical" href="https://www.payrolltool.in/final-settlement" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "Final Settlement Calculator",
+              url: "https://www.payrolltool.in/final-settlement",
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Any (browser-based)",
+              description: "Calculates full and final settlement — gratuity, notice pay, leave encashment, and statutory deductions — in one place.",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+            }),
+          }}
+        />
       </Head>
 
-      <div style={{ fontFamily: "'DM Sans', sans-serif", background: "#EEEAF8" }}>
+      <div className="fsc-wrapper" data-theme={theme} style={{ fontFamily: "'DM Sans', sans-serif", background: theme === "dark" ? "#15111F" : "#EEEAF8" }}>
         <Header />
 
         <div className="fsc-hero">
@@ -270,7 +309,7 @@ export default function FinalSettlement() {
             <div className="section" id="sec-employment">
               <div className="section-head">
                 <div className="section-head-left">
-                  <span className="sec-icon">🧑</span>
+                  <span className="sec-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg></span>
                   <span className="sec-title">Tenure &amp; Classification</span>
                 </div>
                 <button type="button" className="collapse-btn" onClick={() => toggleSection("employment")}>
@@ -302,8 +341,8 @@ export default function FinalSettlement() {
                   <div className="field field-full">
                     <label htmlFor="sector">Sector</label>
                     <select id="sector" value={fields.sector} onChange={set("sector")}>
-                      <option value="private">Private (gratuity capped at ₹20L)</option>
-                      <option value="government">Government (gratuity capped at ₹25L)</option>
+                      <option value="private">Private (gratuity capped at Rs. 20L)</option>
+                      <option value="government">Government (gratuity capped at Rs. 25L)</option>
                     </select>
                     <div className="help">Not sure? Most salaried company jobs count as Private.</div>
                   </div>
@@ -315,7 +354,7 @@ export default function FinalSettlement() {
             <div className="section" id="sec-salary">
               <div className="section-head">
                 <div className="section-head-left">
-                  <span className="sec-icon">💰</span>
+                  <span className="sec-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2"><path d="M12 2v20m-7-5h14M3 9h18"/></svg></span>
                   <span className="sec-title">Salary</span>
                 </div>
                 <button type="button" className="collapse-btn" onClick={() => toggleSection("salary")}>
@@ -326,20 +365,20 @@ export default function FinalSettlement() {
               <div className="section-body">
                 <div className="grid2">
                   <div className="field">
-                    <label htmlFor="basic">Monthly Basic Salary (₹)</label>
+                    <label htmlFor="basic">Monthly Basic Salary (Rs. )</label>
                     <input inputMode="decimal" type="number" id="basic" value={fields.basic} onChange={set("basic")} min="0" max="50000000" />
                     <div className="help">Check your latest payslip - usually the largest single line item.</div>
                   </div>
                   <div className="field">
                     <label htmlFor="da">
-                      Monthly Dearness Allowance (₹) <span className="req-tag">optional</span>
+                      Monthly Dearness Allowance (Rs. ) <span className="req-tag">optional</span>
                     </label>
                     <input inputMode="decimal" type="number" id="da" value={fields.da} onChange={set("da")} min="0" max="50000000" />
                     <div className="help">If DA is a separate line on your payslip, enter it here - it&apos;s combined with Basic for gratuity and leave encashment.</div>
                   </div>
                   <div className="field field-full">
                     <label htmlFor="gross">
-                      Monthly Gross Salary (₹) <span className="req-tag">optional</span>
+                      Monthly Gross Salary (Rs. ) <span className="req-tag">optional</span>
                     </label>
                     <input inputMode="decimal" type="number" id="gross" value={fields.gross} onChange={set("gross")} min="0" max="50000000" />
                     <div className="help">Only needed if your notice pay below is based on Gross.</div>
@@ -390,7 +429,7 @@ export default function FinalSettlement() {
             <div className="section" id="sec-other">
               <div className="section-head">
                 <div className="section-head-left">
-                  <span className="sec-icon">📝</span>
+                  <span className="sec-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
                   <span className="sec-title">Leave &amp; Other Amounts</span>
                 </div>
                 <button type="button" className="collapse-btn" onClick={() => toggleSection("other")}>
@@ -405,11 +444,11 @@ export default function FinalSettlement() {
                     <input inputMode="decimal" type="number" id="leave" value={fields.leave} onChange={set("leave")} min="0" max="365" />
                   </div>
                   <div className="field">
-                    <label htmlFor="credit">Other amount owed to you (₹)</label>
+                    <label htmlFor="credit">Other amount owed to you (Rs. )</label>
                     <input inputMode="decimal" type="number" id="credit" value={fields.credit} onChange={set("credit")} min="0" max="50000000" />
                   </div>
                   <div className="field field-full">
-                    <label htmlFor="debit">Dues to be deducted (₹)</label>
+                    <label htmlFor="debit">Dues to be deducted (Rs. )</label>
                     <input inputMode="decimal" type="number" id="debit" value={fields.debit} onChange={set("debit")} min="0" max="50000000" />
                   </div>
                 </div>
@@ -424,11 +463,11 @@ export default function FinalSettlement() {
 
           <div className="summary">
             <div className="summary-card">
-              <div className="summary-title">🧮 Your Settlement Summary</div>
+              <div className="summary-title" style={{display:"flex",alignItems:"center",gap:"7px"}}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8" y2="10"/><line x1="12" y1="10" x2="12" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="8" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="8" y2="18"/><line x1="12" y1="18" x2="12" y2="18"/><line x1="16" y1="18" x2="16" y2="18"/></svg>Your Settlement Summary</div>
 
               {!results ? (
                 <div className="summary-placeholder">
-                  <div className="placeholder-icon">🧮</div>
+                  <div className="placeholder-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg></div>
                   <p>
                     Fill in the details on the left and tap <b>Calculate Settlement</b> to see your estimate.
                   </p>
@@ -478,7 +517,7 @@ export default function FinalSettlement() {
                 <div className="rules-box">
                   <p>
                     <b>Gratuity</b> - paid only after 5+ years of service: <code>(Basic + DA) × 15 ÷ 26 × years worked</code>. A period of 6+ months
-                    in the final year rounds up to a full year. Capped at ₹20 lakh (private sector) or ₹25 lakh (government) per the Payment of
+                    in the final year rounds up to a full year. Capped at Rs. 20 lakh (private sector) or Rs. 25 lakh (government) per the Payment of
                     Gratuity Act, 1972.
                   </p>
                   <p>
@@ -499,11 +538,12 @@ export default function FinalSettlement() {
               </details>
               {results && (
               <>
-              <div className="next-step">
-                💡 Once you have this number, ask HR for a written FnF statement and compare it line by line - if anything doesn&apos;t match, ask which
-                formula or dates they used. It&apos;s a completely normal question to ask.
+              <div className="next-step" style={{display:"flex",gap:"8px",alignItems:"flex-start"}}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2" style={{flexShrink:0,marginTop:"2px"}}><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+                <span>Once you have this number, ask HR for a written FnF statement and compare it line by line - if anything doesn&apos;t match, ask which
+                formula or dates they used. It&apos;s a completely normal question to ask.</span>
               </div>
-              <div className="closing-note">Whatever comes next, we hope it goes well for you. 🤝</div>
+              <div className="closing-note">Whatever comes next, we hope it goes well for you.</div>
               </>
               )}
             </div>
@@ -514,6 +554,42 @@ export default function FinalSettlement() {
       </div>
 
       <style jsx>{`
+        .fsc-wrapper {
+          --surface: #fff;
+          --surface-alt: #f9f8fc;
+          --surface-alt2: #f2f1f7;
+          --ink: #1e1b29;
+          --ink-mid: #6b7280;
+          --ink-soft: #9ca3af;
+          --line: #ecead3;
+          --brand: #7c3aed;
+          --brand-deep: #6d28d9;
+          --brand-tint: #f5f3ff;
+          --brand-tint-border: #e4dbfb;
+          --danger: #dc2626;
+          --danger-deep: #c0392b;
+          --warn: #b45309;
+          --warn-tint: #fef3c7;
+          --warn-tint-border: #f5dfa6;
+        }
+        .fsc-wrapper[data-theme="dark"] {
+          --surface: #1c1730;
+          --surface-alt: #16131c;
+          --surface-alt2: #221c3a;
+          --ink: #f3f0fa;
+          --ink-mid: #d6cfe8;
+          --ink-soft: #b3aac7;
+          --line: #2a2536;
+          --brand: #9163f2;
+          --brand-deep: #a47df5;
+          --brand-tint: #2c2147;
+          --brand-tint-border: #3d3654;
+          --danger: #f87171;
+          --danger-deep: #f87171;
+          --warn: #fbbf54;
+          --warn-tint: #332411;
+          --warn-tint-border: #5c4a1f;
+        }
         .fsc-hero {
           text-align: center;
           padding: 24px 20px 8px;
@@ -527,13 +603,13 @@ export default function FinalSettlement() {
           margin: 0 0 6px;
           letter-spacing: -1px;
           line-height: 1.12;
-          color: #1e1b4b;
+          color: var(--ink);
         }
         .fsc-hero h1 span {
-          color: #7c3aed;
+          color: var(--brand);
         }
         .fsc-hero p {
-          color: #6b7280;
+          color: var(--ink-mid);
           font-size: 14.5px;
           line-height: 1.6;
           margin: 0 auto;
@@ -549,8 +625,8 @@ export default function FinalSettlement() {
           align-items: start;
         }
         .section {
-          background: #fff;
-          border: 1px solid #ecead3;
+          background: var(--surface);
+          border: 1px solid var(--line);
           border-radius: 14px;
           margin-bottom: 16px;
           overflow: hidden;
@@ -567,13 +643,13 @@ export default function FinalSettlement() {
           font-family: "DM Sans", sans-serif;
           font-size: 12px;
           font-weight: 600;
-          color: #7c3aed;
+          color: var(--brand);
           cursor: pointer;
           padding: 4px 8px;
           border-radius: 6px;
         }
         .collapse-btn:hover {
-          background: #f5f3ff;
+          background: var(--brand-tint);
         }
         .calc-btn {
           width: 100%;
@@ -581,8 +657,8 @@ export default function FinalSettlement() {
           padding: 14px;
           border: none;
           border-radius: 10px;
-          background: linear-gradient(135deg, #7c3aed, #6d28d9);
-          color: #fff;
+          background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+          color: var(--surface);
           font-family: "Sora", sans-serif;
           font-size: 14.5px;
           font-weight: 700;
@@ -600,7 +676,7 @@ export default function FinalSettlement() {
           width: 30px;
           height: 30px;
           border-radius: 9px;
-          background: #f5f3ff;
+          background: var(--brand-tint);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -610,7 +686,7 @@ export default function FinalSettlement() {
           font-family: "Sora", sans-serif;
           font-weight: 700;
           font-size: 14.5px;
-          color: #1e1b29;
+          color: var(--ink);
         }
         .section-body {
           padding: 2px 18px 20px;
@@ -630,12 +706,12 @@ export default function FinalSettlement() {
           display: block;
           font-size: 12.5px;
           font-weight: 600;
-          color: #1e1b29;
+          color: var(--ink);
           margin-bottom: 5px;
         }
         .field label .req-tag {
           font-weight: 400;
-          color: #9ca3af;
+          color: var(--ink-soft);
           font-size: 11px;
         }
         .field label .info-dot {
@@ -644,13 +720,13 @@ export default function FinalSettlement() {
           justify-content: center;
           font-size: 11px;
           font-weight: 700;
-          color: #6d28d9;
+          color: var(--brand-deep);
           cursor: help;
           margin-left: 2px;
         }
         .field .help {
           font-size: 11px;
-          color: #9ca3af;
+          color: var(--ink-soft);
           margin-top: 4px;
           line-height: 1.4;
         }
@@ -669,11 +745,11 @@ export default function FinalSettlement() {
           width: 100%;
           font-family: "DM Sans", sans-serif;
           font-size: 13.5px;
-          color: #1e1b29;
-          border: 1px solid #ecead3;
+          color: var(--ink);
+          border: 1px solid var(--line);
           border-radius: 8px;
           padding: 10px 11px;
-          background: #fff;
+          background: var(--surface);
           outline: none;
         }
         input[type="number"] {
@@ -689,17 +765,17 @@ export default function FinalSettlement() {
         }
         input:focus,
         select:focus {
-          border-color: #7c3aed;
-          box-shadow: 0 0 0 3px #f5f3ff;
+          border-color: var(--brand);
+          box-shadow: 0 0 0 3px var(--brand-tint);
         }
         .auto-badge {
           display: inline-block;
           margin-left: 6px;
           font-size: 10px;
           font-weight: 700;
-          color: #6d28d9;
-          background: #f5f3ff;
-          border: 1px solid #e4dbfb;
+          color: var(--brand-deep);
+          background: var(--brand-tint);
+          border: 1px solid var(--brand-tint-border);
           padding: 1px 7px;
           border-radius: 999px;
         }
@@ -708,8 +784,8 @@ export default function FinalSettlement() {
           top: 76px;
         }
         .summary-card {
-          background: #fff;
-          border: 1px solid #ecead3;
+          background: var(--surface);
+          border: 1px solid var(--line);
           border-radius: 14px;
           padding: 22px;
         }
@@ -718,11 +794,11 @@ export default function FinalSettlement() {
           font-weight: 700;
           font-size: 14.5px;
           margin-bottom: 2px;
-          color: #1e1b29;
+          color: var(--ink);
         }
         .summary-sub {
           font-size: 11.5px;
-          color: #9ca3af;
+          color: var(--ink-soft);
           margin-bottom: 14px;
         }
         .summary-placeholder {
@@ -736,27 +812,27 @@ export default function FinalSettlement() {
         }
         .summary-placeholder p {
           font-size: 12.5px;
-          color: #6b7280;
+          color: var(--ink-mid);
           line-height: 1.6;
           margin: 0 0 8px;
         }
         .summary-placeholder .placeholder-sub {
           font-size: 11px;
-          color: #9ca3af;
+          color: var(--ink-soft);
           margin: 0;
         }
         .warn {
           font-size: 11.5px;
-          color: #b45309;
-          background: #fef3c7;
-          border: 1px solid #f5dfa6;
+          color: var(--warn);
+          background: var(--warn-tint);
+          border: 1px solid var(--warn-tint-border);
           border-radius: 8px;
           padding: 9px 11px;
           margin-bottom: 12px;
         }
         .line-item {
           padding: 9px 0;
-          border-bottom: 1px solid #f2f1f7;
+          border-bottom: 1px solid var(--surface-alt2);
         }
         .line-item:last-child {
           border-bottom: none;
@@ -771,7 +847,7 @@ export default function FinalSettlement() {
         .li-label {
           font-size: 13px;
           font-weight: 600;
-          color: #1e1b29;
+          color: var(--ink);
         }
         .li-amt {
           font-size: 13.5px;
@@ -779,14 +855,14 @@ export default function FinalSettlement() {
           white-space: normal;
           word-break: break-word;
           overflow-wrap: anywhere;
-          color: #1e1b29;
+          color: var(--ink);
         }
         .li-amt.neg {
-          color: #dc2626;
+          color: var(--danger);
         }
         .li-explain {
           font-size: 11px;
-          color: #9ca3af;
+          color: var(--ink-soft);
           margin-top: 2px;
           line-height: 1.4;
         }
@@ -795,21 +871,21 @@ export default function FinalSettlement() {
           margin-top: 5px;
           font-size: 11.5px;
           font-weight: 700;
-          color: #b45309;
+          color: var(--warn);
         }
         .stamp {
           margin-top: 14px;
           padding: 18px 18px;
           border-radius: 12px;
           text-align: center;
-          background: linear-gradient(135deg, #7c3aed, #6d28d9);
-          color: #fff;
+          background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+          color: var(--surface);
           width: 100%;
           max-width: 100%;
           overflow: hidden;
         }
         .stamp.recover {
-          background: linear-gradient(135deg, #c0392b, #dc2626);
+          background: linear-gradient(135deg, var(--danger-deep), var(--danger));
         }
         .stamp-label {
           font-size: 11px;
@@ -843,7 +919,7 @@ export default function FinalSettlement() {
           cursor: pointer;
           font-size: 11.5px;
           font-weight: 700;
-          color: #6b7280;
+          color: var(--ink-mid);
           list-style: none;
         }
         .rules summary::-webkit-details-marker {
@@ -851,26 +927,26 @@ export default function FinalSettlement() {
         }
         .rules-box {
           font-size: 11.5px;
-          color: #6b7280;
+          color: var(--ink-mid);
           line-height: 1.6;
-          background: #f9f8fc;
-          border: 1px solid #ecead3;
+          background: var(--surface-alt);
+          border: 1px solid var(--line);
           border-radius: 8px;
           padding: 12px 14px;
           margin-top: 8px;
         }
         .rules-box code {
-          background: #fff;
-          border: 1px solid #ecead3;
+          background: var(--surface);
+          border: 1px solid var(--line);
           padding: 1px 5px;
           border-radius: 4px;
         }
         .next-step {
           margin-top: 14px;
           font-size: 11.5px;
-          color: #6d28d9;
-          background: #f5f3ff;
-          border: 1px solid #e4dbfb;
+          color: var(--brand-deep);
+          background: var(--brand-tint);
+          border: 1px solid var(--brand-tint-border);
           border-radius: 8px;
           padding: 10px 12px;
           line-height: 1.5;
@@ -878,7 +954,7 @@ export default function FinalSettlement() {
         .closing-note {
           margin-top: 14px;
           font-size: 12px;
-          color: #6b7280;
+          color: var(--ink-mid);
           text-align: center;
         }
         @media (max-width: 840px) {

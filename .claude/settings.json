@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx next *)",
+      "Read(//tmp/**)",
+      "Bash(curl -sv http://localhost:3000)",
+      "Bash(curl -sf http://localhost:3002/salary-proration -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(node \"C:/Users/Hp/AppData/Local/Temp/claude/d--Coder-lop-splitter/8b44cca3-b094-4c36-ba81-fdc7805121db/scratchpad/shot.js\")",
+      "Bash(lsof -ti:3002 -sTCP:LISTEN)",
+      "Bash(sed -n '11,210p' public/salary-proration-tool.html)",
+      "Bash(sed -n '217,554p' public/salary-proration-tool.html)",
+      "Bash(sed -n '558,2019p' public/salary-proration-tool.html)",
+      "Bash(python3 -)",
+      "Bash(node -)",
+      "Bash(node --check C:/Users/Hp/AppData/Local/Temp/claude/d--Coder-lop-splitter/8b44cca3-b094-4c36-ba81-fdc7805121db/scratchpad/tool.js)",
+      "Bash(sed -i 's/document\\\\.getElementById\\('\\\\''fi'\\\\''\\)/window.__spRoot.getElementById\\('\\\\''fi'\\\\''\\)/' C:/Users/Hp/AppData/Local/Temp/claude/d--Coder-lop-splitter/8b44cca3-b094-4c36-ba81-fdc7805121db/scratchpad/tool-body.html)",
+      "Bash(sed -i 's/document\\\\.getElementById\\('\\\\''dlConfirm'\\\\''\\)/window.__spRoot.getElementById\\('\\\\''dlConfirm'\\\\''\\)/' C:/Users/Hp/AppData/Local/Temp/claude/d--Coder-lop-splitter/8b44cca3-b094-4c36-ba81-fdc7805121db/scratchpad/tool-body.html)"
+    ]
+  }
+}
