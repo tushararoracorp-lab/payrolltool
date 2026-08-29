@@ -77,7 +77,7 @@ export default function Faq() {
   return (
     <>
       <Head>
-        <title>FAQ &#8212; PayrollTool.in | Answers About Data, Accuracy &amp; Tools</title>
+        <title>FAQ - PayrollTool.in | Answers About Data, Accuracy &amp; Tools</title>
         <meta name="description" content="Answers to common questions about PayrollTool.in's calculators - data privacy, accuracy, supported file formats, and pricing." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.payrolltool.in/faq" />

@@ -7,7 +7,7 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>About &#8212; PayrollTool.in | Built by a Payroll Compliance Professional</title>
+        <title>About - PayrollTool.in | Built by a Payroll Compliance Professional</title>
         <meta name="description" content="The story behind PayrollTool.in - payroll calculators for PF ECR, salary proration, tax, LOP and final settlement, built from 8+ years of hands-on Indian payroll compliance experience." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.payrolltool.in/about" />

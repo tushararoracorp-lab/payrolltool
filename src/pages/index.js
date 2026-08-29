@@ -237,7 +237,7 @@ export default function Home() {
             const c = byIso[+d.id];
             if (!c) return;
             const rect = popoverEl.getBoundingClientRect();
-            tooltip.textContent = `${c.name} \u2014 ${c.users} user${c.users === 1 ? "" : "s"}`;
+            tooltip.textContent = `${c.name} - ${c.users} user${c.users === 1 ? "" : "s"}`;
             tooltip.style.left = event.clientX - rect.left + "px";
             tooltip.style.top = Math.max(24, event.clientY - rect.top) + "px";
             tooltip.style.opacity = "1";
@@ -248,7 +248,7 @@ export default function Home() {
           });
       })
       .catch(() => {
-        wrap.innerHTML = '<div class="cm-loading">Map unavailable \u2014 see list below.</div>';
+        wrap.innerHTML = '<div class="cm-loading">Map unavailable - see list below.</div>';
       });
   }
 
@@ -395,7 +395,7 @@ export default function Home() {
                   url: "https://www.payrolltool.in/final-settlement",
                   applicationCategory: "BusinessApplication",
                   operatingSystem: "Any (browser-based)",
-                  description: "Calculates full and final settlement \u2014 gratuity, notice pay, leave encashment, and statutory deductions \u2014 in one place.",
+                  description: "Calculates full and final settlement - gratuity, notice pay, leave encashment, and statutory deductions - in one place.",
                   offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
                 },
               ],
