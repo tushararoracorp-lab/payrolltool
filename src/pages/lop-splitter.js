@@ -36,7 +36,7 @@ function excelSerial(date) {
   return Math.round((date - new Date(Date.UTC(1899, 11, 30))) / 86400000);
 }
 
-/** Format a Date as "DD-MM-YYYY" string — used as dictionary keys (mirrors VBA dateKey) */
+/** Format a Date as "DD-MM-YYYY" string - used as dictionary keys (mirrors VBA dateKey) */
 function dateKey(empID, date) {
   const dd = String(date.getUTCDate()).padStart(2, "0");
   const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
@@ -44,16 +44,16 @@ function dateKey(empID, date) {
   return `${empID}|${dd}-${mm}-${yyyy}`;
 }
 
-// ─── CORE PROCESSING (Full VBA port — Module4) ───────────────────────────────
+// ─── CORE PROCESSING (Full VBA port - Module4) ───────────────────────────────
 /**
  * Two-pass processing matching the VBA macro exactly:
  *
- * Pass 1 — Collect all explicit Start Dates across all rows (priorityDates).
- * Pass 2 — For each row, iterate day-by-day:
+ * Pass 1 - Collect all explicit Start Dates across all rows (priorityDates).
+ * Pass 2 - For each row, iterate day-by-day:
  *   • Skip days beyond monthEnd
  *   • Skip days beyond DOL
  *   • Stop early if the current date matches another row's explicit Start Date
- *     (priority start date check — carries remaining days to excess)
+ *     (priority start date check - carries remaining days to excess)
  *   • Skip duplicate dates via usedDates dictionary
  *   • Apply same logic to the decimal day
  */
@@ -78,7 +78,7 @@ function processLOP(rows) {
   }
 
   // ── PASS 2: main processing ─────────────────────────────────────────────────
-  const usedDates = new Map(); // Map<"empID|DD-MM-YYYY", number> — stores days already written
+  const usedDates = new Map(); // Map<"empID|DD-MM-YYYY", number> - stores days already written
 
   for (let idx = 0; idx < rows.length; idx++) {
     const raw    = rows[idx];
@@ -180,7 +180,7 @@ function processLOP(rows) {
         continue;
       }
 
-      // Priority start date check — only for dates AFTER the actualStart
+      // Priority start date check - only for dates AFTER the actualStart
       // (mirrors VBA: If currentDate <> actualStart Then)
       if (currentDate.getTime() !== actualStart.getTime()) {
         const dk = dateKey(empID, currentDate);
@@ -349,7 +349,7 @@ function buildTemplateWorkbook() {
   ws["!cols"]  = [{ wch: 18 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 8 }];
   XLSX.utils.book_append_sheet(wb, ws, "Uploader");
 
-  // Hidden validation token — treated as a trade secret
+  // Hidden validation token - treated as a trade secret
   const tokenSheet = XLSX.utils.aoa_to_sheet([["PAYROLLTOOLS_V1_SECURE"]]);
   XLSX.utils.book_append_sheet(wb, tokenSheet, "__lop_token__");
 
@@ -501,7 +501,7 @@ function AboutModal({ onClose }) {
               ),
               title: "Why We're Here",
               content: [
-                "Every month, payroll and HR professionals spend hours doing repetitive, error-prone calculations in Excel — splitting LOP dates, computing proration, calculating notice recoveries and final settlements. These aren't complex problems. They just need the right tool.",
+                "Every month, payroll and HR professionals spend hours doing repetitive, error-prone calculations in Excel - splitting LOP dates, computing proration, calculating notice recoveries and final settlements. These aren't complex problems. They just need the right tool.",
                 "PayrollTool.in was built to solve exactly that - turning what used to be a 30-minute spreadsheet exercise into a 30-second task.",
               ],
             },
@@ -652,7 +652,7 @@ export default function Home() {
       const buffer = await file.arrayBuffer();
       const wb_in  = XLSX.read(buffer, { type: "array", cellDates: false });
 
-      // Token validation (fast path) — only trusts files with the hidden marker.
+      // Token validation (fast path) - only trusts files with the hidden marker.
       const tokenSheet = wb_in.Sheets?.["__lop_token__"];
       const tokenCell  = tokenSheet?.["A1"];
       const hasToken   = !!tokenSheet && !!tokenCell && tokenCell.v === "PAYROLLTOOLS_V1_SECURE";
@@ -660,7 +660,7 @@ export default function Home() {
       const ws  = wb_in.Sheets[wb_in.SheetNames[0]];
       const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "", blankrows: true });
 
-      // Fallback header validation — the hidden sheet is often stripped by
+      // Fallback header validation - the hidden sheet is often stripped by
       // Google Sheets / LibreOffice re-saves even when the data itself is fine.
       const EXPECTED_HEADERS = ["Employee ID", "DOJ", "DOL", "Start Date", "Days"];
       const actualHeaders = (aoa[0] || []).map(h => String(h ?? "").trim());

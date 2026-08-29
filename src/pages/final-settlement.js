@@ -287,7 +287,7 @@ export default function FinalSettlement() {
               url: "https://www.payrolltool.in/final-settlement",
               applicationCategory: "BusinessApplication",
               operatingSystem: "Any (browser-based)",
-              description: "Calculates full and final settlement — gratuity, notice pay, leave encashment, and statutory deductions — in one place.",
+              description: "Calculates full and final settlement - gratuity, notice pay, leave encashment, and statutory deductions - in one place.",
               offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
             }),
           }}

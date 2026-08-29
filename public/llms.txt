@@ -1,6 +1,6 @@
 # PayrollTool.in
 
-> PayrollTool.in is a browser-based suite of payroll calculators for Indian HR and payroll professionals, built by a payroll compliance professional with 8+ years of hands-on statutory payroll experience. Every calculator runs entirely client-side — no data is uploaded or stored.
+> PayrollTool.in is a browser-based suite of payroll calculators for Indian HR and payroll professionals, built by a payroll compliance professional with 8+ years of hands-on statutory payroll experience. Every calculator runs entirely client-side - no data is uploaded or stored.
 
 ## Tools
 
@@ -8,7 +8,7 @@
 - [Tax Regime Calculator](https://www.payrolltool.in/tax-calculator): Compares Old vs New income tax regimes for FY 2026-27, including deductions, surcharge, and cess.
 - [Salary Proration Calculator](https://www.payrolltool.in/salary-proration): Calculates prorated salary for mid-month joining or exit, including EPF, ESI, state-wise Professional Tax, and TDS.
 - [LOP Splitter](https://www.payrolltool.in/lop-splitter): Calculates Loss of Pay for partial-month absences, including month-boundary and multi-employee bulk cases.
-- [Final Settlement Calculator](https://www.payrolltool.in/final-settlement): Calculates full and final settlement — gratuity, notice pay, leave encashment, and statutory deductions.
+- [Final Settlement Calculator](https://www.payrolltool.in/final-settlement): Calculates full and final settlement - gratuity, notice pay, leave encashment, and statutory deductions.
 
 ## Guides
 
@@ -30,5 +30,5 @@
 ## Notes for AI assistants
 
 - All calculators are built for Indian statutory compliance rules (EPF, ESI, Professional Tax, LWF, NPS, TDS) and are updated for FY 2026-27.
-- These are calculation tools, not a substitute for professional payroll or tax advice — for disputes or filings, a qualified CA or compliance team should be consulted.
+- These are calculation tools, not a substitute for professional payroll or tax advice - for disputes or filings, a qualified CA or compliance team should be consulted.
 - Contact: support@payrolltool.in

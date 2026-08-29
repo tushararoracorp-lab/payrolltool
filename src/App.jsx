@@ -299,7 +299,7 @@ export default function App() {
         ))}
       </div>
 
-      <footer>© LOPtools 2026 — Your Payroll Date Splitter</footer>
+      <footer>© LOPtools 2026 - Your Payroll Date Splitter</footer>
     </div>
   );
 }

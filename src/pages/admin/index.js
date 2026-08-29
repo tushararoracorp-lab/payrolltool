@@ -156,7 +156,7 @@ export default function AdminDashboard() {
             <div style={{ display:'flex', alignItems:'center', gap:8, flexShrink:0 }}>
               <div style={{ width:8, height:8, borderRadius:'50%', background:'#16a34a', boxShadow:'0 0 0 3px #dcfce7' }} />
               <span style={{ fontSize:12, fontWeight:600, color:NAVY, ...S }}>Live right now</span>
-              <span style={{ fontSize:20, fontWeight:700, color:PRIMARY, ...S }}>{realtime?.activeUsers ?? '—'}</span>
+              <span style={{ fontSize:20, fontWeight:700, color:PRIMARY, ...S }}>{realtime?.activeUsers ?? '-'}</span>
               <span style={{ fontSize:12, color:'#a78bfa', ...S }}>active user{realtime?.activeUsers !== 1 ? 's' : ''}</span>
             </div>
             <div style={{ width:1, height:20, background:'#ede9fe', flexShrink:0 }} />

@@ -8,7 +8,7 @@ const INFO_CARDS = [
   {
     icon: "📅",
     title: "What is Proration?",
-    body: "Pay calculated for a partial month — mid-month joining, exit, or a role change — split proportionally across the days actually payable.",
+    body: "Pay calculated for a partial month - mid-month joining, exit, or a role change - split proportionally across the days actually payable.",
   },
   {
     icon: "🧮",
@@ -23,7 +23,7 @@ const INFO_CARDS = [
   {
     icon: "⚖️",
     title: "Statutory Coverage",
-    body: "EPF + VPF, Employer NPS, ESI, state-wise Professional Tax & LWF, and a New vs Old regime TDS estimate — all recalculated on the prorated figure.",
+    body: "EPF + VPF, Employer NPS, ESI, state-wise Professional Tax & LWF, and a New vs Old regime TDS estimate - all recalculated on the prorated figure.",
   },
   {
     icon: "📄",

@@ -14,7 +14,7 @@
 // conversely a 30-day active-users count means something different than an
 // all-time one for judging whether the site is currently getting used.
 //
-// This calls Google's API server-side using a service account — never do
+// This calls Google's API server-side using a service account - never do
 // this from the browser, since it needs a private key that must not be
 // exposed to the client. The frontend just calls GET /api/stats and gets
 // back plain JSON.

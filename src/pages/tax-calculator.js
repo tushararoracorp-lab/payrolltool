@@ -207,7 +207,7 @@ export default function TaxCalculator() {
   // Mirror the <html data-theme> attribute (set by Header.js's toggle) onto
   // this component's own wrapper element. The previous approach relied on a
   // CSS selector spanning <html> and .tc together (html[data-theme="dark"]
-  // .tc) inside a *scoped* styled-jsx block — that depends on exactly how
+  // .tc) inside a *scoped* styled-jsx block - that depends on exactly how
   // styled-jsx rewrites multi-element selectors, which isn't something to
   // gamble on. This sidesteps that entirely: the theme lives directly on
   // .tc as its own attribute, so the CSS rule only ever needs to match one
@@ -317,7 +317,7 @@ export default function TaxCalculator() {
     });
   };
 
-  // LinkedIn's share-offsite endpoint only ever accepts a url= param — it
+  // LinkedIn's share-offsite endpoint only ever accepts a url= param - it
   // has never supported pre-filling post text (deliberately, to stop sites
   // auto-stuffing promotional copy into people's posts). It only reads the
   // target URL's Open Graph tags for the preview card, which is why the
@@ -1001,7 +1001,7 @@ export default function TaxCalculator() {
                   </div>
                   {liCopied && (
                     <p style={{ fontSize: "12.5px", color: "var(--ink-soft)", marginTop: "8px" }}>
-                      LinkedIn doesn&apos;t support pre-filled post text — your message is copied, just paste it into the box that opened.
+                      LinkedIn doesn&apos;t support pre-filled post text - your message is copied, just paste it into the box that opened.
                     </p>
                   )}
                 </div>

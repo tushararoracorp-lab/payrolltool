@@ -74,7 +74,7 @@ const toolLinksCol2 = [
 ];
 
 // Curated 6 of 9 live posts (matches the 3 already featured on the homepage
-// blog section, plus 3 more) — "Browse all articles" in col 2 covers the rest.
+// blog section, plus 3 more) - "Browse all articles" in col 2 covers the rest.
 const blogLinksCol1 = [
   { href: "/blog/pf-ecr-file-format", label: "PF ECR File Format Guide", icon: ICONS.pfEcr },
   { href: "/blog/salary-proration-india", label: "Prorated CTC Calculation", icon: ICONS.article },

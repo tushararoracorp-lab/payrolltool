@@ -19,7 +19,7 @@ export default function RequestForm({ heading, subtext }) {
     const trimmedEmail = email.trim();
 
     if (!EMAIL_PATTERN.test(trimmedEmail)) {
-      setEmailError("That doesn't look like a valid email — double-check it before sending.");
+      setEmailError("That doesn't look like a valid email - double-check it before sending.");
       return;
     }
     setEmailError("");
@@ -82,7 +82,7 @@ export default function RequestForm({ heading, subtext }) {
         </button>
         {status === "error" && (
           <p className="request-form-error">
-            Something went wrong — email{" "}
+            Something went wrong - email{" "}
             <a href="mailto:support@payrolltool.in">support@payrolltool.in</a> directly instead.
           </p>
         )}
