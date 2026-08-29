@@ -4,6 +4,7 @@ import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import RequestForm from "../components/RequestForm";
 
 const Icon = {
   globe: (
@@ -264,7 +265,7 @@ export default function Home() {
         <link rel="canonical" href="https://www.payrolltool.in/" />
         <meta name="theme-color" content="#7C3AED" />
 
-        {/* TODO: og-homepage.jpg doesn't exist yet — create a real 1200x630
+        {/* TODO: og-homepage.jpg doesn't exist yet - create a real 1200x630
             image and deploy it to /public before relying on link previews. */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="PayrollTool.in" />
@@ -343,7 +344,7 @@ export default function Home() {
         />
         {/* SoftwareApplication schema - one per tool.
             NOTE: price is 0 for all five tools below because that's accurate
-            today. Update per-tool when the paid plan launches — a schema
+            today. Update per-tool when the paid plan launches - a schema
             that still claims free after that changes is the same class of
             problem as the earlier FAQ-schema mismatch. */}
         <script
@@ -686,6 +687,15 @@ export default function Home() {
         </div>
       </section>
 
+      <section style={{ padding: "16px 0 76px" }}>
+        <div className="wrap" style={{ display: "flex", justifyContent: "center" }}>
+          <RequestForm
+            heading="Have a calculator you wish existed? Or something here made your day easier?"
+            subtext="Tell me - I'd love to know!"
+          />
+        </div>
+      </section>
+
       <button
         className={`back-to-top${showBackToTop ? " visible" : ""}`}
         aria-label="Back to top"
@@ -709,10 +719,10 @@ export default function Home() {
         /* Dark-mode color overrides.
            Root cause found: globals.css had an entire legacy "HOMEPAGE
            STYLES" section reusing these same class names (.hero, .tool-card,
-           etc.) with hardcoded light-only colors — e.g. .hero h1 { color:
+           etc.) with hardcoded light-only colors - e.g. .hero h1 { color:
            #1E1B4B } directly, not via a variable, so no dark-mode override
            could ever touch it. That section has been removed from
-           globals.css. !important is no longer needed here as a result —
+           globals.css. !important is no longer needed here as a result -
            plain specificity is enough now that there's one source of truth. */
         html[data-theme="dark"] {
           --brand-600: #9163F2;
