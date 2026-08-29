@@ -85,18 +85,42 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Email 1: notification to you, with replyTo set to the submitter so
+    // you can just hit reply in your own inbox. This is the important one -
+    // if this fails, the request genuinely failed.
     await mailer.sendMail({
       from: '"PayrollTool.in" <support@payrolltool.in>',
       to: "support@payrolltool.in",
-      replyTo: email, // hit reply in your inbox and it goes straight to them, not back to yourself
+      replyTo: email,
       subject: `Feature request${name ? ` from ${name}` : ""} — PayrollTool.in`,
       text: `From: ${name || "(no name given)"} <${email}>\n\n${message}`,
       html: `<p><strong>From:</strong> ${name || "(no name given)"} &lt;${email}&gt;</p><p>${message.replace(/\n/g, "<br>")}</p>`,
     });
-
-    res.status(200).json({ success: true });
   } catch (err) {
-    console.error("Failed to send contact form email:", err);
+    console.error("Failed to send contact form notification email:", err);
     res.status(502).json({ error: "Failed to send email", detail: err.message });
+    return;
   }
+
+  // Email 2: confirmation back to the submitter, so they get something in
+  // their own inbox too, not just the on-screen "Got it" message. This was
+  // missing entirely before - the notification above only ever reached
+  // support@payrolltool.in, submitters had no email trail at all.
+  // Deliberately NOT allowed to fail the whole request - the important
+  // email (above) already succeeded by the time this runs, and a bounce or
+  // transient issue sending this one shouldn't make the submitter see an
+  // error for something that actually worked.
+  try {
+    await mailer.sendMail({
+      from: '"PayrollTool.in" <support@payrolltool.in>',
+      to: email,
+      subject: "Got your message — PayrollTool.in",
+      text: `Hi${name ? ` ${name}` : ""},\n\nThanks for reaching out — I've received your message and read every one myself:\n\n"${message}"\n\nI'll get back to you directly if there's anything to follow up on.\n\n— Tushar, PayrollTool.in`,
+      html: `<p>Hi${name ? ` ${name}` : ""},</p><p>Thanks for reaching out — I've received your message and read every one myself:</p><blockquote style="border-left:3px solid #7C3AED;margin:12px 0;padding-left:12px;color:#4A4258;">${message.replace(/\n/g, "<br>")}</blockquote><p>I'll get back to you directly if there's anything to follow up on.</p><p>— Tushar, PayrollTool.in</p>`,
+    });
+  } catch (err) {
+    console.error("Failed to send confirmation email to submitter (notification to support@ already succeeded):", err);
+  }
+
+  res.status(200).json({ success: true });
 }
