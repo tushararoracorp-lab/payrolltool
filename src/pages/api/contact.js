@@ -92,7 +92,7 @@ export default async function handler(req, res) {
       from: '"PayrollTool.in" <support@payrolltool.in>',
       to: "support@payrolltool.in",
       replyTo: email,
-      subject: `Feature request${name ? ` from ${name}` : ""} — PayrollTool.in`,
+      subject: `Feature request${name ? ` from ${name}` : ""} - PayrollTool.in`,
       text: `From: ${name || "(no name given)"} <${email}>\n\n${message}`,
       html: `<p><strong>From:</strong> ${name || "(no name given)"} &lt;${email}&gt;</p><p>${message.replace(/\n/g, "<br>")}</p>`,
     });
@@ -114,9 +114,9 @@ export default async function handler(req, res) {
     await mailer.sendMail({
       from: '"PayrollTool.in" <support@payrolltool.in>',
       to: email,
-      subject: "Got your message — PayrollTool.in",
-      text: `Hi${name ? ` ${name}` : ""},\n\nThanks for reaching out — I've received your message and read every one myself:\n\n"${message}"\n\nI'll get back to you directly if there's anything to follow up on.\n\n— Tushar, PayrollTool.in`,
-      html: `<p>Hi${name ? ` ${name}` : ""},</p><p>Thanks for reaching out — I've received your message and read every one myself:</p><blockquote style="border-left:3px solid #7C3AED;margin:12px 0;padding-left:12px;color:#4A4258;">${message.replace(/\n/g, "<br>")}</blockquote><p>I'll get back to you directly if there's anything to follow up on.</p><p>— Tushar, PayrollTool.in</p>`,
+      subject: "Got your message - PayrollTool.in",
+      text: `Hi${name ? ` ${name}` : ""},\n\nThanks for reaching out - I've received your message and read every one myself:\n\n"${message}"\n\nI'll get back to you directly if there's anything to follow up on.\n\n- Tushar, PayrollTool.in\nLinkedIn: https://www.linkedin.com/in/tushararorafna/\nX: https://x.com/TusharArora89`,
+      html: `<p>Hi${name ? ` ${name}` : ""},</p><p>Thanks for reaching out - I've received your message and read every one myself:</p><blockquote style="border-left:3px solid #7C3AED;margin:12px 0;padding-left:12px;color:#4A4258;">${message.replace(/\n/g, "<br>")}</blockquote><p>I'll get back to you directly if there's anything to follow up on.</p><p>- Tushar, PayrollTool.in<br><a href="https://www.linkedin.com/in/tushararorafna/" style="color:#7C3AED;text-decoration:none;font-size:13px;">LinkedIn</a> &nbsp;·&nbsp; <a href="https://x.com/TusharArora89" style="color:#7C3AED;text-decoration:none;font-size:13px;">X</a></p>`,
     });
   } catch (err) {
     console.error("Failed to send confirmation email to submitter (notification to support@ already succeeded):", err);
