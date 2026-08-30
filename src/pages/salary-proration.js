@@ -473,6 +473,17 @@ export default function SalaryProration() {
         <meta property="og:url" content="https://www.payrolltool.in/salary-proration" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://www.payrolltool.in/salary-proration" />
+        {/* Preload the Shadow DOM's stylesheet. Without this, the browser
+            doesn't start fetching salary-proration-tool.css until the
+            mount useEffect below runs and creates the <link> itself -
+            which only happens after the JS bundle downloads, parses, and
+            the component mounts. That gap is exactly what shows up as
+            unstyled default-browser buttons/borders for about a second
+            before the real styling snaps in. Preloading here starts the
+            fetch immediately, in parallel with everything else, so by the
+            time the Shadow DOM's own <link> requests the same file, it's
+            typically already cached and applies near-instantly. */}
+        <link rel="preload" as="style" href="/salary-proration-tool.css" />
       </Head>
 
       <div className="sp-wrapper" data-theme={theme}>
