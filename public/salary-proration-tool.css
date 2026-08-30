@@ -12,7 +12,7 @@
   --shl:0 20px 60px rgba(124,58,237,.14),0 4px 16px rgba(124,58,237,.07);
 }
 /* Dark mode. :host() is the Shadow-DOM-native way to react to an attribute
-   on the host element (set in the light DOM by the React wrapper) — this
+   on the host element (set in the light DOM by the React wrapper) - this
    is the correct mechanism here, not a workaround, since a shadow tree
    can't see the outer document's html[data-theme] at all. */
 :host([data-theme="dark"]){

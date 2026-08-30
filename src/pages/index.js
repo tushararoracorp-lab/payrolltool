@@ -4,6 +4,7 @@ import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import RequestForm from "../components/RequestForm";
 
 const Icon = {
   globe: (
@@ -162,6 +163,125 @@ export default function Home() {
   const [countryData, setCountryData] = useState(DEFAULT_COUNTRY_DATA);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
+  // Hero card animation state - converted from hero-card-v2.html. 4 scenes:
+  // typed Q&A intro, 5-tool grid, roadmap ECG pulse, end card. Loops
+  // continuously, pauses when the tab isn't visible.
+  const HERO_SCENES = [
+    { panel: 1, typed: true },
+    { panel: 2, duration: 4300 },
+    { panel: 3, duration: 4600 },
+    { panel: 4, duration: 2600 },
+  ];
+  const HERO_TYPE_LINES = [
+    { key: "q1", text: "What is PayrollTool.in?", speed: 32 },
+    { key: "a1", text: "PayrollTool.in is a browser-based payroll calculator for Indian HR and payroll professionals.", speed: 16 },
+    { key: "q2", text: "What is the story behind PayrollTool.in?", speed: 32 },
+    { key: "a2", text: "PayrollTool.in grew out of real payroll work. After years of handling Indian payroll and compliance, Tushar Arora found himself repeatedly solving the same calculations through spreadsheets and scattered tools. He started building simple, focused utilities to make those everyday payroll tasks easier - first for himself, and then for other HR and payroll professionals.", speed: 11 },
+  ];
+  const [heroScene, setHeroScene] = useState(0);
+  const [heroTyped, setHeroTyped] = useState({ q1: "", a1: "", q2: "", a2: "" });
+  const [heroTypingLine, setHeroTypingLine] = useState(-1);
+  const [heroToolsIn, setHeroToolsIn] = useState([false, false, false, false, false]);
+  const [heroToolsStamped, setHeroToolsStamped] = useState([false, false, false, false, false]);
+  const [heroCalloutsIn, setHeroCalloutsIn] = useState([false, false, false]);
+  const [heroOutroIn, setHeroOutroIn] = useState(false);
+  const [heroEcgKey, setHeroEcgKey] = useState(0); // bump to force the SVG draw/dot animations to restart each loop
+  const [heroRestartTick, setHeroRestartTick] = useState(0); // bump to force the scene effect to re-run on the same scene index
+
+  useEffect(() => {
+    let timers = [];
+    let cancelled = false;
+    const scene = HERO_SCENES[heroScene];
+
+    // Don't schedule anything while the tab is backgrounded - the
+    // visibilitychange listener below forces this effect to re-run (and
+    // its cleanup to cancel any timers already pending) the moment the tab
+    // hides, and again when it becomes visible.
+    if (document.hidden) {
+      return () => { cancelled = true; timers.forEach(clearTimeout); };
+    }
+
+    setHeroToolsIn([false, false, false, false, false]);
+    setHeroToolsStamped([false, false, false, false, false]);
+    setHeroCalloutsIn([false, false, false]);
+    setHeroOutroIn(false);
+
+    function advance() {
+      setHeroScene((prev) => (prev + 1) % HERO_SCENES.length);
+    }
+
+    if (scene.panel === 1) {
+      setHeroTyped({ q1: "", a1: "", q2: "", a2: "" });
+      let li = 0;
+      function typeLine() {
+        if (cancelled || li >= HERO_TYPE_LINES.length) {
+          if (!cancelled) timers.push(setTimeout(advance, 300));
+          return;
+        }
+        const line = HERO_TYPE_LINES[li];
+        setHeroTypingLine(li);
+        let ci = 0;
+        function typeChar() {
+          if (cancelled) return;
+          setHeroTyped((prev) => ({ ...prev, [line.key]: line.text.slice(0, ci) }));
+          if (ci >= line.text.length) {
+            const pause = li === 1 ? 1800 : li === 3 ? 2200 : 350;
+            timers.push(setTimeout(() => { li++; typeLine(); }, pause));
+            return;
+          }
+          ci++;
+          timers.push(setTimeout(typeChar, line.speed));
+        }
+        typeChar();
+      }
+      typeLine();
+    }
+
+    if (scene.panel === 3) {
+      setHeroEcgKey((k) => k + 1);
+      timers.push(setTimeout(() => setHeroCalloutsIn([true, false, false]), 1000));
+      timers.push(setTimeout(() => setHeroCalloutsIn([true, true, false]), 1750));
+      timers.push(setTimeout(() => setHeroCalloutsIn([true, true, true]), 2500));
+      timers.push(setTimeout(() => setHeroOutroIn(true), 3300));
+    }
+
+    if (scene.panel === 2) {
+      for (let ti = 0; ti < 5; ti++) {
+        const delay = 200 + ti * 780;
+        timers.push(setTimeout(() => {
+          setHeroToolsIn((prev) => { const next = [...prev]; next[ti] = true; return next; });
+        }, delay));
+        timers.push(setTimeout(() => {
+          setHeroToolsStamped((prev) => { const next = [...prev]; next[ti] = true; return next; });
+        }, delay + 280));
+      }
+    }
+
+    if (!scene.typed) {
+      timers.push(setTimeout(advance, scene.duration));
+    }
+
+    return () => { cancelled = true; timers.forEach(clearTimeout); };
+  }, [heroScene, heroRestartTick]);
+
+  // Pause the whole sequence when the tab is backgrounded (the effect's own
+  // cleanup already cancels every pending timer when this component
+  // re-renders, and a plain document.hidden check inside each timer callback
+  // isn't reliable since a backgrounded tab can throttle timers arbitrarily).
+  // On becoming visible again, restart the current scene from the beginning -
+  // matching the original vanilla JS version's behavior exactly, which also
+  // restarted the current scene rather than resuming from its exact
+  // sub-position. Setting heroScene to its own value wouldn't re-trigger the
+  // effect (React bails out when state is unchanged), so a separate counter
+  // forces it.
+  useEffect(() => {
+    function handleVisibility() {
+      setHeroRestartTick((t) => t + 1);
+    }
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
+
   // ---------- Back to top ----------
   useEffect(() => {
     function onScroll() {
@@ -236,7 +356,7 @@ export default function Home() {
             const c = byIso[+d.id];
             if (!c) return;
             const rect = popoverEl.getBoundingClientRect();
-            tooltip.textContent = `${c.name} \u2014 ${c.users} user${c.users === 1 ? "" : "s"}`;
+            tooltip.textContent = `${c.name} - ${c.users} user${c.users === 1 ? "" : "s"}`;
             tooltip.style.left = event.clientX - rect.left + "px";
             tooltip.style.top = Math.max(24, event.clientY - rect.top) + "px";
             tooltip.style.opacity = "1";
@@ -247,7 +367,7 @@ export default function Home() {
           });
       })
       .catch(() => {
-        wrap.innerHTML = '<div class="cm-loading">Map unavailable \u2014 see list below.</div>';
+        wrap.innerHTML = '<div class="cm-loading">Map unavailable - see list below.</div>';
       });
   }
 
@@ -264,7 +384,7 @@ export default function Home() {
         <link rel="canonical" href="https://www.payrolltool.in/" />
         <meta name="theme-color" content="#7C3AED" />
 
-        {/* TODO: og-homepage.jpg doesn't exist yet — create a real 1200x630
+        {/* TODO: og-homepage.jpg doesn't exist yet - create a real 1200x630
             image and deploy it to /public before relying on link previews. */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="PayrollTool.in" />
@@ -343,7 +463,7 @@ export default function Home() {
         />
         {/* SoftwareApplication schema - one per tool.
             NOTE: price is 0 for all five tools below because that's accurate
-            today. Update per-tool when the paid plan launches — a schema
+            today. Update per-tool when the paid plan launches - a schema
             that still claims free after that changes is the same class of
             problem as the earlier FAQ-schema mismatch. */}
         <script
@@ -394,7 +514,7 @@ export default function Home() {
                   url: "https://www.payrolltool.in/final-settlement",
                   applicationCategory: "BusinessApplication",
                   operatingSystem: "Any (browser-based)",
-                  description: "Calculates full and final settlement \u2014 gratuity, notice pay, leave encashment, and statutory deductions \u2014 in one place.",
+                  description: "Calculates full and final settlement - gratuity, notice pay, leave encashment, and statutory deductions - in one place.",
                   offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
                 },
               ],
@@ -436,31 +556,102 @@ export default function Home() {
             </div>
 
             <div className="hero-visual">
-              <div className="preview-card">
-                <div className="preview-topbar">
-                  <span className="title">{Icon.file} LOP Splitter - live preview</span>
-                  <span className="live-tag"><span className="dot" />Live</span>
-                </div>
-                <div className="preview-body">
-                  <div className="preview-row-label">Employee period entered</div>
-                  <div className="input-chip-row">
-                    <span className="input-chip">DOJ: 14 Feb 2026</span>
-                    <span className="input-chip">LOP: 3 days</span>
-                    <span className="input-chip">Payroll month: Feb 2026</span>
-                  </div>
-                  <table className="preview-table">
-                    <thead>
-                      <tr><th>Month</th><th>Days</th><th>LOP</th><th>Payable</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr><td>Feb 2026</td><td>28</td><td><span className="badge-days">3.0</span></td><td>25.0</td></tr>
-                      <tr><td>Mar 2026</td><td>31</td><td><span className="badge-days">0.0</span></td><td>31.0</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className="preview-footer">
-                  <span className="result">Calculated in <b>0.4s</b></span>
-                  <span className="mini-btn">Download report {Icon.download}</span>
+              <div className="preview-card hero-card" role="group" aria-label="PayrollTool.in feature preview">
+                <span className="sr-only-hero">
+                  PayrollTool.in: browser-based payroll calculators for Indian HR and payroll professionals - LOP Splitter, salary proration, PF ECR filing, tax regime comparison, and final settlement. No sign-up required.
+                </span>
+                <div className="hero-card-body">
+
+                  {/* Panel 1: typed Q&A intro */}
+                  {HERO_SCENES[heroScene].panel === 1 && (
+                    <div className="hero-panel hero-type-wrap">
+                      {heroTyped.q1 && (
+                        <div className="hero-type-line hero-type-q">
+                          {heroTyped.q1}{heroTypingLine === 0 && <span className="hero-type-cursor" />}
+                        </div>
+                      )}
+                      {heroTyped.a1 && (
+                        <div className="hero-type-line hero-type-a">
+                          {heroTyped.a1}{heroTypingLine === 1 && <span className="hero-type-cursor" />}
+                        </div>
+                      )}
+                      {heroTyped.q2 && (
+                        <div className="hero-type-line hero-type-q">
+                          {heroTyped.q2}{heroTypingLine === 2 && <span className="hero-type-cursor" />}
+                        </div>
+                      )}
+                      {heroTyped.a2 && (
+                        <div className="hero-type-line hero-type-a">
+                          {heroTyped.a2}{heroTypingLine === 3 && <span className="hero-type-cursor" />}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Panel 2: 5-tool grid */}
+                  {HERO_SCENES[heroScene].panel === 2 && (
+                    <div className="hero-panel">
+                      <div className="hero-tools-caption">Then came four more - each built, then shipped.</div>
+                      <div className="hero-tools-grid">
+                        {[
+                          { name: "LOP Splitter", icon: Icon.file },
+                          { name: "Salary Proration", icon: Icon.globe },
+                          { name: "PF ECR Creator", icon: Icon.download },
+                          { name: "Final Settlement", icon: Icon.check },
+                          { name: "Tax Calculator", icon: Icon.bolt },
+                        ].map((tool, i) => (
+                          <div className={`hero-tool-card${i === 4 ? " hero-tool-center" : ""}${heroToolsIn[i] ? " in" : ""}`} key={tool.name}>
+                            <div className="hero-tool-icon">{tool.icon}</div>
+                            <div className="hero-tool-name">{tool.name}</div>
+                            <span className={`hero-tool-stamp${heroToolsStamped[i] ? " on" : ""}`}><span className="dot" />Live</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Panel 3: roadmap ECG pulse */}
+                  {HERO_SCENES[heroScene].panel === 3 && (
+                    <div className="hero-panel hero-ecg-panel">
+                      <div className="hero-ecg-top">
+                        <div className="hero-tools-caption">And we&apos;re still building.</div>
+                        <div className="hero-ecg-wrap">
+                          <svg className="hero-ecg-svg" viewBox="0 0 340 96" preserveAspectRatio="none">
+                            <path d="M0,50 L60,50 L72,50 L80,15 L88,80 L96,50 L118,50 L130,50 L138,25 L146,72 L154,50 L176,50 L184,50 L192,20 L200,75 L208,50 L230,50 L340,50" fill="none" stroke="var(--line)" strokeWidth="2" />
+                            <path key={`ecg-line-${heroEcgKey}`} className="hero-ecg-line-anim" d="M0,50 L60,50 L72,50 L80,15 L88,80 L96,50 L118,50 L130,50 L138,25 L146,72 L154,50 L176,50 L184,50 L192,20 L200,75 L208,50 L230,50 L340,50" fill="none" stroke="var(--brand-600)" strokeWidth="2.2" />
+                            <circle key={`ecg-dot-${heroEcgKey}`} className="hero-ecg-dot" r="4" fill="var(--brand-600)" />
+                          </svg>
+                          <div className={`hero-ecg-callout${heroCalloutsIn[0] ? " in" : ""}`} style={{ top: "-4px", left: "14%" }}>
+                            <b>ESIC File Builder</b><span style={{ color: "var(--amber)" }}>In progress</span>
+                          </div>
+                          <div className={`hero-ecg-callout${heroCalloutsIn[1] ? " in" : ""}`} style={{ top: "58%", left: "38%" }}>
+                            <b>Compliance Updates</b><span style={{ color: "var(--amber)" }}>Planned</span>
+                          </div>
+                          <div className={`hero-ecg-callout${heroCalloutsIn[2] ? " in" : ""}`} style={{ top: "-4px", left: "58%" }}>
+                            <b>Dashboard</b><span style={{ color: "var(--amber)" }}>Planned</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="hero-ecg-outro-spacer">
+                        <div className={`hero-ecg-outro${heroOutroIn ? " in" : ""}`}>Many more to go.</div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Panel 4: end card */}
+                  {HERO_SCENES[heroScene].panel === 4 && (
+                    <div className="hero-panel hero-end-wrap">
+                      <div className="hero-end-mark">{Icon.heart}</div>
+                      <div className="hero-end-word">PayrollTool<span style={{ color: "var(--ink-soft)", fontWeight: 600 }}>.in</span></div>
+                      <div className="hero-end-tagline">Built from real payroll work.</div>
+                      <div className="hero-end-sub">Practical tools for getting payroll right.</div>
+                      <Link href="#tools" className="hero-end-btn">
+                        Explore Tools
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+                      </Link>
+                    </div>
+                  )}
+
                 </div>
               </div>
             </div>
@@ -686,6 +877,15 @@ export default function Home() {
         </div>
       </section>
 
+      <section style={{ padding: "16px 0 76px" }}>
+        <div className="wrap" style={{ display: "flex", justifyContent: "center" }}>
+          <RequestForm
+            heading="Have a calculator you wish existed? Or something here made your day easier?"
+            subtext="Tell me - I'd love to know!"
+          />
+        </div>
+      </section>
+
       <button
         className={`back-to-top${showBackToTop ? " visible" : ""}`}
         aria-label="Back to top"
@@ -709,10 +909,10 @@ export default function Home() {
         /* Dark-mode color overrides.
            Root cause found: globals.css had an entire legacy "HOMEPAGE
            STYLES" section reusing these same class names (.hero, .tool-card,
-           etc.) with hardcoded light-only colors — e.g. .hero h1 { color:
+           etc.) with hardcoded light-only colors - e.g. .hero h1 { color:
            #1E1B4B } directly, not via a variable, so no dark-mode override
            could ever touch it. That section has been removed from
-           globals.css. !important is no longer needed here as a result —
+           globals.css. !important is no longer needed here as a result -
            plain specificity is enough now that there's one source of truth. */
         html[data-theme="dark"] {
           --brand-600: #9163F2;
@@ -742,9 +942,9 @@ export default function Home() {
         .trust-row { display: flex; align-items: center; gap: 18px; margin-top: 34px; flex-wrap: wrap; }
         .trust-pill { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-soft); font-weight: 500; }
         .trust-pill svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
-        .hero-visual { position: relative; min-height: 420px; background: var(--card-2); border-radius: var(--radius-lg); border: 1px solid var(--line); padding: 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hero-visual { position: relative; min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-        .preview-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; width: 100%; }
+        .preview-card { background: var(--card-2); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; width: 100%; }
         .preview-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--brand-50); }
         .preview-topbar .title { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--ink); min-width: 0; flex: 1; }
         .preview-topbar .title svg { width: 16px; height: 16px; color: var(--brand-600); }
@@ -764,6 +964,64 @@ export default function Home() {
         .preview-footer .result { font-size: 12.5px; color: var(--ink-soft); }
         .preview-footer .result b { color: var(--ink); font-family: "DM Mono", monospace; font-size: 15px; }
         .mini-btn { background: var(--ink); color: var(--paper); font-size: 12.5px; font-weight: 600; padding: 8px 14px; border-radius: 100px; display: flex; align-items: center; gap: 6px; }
+
+        /* ---------- Hero card animation ---------- */
+        .sr-only-hero { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        .hero-card-body { position: relative; height: 300px; padding: 18px; }
+        .hero-panel { animation: heroPanelIn .5s ease; height: 100%; }
+        @keyframes heroPanelIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero-type-wrap { display: flex; flex-direction: column; justify-content: center; height: 100%; gap: 8px; }
+        .hero-type-line { font-size: 12.5px; line-height: 1.55; }
+        .hero-type-q { font-family: "Sora", sans-serif; font-weight: 700; color: var(--ink); font-size: 14px; }
+        .hero-type-a { color: var(--ink-soft); }
+        .hero-type-cursor { display: inline-block; width: 2px; background: var(--brand-600); margin-left: 1px; animation: heroBlink .9s step-end infinite; height: 1em; vertical-align: text-bottom; }
+        @keyframes heroBlink { 50% { opacity: 0; } }
+
+        .hero-tools-caption { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 10px; text-align: center; }
+        .hero-tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+        .hero-tool-card { background: var(--card-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 5px; text-align: center; opacity: 0; transform: scale(.88); transition: all .45s cubic-bezier(.34,1.4,.64,1); min-height: 76px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hero-tool-card.in { opacity: 1; transform: scale(1); }
+        .hero-tool-center { grid-column: 2 / 3; }
+        .hero-tool-icon { width: 20px; height: 20px; border-radius: 50%; background: var(--brand-50); color: var(--brand-600); display: flex; align-items: center; justify-content: center; margin: 0 auto 5px; flex-shrink: 0; }
+        .hero-tool-icon svg { width: 11px; height: 11px; }
+        .hero-tool-name { font-size: 9px; font-weight: 600; color: var(--ink); line-height: 1.25; }
+        .hero-tool-stamp { display: inline-flex; align-items: center; gap: 3px; font-size: 8.5px; font-weight: 700; padding: 1.5px 6px; border-radius: 100px; margin-top: 5px; background: var(--green-50); color: var(--green); opacity: 0; transform: scale(1.8) rotate(-10deg); transition: all .3s cubic-bezier(.18,1.8,.5,1); }
+        .hero-tool-stamp.on { opacity: 1; transform: scale(1) rotate(-4deg); }
+        .hero-tool-stamp .dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+
+        .hero-ecg-panel { display: flex; flex-direction: column; }
+        .hero-ecg-top { flex: none; }
+        .hero-ecg-outro-spacer { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+        .hero-ecg-wrap { position: relative; width: 100%; height: 96px; }
+        .hero-ecg-svg { width: 100%; height: 100%; overflow: visible; }
+        .hero-ecg-line-anim { stroke-dasharray: 900; stroke-dashoffset: 900; animation: heroEcgDraw 3.4s ease-in-out forwards; }
+        @keyframes heroEcgDraw { to { stroke-dashoffset: 0; } }
+        .hero-ecg-dot { offset-path: path("M0,50 L60,50 L72,50 L80,15 L88,80 L96,50 L118,50 L130,50 L138,25 L146,72 L154,50 L176,50 L184,50 L192,20 L200,75 L208,50 L230,50 L340,50"); offset-distance: 0%; animation: heroEcgMove 3.4s ease-in-out forwards; }
+        @keyframes heroEcgMove { to { offset-distance: 100%; } }
+        @supports not (offset-path: path("M0,0")) { .hero-ecg-dot { display: none; } }
+        .hero-ecg-callout { position: absolute; background: var(--card); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow-card); padding: 5px 8px; text-align: center; width: 96px; opacity: 0; transform: translateY(6px) scale(.9); transition: all .35s cubic-bezier(.34,1.4,.64,1); font-size: 9px; }
+        .hero-ecg-callout.in { opacity: 1; transform: translateY(0) scale(1); }
+        .hero-ecg-callout b { display: block; font-size: 9px; color: var(--ink); margin-bottom: 2px; }
+        .hero-ecg-outro { text-align: center; font-family: "Sora", sans-serif; font-weight: 700; font-size: 12px; color: var(--brand-600); opacity: 0; transform: translateY(6px); transition: all .4s cubic-bezier(.34,1.4,.64,1); }
+        .hero-ecg-outro.in { opacity: 1; transform: translateY(0); }
+
+        .hero-end-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; }
+        .hero-end-mark { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--brand-600), var(--brand-700)); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; color: white; }
+        .hero-end-mark svg { width: 17px; height: 17px; }
+        .hero-end-word { font-family: "Sora", sans-serif; font-weight: 700; font-size: 16px; color: var(--brand-600); margin-bottom: 6px; }
+        .hero-end-tagline { font-family: "Sora", sans-serif; font-weight: 700; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+        .hero-end-sub { font-size: 11.5px; color: var(--ink-soft); max-width: 230px; line-height: 1.5; }
+        .hero-end-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--brand-600); color: #fff; font-size: 12.5px; font-weight: 600; padding: 9px 16px; border-radius: 100px; text-decoration: none; margin-top: 14px; transition: opacity .15s ease; }
+        .hero-end-btn:hover { opacity: .88; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-panel, .hero-tool-card, .hero-tool-stamp, .hero-ecg-line-anim, .hero-ecg-dot,
+          .hero-ecg-callout, .hero-ecg-outro, .hero-type-cursor {
+            animation: none !important; transition: none !important;
+          }
+          .hero-tool-card.in, .hero-ecg-callout.in, .hero-ecg-outro.in { opacity: 1; transform: none; }
+        }
 
         @media (max-width: 960px) {
           .hero-grid { grid-template-columns: 1fr; gap: 32px; }

@@ -15,9 +15,9 @@ This is not your own NPS contribution. It is an amount your **employer** pays in
 
 Three separate NPS-related deductions exist, and they are constantly confused:
 
-**Your own contribution within the Section 123 basket** - competes with EPF, PPF and everything else for one ₹1,50,000 cap. Old regime only.
+**Your own contribution within the Section 123 basket** - competes with EPF, PPF and everything else for one Rs. 1,50,000 cap. Old regime only.
 
-**Your additional contribution of up to ₹50,000** - formerly Section 80CCD(1B), sits outside the basket. Old regime only.
+**Your additional contribution of up to Rs. 50,000** - formerly Section 80CCD(1B), sits outside the basket. Old regime only.
 
 **Your employer's contribution under Section 124** - separate from both, and available under **both regimes**.
 
@@ -27,13 +27,13 @@ The deduction is capped as a **percentage of salary**, where salary means Basic 
 
 The percentage differs by employer type and, since the new regime's introduction, by regime. Because the applicable percentage has been revised more than once in recent years, check the current figure against your own payroll system's configuration or with your finance team before relying on a specific number - this is one of the details most likely to have moved.
 
-The structural point holds regardless of the exact percentage: **the higher your Basic, the more room you have.** An employee with a Basic of ₹4,00,000 has far less headroom than one with a Basic of ₹12,00,000 on the same CTC. Salary structures that suppress Basic to reduce gratuity and EPF liability also shrink this deduction.
+The structural point holds regardless of the exact percentage: **the higher your Basic, the more room you have.** An employee with a Basic of Rs. 4,00,000 has far less headroom than one with a Basic of Rs. 12,00,000 on the same CTC. Salary structures that suppress Basic to reduce gratuity and EPF liability also shrink this deduction.
 
 ## Why it matters more under the new regime
 
 Under the old regime, employer NPS is one deduction among many. Under the new regime it is essentially the only one, which changes its relative value entirely.
 
-Consider an employee on ₹19,00,000 gross under the new regime. Standard Deduction of ₹75,000 brings taxable income to ₹18,25,000, and the tax is ₹1,71,600. Every rupee of employer NPS contribution comes off that ₹18,25,000 at the marginal rate - and there is nothing else competing to reduce it.
+Consider an employee on Rs. 19,00,000 gross under the new regime. Standard Deduction of Rs. 75,000 brings taxable income to Rs. 18,25,000, and the tax is Rs. 1,71,600. Every rupee of employer NPS contribution comes off that Rs. 18,25,000 at the marginal rate - and there is nothing else competing to reduce it.
 
 ## The catch employees miss
 

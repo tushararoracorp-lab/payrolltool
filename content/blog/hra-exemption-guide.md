@@ -21,15 +21,15 @@ Whichever is smallest becomes exempt. The remainder is taxable salary.
 
 ## A worked example
 
-Basic plus DA of ₹9,50,000 a year. HRA received ₹3,80,000. Rent paid ₹3,60,000. Living in a metro city.
+Basic plus DA of Rs. 9,50,000 a year. HRA received Rs. 3,80,000. Rent paid Rs. 3,60,000. Living in a metro city.
 
-**Actual HRA received** = ₹3,80,000  
-**Rent minus 10% of salary** = ₹3,60,000 − ₹95,000 = ₹2,65,000  
-**50% of salary** = ₹4,75,000
+**Actual HRA received** = Rs. 3,80,000  
+**Rent minus 10% of salary** = Rs. 3,60,000 − Rs. 95,000 = Rs. 2,65,000  
+**50% of salary** = Rs. 4,75,000
 
-The least is ₹2,65,000. That is your exemption. The remaining **₹1,15,000 of your HRA is taxable**.
+The least is Rs. 2,65,000. That is your exemption. The remaining **Rs. 1,15,000 of your HRA is taxable**.
 
-Notice what happened: this employee received ₹3,80,000 of HRA and got to exempt only about 70% of it, because the rent was not high enough relative to salary. That is the usual outcome, and it surprises people who assume HRA is a full exemption.
+Notice what happened: this employee received Rs. 3,80,000 of HRA and got to exempt only about 70% of it, because the rent was not high enough relative to salary. That is the usual outcome, and it surprises people who assume HRA is a full exemption.
 
 ## Why the second test is the binding one
 
@@ -53,7 +53,7 @@ Two points that cause disputes:
 
 **A rent agreement**, generally required above modest claim levels.
 
-**Your landlord's PAN** if annual rent exceeds ₹1,00,000. This is the requirement that most often derails a claim at proof-submission time, because landlords are sometimes reluctant to share it. Without the PAN the employer must disallow the claim, and you are left to claim it in your return with the evidence to support it.
+**Your landlord's PAN** if annual rent exceeds Rs. 1,00,000. This is the requirement that most often derails a claim at proof-submission time, because landlords are sometimes reluctant to share it. Without the PAN the employer must disallow the claim, and you are left to claim it in your return with the evidence to support it.
 
 ## The mistakes that cost money
 
@@ -69,7 +69,7 @@ Two points that cause disputes:
 
 ## The interaction with regime choice
 
-Because HRA only exists under the old regime, a large HRA exemption is one of the few things that can still make the old regime worthwhile. As a rough guide, an employee on ₹19,00,000 gross needs somewhere near ₹6,75,000 of total deductions to match the new regime - and for most people HRA is the largest single component of getting there.
+Because HRA only exists under the old regime, a large HRA exemption is one of the few things that can still make the old regime worthwhile. As a rough guide, an employee on Rs. 19,00,000 gross needs somewhere near Rs. 6,75,000 of total deductions to match the new regime - and for most people HRA is the largest single component of getting there.
 
 If your rent is modest relative to your salary, the old regime is unlikely to win regardless of what else you claim.
 

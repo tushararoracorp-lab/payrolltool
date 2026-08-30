@@ -63,7 +63,7 @@ export default function AdminLogin() {
   return (
     <>
       <Head>
-        <title>Admin Login — PayrollTool</title>
+        <title>Admin Login - PayrollTool</title>
       </Head>
       <div style={{
         minHeight: '100vh',

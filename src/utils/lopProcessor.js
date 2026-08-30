@@ -1,6 +1,6 @@
 /**
  * lopProcessor.js
- * Core LOP splitting logic — ported from VBA Module4.
+ * Core LOP splitting logic - ported from VBA Module4.
  * No weekend / holiday exclusion. All calendar days count.
  */
 
@@ -68,13 +68,13 @@ export function validateRow(row, rowNum) {
 /**
  * Process all input rows.
  *
- * @param {Array} rows  — array of raw objects from SheetJS
+ * @param {Array} rows  - array of raw objects from SheetJS
  * @returns {{ exportRows, obsRows, inputFlags, errors }}
  *
  * inputFlags: Map of rowIndex → { color: 'yellow'|'red' }
  * exportRows: [{ employeeId, startDate, endDate, days }]
  * obsRows:    [{ employeeId, doj, dol, startDate, totalDays, allowedDays, excessDays, remarks }]
- * errors:     [string]  — validation errors collected across all rows
+ * errors:     [string]  - validation errors collected across all rows
  */
 export function processLOP(rows) {
   const exportRows = [];

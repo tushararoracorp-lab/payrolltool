@@ -74,7 +74,7 @@ const toolLinksCol2 = [
 ];
 
 // Curated 6 of 9 live posts (matches the 3 already featured on the homepage
-// blog section, plus 3 more) — "Browse all articles" in col 2 covers the rest.
+// blog section, plus 3 more) - "Browse all articles" in col 2 covers the rest.
 const blogLinksCol1 = [
   { href: "/blog/pf-ecr-file-format", label: "PF ECR File Format Guide", icon: ICONS.pfEcr },
   { href: "/blog/salary-proration-india", label: "Prorated CTC Calculation", icon: ICONS.article },
@@ -185,9 +185,9 @@ export default function Header() {
             </div>
 
             <div className={`nav-item${blogActive ? " active" : ""}${openMenu === "blog" ? " mega-open" : ""}`} ref={blogRef}>
-              <a href="/blog" className="nav-link" onClick={handleBlogClick}>
+              <Link href="/blog" className="nav-link" onClick={handleBlogClick}>
                 Blog {ICONS.chevron}
-              </a>
+              </Link>
               <div className="mega">
                 <div className="mega-col">
                   <h5>Guides</h5>

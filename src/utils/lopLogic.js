@@ -79,7 +79,7 @@ export function addDays(date, n) {
 }
 
 /**
- * Process a single input row — returns export rows + observation entry
+ * Process a single input row - returns export rows + observation entry
  * @param {Object} row - { employeeId, doj, dol, startDate, days }
  * @param {number} rowIndex - 1-based row index for observations
  * @returns {{ exportRows: Array, observation: Object|null }}

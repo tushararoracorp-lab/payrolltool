@@ -1,6 +1,6 @@
 ---
 title: "Final Settlement Calculator: How to Calculate Gratuity, Leave Encashment & Notice Pay"
-description: "A guide to calculating your full and final settlement: gratuity (₹20L cap), leave encashment (₹25L Sec 10(10AA)), and notice period shortfall under Indian law."
+description: "A guide to calculating your full and final settlement: gratuity (Rs. 20L cap), leave encashment (Rs. 25L Sec 10(10AA)), and notice period shortfall under Indian law."
 date: "2026-08-07"
 slug: "final-settlement-calculator"
 ---
@@ -19,10 +19,10 @@ The formula is simple: **(Basic + DA) × 15 ÷ 26 × Years of Service**
 
 The 15 ÷ 26 is the statutory daily rate (15 working days per 26 working days in a month). If you've worked 6 years and 6 months, round the final 6 months up to a full year - so count it as 7 years.
 
-Here's the catch: gratuity is **capped at ₹20 lakh for private sector** and **₹25 lakh for government**. Anything above that cap is taxable. This cap is also the Section 10(10) tax exemption limit, so you'll never pay tax on gratuity if the employer paid it correctly.
+Here's the catch: gratuity is **capped at Rs. 20 lakh for private sector** and **Rs. 25 lakh for government**. Anything above that cap is taxable. This cap is also the Section 10(10) tax exemption limit, so you'll never pay tax on gratuity if the employer paid it correctly.
 
-**Example:** 6 years of service, Basic ₹50,000, DA ₹5,000.  
-Gratuity = (₹50,000 + ₹5,000) × 15 ÷ 26 × 6 = ₹75,000. Tax-free.
+**Example:** 6 years of service, Basic Rs. 50,000, DA Rs. 5,000.  
+Gratuity = (Rs. 50,000 + Rs. 5,000) × 15 ÷ 26 × 6 = Rs. 75,000. Tax-free.
 
 ## Leave encashment: Only earned/privilege leave
 
@@ -30,10 +30,10 @@ Not all leave is encashable. Typically **Earned Leave (EL)** and **Privilege Lea
 
 The formula: **(Basic + DA) ÷ 30 × Number of Unused Leave Days**
 
-Leave encashment falls under **Section 10(10AA)**, which exempts up to **₹25 lakh per employee per lifetime** - shared across all employers. Anything above ₹25 lakh is taxable.
+Leave encashment falls under **Section 10(10AA)**, which exempts up to **Rs. 25 lakh per employee per lifetime** - shared across all employers. Anything above Rs. 25 lakh is taxable.
 
-**Example:** 45 unused leave days, Basic ₹50,000, DA ₹5,000.  
-Leave Encashment = (₹55,000 ÷ 30) × 45 = ₹82,500. Tax-free (under ₹25L).
+**Example:** 45 unused leave days, Basic Rs. 50,000, DA Rs. 5,000.  
+Leave Encashment = (Rs. 55,000 ÷ 30) × 45 = Rs. 82,500. Tax-free (under Rs. 25L).
 
 ## Notice period shortfall: Salary deduction
 
@@ -43,19 +43,19 @@ The formula: **(Basic + DA OR Gross) ÷ 30 × Short Days**
 
 Here's where people get confused: your appointment letter specifies whether the shortfall is calculated on **Basic+DA** or **Gross**. These can differ by thousands of rupees. Check your letter before resigning - asking HR in writing beats finding surprises on your settlement.
 
-**Example:** 60-day notice required, you worked 25 days, Gross ₹65,000.  
-Shortfall = (₹65,000 ÷ 30) × 35 = ₹75,833. This gets deducted.
+**Example:** 60-day notice required, you worked 25 days, Gross Rs. 65,000.  
+Shortfall = (Rs. 65,000 ÷ 30) × 35 = Rs. 75,833. This gets deducted.
 
 ## A complete settlement example
 
-Tenure 6 years 8 months, Basic ₹50,000, DA ₹5,000, Gross ₹65,000, 30 unused leave, 60-day notice required but only 25 days worked, ₹5,000 bonus pending, ₹2,000 uniform cost to deduct.
+Tenure 6 years 8 months, Basic Rs. 50,000, DA Rs. 5,000, Gross Rs. 65,000, 30 unused leave, 60-day notice required but only 25 days worked, Rs. 5,000 bonus pending, Rs. 2,000 uniform cost to deduct.
 
-**Gratuity** = ₹77,596 (6+ months in final year rounds up)  
-**Leave Encashment** = ₹55,000  
-**Notice Shortfall** = −₹75,833 (deducted)  
-**Bonus** = +₹5,000  
-**Uniform Cost** = −₹2,000  
-**Total** = ₹59,763 (before tax on the notice shortfall)
+**Gratuity** = Rs. 77,596 (6+ months in final year rounds up)  
+**Leave Encashment** = Rs. 55,000  
+**Notice Shortfall** = -Rs. 75,833 (deducted)  
+**Bonus** = +Rs. 5,000  
+**Uniform Cost** = -Rs. 2,000  
+**Total** = Rs. 59,763 (before tax on the notice shortfall)
 
 ## Before you sign your settlement
 

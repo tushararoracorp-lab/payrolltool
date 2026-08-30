@@ -706,7 +706,7 @@ function calculate(){
   const tdsM=tdsRes.tdsM; // this month's actual TDS deduction
   const tdsProjected = fullMos > 0
     ? R((tdsRes.annualTax - tdsM) / fullMos)
-    : tdsM; // last month of FY — nothing left to spread, charge remaining balance now
+    : tdsM; // last month of FY - nothing left to spread, charge remaining balance now
   const tdsDiffers=Math.abs(tdsM-tdsProjected)>1;
 
   // ── Totals - both columns ──
@@ -870,7 +870,7 @@ function buildTaxCmp(o){
       stdDed,npsExempt,ptExempt,perqAdd,
       annualTaxable:res.taxable,
       projectedTaxable:resProj.taxable,
-      annTax:res.annualTax, // DOJ-exact FY liability — matches Excel (114745 old / 0 new)
+      annTax:res.annualTax, // DOJ-exact FY liability - matches Excel (114745 old / 0 new)
       tdsMonthly:tdsForMonth,
       tdsThisMonth:tdsForThis,
       netMonthly,netThisMonth,

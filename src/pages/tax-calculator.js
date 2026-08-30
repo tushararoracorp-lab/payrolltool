@@ -207,7 +207,7 @@ export default function TaxCalculator() {
   // Mirror the <html data-theme> attribute (set by Header.js's toggle) onto
   // this component's own wrapper element. The previous approach relied on a
   // CSS selector spanning <html> and .tc together (html[data-theme="dark"]
-  // .tc) inside a *scoped* styled-jsx block — that depends on exactly how
+  // .tc) inside a *scoped* styled-jsx block - that depends on exactly how
   // styled-jsx rewrites multi-element selectors, which isn't something to
   // gamble on. This sidesteps that entirely: the theme lives directly on
   // .tc as its own attribute, so the CSS rule only ever needs to match one
@@ -317,7 +317,7 @@ export default function TaxCalculator() {
     });
   };
 
-  // LinkedIn's share-offsite endpoint only ever accepts a url= param — it
+  // LinkedIn's share-offsite endpoint only ever accepts a url= param - it
   // has never supported pre-filling post text (deliberately, to stop sites
   // auto-stuffing promotional copy into people's posts). It only reads the
   // target URL's Open Graph tags for the preview card, which is why the
@@ -514,7 +514,7 @@ export default function TaxCalculator() {
               {/* ---------- Slabs reference ---------- */}
               <div className={"card" + (openCards.slabs ? "" : " collapsed")} id="card-slabs">
                 <div className="card-head" onClick={() => toggleCard("slabs")}>
-                  <div className="card-icon">📊</div>
+                  <div className="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg></div>
                   <div className="card-titles">
                     <div className="card-title">Tax slabs for reference</div>
                     <div className="card-sub">
@@ -568,7 +568,7 @@ export default function TaxCalculator() {
               {/* ---------- Section 123 ---------- */}
               <div className={"card" + (openCards.sec123 ? "" : " collapsed")} id="card-80c">
                 <div className="card-head" onClick={() => toggleCard("sec123")}>
-                  <div className="card-icon">🏦</div>
+                  <div className="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 21h18M4 10h16M4 10l8-6 8 6M6 10v9m4-9v9m4-9v9m4-9v9"/></svg></div>
                   <div className="card-titles">
                     <div className="card-title">Investments and savings</div>
                     <div className="card-sub">
@@ -611,7 +611,7 @@ export default function TaxCalculator() {
               {/* ---------- Section 126 ---------- */}
               <div className={"card" + (openCards.d80 ? "" : " collapsed")} id="card-80d">
                 <div className="card-head" onClick={() => toggleCard("d80")}>
-                  <div className="card-icon">🩺</div>
+                  <div className="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
                   <div className="card-titles">
                     <div className="card-title">Health insurance premium</div>
                     <div className="card-sub">Under Section 126 (formerly Section 80D)</div>
@@ -656,7 +656,7 @@ export default function TaxCalculator() {
               {/* ---------- HRA ---------- */}
               <div className={"card" + (openCards.hra ? "" : " collapsed")} id="card-hra">
                 <div className="card-head" onClick={() => toggleCard("hra")}>
-                  <div className="card-icon">🏠</div>
+                  <div className="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
                   <div className="card-titles">
                     <div className="card-title">House Rent Allowance (HRA)</div>
                     <div className="card-sub">
@@ -708,7 +708,7 @@ export default function TaxCalculator() {
               {/* ---------- Other exemptions ---------- */}
               <div className={"card" + (openCards.other ? "" : " collapsed")} id="card-other">
                 <div className="card-head" onClick={() => toggleCard("other")}>
-                  <div className="card-icon">🎁</div>
+                  <div className="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8v13M3 12h18"/><path d="M7.5 8a2.5 2.5 0 010-5C9.5 3 12 8 12 8s2.5-5 4.5-5a2.5 2.5 0 010 5"/></svg></div>
                   <div className="card-titles">
                     <div className="card-title">Other exemptions included in salary</div>
                     <div className="card-sub">
@@ -758,7 +758,7 @@ export default function TaxCalculator() {
               {/* ---------- Professional Tax ---------- */}
               <div className={"card" + (openCards.pt ? "" : " collapsed")} id="card-pt">
                 <div className="card-head" onClick={() => toggleCard("pt")}>
-                  <div className="card-icon">🏛️</div>
+                  <div className="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M14 2v5h5M8 13h8M8 17h5"/></svg></div>
                   <div className="card-titles">
                     <div className="card-title">Professional Tax</div>
                     <div className="card-sub">
@@ -790,7 +790,7 @@ export default function TaxCalculator() {
               {/* ---------- Employer NPS ---------- */}
               <div className={"card" + (openCards.npser ? "" : " collapsed")} id="card-both">
                 <div className="card-head" onClick={() => toggleCard("npser")}>
-                  <div className="card-icon">🤝</div>
+                  <div className="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="9" r="3"/><path d="M3 20c0-3 2.5-5 6-5M22 20c0-3-2.5-5-6-5"/></svg></div>
                   <div className="card-titles">
                     <div className="card-title">Employer&apos;s NPS contribution</div>
                     <div className="card-sub">
@@ -832,7 +832,7 @@ export default function TaxCalculator() {
               <div className="compare-head">
                 <div className="compare-head-title">TAX REGIME COMPARISON - TAX YEAR 2026-27</div>
                 <button type="button" className="edit-link" onClick={expandAllAndScrollUp}>
-                  ✏️ Edit details
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display:"inline",verticalAlign:"-2px",marginRight:"4px"}}><path d="M17 3a2.85 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg> Edit details
                 </button>
               </div>
 
@@ -1001,7 +1001,7 @@ export default function TaxCalculator() {
                   </div>
                   {liCopied && (
                     <p style={{ fontSize: "12.5px", color: "var(--ink-soft)", marginTop: "8px" }}>
-                      LinkedIn doesn&apos;t support pre-filled post text — your message is copied, just paste it into the box that opened.
+                      LinkedIn doesn&apos;t support pre-filled post text - your message is copied, just paste it into the box that opened.
                     </p>
                   )}
                 </div>
