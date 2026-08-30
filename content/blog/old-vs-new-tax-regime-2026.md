@@ -11,28 +11,28 @@ Every year around January, payroll inboxes fill up with the same question: old r
 
 **New regime slabs (Tax Year 2026-27)**
 
-Up to ₹4,00,000 - Nil  
-₹4,00,001 to ₹8,00,000 - 5%  
-₹8,00,001 to ₹12,00,000 - 10%  
-₹12,00,001 to ₹16,00,000 - 15%  
-₹16,00,001 to ₹20,00,000 - 20%  
-₹20,00,001 to ₹24,00,000 - 25%  
-Above ₹24,00,000 - 30%
+Up to Rs. 4,00,000 - Nil  
+Rs. 4,00,001 to Rs. 8,00,000 - 5%  
+Rs. 8,00,001 to Rs. 12,00,000 - 10%  
+Rs. 12,00,001 to Rs. 16,00,000 - 15%  
+Rs. 16,00,001 to Rs. 20,00,000 - 20%  
+Rs. 20,00,001 to Rs. 24,00,000 - 25%  
+Above Rs. 24,00,000 - 30%
 
 **Old regime slabs**
 
-Up to ₹2,50,000 - Nil  
-₹2,50,001 to ₹5,00,000 - 5%  
-₹5,00,001 to ₹10,00,000 - 20%  
-Above ₹10,00,000 - 30%
+Up to Rs. 2,50,000 - Nil  
+Rs. 2,50,001 to Rs. 5,00,000 - 5%  
+Rs. 5,00,001 to Rs. 10,00,000 - 20%  
+Above Rs. 10,00,000 - 30%
 
-The old regime's nil band extends to ₹3,00,000 for a senior citizen (60 to 79) and to ₹5,00,000 for a super senior citizen (80 and above), where the 5% band disappears entirely.
+The old regime's nil band extends to Rs. 3,00,000 for a senior citizen (60 to 79) and to Rs. 5,00,000 for a super senior citizen (80 and above), where the 5% band disappears entirely.
 
 ## The three things that actually decide it
 
-**Standard Deduction.** ₹75,000 under the new regime against ₹50,000 under the old. The new regime starts ₹25,000 ahead before you claim anything.
+**Standard Deduction.** Rs. 75,000 under the new regime against Rs. 50,000 under the old. The new regime starts Rs. 25,000 ahead before you claim anything.
 
-**Rebate.** Under the new regime, a rebate of up to ₹60,000 wipes out tax entirely if taxable income is ₹12,00,000 or below, with marginal relief tapering to roughly ₹12,70,588. Under the old regime the rebate is ₹12,500 and it stops at ₹5,00,000 of taxable income.
+**Rebate.** Under the new regime, a rebate of up to Rs. 60,000 wipes out tax entirely if taxable income is Rs. 12,00,000 or below, with marginal relief tapering to roughly Rs. 12,70,588. Under the old regime the rebate is Rs. 12,500 and it stops at Rs. 5,00,000 of taxable income.
 
 **Deductions.** The old regime allows HRA, the Section 123 basket, health insurance under Section 126, professional tax under Section 19 and a long list of Schedule II exemptions. The new regime allows almost none of them - the notable survivor is your employer's NPS contribution under Section 124.
 
@@ -40,33 +40,33 @@ The old regime's nil band extends to ₹3,00,000 for a senior citizen (60 to 79)
 
 This is the part worth knowing. For a salaried person under 60, here is roughly how much you need to claim under the old regime just to match the new regime's tax:
 
-**Gross ₹8,00,000** - break-even at about ₹2,50,000 of deductions  
-**Gross ₹12,00,000** - break-even at about ₹6,50,000  
-**Gross ₹15,00,000** - break-even at about ₹5,44,000  
-**Gross ₹19,00,000** - break-even at about ₹6,75,000  
-**Gross ₹25,00,000 and above** - break-even at about ₹8,00,000
+**Gross Rs. 8,00,000** - break-even at about Rs. 2,50,000 of deductions  
+**Gross Rs. 12,00,000** - break-even at about Rs. 6,50,000  
+**Gross Rs. 15,00,000** - break-even at about Rs. 5,44,000  
+**Gross Rs. 19,00,000** - break-even at about Rs. 6,75,000  
+**Gross Rs. 25,00,000 and above** - break-even at about Rs. 8,00,000
 
 Below those figures, the new regime wins. Above them, the old regime does.
 
-The ₹12,00,000 row looks strange until you remember the rebate: the new regime charges nothing at all there, so the old regime has to reach zero tax too, which takes a very large claim.
+The Rs. 12,00,000 row looks strange until you remember the rebate: the new regime charges nothing at all there, so the old regime has to reach zero tax too, which takes a very large claim.
 
 ## A worked example
 
-Gross salary ₹19,00,000, under 60, salaried.
+Gross salary Rs. 19,00,000, under 60, salaried.
 
-**Old regime.** Standard Deduction ₹50,000, HRA exemption ₹2,40,000, Section 123 basket ₹1,50,000, additional NPS ₹50,000, health insurance ₹25,000, professional tax ₹2,500. Total deductions ₹5,17,500, taxable income ₹13,82,500, tax **₹2,36,340**.
+**Old regime.** Standard Deduction Rs. 50,000, HRA exemption Rs. 2,40,000, Section 123 basket Rs. 1,50,000, additional NPS Rs. 50,000, health insurance Rs. 25,000, professional tax Rs. 2,500. Total deductions Rs. 5,17,500, taxable income Rs. 13,82,500, tax **Rs. 2,36,340**.
 
-**New regime.** Standard Deduction ₹75,000, taxable income ₹18,25,000, tax **₹1,71,600**.
+**New regime.** Standard Deduction Rs. 75,000, taxable income Rs. 18,25,000, tax **Rs. 1,71,600**.
 
-The new regime wins by ₹64,740 - and that is with a near-maximum old regime claim. To flip the result you would need roughly ₹1,58,000 more in deductions, which for most salaried people means a much higher rent or a home loan.
+The new regime wins by Rs. 64,740 - and that is with a near-maximum old regime claim. To flip the result you would need roughly Rs. 1,58,000 more in deductions, which for most salaried people means a much higher rent or a home loan.
 
 ## Who still comes out ahead on the old regime
 
 - High rent in a metro city alongside a large basic salary, so the HRA exemption is substantial
 - A home loan with meaningful interest under the let-out or self-occupied property rules
-- A full ₹1,50,000 Section 123 claim plus the ₹50,000 additional NPS contribution
+- A full Rs. 1,50,000 Section 123 claim plus the Rs. 50,000 additional NPS contribution
 - Health insurance premiums for both yourself and senior citizen parents
-- Income comfortably above ₹24,00,000, where the 30% band bites either way and every deduction is worth 30 paise in the rupee
+- Income comfortably above Rs. 24,00,000, where the 30% band bites either way and every deduction is worth 30 paise in the rupee
 
 ## Two things people get wrong
 

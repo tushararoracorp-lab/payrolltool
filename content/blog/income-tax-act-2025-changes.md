@@ -11,7 +11,7 @@ The Income Tax Act, 2025 takes effect from 1 April 2026, replacing the Income-ta
 
 The most disruptive change for day-to-day payroll work is not a rate change - it is that familiar section numbers have moved. The underlying entitlements are largely preserved.
 
-**Section 80C becomes Section 123.** The ₹1,50,000 investment basket survives, now with Section 80CCC (pension policies) folded into it rather than sitting alongside.
+**Section 80C becomes Section 123.** The Rs. 1,50,000 investment basket survives, now with Section 80CCC (pension policies) folded into it rather than sitting alongside.
 
 **Section 80CCD(2) becomes Section 124.** Your employer's NPS contribution remains deductible under both regimes.
 
@@ -27,7 +27,7 @@ The most disruptive change for day-to-day payroll work is not a rate change - it
 
 ## What has not changed
 
-The slab rates for 2026-27 are unchanged from the position announced for the preceding year. Standard Deduction remains ₹50,000 under the old regime and ₹75,000 under the new. The 4% Health and Education Cess applies as before. Surcharge bands and marginal relief are carried across intact, with the new regime still capped at 25% against the old regime's 37%.
+The slab rates for 2026-27 are unchanged from the position announced for the preceding year. Standard Deduction remains Rs. 50,000 under the old regime and Rs. 75,000 under the new. The 4% Health and Education Cess applies as before. Surcharge bands and marginal relief are carried across intact, with the new regime still capped at 25% against the old regime's 37%.
 
 The new regime remains the default. An employee who makes no declaration is taxed under it.
 
@@ -53,7 +53,7 @@ The new regime remains the default. An employee who makes no declaration is taxe
 
 ## What this does not change
 
-If you were expecting the new Act to simplify the substance of salary taxation, it largely does not. HRA still requires the three-way least-of test. The Section 123 basket still has the same crowded list of eligible investments competing for one ₹1,50,000 cap. Surcharge marginal relief is still a step-function calculation that trips up spreadsheets.
+If you were expecting the new Act to simplify the substance of salary taxation, it largely does not. HRA still requires the three-way least-of test. The Section 123 basket still has the same crowded list of eligible investments competing for one Rs. 1,50,000 cap. Surcharge marginal relief is still a step-function calculation that trips up spreadsheets.
 
 The Act is a consolidation and renumbering exercise. That is genuinely useful - the 1961 Act had accumulated decades of amendments, provisos and inserted sub-sections - but it is not a rate reform.
 
