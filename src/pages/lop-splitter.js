@@ -992,6 +992,25 @@ export default function Home() {
           </div>
         </main>
 
+        {/* About / How it works - expanded copy per SEO content-depth review */}
+        <section className="max-w-lg mx-auto w-full px-4 pb-10">
+          <div className="bg-white rounded-3xl shadow-xl p-8">
+            <h2 className="text-lg font-bold text-gray-900 mb-4 text-center">What is LOP, and how does this tool calculate it?</h2>
+            <p className="text-sm text-gray-600 leading-relaxed mb-3">
+              Loss of Pay (LOP) is the salary deduction applied when an employee is absent without approved leave, or has exhausted their leave balance. The core formula is simple - per-day salary (monthly gross ÷ days in month) multiplied by LOP days - but applying it correctly across a real payroll sheet, for dozens of employees with different absence stretches and month boundaries, is where manual Excel work breaks down.
+            </p>
+            <p className="text-sm text-gray-600 leading-relaxed mb-3">
+              This tool splits each employee&apos;s LOP period into individual, HRMS-ready date rows - the format most HR systems expect for bulk upload, rather than a single date-range entry most systems can&apos;t parse directly.
+            </p>
+            <p className="text-sm text-gray-600 leading-relaxed mb-3">
+              <strong>A common example:</strong> an employee is on LOP from 28 March to 3 April. Since payroll runs on a calendar-month basis, this needs to be split into two entries - 4 days in March, 3 days in April - each attributed to the correct payroll cycle.
+            </p>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              <strong>Priority date protection</strong> flags overlapping absence records instead of silently double-counting a day. <strong>Duplicate overlap guarding</strong> ensures the same date is never written twice for one employee across multiple rows.
+            </p>
+          </div>
+        </section>
+
         <Footer />
       </div>
 

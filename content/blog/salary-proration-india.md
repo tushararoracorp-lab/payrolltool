@@ -1,15 +1,17 @@
 ---
-title: "Prorated CTC Calculation India 2026-27 | Complete Formula & Guide"
-description: "Learn how to calculate prorated salary for new joiners and exits in India. Covers EPF, ESI, PT, TDS, and statutory deductions on partial month salary."
+title: "What is Prorated CTC? Meaning & Calculation Guide India"
+description: "Prorated CTC is your CTC adjusted for actual days worked in a partial month. Learn what it means, how EPF, ESI, PT, and TDS are each treated differently, with a full worked example."
 date: "2026-07-05"
 slug: "salary-proration-india"
 ---
 
 If you've ever joined a company mid-month and been confused by your first payslip, you're not alone. Salary proration - calculating pay for a partial month - involves more moving parts than most new joiners expect, and even payroll teams sometimes get individual components wrong.
 
-## What is salary proration?
+## What prorated CTC actually means
 
-Proration means calculating salary for the actual number of days worked in a month, rather than the full month. This applies to:
+Prorated CTC means your **annual Cost to Company adjusted for the actual number of days you worked** in a partial month, rather than a full month - most commonly relevant when you join or exit mid-month. It is not simply (annual CTC ÷ 12) × (days worked ÷ total days) - each statutory component (EPF, ESI, PT, TDS) has its own proration rule, so the actual prorated figure is built up component by component, not calculated as one single ratio.
+
+This comes up in three situations:
 
 - New joiners starting mid-month
 - Employees exiting mid-month (final settlement)
