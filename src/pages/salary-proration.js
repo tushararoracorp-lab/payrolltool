@@ -379,6 +379,234 @@ const TOOL_BODY_HTML = `
 
 `;
 
+// Inlined directly rather than fetched as a separate stylesheet. The
+// external <link> approach left a real, if brief, gap: the Shadow DOM
+// mounted and rendered its markup immediately, but the CSS still had to
+// complete a full network round-trip before it could apply - visible as
+// a flash of unstyled default-browser buttons/borders. A preload hint
+// (added earlier) reduced how often that gap was noticeable but couldn't
+// eliminate it entirely, since the fetch still has to finish before the
+// styles exist. Inlining the CSS as a string means it's already present
+// the instant this JS runs - no network request to race against at all.
+const SP_TOOL_CSS = `*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:host{
+  --pm:#7C3AED;--pd:#5B21B6;--pl:#A78BFA;--pp:#EDE9FE;--pg:#F5F3FF;
+  --td:#1E1B4B;--tm:#4B4585;--ts:#7C74B0;
+  --bd:#DDD6FE;--bd2:#C4B5FD;
+  --gr:#059669;--grb:#ECFDF5;--grm:#A7F3D0;
+  --rd:#DC2626;--rdb:#FEF2F2;--rdm:#FECACA;
+  --am:#D97706;--amb:#FFFBEB;--amm:#FCD34D;
+  --bl:#2563EB;--blb:#EFF6FF;--blm:#BFDBFE;
+  --surface:#fff;
+  --sh:0 2px 12px rgba(124,58,237,.10),0 1px 3px rgba(124,58,237,.06);
+  --shl:0 20px 60px rgba(124,58,237,.14),0 4px 16px rgba(124,58,237,.07);
+}
+/* Dark mode. :host() is the Shadow-DOM-native way to react to an attribute
+   on the host element (set in the light DOM by the React wrapper) - this
+   is the correct mechanism here, not a workaround, since a shadow tree
+   can't see the outer document's html[data-theme] at all. */
+:host([data-theme="dark"]){
+  --pm:#9163F2;--pd:#A47DF5;--pl:#C4B0F9;--pp:#2C2147;--pg:#15111F;
+  --td:#F3F0FA;--tm:#D6CFE8;--ts:#B3AAC7;
+  --bd:#2A2536;--bd2:#3D3654;
+  --gr:#34D399;--grb:#123027;--grm:#1F5A44;
+  --rd:#F87171;--rdb:#3D1F1F;--rdm:#5C2E2E;
+  --am:#FBBF54;--amb:#332411;--amm:#5C4A1F;
+  --bl:#60A5FA;--blb:#172033;--blm:#2D4A6B;
+  --surface:#1C1730;
+  --sh:0 2px 12px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.2);
+  --shl:0 20px 60px rgba(0,0,0,.45),0 4px 16px rgba(0,0,0,.25);
+}
+:host{display:block;min-height:100%;font-family:'DM Sans',sans-serif;background:var(--pg);color:var(--td);overflow-x:hidden}
+.hero{text-align:center;padding:28px 20px 18px;background:linear-gradient(135deg,rgba(124,58,237,.07) 0%,transparent 100%)}
+.hero h1{font-family:'Sora',sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:var(--td);letter-spacing:-1px;line-height:1.12;margin-bottom:6px}
+.hero h1 em{color:var(--pm);font-style:normal}
+.hero p{font-size:.8rem;color:var(--ts);max-width:500px;margin:0 auto;line-height:1.6}
+.grid{max-width:1200px;margin:14px auto;padding:0 16px 50px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+
+/* CARD */
+.card{background:var(--surface);border:1.5px solid var(--bd);border-radius:14px;padding:16px;box-shadow:var(--shl);margin-bottom:10px}
+.card:last-child{margin-bottom:0}
+.card-hd{display:flex;align-items:center;gap:8px;padding-bottom:10px;margin-bottom:12px;border-bottom:1.5px solid var(--bd)}
+.step{width:22px;height:22px;border-radius:50%;background:var(--pp);color:var(--pm);font-family:'Sora',sans-serif;font-size:.64rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-title{font-family:'Sora',sans-serif;font-size:.84rem;font-weight:700;color:var(--td);flex:1;display:flex;align-items:center;gap:6px}
+.card-toggle{background:none;border:1.5px solid var(--bd);color:var(--ts);cursor:pointer;font-size:.7rem;padding:3px 9px;border-radius:20px;transition:all .15s;display:inline-flex;white-space:nowrap;font-family:'DM Sans',sans-serif;font-weight:600}
+.card-toggle:hover{background:var(--pp);color:var(--pm);border-color:var(--pl)}
+.card.collapsed .card-body{display:none}
+.card.collapsed .card-hd{padding-bottom:0;margin-bottom:0;border-bottom:none}
+
+/* UPLOAD */
+.dropzone{border:2px dashed var(--pl);border-radius:12px;padding:20px 14px;text-align:center;cursor:pointer;transition:all .2s;background:var(--pg)}
+.dropzone:hover,.dropzone.over{border-color:var(--pm);background:var(--pp)}
+.dz-icon{font-size:1.8rem;margin-bottom:5px;display:block}
+.dz-lbl{font-family:'Sora',sans-serif;font-size:.8rem;font-weight:700;color:var(--pm);margin-bottom:2px}
+.dz-hint{font-size:.67rem;color:var(--ts)}
+input[type=file]{display:none}
+.file-pill{background:var(--grb);border:1.5px solid var(--grm);border-radius:9px;padding:7px 11px;display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.file-pill-name{font-size:.76rem;font-weight:600;color:var(--td);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-pill-rm{background:none;border:none;color:var(--ts);cursor:pointer;font-size:1rem;line-height:1}
+.file-pill-rm:hover{color:var(--rd)}
+
+/* FIELD */
+.field{margin-bottom:9px}
+.field label{display:block;font-size:.6rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ts);margin-bottom:4px}
+.field input,.field select{width:100%;padding:7px 9px;border:1.5px solid var(--bd);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--td);background:var(--surface);outline:none;transition:border-color .17s,box-shadow .17s}
+.field input:focus,.field select:focus{border-color:var(--pm);box-shadow:0 0 0 3px rgba(124,58,237,.09)}
+.field input[readonly]{background:var(--pg);color:var(--ts);cursor:default}
+/* editable PF inputs from appointment letter */
+.field input.pf-input{background:var(--surface);color:var(--td);border-color:var(--bd2)}
+.field input.pf-input:focus{border-color:var(--pm)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.row4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+
+/* DAYS */
+.days-wrap{display:flex;align-items:center;border:1.5px solid var(--bd);border-radius:8px;overflow:hidden}
+.day-btn{width:30px;height:32px;border:none;background:none;font-size:1rem;color:var(--pm);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .14s}
+.day-btn:hover{background:var(--pp)}
+.day-inp{flex:1;border:none;background:transparent;text-align:center;font-family:'DM Sans',sans-serif;font-size:.87rem;font-weight:600;color:var(--td);outline:none}
+.days-note{font-size:.62rem;color:var(--ts);margin-top:3px;line-height:1.5}
+
+/* SDIV */
+.sdiv{font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ts);display:flex;align-items:center;gap:7px;margin:10px 0 7px}
+.sdiv::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+/* TABS */
+.tabs{display:grid;gap:6px}
+.tabs.c2{grid-template-columns:1fr 1fr}
+.tab{padding:8px 5px;border-radius:8px;border:1.5px solid var(--bd);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:.69rem;font-weight:600;color:var(--tm);cursor:pointer;text-align:center;transition:all .16s;line-height:1.4}
+.tab:hover{border-color:var(--pl);color:var(--pm)}
+.tab.on2{border-color:var(--pd);background:var(--pp);color:var(--pd);font-weight:700}
+.tab-sub{font-size:.57rem;display:block;margin-top:1px;opacity:.75;font-weight:400}
+
+/* INFO TOOLTIP - JS-positioned, stays within viewport */
+/* Hide browser number input spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+
+.tip-wrap{position:relative;display:inline-block}
+.tip-btn{background:var(--pp);border:1.5px solid var(--bd2);color:var(--pm);border-radius:50%;width:17px;height:17px;font-size:.64rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;line-height:1;margin-left:4px;transition:all .15s}
+.tip-btn:hover{background:var(--pm);color:#fff}
+.tip-box{
+  display:none;position:fixed;z-index:9999;
+  width:250px;max-width:calc(100vw - 24px);
+  background:var(--surface);border:1.5px solid var(--bd2);border-radius:10px;
+  padding:10px 12px;font-size:.71rem;line-height:1.7;color:var(--tm);
+  box-shadow:0 8px 24px rgba(124,58,237,.18);
+  pointer-events:auto;
+}
+.tip-box.tip-active{display:block}
+.tip-box h5{font-size:.71rem;font-weight:700;color:var(--pm);margin-bottom:5px;border-bottom:1px solid var(--bd);padding-bottom:3px}
+.tip-box p{margin-bottom:4px}
+.tip-box ul{margin-left:12px;margin-bottom:4px}
+.tip-box li{margin-bottom:2px}
+
+/* PAY HEADS */
+.ph-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.ph-hdr h4{font-size:.59rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ts)}
+.btn-add{display:flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;border:1.5px dashed var(--bd2);background:var(--pg);font-family:'DM Sans',sans-serif;font-size:.66rem;font-weight:700;color:var(--pm);cursor:pointer;transition:all .16s}
+.btn-add:hover{border-style:solid;background:var(--pp)}
+.ph-cols{display:grid;grid-template-columns:1.8fr 1fr 88px 28px;gap:6px;padding-bottom:5px;margin-bottom:4px;border-bottom:1px solid var(--bd)}
+.ph-col-lbl{font-size:.57rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ts)}
+.ph-row{display:grid;grid-template-columns:1.8fr 1fr 88px 28px;gap:6px;align-items:center;margin-bottom:5px;animation:fu .16s ease}
+@keyframes fu{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+.ph-name,.ph-amt{padding:5px 7px;border:1.5px solid var(--bd);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.79rem;color:var(--td);background:var(--surface);outline:none;width:100%;transition:border-color .17s}
+.ph-name:focus,.ph-amt:focus{border-color:var(--pm)}
+.ph-amt{text-align:right}
+.cat-toggle{display:flex;border-radius:6px;overflow:hidden;border:1.5px solid var(--bd);height:32px}
+.cat-btn{flex:1;border:none;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:.61rem;font-weight:600;color:var(--ts);cursor:pointer;transition:all .13s;padding:0 2px;white-space:nowrap}
+.cat-btn.active-f{background:var(--blb);color:var(--bl);font-weight:700}
+.cat-btn.active-v{background:var(--amb);color:var(--am);font-weight:700}
+.cat-btn:first-child{border-right:1px solid var(--bd)}
+.ph-del{width:28px;height:28px;border-radius:5px;border:1.5px solid var(--bd);background:var(--surface);color:var(--ts);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .13s;font-size:.68rem}
+.ph-del:hover{border-color:var(--rd);background:var(--rdb);color:var(--rd)}
+
+/* NOTICES */
+.notice,.info,.warn,.err,.ok{border-radius:8px;padding:7px 10px;font-size:.69rem;line-height:1.6;margin-bottom:8px;display:flex;gap:7px}
+.notice{background:var(--pg);border:1.5px solid var(--bd);color:var(--tm)}
+.info{background:var(--blb);border:1.5px solid var(--blm);color:#1D4ED8}
+.warn{background:var(--amb);border:1.5px solid var(--amm);color:var(--am)}
+.err{background:var(--rdb);border:1.5px solid var(--rdm);color:var(--rd)}
+.ok{background:var(--grb);border:1.5px solid var(--grm);color:var(--gr);font-weight:600}
+
+/* CALC BUTTON */
+.calc-btn{width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--pm),var(--pd));color:#fff;font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 14px rgba(124,58,237,.28);letter-spacing:-.2px}
+.calc-btn:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(124,58,237,.38)}
+.calc-btn:active{transform:translateY(0)}
+
+/* RIGHT PANEL */
+.right-panel{position:sticky;top:16px}
+.empty-panel{background:var(--surface);border:1.5px solid var(--bd);border-radius:14px;padding:40px 22px;text-align:center;box-shadow:var(--shl)}
+.empty-ico{font-size:2.4rem;margin-bottom:10px;display:block;opacity:.28}
+.empty-txt{font-size:.8rem;color:var(--ts);line-height:1.65}
+
+/* TILES */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:13px}
+.tile{background:var(--surface);border:1.5px solid var(--bd);border-radius:10px;padding:10px 5px;text-align:center}
+.tile.tg{background:var(--pp);border-color:var(--pl)}
+.tile.tn{background:var(--grb);border-color:var(--grm)}
+.tile-v{font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:800;display:block;color:var(--td);line-height:1}
+.tile.tg .tile-v{color:var(--pm)}
+.tile.tn .tile-v{color:var(--gr)}
+.tile-l{font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ts);margin-top:3px}
+
+/* RESULT TABLE */
+.res-hdr{display:flex;align-items:center;gap:7px;padding-bottom:10px;margin-bottom:11px;border-bottom:1.5px solid var(--bd)}
+.res-title{font-family:'Sora',sans-serif;font-size:.85rem;font-weight:700;color:var(--td);flex:1}
+.res-emp{font-size:.69rem;color:var(--ts)}
+.rtbl{width:100%;border-collapse:collapse;font-size:.76rem}
+.rtbl th{background:var(--pp);padding:6px 8px;text-align:left;font-size:.56rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--pm);border-bottom:2px solid var(--bd)}
+.rtbl th:not(:first-child){text-align:right}
+.rtbl td{padding:6px 8px;border-bottom:1px solid var(--bd);color:var(--tm)}
+.rtbl td:not(:first-child){text-align:right;font-weight:600;color:var(--td)}
+.rtbl tr:last-child td{border-bottom:none}
+.rtbl .s-hdr td{background:var(--pg);font-size:.57rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--pm);border-top:1.5px solid var(--bd);padding:5px 8px}
+.rtbl .sub td{color:var(--ts)!important;font-weight:400!important}
+.rtbl .earn-tot td{background:var(--pp);color:var(--pm)!important;font-weight:700;border-top:2px solid var(--bd2)}
+.rtbl .ded td{color:var(--rd)!important}
+.rtbl .ded-tot td{background:var(--rdb);color:var(--rd)!important;font-weight:700;border-top:2px solid var(--rdm)}
+.rtbl .net td{background:var(--grb);color:var(--gr)!important;font-weight:700;font-size:.84rem;border-top:3px solid var(--grm);font-family:'Sora',sans-serif}
+.itnote{font-size:.56rem;font-style:italic;font-weight:400;color:var(--am);margin-left:3px}
+
+/* TAX CMP */
+.cmp-title{font-family:'Sora',sans-serif;font-size:.81rem;font-weight:700;color:var(--td);margin-bottom:10px;display:flex;align-items:center;gap:7px;padding-bottom:8px;border-bottom:1.5px solid var(--bd)}
+.rtbl .winner td{background:var(--grb);color:var(--gr)!important;font-weight:700}
+.rtbl .loser td{background:var(--rdb);color:var(--rd)!important}
+
+/* LOADER */
+.loader{width:11px;height:11px;border:2px solid rgba(124,58,237,.2);border-top-color:var(--pm);border-radius:50%;animation:spin .75s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PF SOURCE HINT */
+.pf-hint{font-size:.6rem;color:var(--ts);margin-top:2px;line-height:1.4}
+.pf-hint strong{color:var(--pm)}
+
+footer{display:none}
+
+/* DOWNLOAD BUTTON */
+.dl-btn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1.5px solid var(--bd2);border-radius:7px;background:var(--pp);color:var(--pm);font-family:"DM Sans",sans-serif;font-size:.65rem;font-weight:700;cursor:pointer;transition:all .15s}
+.dl-btn:hover{background:var(--pm);color:#fff;border-color:var(--pm)}
+.dl-btn svg{flex-shrink:0}
+
+/* MODAL OVERLAY */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(30,27,75,.45);z-index:10000;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--surface);border-radius:16px;padding:22px 22px 18px;max-width:420px;width:100%;box-shadow:0 24px 64px rgba(124,58,237,.22);border:1.5px solid var(--bd)}
+.modal-title{font-family:"Sora",sans-serif;font-size:.9rem;font-weight:800;color:var(--td);margin-bottom:6px}
+.modal-body{font-size:.76rem;color:var(--tm);line-height:1.65;margin-bottom:14px}
+.modal-check{display:flex;align-items:flex-start;gap:8px;font-size:.73rem;color:var(--tm);margin-bottom:16px;cursor:pointer}
+.modal-check input{margin-top:2px;accent-color:var(--pm)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+.modal-cancel{padding:7px 16px;border:1.5px solid var(--bd);border-radius:8px;background:var(--surface);color:var(--ts);font-family:"DM Sans",sans-serif;font-size:.76rem;font-weight:600;cursor:pointer}
+.modal-cancel:hover{border-color:var(--rd);color:var(--rd)}
+.modal-confirm{padding:7px 16px;border:none;border-radius:8px;background:linear-gradient(135deg,var(--pm),var(--pd));color:#fff;font-family:"DM Sans",sans-serif;font-size:.76rem;font-weight:700;cursor:pointer;opacity:.45;transition:opacity .15s}
+.modal-confirm.active{opacity:1}
+
+#payslipPrint{display:none}
+@media(max-width:840px){.grid{grid-template-columns:1fr}.right-panel{position:static}}
+`;
+
 export default function SalaryProration() {
   const hostRef = useRef(null);
 
@@ -411,10 +639,9 @@ export default function SalaryProration() {
 
     const shadow = host.attachShadow({ mode: "open" });
 
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "/salary-proration-tool.css";
-    shadow.appendChild(link);
+    const styleEl = document.createElement("style");
+    styleEl.textContent = SP_TOOL_CSS;
+    shadow.appendChild(styleEl);
 
     const container = document.createElement("div");
     container.innerHTML = TOOL_BODY_HTML;
@@ -473,17 +700,6 @@ export default function SalaryProration() {
         <meta property="og:url" content="https://www.payrolltool.in/salary-proration" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://www.payrolltool.in/salary-proration" />
-        {/* Preload the Shadow DOM's stylesheet. Without this, the browser
-            doesn't start fetching salary-proration-tool.css until the
-            mount useEffect below runs and creates the <link> itself -
-            which only happens after the JS bundle downloads, parses, and
-            the component mounts. That gap is exactly what shows up as
-            unstyled default-browser buttons/borders for about a second
-            before the real styling snaps in. Preloading here starts the
-            fetch immediately, in parallel with everything else, so by the
-            time the Shadow DOM's own <link> requests the same file, it's
-            typically already cached and applies near-instantly. */}
-        <link rel="preload" as="style" href="/salary-proration-tool.css" />
       </Head>
 
       <div className="sp-wrapper" data-theme={theme}>
