@@ -17,6 +17,8 @@ export default function Document() {
             gtag('config', 'G-YZKNE00CWX');
           `
         }} />
+        {/* Google Preferred Sources */}
+        <script async src="https://news.google.com/swg/js/v1/publisher.js" />
       </Head>
       <body>
         <Main />
