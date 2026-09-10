@@ -159,7 +159,7 @@ const DEFAULT_COUNTRY_DATA = [
 export default function Home() {
   const [scenario, setScenario] = useState("joining");
   const [openFaq, setOpenFaq] = useState(null);
-  const [stats, setStats] = useState({ countries: 15, activeUsers: 82, indiaUsers: 105 });
+  const [stats, setStats] = useState({ countries: "Loading...", activeUsers: "Loading...", indiaUsers: "Loading..." });
   const [countryData, setCountryData] = useState(DEFAULT_COUNTRY_DATA);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -686,7 +686,9 @@ export default function Home() {
                     <li key={c.name}>{c.name} <b>{c.users}</b></li>
                   ))}
                 </ul>
-                <p className="country-map-note">Top 7 of 15 countries shown</p>
+                <p className="country-map-note">
+                  {stats.countries === "Loading..." ? "Loading…" : `Top 7 of ${stats.countries} countries shown`}
+                </p>
               </div>
             </div>
 

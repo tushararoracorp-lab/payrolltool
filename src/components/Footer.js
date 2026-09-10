@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Footer() {
   const [visible, setVisible] = useState(false);
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     function onScroll() {
@@ -10,6 +11,11 @@ export default function Footer() {
     }
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    setTheme(current);
   }, []);
 
   return (
@@ -72,6 +78,10 @@ export default function Footer() {
               support@payrolltool.in
             </a>
           </div>
+
+          <div className="preferred-source">
+            <div google-add-preferred-source-btn="" data-theme={theme}></div>
+          </div>
         </div>
       </footer>
 
@@ -107,6 +117,10 @@ export default function Footer() {
         .footer-bottom {
           border-top: 1px solid var(--line); padding-top: 24px; max-width: 1180px; margin: 0 auto;
           display: flex; justify-content: center; align-items: center; gap: 24px; font-size: 13px; color: var(--ink-soft);
+        }
+        .preferred-source {
+          max-width: 1180px; margin: 20px auto 0;
+          display: flex; justify-content: center;
         }
 
         @media (max-width: 768px) {
