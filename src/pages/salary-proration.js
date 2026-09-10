@@ -699,6 +699,15 @@ export default function SalaryProration() {
         <meta property="og:title" content="Salary Proration Calculator – PayrollTool" />
         <meta property="og:url" content="https://www.payrolltool.in/salary-proration" />
         <meta property="og:type" content="website" />
+        <meta property="og:description" content="Calculate precise prorated salary for partial months, mid-month joining or exit. EPF, ESI, PT, LWF, NPS, TDS included." />
+        <meta property="og:image" content="https://www.payrolltool.in/salary-proration-og-card.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Salary Proration Calculator – PayrollTool" />
+        <meta name="twitter:description" content="Calculate precise prorated salary for partial months, mid-month joining or exit. EPF, ESI, PT, LWF, NPS, TDS included." />
+        <meta name="twitter:image" content="https://www.payrolltool.in/salary-proration-og-card.jpg" />
+        <meta name="keywords" content="salary proration calculator, prorated salary india, mid month salary calculation, partial month salary" />
         <link rel="canonical" href="https://www.payrolltool.in/salary-proration" />
         {/* Preload the Shadow DOM's stylesheet. Without this, the browser
             doesn't start fetching salary-proration-tool.css until the
