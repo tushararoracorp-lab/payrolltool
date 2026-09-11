@@ -11,3 +11,5 @@ dist/
 # Next.js
 .next/
 out/
+public/sitemap.xml
+public/sitemap-0.xml
