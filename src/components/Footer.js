@@ -63,6 +63,7 @@ export default function Footer() {
                 <a href="mailto:support@payrolltool.in">Contact</a>
                 <Link href="/faq">FAQ</Link>
                 <Link href="/privacy-policy">Privacy Policy</Link>
+                <Link href="/terms-of-service">Terms of Service</Link> 
               </div>
             </div>
           </div>

@@ -77,13 +77,39 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2>Cookies</h2>
+            <h2>Cookies and advertising</h2>
             <p>
-              Google Analytics sets cookies to distinguish returning visitors and
-              measure site usage, as described above. We do not currently run
-              advertising on PayrollTool.in. If that changes, this policy will be
-              updated first, and this section will explain exactly what advertising
-              cookies are set and how to opt out of personalised ads.
+              Google Analytics sets first-party cookies on this site to distinguish
+              returning visitors and measure usage, as described above.
+            </p>
+            <p>
+              PayrollTool.in displays or plans to display advertising through Google
+              AdSense. Third-party vendors, including Google, use cookies to serve ads
+              based on a user&apos;s prior visits to this website or other websites.
+              Google&apos;s use of advertising cookies enables it and its partners to
+              show ads that are more relevant to you based on your visits to this site
+              and other sites on the internet.
+            </p>
+            <p>
+              You can opt out of personalised advertising by visiting{" "}
+              <a
+                href="https://adssettings.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google Ads Settings
+              </a>
+              . You can also opt out of some third-party vendors&apos; use of cookies
+              for personalised advertising by visiting{" "}
+              <a
+                href="https://www.aboutads.info"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                www.aboutads.info
+              </a>
+              . None of this is required to use the calculators - every tool on this
+              site works fully with cookies blocked or an ad blocker running.
             </p>
           </section>
 
@@ -91,6 +117,7 @@ export default function PrivacyPolicy() {
             <h2>Third-party services we use</h2>
             <ul>
               <li><strong>Google Analytics</strong> - site usage measurement</li>
+              <li><strong>Google AdSense</strong> - displays advertising, may set advertising cookies as described above</li>
               <li><strong>Google Fonts</strong> - typefaces on this site are served directly by Google</li>
               <li><strong>Vercel</strong> - hosting for payrolltool.in</li>
               <li><strong>Resend</strong> - delivery of transactional emails (such as support replies)</li>
@@ -117,10 +144,11 @@ export default function PrivacyPolicy() {
             <h2>Your choices</h2>
             <p>
               You can use any PayrollTool.in calculator without any data ever leaving
-              your device. If you prefer not to be counted in site analytics, most
-              browsers let you block third-party cookies or use an ad-blocker/analytics
-              opt-out extension - the site works identically either way. To have any
-              feedback or contact data deleted, email support@payrolltool.in.
+              your device. If you prefer not to be counted in site analytics or served
+              personalised ads, most browsers let you block third-party cookies or use
+              an ad-blocker/analytics opt-out extension - the site works identically
+              either way. To have any feedback or contact data deleted, email
+              support@payrolltool.in.
             </p>
           </section>
 
@@ -136,10 +164,9 @@ export default function PrivacyPolicy() {
           <section>
             <h2>Changes to this policy</h2>
             <p>
-              If how we handle data changes - for example, when advertising is
-              introduced - this page will be updated and the last-updated date above
-              will change. We will not make material changes without updating this page
-              first.
+              If how we handle data changes, this page will be updated and the
+              last-updated date above will change. We will not make material changes
+              without updating this page first.
             </p>
           </section>
 
@@ -152,7 +179,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <p className="back">
-            <Link href="/">← Back to PayrollTool.in</Link>
+            <Link href="/">← Back to Homepage</Link>
           </p>
         </div>
       </main>
@@ -161,7 +188,7 @@ export default function PrivacyPolicy() {
 
       <style jsx>{`
         .policy-wrap {
-          padding: 64px 24px 96px;
+          padding: 64px 24px 48px;
         }
         .wrap {
           max-width: 720px;
@@ -237,7 +264,7 @@ export default function PrivacyPolicy() {
           font-weight: 600;
         }
         .back {
-          margin-top: 56px;
+          margin-top: 8px;
         }
         .back a {
           font-size: 14px;
