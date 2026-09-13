@@ -187,6 +187,57 @@ function dash(v) {
 
 /* ================= page ================= */
 
+const TC_INFO_CARDS = [
+  {
+    icon: "\ud83d\udcca",
+    title: "Old vs New, in short",
+    body: "The New Regime gives wider slabs and a bigger standard deduction but drops almost every exemption. The Old Regime keeps HRA, Section 123 and health insurance, taxed on narrower slabs. Which wins depends entirely on how much you can actually claim.",
+  },
+  {
+    icon: "\ud83e\uddee",
+    title: "How the comparison works",
+    body: "Both columns are computed from the same gross salary and the same inputs. Old Regime subtracts HRA, Section 123, health insurance and Professional Tax before applying its slabs. New Regime applies only the standard deduction and employer NPS before its own slabs.",
+  },
+  {
+    icon: "\ud83d\udcdd",
+    title: "Worked Example",
+    body: "Rs. 12,00,000 gross with typical HRA and Section 123 claims: Old Regime tax is about Rs. 54,600, New Regime about Rs. 60,660. The full breakdown is below.",
+  },
+  {
+    icon: "\u2696\ufe0f",
+    title: "What this does not cover",
+    body: "House property income, capital gains, business or professional income, TDS already deducted, advance tax paid, Section 89 relief, and interest or fees for late filing are all outside this calculator's scope.",
+  },
+  {
+    icon: "\ud83d\udd01",
+    title: "Regime Switching",
+    body: "Salaried employees can choose either regime freely each financial year when filing their return. The choice made with an employer for TDS purposes is not final - it can be corrected at filing time.",
+  },
+];
+
+const TC_FAQ = [
+  {
+    q: "Which is better, the old tax regime or the new tax regime?",
+    a: "It depends on how much you claim in deductions. The new regime has wider slabs and a higher standard deduction but allows almost none of the old regime's exemptions, so it usually wins for people with few deductions. The old regime can still be better if you claim substantial HRA, Section 123 investments and health insurance. This calculator computes both side by side for FY 2026-27 so you can compare your own numbers.",
+  },
+  {
+    q: "What if I have no deductions at all?",
+    a: "With no HRA, Section 123, or health insurance claims, the New Regime almost always comes out ahead - its standard deduction is higher (Rs. 75,000 against Rs. 50,000) and its slabs are wider, so there is usually nothing the Old Regime can offer to compensate.",
+  },
+  {
+    q: "Does this calculator account for TDS already deducted or advance tax paid?",
+    a: "No. This tool estimates your total income tax liability for the year, not what remains payable after tax already withheld by an employer or paid in advance. Subtract whatever has already been deducted or paid to see what is still due.",
+  },
+  {
+    q: "Is Professional Tax deductible under the New Regime?",
+    a: "No. Professional Tax is only deductible from salary income under the Old Regime. It is levied by the state, not the centre, so it does not apply at all in Delhi, Haryana, Uttar Pradesh, Rajasthan and other states that do not levy it.",
+  },
+  {
+    q: "Can I switch regimes every year?",
+    a: "If you have only salary income, yes - you can choose either regime when filing your return each year, regardless of which one your employer used for TDS. The choice becomes restricted only if you also have business or professional income.",
+  },
+];
+
 const INITIAL_FIELDS = {
   grossIncome: "",
   salaried: true,
@@ -421,16 +472,11 @@ export default function TaxCalculator() {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "FAQPage",
-              mainEntity: [
-                {
-                  "@type": "Question",
-                  name: "Which is better, the old tax regime or the new tax regime?",
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: "It depends on how much you claim in deductions. The new regime has wider slabs and a higher standard deduction but allows almost none of the old regime's exemptions, so it usually wins for people with few deductions. The old regime can still be better if you claim substantial HRA, Section 123 investments and health insurance. This calculator computes both side by side for FY 2026-27 so you can compare your own numbers.",
-                  },
-                },
-              ],
+              mainEntity: TC_FAQ.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
             }),
           }}
         />
@@ -1010,6 +1056,60 @@ export default function TaxCalculator() {
           </div>
 
           <FeedbackWidget toolName="Tax Calculator" />
+
+          <div className="tc-info-cards">
+            {TC_INFO_CARDS.map((c) => (
+              <div className="tc-info-card" key={c.title}>
+                <div className="tc-info-icon">{c.icon}</div>
+                <h2>{c.title}</h2>
+                <p>{c.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="tc-worked-example">
+            <h4>Worked example - Rs. 12,00,000 gross salary</h4>
+            <p>
+              Basic + DA Rs. 6,00,000, HRA received Rs. 2,40,000, rent paid Rs. 2,16,000 in a metro
+              city, Section 123 investments Rs. 1,50,000, health insurance premium Rs. 20,000, and
+              employer NPS contribution Rs. 60,000.
+            </p>
+            <div className="tc-we-grid">
+              <div className="tc-we-col">
+                <h5>Old Regime</h5>
+                <p>
+                  HRA exemption Rs. 2,16,000 (least of rent minus 10% of salary, 50% of salary, or
+                  HRA received), Section 123 deduction Rs. 1,50,000, health insurance Rs. 20,000,
+                  standard deduction Rs. 50,000, employer NPS Rs. 60,000. Taxable income comes to
+                  roughly Rs. 7,04,000, with tax of approximately Rs. 54,600 including cess.
+                </p>
+              </div>
+              <div className="tc-we-col tc-we-new">
+                <h5>New Regime</h5>
+                <p>
+                  No HRA or Section 123 deduction available. Standard deduction Rs. 75,000 and
+                  employer NPS Rs. 60,000 still apply. Taxable income comes to roughly Rs. 10,65,000,
+                  with tax of approximately Rs. 60,660 including cess.
+                </p>
+              </div>
+            </div>
+            <p className="tc-we-verdict">
+              For this profile the Old Regime saves roughly Rs. 6,000 - almost entirely because of
+              the HRA and Section 123 claims. Someone with the same salary but no rent and no
+              investments would see the New Regime win instead. Enter your own numbers above to see
+              which side wins for you.
+            </p>
+          </div>
+
+          <div className="tc-faq">
+            <h4>Frequently asked questions</h4>
+            {TC_FAQ.map((f) => (
+              <div className="tc-faq-item" key={f.q}>
+                <h5>{f.q}</h5>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
 
           <div className="disclaimer">
             <h4>Before you rely on these figures</h4>
@@ -1626,6 +1726,140 @@ export default function TaxCalculator() {
         .share-btn:hover {
           border-color: var(--purple);
         }
+                .tc-info-cards {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 14px;
+          margin: 28px 0;
+        }
+        .tc-info-card {
+          background: var(--surface);
+          border: 1.5px solid var(--line);
+          border-radius: 12px;
+          padding: 14px 15px;
+          box-shadow: 0 2px 10px rgba(124, 58, 237, 0.07);
+        }
+        .tc-info-icon {
+          font-size: 18px;
+          margin-bottom: 6px;
+        }
+        .tc-info-card h2 {
+          font-family: "Sora", sans-serif;
+          font-size: 12.5px;
+          font-weight: 700;
+          color: var(--purple-deep);
+          margin: 0 0 6px;
+        }
+        .tc-info-card p {
+          font-size: 11.8px;
+          line-height: 1.6;
+          color: var(--ink-soft);
+          margin: 0;
+        }
+        @media (max-width: 980px) {
+          .tc-info-cards { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+          .tc-info-cards { grid-template-columns: 1fr; }
+        }
+
+        .tc-worked-example {
+          background: var(--surface);
+          border: 1.5px solid var(--line);
+          border-radius: 14px;
+          padding: 20px 22px;
+          margin: 24px 0;
+        }
+        .tc-worked-example h4 {
+          font-family: "Sora", sans-serif;
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 10px;
+        }
+        .tc-worked-example > p {
+          font-size: 13px;
+          line-height: 1.65;
+          color: var(--ink-soft);
+          margin: 0 0 16px;
+        }
+        .tc-we-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+          margin-bottom: 14px;
+        }
+        .tc-we-col {
+          background: var(--surface-alt);
+          border-radius: 10px;
+          padding: 14px 16px;
+        }
+        .tc-we-col.tc-we-new {
+          background: var(--green-soft);
+        }
+        .tc-we-col h5 {
+          font-family: "Sora", sans-serif;
+          font-size: 12.5px;
+          font-weight: 700;
+          color: var(--purple-deep);
+          margin: 0 0 8px;
+        }
+        .tc-we-col.tc-we-new h5 {
+          color: var(--green);
+        }
+        .tc-we-col p {
+          font-size: 12.5px;
+          line-height: 1.6;
+          color: var(--ink-soft);
+          margin: 0;
+        }
+        .tc-we-verdict {
+          font-size: 13px;
+          line-height: 1.65;
+          color: var(--ink);
+          font-weight: 500;
+          margin: 0;
+        }
+        @media (max-width: 700px) {
+          .tc-we-grid { grid-template-columns: 1fr; }
+        }
+
+        .tc-faq {
+          background: var(--surface);
+          border: 1.5px solid var(--line);
+          border-radius: 14px;
+          padding: 20px 22px;
+          margin: 24px 0;
+        }
+        .tc-faq > h4 {
+          font-family: "Sora", sans-serif;
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 14px;
+        }
+        .tc-faq-item {
+          padding: 12px 0;
+          border-top: 1px solid var(--line);
+        }
+        .tc-faq-item:first-of-type {
+          border-top: none;
+          padding-top: 0;
+        }
+        .tc-faq-item h5 {
+          font-family: "Sora", sans-serif;
+          font-size: 13.5px;
+          font-weight: 600;
+          color: var(--purple-deep);
+          margin: 0 0 6px;
+        }
+        .tc-faq-item p {
+          font-size: 13px;
+          line-height: 1.65;
+          color: var(--ink-soft);
+          margin: 0;
+        }
+
         .disclaimer {
           max-width: 1080px;
           margin: 22px auto 0;
