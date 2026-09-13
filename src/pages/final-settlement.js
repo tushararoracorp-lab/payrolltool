@@ -171,6 +171,57 @@ function autoServed(dor, dol) {
   return "";
 }
 
+const FS_INFO_CARDS = [
+  {
+    icon: "\ud83c\udfe6",
+    title: "What counts as a full and final settlement?",
+    body: "Everything owed to you after your last working day: unpaid salary, gratuity if you have completed 5+ years, encashment of unused earned leave, any notice-pay shortfall, and other dues - minus anything you owe the company.",
+  },
+  {
+    icon: "\u2696\ufe0f",
+    title: "Gratuity, in short",
+    body: "(Basic + DA) \u00d7 15 \u00f7 26 \u00d7 years worked, only after 5 or more years of service. A final year of 6 or more months rounds up. Capped at Rs. 20 lakh in the private sector under the Payment of Gratuity Act, 1972.",
+  },
+  {
+    icon: "\ud83d\udcdd",
+    title: "Worked Example",
+    body: "7 years 8 months of service on Basic + DA of Rs. 50,000, with 18 days of unused leave. Gratuity comes to roughly Rs. 2,30,769. The full breakdown is below.",
+  },
+  {
+    icon: "\ud83d\udcc5",
+    title: "Notice period shortfall",
+    body: "If your last working day falls short of your notice period, the gap is deducted at your daily Basic + DA (or Gross, if your appointment letter says so) rate - the same rule most Indian employers apply.",
+  },
+  {
+    icon: "\ud83d\udee1\ufe0f",
+    title: "What this does not cover",
+    body: "Bonus, variable pay, ESOP settlement, and TDS on the final payment are not computed here. This is an estimate of the settlement components themselves - always compare it against HR's written statement.",
+  },
+];
+
+const FS_FAQ = [
+  {
+    q: "Am I entitled to gratuity if I resign before 5 years?",
+    a: "Generally no. The Payment of Gratuity Act, 1972 requires a minimum of 5 years of continuous service, with one narrow exception - death or disablement, where the 5-year requirement is waived. Resigning at 4 years 11 months, even by a few days, typically means no gratuity is payable.",
+  },
+  {
+    q: "Is unused sick leave or casual leave encashable?",
+    a: "In most states and company policies, no. Only Earned Leave (also called Privilege Leave) is encashable at exit. Casual leave and sick leave usually lapse unused. Check your specific leave policy, since this varies by state and by employer.",
+  },
+  {
+    q: "What happens if I don't serve my full notice period?",
+    a: "Most appointment letters allow the employer to deduct pay in lieu of the shortfall, calculated per day on your Basic + DA or Gross salary. This calculator applies that same shortfall deduction automatically once you enter your resignation and last working dates.",
+  },
+  {
+    q: "Is my final settlement amount taxable?",
+    a: "Gratuity is tax-exempt up to the same limit used to cap it here (Rs. 20 lakh in the private sector, under Section 10(10)). Leave encashment is tax-exempt only up to a lifetime limit shared across all your employers (Section 10(10AA)); above that limit, it is taxable as salary. This calculator does not deduct that tax - treat the leave encashment figure as pre-tax if you are close to the lifetime limit.",
+  },
+  {
+    q: "How long does an employer have to pay my final settlement?",
+    a: "There is no single central-law deadline that applies to every employer, and practice varies by state and company policy - commonly somewhere between 30 and 45 days from the last working day is treated as reasonable. If your settlement is significantly delayed beyond what your employer's own policy states, that is worth raising with HR directly, and interest may apply on delayed gratuity payments specifically.",
+  },
+];
+
 export default function FinalSettlement() {
   const [theme, setTheme] = useState("light");
   useEffect(() => {
@@ -289,6 +340,20 @@ export default function FinalSettlement() {
               operatingSystem: "Any (browser-based)",
               description: "Calculates full and final settlement - gratuity, notice pay, leave encashment, and statutory deductions - in one place.",
               offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: FS_FAQ.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
             }),
           }}
         />
@@ -548,6 +613,57 @@ export default function FinalSettlement() {
               )}
             </div>
           </div>
+        </div>
+
+        <div className="fsc-info-cards">
+          {FS_INFO_CARDS.map((c) => (
+            <div className="fsc-info-card" key={c.title}>
+              <div className="fsc-info-icon">{c.icon}</div>
+              <h2>{c.title}</h2>
+              <p>{c.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="fsc-worked-example">
+          <h4>Worked example - 7 years 8 months, Basic + DA Rs. 50,000</h4>
+          <p>
+            Joined with Basic + DA of Rs. 50,000/month, resigned after 7 years 8 months of
+            continuous service, with 18 days of unused earned leave and no notice shortfall.
+          </p>
+          <div className="fsc-we-grid">
+            <div className="fsc-we-col">
+              <h5>Gratuity</h5>
+              <p>
+                7 years 8 months rounds to 8 years, since the final year exceeds 6 months.
+                (Rs. 50,000 &times; 15 &divide; 26) &times; 8 = <b>Rs. 2,30,769</b>. Well under
+                the Rs. 20 lakh exemption limit, so it is fully tax-free.
+              </p>
+            </div>
+            <div className="fsc-we-col fsc-we-alt">
+              <h5>Leave encashment</h5>
+              <p>
+                (Rs. 50,000 &divide; 30) &times; 18 days = <b>Rs. 30,000</b>. Well under the
+                lifetime Section 10(10AA) limit for most employees, so ordinarily tax-free too -
+                though that limit is shared across every employer you have worked for.
+              </p>
+            </div>
+          </div>
+          <p className="fsc-we-verdict">
+            Total settlement before any pending dues or deductions: roughly{" "}
+            <b>Rs. 2,60,769</b>. Add or subtract unpaid salary, notice shortfall, and any other
+            dues specific to your case using the calculator above.
+          </p>
+        </div>
+
+        <div className="fsc-faq">
+          <h4>Frequently asked questions</h4>
+          {FS_FAQ.map((f) => (
+            <div className="fsc-faq-item" key={f.q}>
+              <h5>{f.q}</h5>
+              <p>{f.a}</p>
+            </div>
+          ))}
         </div>
 
         <Footer />
@@ -967,6 +1083,141 @@ export default function FinalSettlement() {
           .grid2 {
             grid-template-columns: 1fr;
           }
+        }
+      
+        .fsc-info-cards {
+          max-width: 1200px;
+          margin: 0 auto 24px;
+          padding: 0 20px;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 14px;
+        }
+        .fsc-info-card {
+          background: var(--surface);
+          border: 1.5px solid var(--line);
+          border-radius: 12px;
+          padding: 14px 15px;
+          box-shadow: 0 2px 10px rgba(124, 58, 237, 0.07);
+        }
+        .fsc-info-icon {
+          font-size: 18px;
+          margin-bottom: 6px;
+        }
+        .fsc-info-card h2 {
+          font-family: "Sora", sans-serif;
+          font-size: 12.5px;
+          font-weight: 700;
+          color: var(--brand-deep);
+          margin: 0 0 6px;
+        }
+        .fsc-info-card p {
+          font-size: 11.8px;
+          line-height: 1.6;
+          color: var(--ink-mid);
+          margin: 0;
+        }
+        @media (max-width: 980px) {
+          .fsc-info-cards { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+          .fsc-info-cards { grid-template-columns: 1fr; }
+        }
+
+        .fsc-worked-example {
+          max-width: 1200px;
+          margin: 0 auto 24px;
+          padding: 20px 22px;
+          background: var(--surface);
+          border: 1.5px solid var(--line);
+          border-radius: 14px;
+        }
+        .fsc-worked-example h4 {
+          font-family: "Sora", sans-serif;
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 10px;
+        }
+        .fsc-worked-example > p {
+          font-size: 13px;
+          line-height: 1.65;
+          color: var(--ink-mid);
+          margin: 0 0 16px;
+        }
+        .fsc-we-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+          margin-bottom: 14px;
+        }
+        .fsc-we-col {
+          background: var(--surface-alt);
+          border-radius: 10px;
+          padding: 14px 16px;
+        }
+        .fsc-we-col.fsc-we-alt {
+          background: var(--brand-tint);
+        }
+        .fsc-we-col h5 {
+          font-family: "Sora", sans-serif;
+          font-size: 12.5px;
+          font-weight: 700;
+          color: var(--brand-deep);
+          margin: 0 0 8px;
+        }
+        .fsc-we-col p {
+          font-size: 12.5px;
+          line-height: 1.6;
+          color: var(--ink-mid);
+          margin: 0;
+        }
+        .fsc-we-verdict {
+          font-size: 13px;
+          line-height: 1.65;
+          color: var(--ink);
+          font-weight: 500;
+          margin: 0;
+        }
+        @media (max-width: 700px) {
+          .fsc-we-grid { grid-template-columns: 1fr; }
+        }
+
+        .fsc-faq {
+          max-width: 1200px;
+          margin: 0 auto 40px;
+          padding: 20px 22px;
+          background: var(--surface);
+          border: 1.5px solid var(--line);
+          border-radius: 14px;
+        }
+        .fsc-faq > h4 {
+          font-family: "Sora", sans-serif;
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 14px;
+        }
+        .fsc-faq-item {
+          padding: 12px 0;
+          border-top: 1px solid var(--line);
+        }
+        .fsc-faq-item:first-of-type {
+          border-top: none;
+          padding-top: 0;
+        }
+        .fsc-faq-item h5 {
+          font-family: "Sora", sans-serif;
+          font-size: 13.5px;
+          font-weight: 600;
+          color: var(--brand-deep);
+          margin: 0 0 6px;
+        }
+        .fsc-faq-item p {
+          font-size: 13px;
+          line-height: 1.65;
+          color: var(--ink-mid);
+          margin: 0;
         }
       `}</style>
     </>
