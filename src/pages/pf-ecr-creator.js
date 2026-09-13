@@ -429,6 +429,57 @@ function InfoIcon() {
 }
 
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
+const ECR_INFO_CARDS = [
+  {
+    icon: "\ud83d\udcc4",
+    title: "What is an ECR?",
+    body: "Electronic Challan cum Return - the file every employer uploads to the EPFO Unified Portal each month to remit PF, EPS and EDLI contributions for all employees on a single wage sheet.",
+  },
+  {
+    icon: "\ud83e\uddee",
+    title: "What this tool does",
+    body: "Reads your payroll Excel sheet, validates UANs and wages, caps EPS wages at Rs. 15,000, and outputs the exact #~# delimited text format the EPFO portal expects - no manual formatting.",
+  },
+  {
+    icon: "\ud83d\udcdd",
+    title: "Worked Example",
+    body: "An employee on Rs. 20,000 EPF wage: EPF wage stays Rs. 20,000, but EPS wage is capped at Rs. 15,000. Employee EPF is 12% of Rs. 20,000 = Rs. 2,400; employer EPS is 8.33% of the capped Rs. 15,000 = Rs. 1,250.",
+  },
+  {
+    icon: "\u2696\ufe0f",
+    title: "Common rejection reasons",
+    body: "Duplicate UANs, a UAN linked to two different names, wages below the statutory minimum for the state, and incorrectly formatted UANs are the most common reasons the EPFO portal rejects an ECR file.",
+  },
+  {
+    icon: "\ud83d\udd12",
+    title: "100% Browser Processing",
+    body: "Your payroll sheet is never uploaded to any server - the entire file is read, validated, and converted inside your own browser, then discarded the moment you close the tab.",
+  },
+];
+
+const ECR_FAQ = [
+  {
+    q: "Why does the EPFO portal keep rejecting my ECR file?",
+    a: "The most common causes are a duplicate UAN appearing twice in the same file, one UAN linked to two different employee names, a wage below the applicable state minimum wage, or a UAN that does not match the 12-digit format EPFO expects. This tool checks for the first two automatically before generating your file.",
+  },
+  {
+    q: "What is the EPS wage cap, and why does my EPF wage look different from my EPS wage?",
+    a: "Under EPFO rules, Employees' Pension Scheme (EPS) contributions are calculated on wages capped at Rs. 15,000 per month, regardless of actual salary. EPF contributions themselves are not capped in most establishments. So an employee earning Rs. 30,000 will show a full EPF wage of Rs. 30,000, but their EPS wage - and the resulting employer EPS contribution - is calculated as if they earned only Rs. 15,000.",
+  },
+  {
+    q: "Does this tool submit the ECR file to EPFO for me?",
+    a: "No. This tool prepares a correctly formatted ECR file from your payroll data. You still need to log in to the EPFO Unified Portal yourself and upload the generated file, generate the challan, and complete payment there.",
+  },
+  {
+    q: "What format does my payroll sheet need to be in?",
+    a: "An Excel file (.xlsx or .xls) with one row per employee, including UAN, name, and the wage components EPFO requires. Use the Download Template button above to get a sheet with the exact column headers this tool expects.",
+  },
+  {
+    q: "Is my payroll data safe if I upload it here?",
+    a: "Your file never leaves your browser. All reading, validation, and ECR generation happens locally on your device using JavaScript - nothing is sent to, or stored on, any PayrollTool.in server.",
+  },
+];
+
 export default function PfEcrCreator() {
   // Mirror <html data-theme> onto this page's own wrapper. This file is
   // built entirely with Tailwind utility classes (bg-white, text-gray-500,
@@ -552,6 +603,20 @@ export default function PfEcrCreator() {
               operatingSystem: "Any (browser-based)",
               description: "Prepares PF ECR files for upload to the EPFO Unified Portal from an uploaded Excel spreadsheet.",
               offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: ECR_FAQ.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
             }),
           }}
         />
@@ -983,6 +1048,63 @@ export default function PfEcrCreator() {
               </span>
             ))}
           </div>
+
+          <div className="max-w-5xl mx-auto mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {ECR_INFO_CARDS.map((c) => (
+              <div key={c.title} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <div className="text-lg mb-1.5">{c.icon}</div>
+                <h2 className="text-xs font-bold text-violet-700 mb-1.5">{c.title}</h2>
+                <p className="text-xs leading-relaxed text-gray-500">{c.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="max-w-3xl mx-auto mt-6 bg-white border border-gray-100 rounded-2xl p-6">
+            <h4 className="text-sm font-bold text-gray-900 mb-3">
+              Worked example - Rs. 20,000 EPF wage
+            </h4>
+            <p className="text-sm leading-relaxed text-gray-500 mb-4">
+              An employee whose actual monthly wage is Rs. 20,000 has that full amount used for
+              EPF, but their EPS contribution is calculated differently because of the statutory
+              wage ceiling.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h5 className="text-xs font-bold text-violet-700 mb-2">EPF (uncapped)</h5>
+                <p className="text-xs leading-relaxed text-gray-500">
+                  EPF wage stays at the full Rs. 20,000. Employee contribution is 12% of that -{" "}
+                  <b className="text-gray-900">Rs. 2,400</b> - deducted from the employee&apos;s
+                  pay each month.
+                </p>
+              </div>
+              <div className="bg-violet-50 rounded-lg p-4">
+                <h5 className="text-xs font-bold text-violet-700 mb-2">EPS (capped at Rs. 15,000)</h5>
+                <p className="text-xs leading-relaxed text-gray-500">
+                  Regardless of actual wage, EPS wage cannot exceed Rs. 15,000. Employer EPS
+                  contribution is 8.33% of that capped figure -{" "}
+                  <b className="text-gray-900">Rs. 1,250</b> - not 8.33% of the full Rs. 20,000.
+                </p>
+              </div>
+            </div>
+            <p className="text-sm font-medium text-gray-900">
+              This gap between EPF wage and EPS wage is one of the most common sources of manual
+              ECR errors - this tool applies the Rs. 15,000 cap automatically for every row.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto mt-6 mb-10 bg-white border border-gray-100 rounded-2xl p-6">
+            <h4 className="text-sm font-bold text-gray-900 mb-4">Frequently asked questions</h4>
+            {ECR_FAQ.map((f, i) => (
+              <div
+                key={f.q}
+                className={`py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}
+              >
+                <h5 className="text-sm font-semibold text-violet-700 mb-1.5">{f.q}</h5>
+                <p className="text-sm leading-relaxed text-gray-500">{f.a}</p>
+              </div>
+            ))}
+          </div>
+
         </main>
 
         <Footer />
