@@ -598,6 +598,57 @@ function AboutModal({ onClose }) {
 }
 
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
+const LOP_INFO_CARDS = [
+  {
+    icon: "\ud83d\udcc4",
+    title: "What is LOP?",
+    body: "Loss of Pay - the salary deduction applied when an employee is absent without approved leave, or has exhausted their leave balance. The core formula is monthly gross \u00f7 days in month \u00d7 LOP days.",
+  },
+  {
+    icon: "\ud83e\uddee",
+    title: "What this tool does",
+    body: "Splits each employee's LOP period into individual, HRMS-ready date rows - the format most HR systems expect for bulk upload - rather than a single date-range entry most systems can't parse.",
+  },
+  {
+    icon: "\ud83d\udcdd",
+    title: "Worked Example",
+    body: "An employee on LOP from 28 March to 3 April splits into two HRMS-ready rows: 4 days in March, 3 days in April - each attributed to the correct payroll cycle, with no manual date-splitting.",
+  },
+  {
+    icon: "\u2696\ufe0f",
+    title: "Priority date protection",
+    body: "Flags overlapping absence records instead of silently double-counting a day. If another row's start date falls mid-range, that row takes priority and the excess is logged for review.",
+  },
+  {
+    icon: "\ud83d\udd12",
+    title: "100% Secure Processing",
+    body: "Duplicate overlap guarding ensures the same date is never written twice for one employee across multiple rows - and your payroll sheet never leaves your browser.",
+  },
+];
+
+const LOP_FAQ = [
+  {
+    q: "How is Loss of Pay calculated when an absence spans two months?",
+    a: "Because payroll runs on a calendar-month basis, an absence that crosses a month boundary has to be split into separate entries, each using that month's own per-day rate (that month's gross divided by that month's actual number of days). An absence from 28 March to 3 April becomes two rows - one for the March days, one for the April days - rather than one entry spanning both.",
+  },
+  {
+    q: "What does priority date protection actually prevent?",
+    a: "If two overlapping LOP records exist for the same employee - for example, one entered manually and one imported from an HRMS export - a naive split could count the overlapping days twice, deducting pay twice for the same absence. Priority date protection detects the overlap, keeps only one record for those dates, and flags the conflict so you can review it rather than silently double-charging the employee.",
+  },
+  {
+    q: "Can this tool handle multiple employees in one file?",
+    a: "Yes. Upload a single payroll sheet covering as many employees as you need, and the tool processes each employee's absence records independently, applying the same month-boundary splitting and overlap protection to every row.",
+  },
+  {
+    q: "What format does my payroll sheet need to be in?",
+    a: "An Excel file (.xlsx or .xls). Use the Generate Template button above to get a sheet with the exact column headers this tool expects, so your dates and employee details map correctly.",
+  },
+  {
+    q: "Is my payroll data safe if I upload it here?",
+    a: "Your file never leaves your browser. All reading, date-splitting, and validation happens locally on your device using JavaScript - nothing is sent to, or stored on, any PayrollTool.in server.",
+  },
+];
+
 export default function Home() {
   // Mirror <html data-theme> onto this page's own wrapper - see PF ECR
   // Creator, Tax Calculator, and Salary Proration for the same pattern.
@@ -757,6 +808,20 @@ export default function Home() {
               operatingSystem: "Any (browser-based)",
               description: "Calculates Loss of Pay for partial-month absences, including month-boundary and multi-employee bulk cases.",
               offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: LOP_FAQ.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
             }),
           }}
         />
@@ -992,22 +1057,65 @@ export default function Home() {
           </div>
         </main>
 
-        {/* About / How it works - expanded copy per SEO content-depth review */}
+        {/* About / How it works - card grid, aligned with the other three tools */}
+        <section className="max-w-5xl mx-auto w-full px-4 pb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {LOP_INFO_CARDS.map((c) => (
+              <div key={c.title} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <div className="text-lg mb-1.5">{c.icon}</div>
+                <h2 className="text-xs font-bold text-violet-700 mb-1.5">{c.title}</h2>
+                <p className="text-xs leading-relaxed text-gray-500">{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="max-w-lg mx-auto w-full px-4 pb-4">
+          <div className="bg-white rounded-2xl p-6">
+            <h4 className="text-sm font-bold text-gray-900 mb-3">
+              Worked example - one absence entry, 28 March to 3 April
+            </h4>
+            <p className="text-sm leading-relaxed text-gray-500 mb-4">
+              Payroll runs on a calendar-month basis, so an absence spanning two months has to be
+              split at the month boundary into two separate HRMS-ready rows - this tool does that
+              split automatically from a single start and end date.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              <div className="bg-gray-100 rounded-lg p-4">
+                <h5 className="text-xs font-bold text-violet-700 mb-2">Row 1 - March</h5>
+                <p className="text-xs leading-relaxed text-gray-500">
+                  Employee ID, <b className="text-gray-900">28 Mar to 31 Mar</b> (4 days),
+                  attributed to the March payroll cycle.
+                </p>
+              </div>
+              <div className="bg-violet-50 rounded-lg p-4">
+                <h5 className="text-xs font-bold text-violet-700 mb-2">Row 2 - April</h5>
+                <p className="text-xs leading-relaxed text-gray-500">
+                  Employee ID, <b className="text-gray-900">1 Apr to 3 Apr</b> (3 days),
+                  attributed to the April payroll cycle.
+                </p>
+              </div>
+            </div>
+            <p className="text-sm font-medium text-gray-900">
+              This tool outputs the split date rows only - it does not calculate the rupee
+              deduction. Feed each row&apos;s day count into your payroll system or a salary
+              proration calculator to get the actual LOP amount for that cycle.
+            </p>
+          </div>
+        </section>
+
         <section className="max-w-lg mx-auto w-full px-4 pb-10">
-          <div className="bg-white rounded-3xl shadow-xl p-8">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 text-center">What is LOP, and how does this tool calculate it?</h2>
-            <p className="text-sm text-gray-600 leading-relaxed mb-3">
-              Loss of Pay (LOP) is the salary deduction applied when an employee is absent without approved leave, or has exhausted their leave balance. The core formula is simple - per-day salary (monthly gross ÷ days in month) multiplied by LOP days - but applying it correctly across a real payroll sheet, for dozens of employees with different absence stretches and month boundaries, is where manual Excel work breaks down.
-            </p>
-            <p className="text-sm text-gray-600 leading-relaxed mb-3">
-              This tool splits each employee&apos;s LOP period into individual, HRMS-ready date rows - the format most HR systems expect for bulk upload, rather than a single date-range entry most systems can&apos;t parse directly.
-            </p>
-            <p className="text-sm text-gray-600 leading-relaxed mb-3">
-              <strong>A common example:</strong> an employee is on LOP from 28 March to 3 April. Since payroll runs on a calendar-month basis, this needs to be split into two entries - 4 days in March, 3 days in April - each attributed to the correct payroll cycle.
-            </p>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              <strong>Priority date protection</strong> flags overlapping absence records instead of silently double-counting a day. <strong>Duplicate overlap guarding</strong> ensures the same date is never written twice for one employee across multiple rows.
-            </p>
+          <div className="bg-white rounded-2xl p-6">
+            <h4 className="text-sm font-bold text-gray-900 mb-4">Frequently asked questions</h4>
+            {LOP_FAQ.map((f, i) => (
+              <div
+                key={f.q}
+                className={`py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}
+              >
+                <h5 className="text-sm font-semibold text-violet-700 mb-1.5">{f.q}</h5>
+                <p className="text-sm leading-relaxed text-gray-500">{f.a}</p>
+              </div>
+            ))}
           </div>
         </section>
 
