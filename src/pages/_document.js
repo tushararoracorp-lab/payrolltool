@@ -19,6 +19,12 @@ export default function Document() {
         }} />
         {/* Google Preferred Sources */}
         <script async src="https://news.google.com/swg/js/v1/publisher.js" />
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9339359521272425"
+          crossOrigin="anonymous"
+        />
       </Head>
       <body>
         <Main />
