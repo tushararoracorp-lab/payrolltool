@@ -1165,7 +1165,7 @@ export default function PfEcrCreator() {
             <p className="text-sm leading-relaxed text-gray-500 mb-4">
               An employee whose actual monthly wage is Rs. 20,000 has that full amount used for
               EPF, but their EPS contribution is calculated differently because of the statutory
-              wage ceiling - and that ceiling now depends on which wage month you're filing for.
+              wage ceiling - and that ceiling now depends on which wage month you&apos;re filing for.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
               <div className="bg-gray-50 rounded-lg p-4">
