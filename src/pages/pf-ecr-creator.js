@@ -18,6 +18,7 @@ const C = {
   volPF:    "Voluntary PF",
   ncpDays:  "NCP/LOP Days",
   refund:   "Refund of Advances",
+  epsMemberBefore: "EPS Member Before 17-Sep-2026",
 };
 
 const ALIASES = {
@@ -31,12 +32,46 @@ const ALIASES = {
   volPF:    [C.volPF, "VPF", "VOLUNTARY PF"],
   ncpDays:  [C.ncpDays, "NCP Days", "NCP / LOP Days", "LOP Days", "LOP", "NCP", "ncp/lop days", "ncp days", "lop days"],
   refund:   [C.refund, "Refund of Advance", "Refund", "REFUND", "refund of advances", "refund of advance"],
+  epsMemberBefore: [C.epsMemberBefore, "EPS Member Before", "Existing EPS Member", "EPS Member Pre 17 Sep", "eps member before", "existing eps member"],
 };
 
-const EPS_CEIL = 15000;
+// ─── EPS WAGE CEILING (date-dependent) ─────────────────────────────────────────
+// Notification S.O. 5109(E), effective 17 September 2026, raised the EPFO wage
+// ceiling from Rs. 15,000 to Rs. 25,000. September 2026 itself is a transition
+// month: EPFO FAQ Q7-Q11 require a single ECR with contributions split across
+// 1-16 Sept (old ceiling) and 17-30 Sept (new ceiling).
+const OLD_EPS_CEIL        = 15000;
+const NEW_EPS_CEIL        = 25000;
+const CEILING_CHANGE_YEAR = 2026;
+const CEILING_CHANGE_MONTH = "September";
+const DAYS_BEFORE_CHANGE   = 16;  // 1-16 Sept 2026
+const DAYS_AFTER_CHANGE    = 14;  // 17-30 Sept 2026
+const DAYS_IN_CHANGE_MONTH = 30;
+
 const OBS_PER_PAGE = 10;
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const YEARS  = ["2024","2025","2026","2027","2028","2029","2030"];
+
+// Returns which EPS-ceiling regime applies to a given Wage Month + Year.
+//   "unknown"    - month/year not selected yet; caller must block processing
+//   "old"        - flat Rs. 15,000 cap (any month before Sept 2026)
+//   "transition" - September 2026 itself; blend pre/post ceiling by days
+//   "new"        - flat Rs. 25,000 cap (October 2026 onward)
+function getEpsCeilingInfo(month, year) {
+  const yr = parseInt(year, 10);
+  const monthIdx = MONTHS.indexOf(month);
+  const changeIdx = MONTHS.indexOf(CEILING_CHANGE_MONTH);
+  if (!month || !year || isNaN(yr) || monthIdx === -1) return { mode: "unknown", ceiling: OLD_EPS_CEIL };
+  if (yr < CEILING_CHANGE_YEAR || (yr === CEILING_CHANGE_YEAR && monthIdx < changeIdx)) return { mode: "old", ceiling: OLD_EPS_CEIL };
+  if (yr === CEILING_CHANGE_YEAR && monthIdx === changeIdx) {
+    return { mode: "transition", pre: OLD_EPS_CEIL, post: NEW_EPS_CEIL, daysPre: DAYS_BEFORE_CHANGE, daysPost: DAYS_AFTER_CHANGE, totalDays: DAYS_IN_CHANGE_MONTH };
+  }
+  return { mode: "new", ceiling: NEW_EPS_CEIL };
+}
+function isYes(v) {
+  const s = String(v).trim().toLowerCase();
+  return s === "y" || s === "yes" || s === "true" || s === "1";
+}
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 function getVal(row, aliases) {
@@ -63,7 +98,7 @@ function fmt(v)  { return "Rs. " + rnd(v).toLocaleString("en-IN"); }
 function stripHtml(h) { return h.replace(/<[^>]+>/g, ""); }
 
 // ─── CORE PROCESSING ──────────────────────────────────────────────────────────
-function processWorkbook(buffer) {
+function processWorkbook(buffer, month, year) {
   const wb   = XLSX.read(buffer, { type: "array" });
   const ws   = wb.Sheets[wb.SheetNames[0]];
   const rows = XLSX.utils.sheet_to_json(ws, { defval: "" });
@@ -77,6 +112,22 @@ function processWorkbook(buffer) {
   const colVolPF  = hasCol(rows, ALIASES.volPF);
   if (!colNcp)    infoBanners.push({ type: "info", text: "<strong>NCP/LOP Days column not found</strong> - treated as <strong>0</strong> for all employees." });
   if (!colRefund) infoBanners.push({ type: "info", text: "<strong>Refund of Advances column not found</strong> - treated as <strong>0</strong> for all employees." });
+
+  // ── EPS ceiling regime for this wage month (see getEpsCeilingInfo above) ──
+  const ceilingInfo   = getEpsCeilingInfo(month, year);
+  const colEpsMember  = ceilingInfo.mode === "transition" ? hasCol(rows, ALIASES.epsMemberBefore) : false;
+  if (ceilingInfo.mode === "unknown") {
+    infoBanners.push({ type: "error", text: "<strong>Wage Month and Year not selected.</strong> The EPS wage ceiling changed on 17 September 2026, so the correct cap cannot be applied without knowing the wage month. The Rs. 15,000 cap has been used as a fallback - please re-select the correct month/year and re-process." });
+  }
+  if (ceilingInfo.mode === "transition") {
+    infoBanners.push({
+      type: "info",
+      text: `<strong>September 2026 is a transition month.</strong> EPS wage is split into two periods: 1-16 Sept (based on Pension Wages, capped Rs. ${ceilingInfo.pre.toLocaleString()}) and 17-30 Sept (based on PF Wages, capped Rs. ${ceilingInfo.post.toLocaleString()}). EDLI wage is always based on PF Wages for both periods, regardless of EPS membership` +
+        (colEpsMember
+          ? `. Period 1 uses the "${C.epsMemberBefore}" column to determine whether each employee was already an EPS member before 17 Sept.`
+          : ` - the "${C.epsMemberBefore}" column was <strong>not found</strong>, so every employee has been treated as though they were <strong>not</strong> an EPS member before 17 Sept: Period 1 (1-16 Sept) has been set to Rs. 0 for everyone. If anyone was already an EPS member before the change, add this column and re-process, or their EPS contribution will be understated.`)
+    });
+  }
 
   // uanMap: uan -> [{idx, nameUC}]
   // nameMap: nameUC -> [idx]
@@ -134,8 +185,8 @@ function processWorkbook(buffer) {
     const gross  = num(getVal(row, ALIASES.gross));
     const nameUC = name.toUpperCase();
     let epfWages  = num(getVal(row, ALIASES.pfWages));
-    let epsWages  = num(getVal(row, ALIASES.penWages));
-    let edliWages = num(getVal(row, ALIASES.edli));
+    let epsWages  = num(getVal(row, ALIASES.penWages));   // used as the Period-1 basis (Sept) and as the >0 gate for all months - the EPS wage itself is always derived from PF Wages, not this column
+    let edliInput = num(getVal(row, ALIASES.edli));        // raw sheet value, kept only for a data-quality comparison below - EDLI is always computed from PF Wages
     let empPFin   = num(getVal(row, ALIASES.empPF));
     let volPF     = colVolPF ? num(getVal(row, ALIASES.volPF)) : 0;
     let ncpRaw    = getRaw(row, ALIASES.ncpDays);
@@ -175,22 +226,66 @@ function processWorkbook(buffer) {
       status = "ERROR"; cntError++;
     }
     if (status !== "ERROR") {
-      // ── Check if EPS or EDLI > EPF ──
-      if (epsWages > epfWages) {
-        remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPS Wages (Rs. ${epsWages.toLocaleString()}) exceeds EPF Wages (Rs. ${epfWages.toLocaleString()}) - adjusted to EPF Wages.` });
-        epsWages = epfWages;
-        hasModification = true;
-      }
-      if (edliWages > epfWages) {
-        remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EDLI Wages (Rs. ${edliWages.toLocaleString()}) exceeds EPF Wages (Rs. ${epfWages.toLocaleString()}) - adjusted to EPF Wages.` });
-        edliWages = epfWages;
-        hasModification = true;
+      // ── EPS wage is ALWAYS derived from PF Wages (capped at the applicable
+      //    ceiling), not read directly from the "Pension Wages" column - except
+      //    that column still decides WHETHER an employee has any EPS wage at all
+      //    (0 there means no EPS coverage), and, for September 2026 specifically,
+      //    it is also the basis for Period 1 (1-16 Sept), reflecting whatever the
+      //    payroll system had already been contributing before the ceiling moved.
+      // ── EDLI wage is ALWAYS derived from PF Wages too, with no gating at all -
+      //    every EPF member gets EDLI coverage regardless of EPS membership.
+      let ec;              // EPS wage (final)
+      let edliWages;        // EDLI wage (final)
+
+      if (ceilingInfo.mode === "transition") {
+        const wasEpsMemberBefore = colEpsMember ? isYes(getRaw(row, ALIASES.epsMemberBefore)) : false;
+
+        // Period 1 (1-16 Sept): only counted if the employee was already an EPS
+        // member before 17 Sept - based on the Pension Wages column, capped at
+        // the old Rs. 15,000 ceiling.
+        const p1 = wasEpsMemberBefore ? Math.min(epsWages, ceilingInfo.pre) * ceilingInfo.daysPre / ceilingInfo.totalDays : 0;
+
+        // Period 2 (17-30 Sept): counted if the employee was already an EPS
+        // member (continues automatically, even if Period 1 worked out to 0),
+        // OR if Pension Wages > 0 (signals EPS membership starting fresh from
+        // 17 Sept). Always based on PF Wages, capped at the new Rs. 25,000 ceiling.
+        const p2Gate = wasEpsMemberBefore || epsWages > 0;
+        const p2 = p2Gate ? Math.min(epfWages, ceilingInfo.post) * ceilingInfo.daysPost / ceilingInfo.totalDays : 0;
+
+        ec = p1 + p2;
+
+        if (!colEpsMember) {
+          remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: "${C.epsMemberBefore}" column not found - Period 1 (1-16 Sept) EPS wage treated as Rs. 0. Add this column and re-process for an accurate September ECR.` });
+        } else {
+          remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: September transition - EPS wage Rs. ${Math.round(p1).toLocaleString()} (1-16 Sept) + Rs. ${Math.round(p2).toLocaleString()} (17-30 Sept) = Rs. ${Math.round(ec).toLocaleString()}.` });
+        }
+
+        // EDLI: always PF Wages, both periods, capped at 15,000/25,000, then the
+        // combined figure is capped at Rs. 19,667 as a safety net - structurally
+        // this cap-then-prorate approach can never actually exceed that figure,
+        // since MIN(PF,15000)*16/30 + MIN(PF,25000)*14/30 tops out there by
+        // construction once PF Wages reaches Rs. 25,000.
+        const edliP1 = Math.min(epfWages, ceilingInfo.pre)  * ceilingInfo.daysPre  / ceilingInfo.totalDays;
+        const edliP2 = Math.min(epfWages, ceilingInfo.post) * ceilingInfo.daysPost / ceilingInfo.totalDays;
+        edliWages = Math.min(rnd(edliP1 + edliP2), 19667);
+      } else {
+        const cap = ceilingInfo.ceiling;
+        ec = epsWages > 0 ? Math.min(epfWages, cap) : 0;
+        if (epsWages === 0 && epfWages > 0) {
+          remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: Pension Wages is Rs. 0 - treated as no EPS coverage for this employee.` });
+        } else if (epfWages > cap) {
+          remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPS Wages capped Rs. ${epfWages.toLocaleString()} → Rs. ${cap.toLocaleString()}.` });
+        }
+        edliWages = Math.min(epfWages, cap);
       }
 
-      let ec = Math.min(epsWages, EPS_CEIL);
-      if (epsWages > EPS_CEIL) remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPS Wages capped Rs. ${epsWages.toLocaleString()} → Rs. ${EPS_CEIL.toLocaleString()}.` });
+      if (edliInput > 0 && Math.abs(edliInput - edliWages) > 1) {
+        remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EDLI Wages in your file (Rs. ${edliInput.toLocaleString()}) differs from the statutory figure (Rs. ${edliWages.toLocaleString()}) - EDLI is always calculated from PF Wages, so the statutory figure was used.` });
+      }
+
       let epfC  = rnd(epfWages * 0.12);
       let epsC  = rnd(ec * 0.0833);
+      ec = rnd(ec);
       let epfD  = epfC - epsC;
       if (empPFin > 0 && empPFin !== epfC) remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPF Contribution adjusted Rs. ${empPFin.toLocaleString()} → Rs. ${epfC.toLocaleString()}.` });
       let epfCF   = epfC + volPF;
@@ -222,13 +317,13 @@ function processWorkbook(buffer) {
 // ─── WORKBOOK BUILDERS ────────────────────────────────────────────────────────
 function buildTemplateWorkbook() {
   const wb = XLSX.utils.book_new();
-  const headers = [C.uan, C.name, C.gross, C.pfWages, C.penWages, C.edli, C.empPF, C.volPF, C.ncpDays, C.refund];
+  const headers = [C.uan, C.name, C.gross, C.pfWages, C.penWages, C.edli, C.empPF, C.volPF, C.ncpDays, C.refund, C.epsMemberBefore];
   const sample  = [
-    ["100881966178", "JOHN DOE",    30000, 15000, 15000, 15000, 1800, 0, 0, 0],
-    ["100881966179", "JANE SMITH",  25000, 15000, 15000, 15000, 1800, 0, 2, 0],
+    ["100881966178", "JOHN DOE",    30000, 15000, 15000, 15000, 1800, 0, 0, 0, "Y"],
+    ["100881966179", "JANE SMITH",  25000, 15000, 15000, 15000, 1800, 0, 2, 0, "Y"],
   ];
   const ws = XLSX.utils.aoa_to_sheet([headers, ...sample]);
-  ws["!cols"] = [20, 38, 14, 12, 14, 12, 12, 12, 14, 20].map(w => ({ wch: w }));
+  ws["!cols"] = [20, 38, 14, 12, 14, 12, 12, 12, 14, 20, 26].map(w => ({ wch: w }));
   XLSX.utils.book_append_sheet(wb, ws, "PF Data");
   return wb;
 }
@@ -438,12 +533,12 @@ const ECR_INFO_CARDS = [
   {
     icon: "\ud83e\uddee",
     title: "What this tool does",
-    body: "Reads your payroll Excel sheet, validates UANs and wages, caps EPS wages at Rs. 15,000, and outputs the exact #~# delimited text format the EPFO portal expects - no manual formatting.",
+    body: "Reads your payroll Excel sheet, validates UANs and wages, applies the correct EPS wage ceiling for the wage month you select (Rs. 15,000 before 17 Sept 2026, blended for September 2026, Rs. 25,000 from October 2026 onward), and outputs the exact #~# delimited text format the EPFO portal expects.",
   },
   {
     icon: "\ud83d\udcdd",
     title: "Worked Example",
-    body: "An employee on Rs. 20,000 EPF wage: EPF wage stays Rs. 20,000, but EPS wage is capped at Rs. 15,000. Employee EPF is 12% of Rs. 20,000 = Rs. 2,400; employer EPS is 8.33% of the capped Rs. 15,000 = Rs. 1,250.",
+    body: "An employee on Rs. 20,000 EPF wage, for wage months from October 2026 onward: EPF wage stays Rs. 20,000, and EPS wage is also Rs. 20,000 under the new Rs. 25,000 cap. Employee EPF is 12% of Rs. 20,000 = Rs. 2,400; employer EPS is 8.33% of Rs. 20,000 = Rs. 1,666. Before 17 Sept 2026, the old Rs. 15,000 cap applies instead; September 2026 itself is blended across both periods.",
   },
   {
     icon: "\u2696\ufe0f",
@@ -464,7 +559,7 @@ const ECR_FAQ = [
   },
   {
     q: "What is the EPS wage cap, and why does my EPF wage look different from my EPS wage?",
-    a: "Under EPFO rules, Employees' Pension Scheme (EPS) contributions are calculated on wages capped at Rs. 15,000 per month, regardless of actual salary. EPF contributions themselves are not capped in most establishments. So an employee earning Rs. 30,000 will show a full EPF wage of Rs. 30,000, but their EPS wage - and the resulting employer EPS contribution - is calculated as if they earned only Rs. 15,000.",
+    a: "Employees' Pension Scheme (EPS) contributions are calculated on wages capped at a statutory ceiling, regardless of actual salary - EPF contributions themselves are not capped in most establishments. This ceiling changed on 17 September 2026: it's Rs. 15,000 for wage months up to August 2026, and Rs. 25,000 from October 2026 onward. September 2026 itself is a transition month - EPFO requires a single ECR with contributions split across 1-16 Sept (old cap) and 17-30 Sept (new cap). This tool applies the correct cap automatically based on the Wage Month and Year you select, and blends the two periods for September 2026. EDLI wages follow the same ceiling and the same September blend, since EDLI's own maximum assurance benefit is fixed regardless of wage.",
   },
   {
     q: "Does this tool submit the ECR file to EPFO for me?",
@@ -535,10 +630,14 @@ export default function PfEcrCreator() {
 
   async function handleProcess() {
     if (!file) return;
+    if (!month || !year) {
+      alert("Please select the Wage Month and Year before processing - the EPS ceiling depends on it (Rs. 15,000 before 17 Sept 2026, blended for September 2026, Rs. 25,000 from October 2026 onward).");
+      return;
+    }
     setProcessing(true);
     try {
       const buffer = await file.arrayBuffer();
-      const res    = processWorkbook(buffer);
+      const res    = processWorkbook(buffer, month, year);
       setResult(res);
       setObsPage(1);
     } catch (err) {
@@ -743,7 +842,7 @@ export default function PfEcrCreator() {
 
               <p className="text-center text-xs text-gray-400 mt-3">
                 Supports <span className="font-semibold text-gray-500">.XLSX</span> &amp; <span className="font-semibold text-gray-500">.XLS</span>
-                <Tooltip text="Use the official ECR template. Columns: UAN, Employee Name, Gross Wages, PF Wages, Pension Wages, EDLI Wages, Employee PF, Voluntary PF, NCP Days, Refund of Advances.">
+                <Tooltip text="Use the official ECR template. Columns: UAN, Employee Name, Gross Wages, PF Wages, Pension Wages, EDLI Wages, Employee PF, Voluntary PF, NCP Days, Refund of Advances, EPS Member Before 17-Sep-2026 (optional, only used for September 2026 filings).">
                   <InfoIcon />
                 </Tooltip>
               </p>
@@ -752,7 +851,7 @@ export default function PfEcrCreator() {
               {file && (
                 <button
                   onClick={handleProcess}
-                  disabled={processing}
+                  disabled={processing || !month || !year}
                   className="w-full mt-4 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95 disabled:opacity-60"
                   style={{ background: "linear-gradient(135deg,#059669 0%,#10B981 100%)" }}
                 >
@@ -853,7 +952,7 @@ export default function PfEcrCreator() {
 
                   <p className="text-center text-xs text-gray-400 mt-2">
                     Supports <span className="font-semibold text-gray-500">.XLSX</span> &amp; <span className="font-semibold text-gray-500">.XLS</span>
-                    <Tooltip text="Use the official ECR template. Columns: UAN, Employee Name, Gross Wages, PF Wages, Pension Wages, EDLI Wages, Employee PF, Voluntary PF, NCP Days, Refund of Advances.">
+                    <Tooltip text="Use the official ECR template. Columns: UAN, Employee Name, Gross Wages, PF Wages, Pension Wages, EDLI Wages, Employee PF, Voluntary PF, NCP Days, Refund of Advances, EPS Member Before 17-Sep-2026 (optional, only used for September 2026 filings).">
                       <InfoIcon />
                     </Tooltip>
                   </p>
@@ -862,7 +961,7 @@ export default function PfEcrCreator() {
                   {file && (
                     <button
                       onClick={handleProcess}
-                      disabled={processing}
+                      disabled={processing || !month || !year}
                       className="w-full mt-3 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95 disabled:opacity-60"
                       style={{ background: "linear-gradient(135deg,#059669 0%,#10B981 100%)" }}
                     >
@@ -1039,7 +1138,7 @@ export default function PfEcrCreator() {
             {[
               { label: "EPFO-compliant format",   tip: "Output matches the official ECR #~# delimited format accepted by the EPFO unified portal." },
               { label: "Duplicate UAN guard",      tip: "Detects and flags duplicate UANs, names, or UAN+Name combos before generating the ECR." },
-              { label: "EPS wage auto-cap",        tip: "EPS wages are automatically capped at Rs. 15,000 as per EPFO rules." },
+              { label: "EPS & EDLI wage auto-cap", tip: "EPS and EDLI wages are both automatically capped at the correct ceiling for your selected wage month - Rs. 15,000 before 17 Sept 2026, blended for September 2026, Rs. 25,000 from October 2026 onward." },
               { label: "100% browser processing",  tip: "All processing happens in your browser. No data sent to any server." },
             ].map(({ label, tip }) => (
               <span key={label} className="flex items-center gap-1">
@@ -1066,29 +1165,32 @@ export default function PfEcrCreator() {
             <p className="text-sm leading-relaxed text-gray-500 mb-4">
               An employee whose actual monthly wage is Rs. 20,000 has that full amount used for
               EPF, but their EPS contribution is calculated differently because of the statutory
-              wage ceiling.
+              wage ceiling - and that ceiling now depends on which wage month you&apos;re filing for.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
               <div className="bg-gray-50 rounded-lg p-4">
                 <h5 className="text-xs font-bold text-violet-700 mb-2">EPF (uncapped)</h5>
                 <p className="text-xs leading-relaxed text-gray-500">
-                  EPF wage stays at the full Rs. 20,000. Employee contribution is 12% of that -{" "}
-                  <b className="text-gray-900">Rs. 2,400</b> - deducted from the employee&apos;s
-                  pay each month.
+                  EPF wage stays at the full Rs. 20,000, for any wage month. Employee contribution
+                  is 12% of that - <b className="text-gray-900">Rs. 2,400</b> - deducted from the
+                  employee&apos;s pay each month.
                 </p>
               </div>
               <div className="bg-violet-50 rounded-lg p-4">
-                <h5 className="text-xs font-bold text-violet-700 mb-2">EPS (capped at Rs. 15,000)</h5>
+                <h5 className="text-xs font-bold text-violet-700 mb-2">EPS (ceiling depends on wage month)</h5>
                 <p className="text-xs leading-relaxed text-gray-500">
-                  Regardless of actual wage, EPS wage cannot exceed Rs. 15,000. Employer EPS
-                  contribution is 8.33% of that capped figure -{" "}
-                  <b className="text-gray-900">Rs. 1,250</b> - not 8.33% of the full Rs. 20,000.
+                  Before 17 Sept 2026: capped at Rs. 15,000 - employer EPS contribution{" "}
+                  <b className="text-gray-900">Rs. 1,250</b>. From October 2026 onward: capped at
+                  Rs. 25,000 - the full wage counts, so employer EPS is{" "}
+                  <b className="text-gray-900">Rs. 1,666</b>. September 2026 itself blends both
+                  caps by days within the month.
                 </p>
               </div>
             </div>
             <p className="text-sm font-medium text-gray-900">
               This gap between EPF wage and EPS wage is one of the most common sources of manual
-              ECR errors - this tool applies the Rs. 15,000 cap automatically for every row.
+              ECR errors - this tool applies the correct ceiling automatically based on the Wage
+              Month and Year you select.
             </p>
           </div>
 
