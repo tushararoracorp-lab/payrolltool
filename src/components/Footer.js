@@ -51,6 +51,7 @@ export default function Footer() {
               <div className="footer-col">
                 <h5>Tools</h5>
                 <Link href="/pf-ecr-creator">PF ECR Creator</Link>
+                <Link href="/esic-mc-creator">ESIC MC Creator</Link>
                 <Link href="/tax-calculator">Tax Calculator</Link>
                 <Link href="/salary-proration">Salary Proration</Link>
                 <Link href="/lop-splitter">LOP Splitter</Link>

@@ -184,7 +184,10 @@ export default async function handler(req, res) {
       }
     });
 
-    byCountry.sort((a, b) => b.users - a.users);
+    // Highest users first. Countries with the same count are ordered by name so the
+    // list is identical on every refresh - the homepage shows only the top third of
+    // it, and GA4 returns tied countries in no guaranteed order.
+    byCountry.sort((a, b) => b.users - a.users || a.name.localeCompare(b.name));
 
     const activeUsers = parseInt(
       last30Report[0].rows?.[0]?.metricValues?.[0]?.value || "0",
@@ -195,7 +198,7 @@ export default async function handler(req, res) {
       countries: sinceLaunchRows.length, // since launch - cumulative reach
       activeUsers,                        // strictly last 30 days - recency signal
       indiaUsers,                         // since launch - cumulative reach
-      byCountry: byCountry.slice(0, 7),   // top 7, since launch, matching "Top 7 of N countries shown" on the page
+      byCountry,                          // every country (since launch), highest first - the homepage lists the top third of these and colours them all on the map
     });
   } catch (err) {
     console.error("GA4 Data API request failed:", err);

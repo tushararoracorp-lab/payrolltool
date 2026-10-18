@@ -1,0 +1,98 @@
+[
+  {
+    "slug": "pf-ecr-file-format",
+    "title": "PF ECR File Format in Excel",
+    "icon": "pfEcr",
+    "order": 1
+  },
+  {
+    "slug": "epf-wage-ceiling-25000",
+    "title": "EPF Wage Ceiling ₹25,000",
+    "icon": "article",
+    "order": 2
+  },
+  {
+    "slug": "gratuity-eligibility-4-years-240-days",
+    "title": "Gratuity: 4 Years 240 Days Rule",
+    "icon": "finalSettlement",
+    "order": 3
+  },
+  {
+    "slug": "pf-ecr-validation-errors-guide",
+    "title": "PF ECR Validation Errors",
+    "icon": "pfEcr",
+    "order": 4
+  },
+  {
+    "slug": "esic-mc-file-upload-template-reason-codes",
+    "title": "ESIC MC Template & Reason Codes",
+    "icon": "esicMc",
+    "order": 5
+  },
+  {
+    "slug": "salary-proration-india",
+    "title": "Prorated CTC Calculation",
+    "icon": "article",
+    "order": 6
+  },
+  {
+    "slug": "code-on-wages-50-percent-rule",
+    "title": "Code on Wages 50% Rule",
+    "icon": "article",
+    "order": 7
+  },
+  {
+    "slug": "how-to-calculate-lop-in-india",
+    "title": "What is LOP? Calculation Guide",
+    "icon": "lopSplitter",
+    "order": 8
+  },
+  {
+    "slug": "esi-calculation-guide-india",
+    "title": "ESI Calculation Guide",
+    "icon": "article",
+    "order": 9
+  },
+  {
+    "slug": "professional-tax-india-state-wise-guide",
+    "title": "Professional Tax State-wise Guide",
+    "icon": "tax",
+    "order": 10
+  },
+  {
+    "slug": "employer-nps-contribution",
+    "title": "Employer NPS Contributions",
+    "icon": "article",
+    "order": 11
+  },
+  {
+    "slug": "final-settlement-calculator",
+    "title": "Final Settlement Guide",
+    "icon": "finalSettlement",
+    "order": 12
+  },
+  {
+    "slug": "old-vs-new-tax-regime-2026",
+    "title": "Old vs New Tax Regime",
+    "icon": "tax",
+    "order": 13
+  },
+  {
+    "slug": "hra-exemption-guide",
+    "title": "HRA Exemption Guide",
+    "icon": "tax",
+    "order": 14
+  },
+  {
+    "slug": "section-123-basket-explained",
+    "title": "Section 123 Basket Explained",
+    "icon": "tax",
+    "order": 15
+  },
+  {
+    "slug": "income-tax-act-2025-changes",
+    "title": "Income Tax Act 2025 Changes",
+    "icon": "tax",
+    "order": 16
+  }
+]

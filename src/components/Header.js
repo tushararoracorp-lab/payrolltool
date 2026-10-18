@@ -15,6 +15,11 @@ const ICONS = {
       <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M7 7h10v10H7z" />
     </svg>
   ),
+  esicMc: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3z" /><path d="M12 8v6M9 11h6" />
+    </svg>
+  ),
   tax: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M12 2v20m-7-5h14M3 9h18" />
@@ -65,33 +70,55 @@ const ICONS = {
 
 const toolLinks = [
   { href: "/pf-ecr-creator", label: "PF ECR Creator", icon: ICONS.pfEcr },
+  { href: "/esic-mc-creator", label: "ESIC MC Creator", icon: ICONS.esicMc },
   { href: "/tax-calculator", label: "Tax Calculator", icon: ICONS.tax },
-  { href: "/salary-proration", label: "Salary Proration", icon: ICONS.salaryProration },
 ];
 const toolLinksCol2 = [
+  { href: "/salary-proration", label: "Salary Proration", icon: ICONS.salaryProration },
   { href: "/lop-splitter", label: "LOP Splitter", icon: ICONS.lopSplitter },
   { href: "/final-settlement", label: "Final Settlement", icon: ICONS.finalSettlement },
 ];
 
-// Curated 6 of 9 live posts (matches the 3 already featured on the homepage
-// blog section, plus 3 more) - "Browse all articles" in col 2 covers the rest.
-const blogLinksCol1 = [
-  { href: "/blog/pf-ecr-file-format", label: "PF ECR File Format Guide", icon: ICONS.pfEcr },
-  { href: "/blog/salary-proration-india", label: "Prorated CTC Calculation", icon: ICONS.article },
-  { href: "/blog/final-settlement-calculator", label: "Final Settlement Guide", icon: ICONS.finalSettlement },
-];
-const blogLinksCol2 = [
-  { href: "/blog/old-vs-new-tax-regime-2026", label: "Old vs New Tax Regime", icon: ICONS.tax },
-  { href: "/blog/hra-exemption-guide", label: "HRA Exemption Guide", icon: ICONS.article },
-  { href: "/blog/how-to-calculate-lop-in-india", label: "LOP Calculation Guide", icon: ICONS.lopSplitter },
-];
+// Blog links are fetched dynamically from /public/blog-meta.json
+// This allows infinite blog posts without manual header updates
 
 export default function Header() {
   const router = useRouter();
   const [theme, setTheme] = useState("light");
   const [openMenu, setOpenMenu] = useState(null); // null | "tools" | "blog"
+  const [blogCols, setBlogCols] = useState([[], [], []]); // 3 columns of blog links
   const toolsRef = useRef(null);
   const blogRef = useRef(null);
+
+  // Fetch blog posts from blog-meta.json on component mount
+  useEffect(() => {
+    fetch("/blog-meta.json")
+      .then((res) => res.json())
+      .then((posts) => {
+        // Take top 12 posts, split into 3 columns of 4
+        const top12 = posts.slice(0, 12);
+        const col1 = top12.slice(0, 4).map((p) => ({
+          href: `/blog/${p.slug}`,
+          label: p.title,
+          icon: ICONS[p.icon] || ICONS.article,
+        }));
+        const col2 = top12.slice(4, 8).map((p) => ({
+          href: `/blog/${p.slug}`,
+          label: p.title,
+          icon: ICONS[p.icon] || ICONS.article,
+        }));
+        const col3 = [
+          ...top12.slice(8, 12).map((p) => ({
+            href: `/blog/${p.slug}`,
+            label: p.title,
+            icon: ICONS[p.icon] || ICONS.article,
+          })),
+          { href: "/blog", label: "Browse all articles", icon: ICONS.arrowRight },
+        ];
+        setBlogCols([col1, col2, col3]);
+      })
+      .catch((err) => console.error("Failed to load blog meta:", err));
+  }, []);
 
   // Read the user's last saved choice first; only fall back to system
   // preference if they've never toggled it. Without this, navigating to
@@ -176,10 +203,6 @@ export default function Header() {
                       <span className="mega-icon">{icon}</span>{label}
                     </Link>
                   ))}
-                  <a href="#" className="mega-link soon" onClick={(e) => e.preventDefault()}>
-                    <span className="mega-icon">{ICONS.dashboard}</span>
-                    Dashboard <span className="soon-badge">Soon</span>
-                  </a>
                 </div>
               </div>
             </div>
@@ -189,29 +212,20 @@ export default function Header() {
                 Blog {ICONS.chevron}
               </Link>
               <div className="mega">
-                <div className="mega-col">
-                  <h5>Guides</h5>
-                  {blogLinksCol1.map(({ href, label, icon }) => (
-                    <Link key={href} href={href} className="mega-link" onClick={() => setOpenMenu(null)}>
-                      <span className="mega-icon">{icon}</span>{label}
-                    </Link>
-                  ))}
-                </div>
-                <div className="mega-col">
-                  <h5>&nbsp;</h5>
-                  {blogLinksCol2.map(({ href, label, icon }) => (
-                    <Link key={href} href={href} className="mega-link" onClick={() => setOpenMenu(null)}>
-                      <span className="mega-icon">{icon}</span>{label}
-                    </Link>
-                  ))}
-                  <Link href="/blog" className="mega-link" onClick={() => setOpenMenu(null)}>
-                    <span className="mega-icon">{ICONS.arrowRight}</span>
-                    Browse all articles
-                  </Link>
-                </div>
+                {blogCols.map((col, idx) => (
+                  <div key={`blog-col-${idx}`} className="mega-col">
+                    <h5>{idx === 0 ? "GUIDES" : "\u00A0"}</h5>
+                    {col.map(({ href, label, icon }) => (
+                      <Link key={href} href={href} className={`mega-link${href === router.pathname ? " active" : ""}`}>
+                        <div className="mega-icon">{icon}</div>
+                        {label}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
               </div>
-            </div>
-
+            </div>                
+              
             <div className="nav-item">
               <span className="nav-link disabled">Updates</span>
               <div className="cooking-panel">
@@ -388,10 +402,11 @@ export default function Header() {
           position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
           background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
           box-shadow: var(--shadow-card-hover); padding: 22px;
-          display: flex; gap: 36px; min-width: 460px;
+          display: flex; gap: 36px; min-width: 460px; align-items: flex-start;
           opacity: 0; visibility: hidden; translate: 0 6px;
           transition: opacity .16s ease, translate .16s ease, visibility .16s;
         }
+
         .nav-item:hover .mega, .nav-item.mega-open .mega { opacity: 1; visibility: visible; translate: 0 0; }
         .mega-col { min-width: 190px; }
         .mega-col h5 {

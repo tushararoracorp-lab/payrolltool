@@ -47,6 +47,11 @@ const Icon = {
       <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M7 7h10v10H7z" />
     </svg>
   ),
+  esicMc: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3z" /><path d="M12 8v6M9 11h6" />
+    </svg>
+  ),
   tax: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M12 2v20m-7-5h14M3 9h18" />
@@ -101,6 +106,7 @@ const Icon = {
 
 const toolCards = [
   { icon: Icon.pfEcr, name: "PF ECR Creator", href: "/pf-ecr-creator", desc: "Prepares your ECR file for upload to the EPFO Unified Portal. Upload your spreadsheet, verify, download." },
+  { icon: Icon.esicMc, name: "ESIC MC Creator", href: "/esic-mc-creator", desc: "Builds your ESIC monthly contribution file for the ESIC portal. Upload your sheet, fix any flagged rows, and download a portal-ready .xls." },
   { icon: Icon.tax, name: "Tax Regime Calculator", href: "/tax-calculator", desc: "Compare Old vs New tax regimes for FY 2026\u201127. See which saves you more with deductions, surcharge, and cess." },
   { icon: Icon.salaryProration, name: "Salary Proration", href: "/salary-proration", desc: "Calculate prorated salary for mid-month joining or exit. Handles partial months, joining/resignation dates, and statutory deductions." },
   { icon: Icon.lopSplitter, name: "LOP Splitter", href: "/lop-splitter", desc: "Determine Loss of Pay for partial month absences. Handles unpaid leave, disciplinary action, and month-boundary calculations." },
@@ -146,15 +152,9 @@ const blogPosts = [
   { href: "/blog/final-settlement-calculator", variant: "brand", icon: Icon.finalSettlement, tag: "Guide", title: "Full & Final Settlement Calculator | Gratuity, Leave Encashment" },
 ];
 
-const DEFAULT_COUNTRY_DATA = [
-  { name: "India", iso: 356, users: 105 },
-  { name: "United States", iso: 840, users: 32 },
-  { name: "Canada", iso: 124, users: 1 },
-  { name: "Germany", iso: 276, users: 1 },
-  { name: "Estonia", iso: 233, users: 1 },
-  { name: "Hungary", iso: 348, users: 1 },
-  { name: "Lithuania", iso: 440, users: 1 },
-];
+// No placeholder figures: until /api/stats answers, the country list stays empty and the
+// headline shows "Loading..." instead of inventing numbers (the old placeholders put India at 105).
+const DEFAULT_COUNTRY_DATA = [];
 
 export default function Home() {
   const [scenario, setScenario] = useState("joining");
@@ -164,11 +164,11 @@ export default function Home() {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Hero card animation state - converted from hero-card-v2.html. 4 scenes:
-  // typed Q&A intro, 5-tool grid, roadmap ECG pulse, end card. Loops
+  // typed Q&A intro, 6-tool grid, roadmap ECG pulse, end card. Loops
   // continuously, pauses when the tab isn't visible.
   const HERO_SCENES = [
     { panel: 1, typed: true },
-    { panel: 2, duration: 4300 },
+    { panel: 2, duration: 4500 },
     { panel: 3, duration: 4600 },
     { panel: 4, duration: 2600 },
   ];
@@ -181,8 +181,8 @@ export default function Home() {
   const [heroScene, setHeroScene] = useState(0);
   const [heroTyped, setHeroTyped] = useState({ q1: "", a1: "", q2: "", a2: "" });
   const [heroTypingLine, setHeroTypingLine] = useState(-1);
-  const [heroToolsIn, setHeroToolsIn] = useState([false, false, false, false, false]);
-  const [heroToolsStamped, setHeroToolsStamped] = useState([false, false, false, false, false]);
+  const [heroToolsIn, setHeroToolsIn] = useState([false, false, false, false, false, false]);
+  const [heroToolsStamped, setHeroToolsStamped] = useState([false, false, false, false, false, false]);
   const [heroCalloutsIn, setHeroCalloutsIn] = useState([false, false, false]);
   const [heroOutroIn, setHeroOutroIn] = useState(false);
   const [heroEcgKey, setHeroEcgKey] = useState(0); // bump to force the SVG draw/dot animations to restart each loop
@@ -201,8 +201,8 @@ export default function Home() {
       return () => { cancelled = true; timers.forEach(clearTimeout); };
     }
 
-    setHeroToolsIn([false, false, false, false, false]);
-    setHeroToolsStamped([false, false, false, false, false]);
+    setHeroToolsIn([false, false, false, false, false, false]);
+    setHeroToolsStamped([false, false, false, false, false, false]);
     setHeroCalloutsIn([false, false, false]);
     setHeroOutroIn(false);
 
@@ -246,8 +246,8 @@ export default function Home() {
     }
 
     if (scene.panel === 2) {
-      for (let ti = 0; ti < 5; ti++) {
-        const delay = 200 + ti * 780;
+      for (let ti = 0; ti < 6; ti++) {
+        const delay = 200 + ti * 650;   // 6 cards: tighter stagger so the last "Live" stamp lands before the scene ends
         timers.push(setTimeout(() => {
           setHeroToolsIn((prev) => { const next = [...prev]; next[ti] = true; return next; });
         }, delay));
@@ -301,6 +301,18 @@ export default function Home() {
   const mapWrapRef = useRef(null);
   const popoverRef = useRef(null);
 
+  // The map must follow the live data, not whatever existed on the first hover. The old code
+  // froze a snapshot when the map was first drawn, so a hover that landed before /api/stats
+  // answered locked in the placeholder data for good. The handlers now read this lookup when
+  // they run, and the effect below re-colours the countries whenever the data changes.
+  const byIsoRef = useRef({});
+  byIsoRef.current = Object.fromEntries(countryData.map((c) => [c.iso, c]));
+  useEffect(() => {
+    if (!mapInitialized.current || !window.d3 || !mapWrapRef.current) return;
+    window.d3.select(mapWrapRef.current).selectAll("path")
+      .attr("class", (d) => "cm-country" + (byIsoRef.current[+d.id] ? " active" : ""));
+  }, [countryData]);
+
   // Live stats + country breakdown, falling back to interim figures if the
   // endpoint isn't wired up yet.
   useEffect(() => {
@@ -326,9 +338,6 @@ export default function Home() {
 
     const d3 = window.d3;
     const topojson = window.topojson;
-    const byIso = {};
-    countryData.forEach((c) => { byIso[c.iso] = c; });
-
     wrap.innerHTML = "";
     const width = wrap.clientWidth || 400;
     const height = wrap.clientHeight || 190;
@@ -351,9 +360,9 @@ export default function Home() {
           .enter()
           .append("path")
           .attr("d", path)
-          .attr("class", (d) => "cm-country" + (byIso[+d.id] ? " active" : ""))
+          .attr("class", (d) => "cm-country" + (byIsoRef.current[+d.id] ? " active" : ""))
           .on("mousemove", (event, d) => {
-            const c = byIso[+d.id];
+            const c = byIsoRef.current[+d.id];
             if (!c) return;
             const rect = popoverEl.getBoundingClientRect();
             tooltip.textContent = `${c.name} - ${c.users} user${c.users === 1 ? "" : "s"}`;
@@ -362,7 +371,7 @@ export default function Home() {
             tooltip.style.opacity = "1";
           })
           .on("mouseleave", (event, d) => {
-            if (!byIso[+d.id]) return;
+            if (!byIsoRef.current[+d.id]) return;
             tooltip.style.opacity = "0";
           });
       })
@@ -372,14 +381,20 @@ export default function Home() {
   }
 
   const sortedCountries = [...countryData].sort((a, b) => b.users - a.users);
+  // The popover lists the top third of the countries with active users (30 -> 10, 17 -> 6),
+  // so the list grows with the audience instead of staying fixed at 7. The map still colours
+  // every country the API returns.
+  const totalCountries = typeof stats.countries === "number" ? stats.countries : countryData.length;
+  const countriesToShow = Math.max(1, Math.round(totalCountries / 3));
+  const topCountries = sortedCountries.slice(0, countriesToShow);
   const scenarioActive = scenarioData[scenario];
 
   return (
     <>
       <Head>
         <title>PayrollTool.in – Payroll Calculators for HR Teams in India</title>
-        <meta name="description" content="PF ECR, income tax, salary proration, LOP and final settlement calculators for Indian HR teams - browser-based, no sign-up required." />
-        <meta name="keywords" content="PF ECR generator, payroll calculator India, salary proration calculator, LOP calculator, income tax calculator India, final settlement calculator, EPFO ECR format, payroll compliance tools" />
+        <meta name="description" content="PF ECR, ESIC MC, income tax, salary proration, LOP and final settlement tools for Indian HR teams - browser-based, no sign-up required." />
+        <meta name="keywords" content="PF ECR generator, payroll calculator India, salary proration calculator, LOP calculator, income tax calculator India, final settlement calculator, EPFO ECR format, ESIC MC file generator, ESIC contribution file, payroll compliance tools" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.payrolltool.in/" />
         <meta name="theme-color" content="#7C3AED" />
@@ -389,7 +404,7 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="PayrollTool.in" />
         <meta property="og:title" content="PayrollTool.in – Payroll Calculators for HR Teams in India" />
-        <meta property="og:description" content="PF ECR, income tax, salary proration, LOP and final settlement calculators for Indian HR teams - browser-based, no sign-up required." />
+        <meta property="og:description" content="PF ECR, ESIC MC, income tax, salary proration, LOP and final settlement tools for Indian HR teams - browser-based, no sign-up required." />
         <meta property="og:url" content="https://www.payrolltool.in/" />
         <meta property="og:image" content="https://www.payrolltool.in/og-homepage.jpg" />
         <meta property="og:image:width" content="1200" />
@@ -398,7 +413,7 @@ export default function Home() {
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="PayrollTool.in – Payroll Calculators for HR Teams in India" />
-        <meta name="twitter:description" content="PF ECR, income tax, salary proration, LOP and final settlement calculators for Indian HR teams - browser-based, no sign-up required." />
+        <meta name="twitter:description" content="PF ECR, ESIC MC, income tax, salary proration, LOP and final settlement tools for Indian HR teams - browser-based, no sign-up required." />
         <meta name="twitter:image" content="https://www.payrolltool.in/og-homepage.jpg" />
 
         <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='%237C3AED'/><path d='M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z' fill='white'/></svg>" />
@@ -462,7 +477,7 @@ export default function Home() {
           }}
         />
         {/* SoftwareApplication schema - one per tool.
-            NOTE: price is 0 for all five tools below because that's accurate
+            NOTE: price is 0 for all six tools below because that's accurate
             today. Update per-tool when the paid plan launches - a schema
             that still claims free after that changes is the same class of
             problem as the earlier FAQ-schema mismatch. */}
@@ -479,6 +494,15 @@ export default function Home() {
                   applicationCategory: "BusinessApplication",
                   operatingSystem: "Any (browser-based)",
                   description: "Prepares PF ECR files for upload to the EPFO Unified Portal from an uploaded Excel spreadsheet.",
+                  offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "ESIC MC Creator",
+                  url: "https://www.payrolltool.in/esic-mc-creator",
+                  applicationCategory: "BusinessApplication",
+                  operatingSystem: "Any (browser-based)",
+                  description: "Prepares ESIC Monthly Contribution files for upload to the ESIC portal from an uploaded Excel spreadsheet.",
                   offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
                 },
                 {
@@ -588,10 +612,10 @@ export default function Home() {
                     </div>
                   )}
 
-                  {/* Panel 2: 5-tool grid */}
+                  {/* Panel 2: 6-tool grid */}
                   {HERO_SCENES[heroScene].panel === 2 && (
                     <div className="hero-panel">
-                      <div className="hero-tools-caption">Then came four more - each built, then shipped.</div>
+                      <div className="hero-tools-caption">Then came five more - each built, then shipped.</div>
                       <div className="hero-tools-grid">
                         {[
                           { name: "LOP Splitter", icon: Icon.file },
@@ -599,8 +623,9 @@ export default function Home() {
                           { name: "PF ECR Creator", icon: Icon.download },
                           { name: "Final Settlement", icon: Icon.check },
                           { name: "Tax Calculator", icon: Icon.bolt },
+                          { name: "ESIC MC Creator", icon: Icon.esicMc },
                         ].map((tool, i) => (
-                          <div className={`hero-tool-card${i === 4 ? " hero-tool-center" : ""}${heroToolsIn[i] ? " in" : ""}`} key={tool.name}>
+                          <div className={`hero-tool-card${heroToolsIn[i] ? " in" : ""}`} key={tool.name}>
                             <div className="hero-tool-icon">{tool.icon}</div>
                             <div className="hero-tool-name">{tool.name}</div>
                             <span className={`hero-tool-stamp${heroToolsStamped[i] ? " on" : ""}`}><span className="dot" />Live</span>
@@ -621,9 +646,6 @@ export default function Home() {
                             <path key={`ecg-line-${heroEcgKey}`} className="hero-ecg-line-anim" d="M0,50 L60,50 L72,50 L80,15 L88,80 L96,50 L118,50 L130,50 L138,25 L146,72 L154,50 L176,50 L184,50 L192,20 L200,75 L208,50 L230,50 L340,50" fill="none" stroke="var(--brand-600)" strokeWidth="2.2" />
                             <circle key={`ecg-dot-${heroEcgKey}`} className="hero-ecg-dot" r="4" fill="var(--brand-600)" />
                           </svg>
-                          <div className={`hero-ecg-callout${heroCalloutsIn[0] ? " in" : ""}`} style={{ top: "-4px", left: "14%" }}>
-                            <b>ESIC File Builder</b><span style={{ color: "var(--amber)" }}>In progress</span>
-                          </div>
                           <div className={`hero-ecg-callout${heroCalloutsIn[1] ? " in" : ""}`} style={{ top: "58%", left: "38%" }}>
                             <b>Compliance Updates</b><span style={{ color: "var(--amber)" }}>Planned</span>
                           </div>
@@ -682,12 +704,12 @@ export default function Home() {
                   <div className="cm-loading">Loading map…</div>
                 </div>
                 <ul className="country-map-list">
-                  {sortedCountries.map((c) => (
+                  {topCountries.map((c) => (
                     <li key={c.name}>{c.name} <b>{c.users}</b></li>
                   ))}
                 </ul>
                 <p className="country-map-note">
-                  {stats.countries === "Loading..." ? "Loading…" : `Top 7 of ${stats.countries} countries shown`}
+                  {stats.countries === "Loading..." ? "Loading…" : `Top ${topCountries.length} of ${stats.countries} countries shown`}
                 </p>
               </div>
             </div>
@@ -741,9 +763,9 @@ export default function Home() {
           <div className="section-head center">
             <span className="eyebrow"><span className="dot" />Calculate</span>
             <h2>Payroll compliance, simplified</h2>
-            <p>Five powerful calculators for the most common HR calculations in India. No HRMS setup required - just upload a file or enter numbers.</p>
+            <p>Six powerful tools for the most common HR calculations in India. No HRMS setup required - just upload a file or enter numbers.</p>
             <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", maxWidth: "640px", margin: "12px auto 0", opacity: 0.85 }}>
-              PayrollTool.in is a browser-based suite of payroll calculators for Indian HR and payroll teams - covering PF ECR generation, income tax (Old vs New regime), salary proration, LOP calculation, and final settlement.
+              PayrollTool.in is a browser-based suite of payroll calculators for Indian HR and payroll teams - covering PF ECR and ESIC MC file generation, income tax (Old vs New regime), salary proration, LOP calculation, and final settlement.
             </p>
           </div>
           <div className="tools-grid">
