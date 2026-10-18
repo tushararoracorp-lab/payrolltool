@@ -226,28 +226,8 @@ export default function Header() {
               </div>
             </div>                
               
-            <div className="nav-item">
-              <span className="nav-link disabled">Updates</span>
-              <div className="cooking-panel">
-                <svg viewBox="0 0 160 130" width="140" height="114">
-                  <rect x="30" y="106" width="100" height="6" rx="3" fill="var(--line)" />
-                  <path className="ck-flame f1" d="M70 104 Q66 93 71 87 Q76 93 72 104 Z" fill="none" stroke="var(--amber)" strokeWidth="1.8" strokeLinejoin="round" />
-                  <path className="ck-flame f2" d="M84 104 Q80 91 88 82 Q94 92 90 104 Z" fill="none" stroke="var(--amber)" strokeWidth="1.8" strokeLinejoin="round" />
-                  <path className="ck-flame f3" d="M98 104 Q95 94 100 88 Q105 94 102 104 Z" fill="none" stroke="var(--amber)" strokeWidth="1.8" strokeLinejoin="round" />
-                  <rect x="55" y="68" width="50" height="36" rx="7" fill="none" stroke="var(--ink-soft)" strokeWidth="1.8" />
-                  <line x1="45" y1="78" x2="55" y2="78" stroke="var(--ink-soft)" strokeWidth="1.8" strokeLinecap="round" />
-                  <line x1="105" y1="78" x2="115" y2="78" stroke="var(--ink-soft)" strokeWidth="1.8" strokeLinecap="round" />
-                  <ellipse cx="80" cy="68" rx="26" ry="6" fill="none" stroke="var(--ink-soft)" strokeWidth="1.8" />
-                  <g className="ck-whistle">
-                    <rect x="76" y="54" width="8" height="10" rx="2" fill="none" stroke="var(--ink-soft)" strokeWidth="1.8" />
-                    <circle cx="80" cy="52" r="3.5" fill="none" stroke="var(--ink-soft)" strokeWidth="1.8" />
-                  </g>
-                  <path className="ck-steam-path s1" d="M76 48 Q72 40 76 34 Q80 28 76 22" stroke="var(--ink-soft)" strokeWidth="1.8" fill="none" strokeLinecap="round" opacity="0" />
-                  <path className="ck-steam-path s2" d="M84 48 Q88 40 84 34 Q80 28 84 22" stroke="var(--ink-soft)" strokeWidth="1.8" fill="none" strokeLinecap="round" opacity="0" />
-                </svg>
-                <div className="ck-caption">Something&apos;s cooking</div>
-                <div className="ck-sub">New updates are on the way</div>
-              </div>
+            <div className={`nav-item${router.pathname === "/updates" ? " active" : ""}`}>
+              <Link href="/updates" className="nav-link">Updates</Link>
             </div>
 
             <div className="nav-item">
