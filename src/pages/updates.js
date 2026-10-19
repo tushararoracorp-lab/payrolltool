@@ -176,8 +176,8 @@ font-size:.79rem;font-weight:600;color:var(--ink-soft);cursor:pointer}
 .upd .hist-r.bad{background:var(--red-50)}
 .upd .hist-r.gapr{background:var(--card-2)}
 .upd .hist-r b{font-family:'Sora',sans-serif}
-.upd .foot{display:flex;align-items:flex-start;gap:12px;width:calc(100% - 40px);max-width:1160px;margin:24px auto 0;padding:16px 20px;background:var(--brand-50);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);font-size:.9rem;line-height:1.6;text-align:left}
-.upd .foot svg{flex-shrink:0;width:20px;height:20px;margin-top:2px;color:var(--brand-600)}
+.upd .foot{display:flex;align-items:center;justify-content:center;gap:12px;width:calc(100% - 40px);max-width:1160px;margin:24px auto 0;padding:16px 20px;background:var(--brand-50);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);font-size:.9rem;line-height:1.6;text-align:center}
+.upd .foot svg{flex-shrink:0;width:20px;height:20px;color:var(--brand-600)}
 .upd .foot p{margin:0}
 .upd{margin-bottom:-40px}
 .upd .scroller{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius)}
