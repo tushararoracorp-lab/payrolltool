@@ -46,7 +46,7 @@ background:radial-gradient(circle,rgba(124,58,237,.10),transparent 70%);pointer-
 html[data-theme="dark"] .upd .intro::before{background:radial-gradient(circle,rgba(145,99,242,.16),transparent 70%)}
 .upd .intro h1{font-family:'Sora',sans-serif;font-size:2.1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:10px;position:relative}
 .upd .intro p{color:var(--ink-soft);max-width:640px;margin:0 auto;font-size:1rem;line-height:1.5;position:relative}
-.upd .upd-wrap{max-width:1200px;margin:0 auto;padding:0 20px 64px}
+.upd .upd-wrap{max-width:1200px;margin:0 auto;padding:0 20px 8px}
 .upd .tabs{display:flex;gap:6px;justify-content:center;margin:24px 0 8px;flex-wrap:wrap}
 .upd .tab{padding:10px 22px;border-radius:100px;border:1px solid var(--line);background:var(--card);
 color:var(--ink-soft);font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s ease}
@@ -176,7 +176,10 @@ font-size:.79rem;font-weight:600;color:var(--ink-soft);cursor:pointer}
 .upd .hist-r.bad{background:var(--red-50)}
 .upd .hist-r.gapr{background:var(--card-2)}
 .upd .hist-r b{font-family:'Sora',sans-serif}
-.upd .foot{text-align:center;padding:24px 20px;color:var(--ink-soft);font-size:.79rem;border-top:1px solid var(--line)}
+.upd .foot{display:flex;align-items:flex-start;gap:12px;width:calc(100% - 40px);max-width:1160px;margin:24px auto 0;padding:16px 20px;background:var(--brand-50);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);font-size:.9rem;line-height:1.6;text-align:left}
+.upd .foot svg{flex-shrink:0;width:20px;height:20px;margin-top:2px;color:var(--brand-600)}
+.upd .foot p{margin:0}
+.upd{margin-bottom:-40px}
 .upd .scroller{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius)}
 @media(max-width:860px){.upd .intro h1{font-size:1.55rem}.upd .dl{grid-template-columns:1fr;gap:2px 0}.upd .dl dd{margin-bottom:7px}.upd .count{margin-left:0;width:100%}.upd .jgrid{grid-template-columns:1fr}}
 .upd .jlists{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;margin-top:18px}
