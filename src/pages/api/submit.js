@@ -59,9 +59,17 @@ module.exports = async function handler(req, res) {
 
   const base = (process.env.PUBLIC_BASE_URL || '').replace(/\/$/, '');
   const link = (a) => `${base}/api/decision?t=${encodeURIComponent(sign({ rid: row.id, n, a, exp }, process.env.APPROVAL_SECRET))}`;
-  await sendApprovalEmail({
-    request: { action, kind, summary, submitted_by, expires_at: row.expires_at },
-    approveUrl: link('approve'), rejectUrl: link('reject'), preview: preview(kind, clean),
-  });
+  try {
+    await sendApprovalEmail({
+      request: { action, kind, summary, submitted_by, expires_at: row.expires_at },
+      approveUrl: link('approve'), rejectUrl: link('reject'), preview: preview(kind, clean),
+    });
+  } catch (e) {
+    // nobody could ever approve this request, so close it instead of leaving it waiting
+    await db.query("UPDATE change_requests SET status = 'expired', decided_at = now() WHERE id = $1", [row.id]);
+    await db.query('INSERT INTO audit_log (request_id, event, kind, target_id, detail) VALUES ($1,$2,$3,$4,$5::jsonb)',
+      [row.id, 'expired', kind, target_id || null, JSON.stringify({ reason: 'approval email could not be sent', message: String(e.message || e).slice(0, 300) })]);
+    return res.status(502).json({ error: 'Nothing was saved: the approval email could not be sent.', detail: String(e.message || e) });
+  }
   return res.status(202).json({ id: row.id, status: 'pending', message: 'Stored. Waiting for the admin to approve by email.' });
 };
