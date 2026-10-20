@@ -5,10 +5,19 @@ export default function initUpdates(DATA, root) {
   const $ = (s) => root.querySelector(s);
 let FULLOPEN=false, PAGE=12, curId=null, curLang='en', curTab='explainer', curName=null, mode='feed';
 
+// ---------- analytics: Google Analytics 4 events. Silently does nothing when gtag is not on the page. ----------
+const track=(name,params)=>{try{if(typeof window==='undefined') return; if(typeof window.gtag==='function'){window.gtag('event',name,params||{});} else if(Array.isArray(window.dataLayer)){(function(){window.dataLayer.push(arguments);})('event',name,params||{});}}catch(e){/* never break the page for analytics */}};
+const cut=(s,n)=>String(s==null?'':s).slice(0,n||90);
+const TAB_NAMES={feed:'notifications',rates:'minimum_wages',ptp:'professional_tax',lwfp:'labour_welfare_fund'};
+const TOPIC_OF_MODE={feed:'notifications',mw:'minimum_wages',pt:'professional_tax',lwf:'labour_welfare_fund'};
+const ac=new AbortController();   // removes the page-wide listeners when the page is left or re-initialised
+const titleOf=id=>{const f=DATA.feed.find(x=>x.id===id); return f?cut(f.title):'';};
+
 root.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
   root.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   root.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
   b.classList.add('active'); $('#'+b.dataset.panel).classList.add('on');
+  track('updates_tab_view',{tab:TAB_NAMES[b.dataset.panel]||b.dataset.panel});
 });
 
 // ---------- notifications feed ----------
@@ -51,7 +60,10 @@ function renderFeed(){
   $('#cards').innerHTML=show.map(cardHtml).join('');
 }
 ['q','fcat','fstate','fstatus','fyear'].forEach(id=>$('#'+id).addEventListener('input',()=>{PAGE=12;renderFeed();}));
-$('#more').onclick=()=>{PAGE+=12;renderFeed();};
+let qTimer=null;
+$('#q').addEventListener('input',()=>{clearTimeout(qTimer);qTimer=setTimeout(()=>{const t=$('#q').value.trim(); if(t.length>=3) track('search',{search_term:cut(t.toLowerCase(),60),search_area:'updates'});},900);});
+[['fcat','category'],['fstate','state'],['fstatus','status'],['fyear','year']].forEach(([id,kind])=>$('#'+id).addEventListener('change',()=>{const v=$('#'+id).value; if(v) track('updates_filter',{filter_type:kind,filter_value:cut(v,60)});}));
+$('#more').onclick=()=>{PAGE+=12;renderFeed();track('updates_show_more',{shown:PAGE});};
 $('#cards').addEventListener('click',e=>{const b=e.target.closest('[data-open]'); if(b) openM(b.dataset.open);});
 
 // ---------- minimum wages ----------
@@ -129,14 +141,17 @@ function bindTabs(){root.querySelectorAll('.st').forEach(b=>b.onclick=()=>{
 
 function openM(id){mode='feed';curId=id;curLang='en';curTab='explainer';
   const f=DATA.feed.find(x=>x.id===id); $('#mTitle').textContent=f.title;
+  track('updates_explainer_open',{item_id:cut(f.id,40),category:cut(f.cat,30),state:cut(f.state||'All India',40),item_title:cut(f.title)});
   setTabs(`<button class="st on" data-st="explainer">Plain-language explainer</button><button class="st" data-st="details">Notification details</button>`);
   paint(); show();}
 function openMW(name){mode='mw';curName=name;curTab='history';
   const m=DATA.mw.find(x=>x.name===name); $('#mTitle').textContent=m.name+' - minimum wages';
+  track('updates_state_open',{topic:'minimum_wages',state:cut(m.name,40)});
   setTabs(`<button class="st on" data-st="history">Rate history</button><button class="st" data-st="details">Schedule detail</button>`);
   paint(); show();}
 function openJ(kind,name){mode=kind;curName=name;
   $('#mTitle').textContent=name+' - '+JCFG[kind].title;
+  track('updates_state_open',{topic:TOPIC_OF_MODE[kind],state:cut(name,40)});
   setTabs(''); paint(); show();}
 
 function latestRec(cat,state){
@@ -246,16 +261,25 @@ function paint(){
   const db=$('#discBtn'), ft=$('#fullTxt');
   const open=()=>{ft.classList.add('on'); db.innerHTML='Hide the full explanation &uarr;';};
   if(FULLOPEN) open();
-  db.onclick=()=>{FULLOPEN=!FULLOPEN; ft.classList.toggle('on',FULLOPEN);
+  db.onclick=()=>{FULLOPEN=!FULLOPEN; ft.classList.toggle('on',FULLOPEN); if(FULLOPEN) track('updates_explainer_expand',{item_id:cut(curId,40),item_title:titleOf(curId)});
     db.innerHTML=FULLOPEN?'Hide the full explanation &uarr;':'Read the full explanation &darr;';};
-  root.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{curLang=b.dataset.l;FULLOPEN=true;paint();});
+  root.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{curLang=b.dataset.l;FULLOPEN=true;track('updates_explainer_language',{language:b.dataset.l,item_id:cut(curId,40),item_title:titleOf(curId)});paint();});
 }
 $('#mClose').onclick=hide;
 $('#modal').onclick=e=>{if(e.target.id==='modal') hide();};
 const onKey=e=>{if(e.key==='Escape'&&$('#modal').classList.contains('on')) hide();};
-document.addEventListener('keydown',onKey);
+document.addEventListener('keydown',onKey,{signal:ac.signal});
+
+// official-source links (the card button and the links inside popups)
+root.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="http"]'); if(!a) return;
+  let host=''; try{host=new URL(a.href).hostname;}catch(err){return;}
+  if(host===window.location.hostname) return;
+  const inPopup=!!a.closest('#modal'); const card=a.closest('.card'); const opener=card&&card.querySelector('[data-open]');
+  track('updates_source_click',{link_domain:cut(host,60),from:inPopup?'popup':'card',topic:inPopup?(TOPIC_OF_MODE[mode]||mode):'notifications',item_id:cut(inPopup?(mode==='feed'?curId:curName):(opener?opener.dataset.open:''),40)});
+},{signal:ac.signal});
 
 renderFeed(); renderRates();
-return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+return () => { ac.abort(); clearTimeout(qTimer); document.body.style.overflow = ''; };
 
 }
