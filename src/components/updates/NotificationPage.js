@@ -14,13 +14,13 @@ export default function NotificationPage({ n, related, stateLink }) {
       const a = e.target.closest('a[href^="http"]'); if (!a) return;
       let host = ''; try { host = new URL(a.href).hostname; } catch (err) { return; }
       if (host === window.location.hostname) return;
-      gt('updates_source_click', { link_domain: host.slice(0, 60), from: 'notification_page', topic: 'notifications', item_id: String(n.id).slice(0, 40) });
+      gt('updates_source_click', { link_domain: host.slice(0, 60), from: 'notification_page', topic: 'notifications', item_id: String(n.key).slice(0, 40) });
     };
     const hi = el.querySelector('details.hi');
-    const onToggle = () => { if (hi && hi.open) gt('updates_explainer_language', { language: 'hi', item_id: String(n.id).slice(0, 40), item_title: String(n.title).slice(0, 90) }); };
+    const onToggle = () => { if (hi && hi.open) gt('updates_explainer_language', { language: 'hi', item_id: String(n.key).slice(0, 40), item_title: String(n.title).slice(0, 90) }); };
     el.addEventListener('click', onClick); if (hi) hi.addEventListener('toggle', onToggle);
     return () => { el.removeEventListener('click', onClick); if (hi) hi.removeEventListener('toggle', onToggle); };
-  }, [n.id, n.title]);
+  }, [n.key, n.title]);
 
   return (
     <main className="upd" ref={root}>

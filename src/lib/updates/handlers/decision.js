@@ -26,6 +26,7 @@ module.exports = async function handler(req, res) {
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'");
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  if (process.env.UPDATES_APPROVAL_ENABLED !== '1') return res.status(404).send(page('Not found', '<h2>Not found.</h2>'));   // off unless UPDATES_APPROVAL_ENABLED=1
   const token = req.method === 'POST' ? (req.body && req.body.t) : (req.query && req.query.t);
   const data = verify(token, process.env.APPROVAL_SECRET);
   if (!data) return res.status(400).send(page('Invalid link', '<h2>This link is not valid or has expired.</h2><p>Ask the submitter to send the request again.</p>'));

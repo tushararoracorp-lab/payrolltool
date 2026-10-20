@@ -17,6 +17,7 @@ function preview(kind, clean) {
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
+  if (process.env.UPDATES_APPROVAL_ENABLED !== '1') return res.status(404).json({ error: 'Not found' });   // off unless UPDATES_APPROVAL_ENABLED=1
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
   if (!safeEqual(req.headers['x-api-key'], process.env.SUBMIT_API_KEY)) return res.status(401).json({ error: 'Invalid API key' });
 

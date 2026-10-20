@@ -12,7 +12,7 @@ export function pcls(f) {
   return '';
 }
 export function cardHtml(f) {
-  return `<div class="card" data-id="${esc(f.id)}">
+  return `<div class="card" data-id="${esc(f.key)}">
     <div class="card-top">
       <span class="pill brand">${esc(f.cat)}</span>
       <span class="pill">${esc(f.state||'All India')}</span>
@@ -59,5 +59,5 @@ export function mwCardHtml(m) {
     </a>`;
 }
 
-// stable address of one notification page: readable title + the first 8 characters of its id (so a changed title never breaks the lookup)
-export const notifSlug = (f) => slugOf(f.title).slice(0, 70).replace(/-+$/, '') + '-' + String(f.id).slice(0, 8);
+// stable address of one notification page: readable title + 8 characters of the notification's content fingerprint (the same in every database, so the address never changes)
+export const notifSlug = (f) => slugOf(f.title).slice(0, 70).replace(/-+$/, '') + '-' + String(f.key).slice(0, 8);

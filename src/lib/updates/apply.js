@@ -50,8 +50,8 @@ async function decide(tx, requestId, nonce, decision, ip) {
   const note = (state, category) => { if (state && !affected.states.includes(state)) affected.states.push(state); if (category && !affected.categories.includes(category)) affected.categories.push(category); };
   if (r.payload) note(r.payload.state, r.payload.category);
   if (r.target_id) {
-    const old = await tx.query(`SELECT state${r.kind === 'notification' ? ', category, id, title' : ''} FROM ${TABLE[r.kind]} WHERE id = $1`, [r.target_id]);
-    if (old[0]) { note(old[0].state, old[0].category); if (r.kind === 'notification') affected.notifications.push({ id: old[0].id, title: old[0].title }); }
+    const old = await tx.query(`SELECT state${r.kind === 'notification' ? ', category, dedupe_key, title' : ''} FROM ${TABLE[r.kind]} WHERE id = $1`, [r.target_id]);
+    if (old[0]) { note(old[0].state, old[0].category); if (r.kind === 'notification') affected.notifications.push({ key: old[0].dedupe_key, title: old[0].title }); }
   }
   let added = null, removed = null;
   if (r.action === 'REMOVE' || r.action === 'REPLACE') removed = await removeEntry(tx, r.kind, r.target_id, requestId);

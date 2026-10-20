@@ -20,6 +20,6 @@ function verify(token, secret, now = Date.now()) {
 const nonce = () => crypto.randomBytes(18).toString('base64url');
 function safeEqual(a, b) {
   const x = Buffer.from(String(a || '')), y = Buffer.from(String(b || ''));
-  return x.length === y.length && crypto.timingSafeEqual(x, y);
+  return x.length > 0 && x.length === y.length && crypto.timingSafeEqual(x, y);   // an empty or unset key never matches
 }
 module.exports = { sign, verify, nonce, safeEqual };

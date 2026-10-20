@@ -9,13 +9,19 @@ const TOPICS = {
 // must stay identical to slugOf() in components/updates/render.js (a test checks they agree)
 const slugify = (s) => String(s == null ? '' : s).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
+// While the site is BUILDING, one database read serves all pages. While it is RUNNING, every page rebuild reads the database
+// afresh: a page regenerated right after an update must never be built from older data.
 // must stay identical to notifSlug() in components/updates/render.js (a test checks they agree)
-const notifSlug = (f) => slugify(f.title).slice(0, 70).replace(/-+$/, '') + '-' + String(f.id).slice(0, 8);
+const notifSlug = (f) => {
+  if (!f || !f.key) throw new Error('Notification without a key: publicData.js and pageData.js are from different versions. Copy the whole pack.');
+  return slugify(f.title).slice(0, 70).replace(/-+$/, '') + '-' + String(f.key).slice(0, 8);
+};
 
-let memo = null;                                   // one database read serves many pages during a build
-async function loadAll() {
-  if (memo && Date.now() - memo.t < 30000) return memo.d;
-  const d = await buildPublicData(); memo = { t: Date.now(), d }; return d;
+let memo = null;
+function loadAll() {
+  if (process.env.NEXT_PHASE !== 'phase-production-build') return buildPublicData();
+  if (!memo) { memo = buildPublicData(); memo.catch(() => { memo = null; }); }
+  return memo;
 }
 const rowsOf = (data, key) => (key === 'mw' ? data.mw : data[key].rows);
 const plain = (o) => JSON.parse(JSON.stringify(o));
@@ -62,10 +68,10 @@ async function listNotificationPaths() {
   const d = await loadAll(); return d.feed.map((f) => ({ slug: notifSlug(f) }));
 }
 
-// Found by the id at the end of the address, so a page keeps working if its title text is ever corrected (the caller redirects to the canonical address).
+// Found by the fingerprint at the end of the address, so a page keeps working if its title text is ever corrected (the caller redirects to the canonical address).
 async function getNotification(slug) {
-  const d = await loadAll(); const id8 = String(slug).slice(-8);
-  const n = d.feed.find((f) => String(f.id).slice(0, 8) === id8); if (!n) return null;
+  const d = await loadAll(); const key8 = String(slug).slice(-8);
+  const n = d.feed.find((f) => String(f.key).slice(0, 8) === key8); if (!n) return null;
   const related = d.feed.filter((f) => f.cat === n.cat && f.id !== n.id).sort(newestFirst).slice(0, 5)
     .map((f) => ({ title: f.title, slug: notifSlug(f), state: f.state || 'All India', eff: f.eff }));
   const entry = Object.entries(TOPICS).find(([, t]) => t.cat === n.cat);

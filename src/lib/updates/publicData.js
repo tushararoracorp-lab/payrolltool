@@ -20,7 +20,7 @@ async function buildPublicData() {
   const byState = {}; mwAll.forEach((r) => { (byState[r.state] = byState[r.state] || []).push(r); });
 
   return {
-    feed: notif.map((n) => ({ id: n.id, cat: n.category, state: n.state, title: n.title, short: n.short_summary, ref: n.reference,
+    feed: notif.map((n) => ({ id: n.id, key: String(n.dedupe_key).slice(0, 8), cat: n.category, state: n.state, title: n.title, short: n.short_summary, ref: n.reference,
       eff: d(n.effective_date), pub: d(n.published_date), flag: n.flag, status: n.status, src: n.issued_by, url: n.official_url,
       en: n.explainer_en, hi: n.explainer_hi, note: n.note || '' })),
     mw: Object.entries(byState).map(([name, rows]) => {
