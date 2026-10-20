@@ -226,7 +226,7 @@ export default function Header() {
               </div>
             </div>                
               
-            <div className={`nav-item${router.pathname === "/updates" ? " active" : ""}`}>
+            <div className={`nav-item${router.pathname.startsWith("/updates") ? " active" : ""}`}>
               <Link href="/updates" className="nav-link">Updates</Link>
             </div>
 

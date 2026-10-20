@@ -1,4 +1,4 @@
-import { cardHtml } from './render';
+import { cardHtml, jlistsHtml, mwCardHtml } from './render';
 
 const PAGE = 12;
 // The page markup. The first 12 notifications are written into the HTML on the server so crawlers see real content.
@@ -6,6 +6,9 @@ export function buildMarkup(data) {
   const rows = data.feed || [];
   const cards = rows.slice(0, PAGE).map(cardHtml).join('');
   const count = `showing ${Math.min(PAGE, rows.length)} of ${rows.length}`;
+  const mwCards = (data.mw || []).map(mwCardHtml).join('');
+  const ptLists = jlistsHtml('pt', data.pt);
+  const lwfLists = jlistsHtml('lwf', data.lwf);
   const moreStyle = rows.length > PAGE ? 'display:block' : 'display:none';
   return `
 
@@ -54,7 +57,7 @@ export function buildMarkup(data) {
   <input id="rq" placeholder="Search a state or union territory&hellip;">
   <span class="count" id="rcount"></span>
 </div>
-<div class="jgrid" id="rgrid"></div>
+<div class="jgrid" id="rgrid">${mwCards}</div>
 </div>
 
 <div class="panel" id="ptp">
@@ -70,7 +73,7 @@ export function buildMarkup(data) {
 </details>
 </div>
 <div class="banner"><b>The constitutional ceiling is Rs. 2,500 per person per year</b> under Article 276(2), whatever a state's slab says. Cycles differ: most states are monthly, Tamil Nadu, Kerala and Puducherry are half-yearly, and Jharkhand is annual. <b>Tap any state that levies professional tax</b> for its basis, cycle, due dates and what to watch in that state.</div>
-<div class="jlists" id="ptlists"></div>
+<div class="jlists" id="ptlists">${ptLists}</div>
 </div>
 
 <div class="panel" id="lwfp">
@@ -86,17 +89,12 @@ export function buildMarkup(data) {
 </details>
 </div>
 <div class="banner alert"><b>There is no national convention for the employer-to-employee ratio.</b> Tamil Nadu and Haryana are 1:2. Maharashtra, Madhya Pradesh and Chhattisgarh are 1:3. Punjab is 1:4. <b>West Bengal is 1:10</b> - Rs. 3 from the employee, Rs. 30 from the employer. Never derive the employer figure from the employee figure.</div>
-<div class="jlists" id="lwflists"></div>
+<div class="jlists" id="lwflists">${lwfLists}</div>
 </div>
 </div>
 
-<div class="modal" id="modal"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-<div class="sheet-head"><h2 id="mTitle"></h2><button class="x" id="mClose" aria-label="Close">&times;</button></div>
-<div class="sheet-tabs" id="mTabs"></div>
-<div class="sheet-body" id="mBody"></div>
-</div></div>
-
-<div class="foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><p>Summaries are for guidance only and are not a substitute for the official notification or professional advice.</p></div>
+<nav class="statelinks browse" aria-label="Browse by topic"><a href="/updates/minimum-wages">Minimum wages by state</a><a href="/updates/professional-tax">Professional Tax by state</a><a href="/updates/labour-welfare-fund">Labour Welfare Fund by state</a></nav>
+  <div class="foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><p>Summaries are for guidance only and are not a substitute for the official notification or professional advice.</p></div>
 
 `;
 }

@@ -3,6 +3,19 @@
 const db = require('../db');
 const { verify } = require('../token');
 const { decide } = require('../apply');
+const { slugify, notifSlug } = require('../pageData');
+
+const TOPIC_OF_KIND = { pt_rule: 'professional-tax', lwf_rule: 'labour-welfare-fund', mw_rate: 'minimum-wages' };
+const TOPIC_OF_CAT = { PT: 'professional-tax', LWF: 'labour-welfare-fund', 'Min Wages': 'minimum-wages' };
+// the /updates pages that show the data an approval just changed
+function pagesToRefresh(a) {
+  const topics = new Set(); if (TOPIC_OF_KIND[a.kind]) topics.add(TOPIC_OF_KIND[a.kind]);
+  (a.categories || []).forEach((c) => { if (TOPIC_OF_CAT[c]) topics.add(TOPIC_OF_CAT[c]); });
+  const paths = new Set(['/updates']);
+  (a.notifications || []).forEach((n) => paths.add('/updates/notifications/' + notifSlug(n)));   // a removed or replaced notification page must disappear at once
+  topics.forEach((t) => { paths.add('/updates/' + t); (a.states || []).forEach((st) => paths.add('/updates/' + t + '/' + slugify(st))); });
+  return [...paths];
+}
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const page = (title, body) => `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -34,6 +47,8 @@ module.exports = async function handler(req, res) {
   const out = await db.tx((tx) => decide(tx, data.rid, data.n, data.a, ip));
   const ok = out.status === 'approved' || out.status === 'rejected';
   // Next.js only: rebuild the public page right away so an approved change shows up without waiting for the 10 minute cache.
-  if (out.status === 'approved' && typeof res.revalidate === 'function') { try { await res.revalidate('/updates'); } catch (e) { /* page rebuilds on its own within 10 minutes */ } }
+  if (out.status === 'approved' && typeof res.revalidate === 'function') {
+    await Promise.all(pagesToRefresh(out.affected || {}).map((path) => res.revalidate(path).catch(() => { /* the page rebuilds on its own within 10 minutes */ })));
+  }
   return res.status(ok ? 200 : 400).send(page('Done', `<h2>${esc(out.message)}</h2>`));
 };

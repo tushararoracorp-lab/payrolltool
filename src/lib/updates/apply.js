@@ -45,6 +45,14 @@ async function decide(tx, requestId, nonce, decision, ip) {
     await audit(tx, requestId, 'rejected', r.kind, r.target_id, {});
     return { status: 'rejected', message: 'Rejected. Nothing was changed.' };
   }
+  // which pages show this data, so the website can refresh exactly those after an approval
+  const affected = { kind: r.kind, states: [], categories: [], notifications: [] };
+  const note = (state, category) => { if (state && !affected.states.includes(state)) affected.states.push(state); if (category && !affected.categories.includes(category)) affected.categories.push(category); };
+  if (r.payload) note(r.payload.state, r.payload.category);
+  if (r.target_id) {
+    const old = await tx.query(`SELECT state${r.kind === 'notification' ? ', category, id, title' : ''} FROM ${TABLE[r.kind]} WHERE id = $1`, [r.target_id]);
+    if (old[0]) { note(old[0].state, old[0].category); if (r.kind === 'notification') affected.notifications.push({ id: old[0].id, title: old[0].title }); }
+  }
   let added = null, removed = null;
   if (r.action === 'REMOVE' || r.action === 'REPLACE') removed = await removeEntry(tx, r.kind, r.target_id, requestId);
   if (r.action === 'ADD' || r.action === 'REPLACE') added = await insertEntry(tx, r.kind, r.payload, requestId);
@@ -52,6 +60,6 @@ async function decide(tx, requestId, nonce, decision, ip) {
   if (removed) await audit(tx, requestId, 'removed', r.kind, removed, {});
   if (added) await audit(tx, requestId, 'added', r.kind, added, { summary: r.summary });
   await audit(tx, requestId, 'approved', r.kind, added || removed, {});
-  return { status: 'approved', message: 'Approved and applied.', added, removed };
+  return { status: 'approved', message: 'Approved and applied.', added, removed, affected };
 }
 module.exports = { insertEntry, removeEntry, audit, decide, COLUMNS };
