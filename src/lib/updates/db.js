@@ -5,7 +5,10 @@ let driver = null;
 function setDriver(d) { driver = d; }
 
 function neonDriver() {
-  const { Pool, neonConfig } = require('@neondatabase/serverless');
+  const { Pool, neonConfig, types } = require('@neondatabase/serverless');
+  // A DATE is a calendar day with no time zone. Return it as plain text ('2026-10-01') so the day can never shift
+  // with the time zone of the computer reading it (a laptop in India would otherwise show every date one day early).
+  if (types && types.setTypeParser) types.setTypeParser(1082, (v) => v);
   try { neonConfig.webSocketConstructor = require('ws'); } catch (_) { /* Node 22+ has a global WebSocket */ }
   const pool = new Pool({ connectionString: process.env.DATABASE_URL });
   return {
