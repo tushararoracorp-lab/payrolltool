@@ -41,7 +41,7 @@ export default function NotificationPage({ n, related, stateLink }) {
           <p>{n.short}</p>
           <dl>
             {n.ref ? (<><dt>Reference</dt><dd>{n.ref}</dd></>) : null}
-            <dt>Effective</dt><dd>{dtf(n.eff)}</dd>
+            {n.eff ? (<><dt>Effective</dt><dd>{dtf(n.eff)}</dd></>) : null}
             {n.src ? (<><dt>Issued by</dt><dd>{n.src}</dd></>) : null}
           </dl>
         </div>
@@ -67,7 +67,7 @@ export default function NotificationPage({ n, related, stateLink }) {
           <section className="sp-sec">
             <h2>More {n.cat} notifications</h2>
             <ul className="np-related">
-              {related.map((r) => (<li key={r.slug}><Link href={'/updates/notifications/' + r.slug}>{r.title}</Link><span>{r.state} - {dtf(r.eff)}</span></li>))}
+              {related.map((r) => (<li key={r.slug}><Link href={'/updates/notifications/' + r.slug}>{r.title}</Link><span>{[r.state, r.eff ? dtf(r.eff) : ''].filter(Boolean).join(' - ')}</span></li>))}
             </ul>
           </section>
         ) : null}

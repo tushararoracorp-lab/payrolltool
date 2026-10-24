@@ -1,6 +1,5 @@
 import Head from 'next/head';
-
-const SITE = 'https://payrolltool.in';
+import { SITE } from './site';
 
 // title, description, canonical, robots (noindex until indexing is switched on) and breadcrumb markup for one page
 export default function Seo({ title, description, path, crumbs, indexable }) {
@@ -19,7 +18,15 @@ export default function Seo({ title, description, path, crumbs, indexable }) {
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content={SITE + '/og-image.jpg'} />
+      <meta property="og:image" content={SITE + '/og-homepage.jpg'} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:site_name" content="PayrollTool.in" />
+      <meta property="og:locale" content="en_IN" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={SITE + '/og-homepage.jpg'} />
       {ld && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ld }} />}
     </Head>
   );

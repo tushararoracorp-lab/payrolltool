@@ -143,7 +143,7 @@ export default function StatePage({ topic, state, row, notifications, others, to
             <h2>Latest {topic.label} notifications for {state.name}</h2>
             {notifications.map((n) => (
               <article className="art" key={n.id}>
-                <div className="meta"><span className={'pill ' + (n.flag === 'current' ? 'ok' : '')}>{String(n.flag || '').replace(/_/g, ' ')}</span> &nbsp;Effective {dtf(n.eff)}{n.src ? ' - ' + n.src : ''}</div>
+                <div className="meta"><span className={'pill ' + (n.flag === 'current' ? 'ok' : '')}>{String(n.flag || '').replace(/_/g, ' ')}</span> &nbsp;{[n.eff ? 'Effective ' + dtf(n.eff) : '', n.src].filter(Boolean).join(' - ')}</div>
                 <h3><Link href={'/updates/notifications/' + n.slug} className="card-link">{n.title}</Link></h3>
                 <p className="sum">{n.short}</p>
                 <Link href={'/updates/notifications/' + n.slug} className="btn">Read the full explanation</Link>

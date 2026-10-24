@@ -22,7 +22,7 @@ export function cardHtml(f) {
     ${f.note?`<div class="rnote"><b>Note:</b> ${esc(f.note)}</div>`:''}
     <p class="short">${esc(f.short)}</p>
     <div class="meta">${f.ref?`<span><b>Reference:</b> ${esc(f.ref)}</span>`:''}
-      <span><b>Effective:</b> ${dt(f.eff)}</span>${f.src?`<span><b>Issued by:</b> ${esc(f.src)}</span>`:''}</div>
+      ${f.eff?`<span><b>Effective:</b> ${dt(f.eff)}</span>`:''}${f.src?`<span><b>Issued by:</b> ${esc(f.src)}</span>`:''}</div>
     <div class="actions">
       <a class="btn" href="/updates/notifications/${notifSlug(f)}">Read the full explainer</a>
       ${f.url?`<a class="btn ghost" href="${esc(f.url)}" target="_blank" rel="noopener">Official source &rarr;</a>`:''}
