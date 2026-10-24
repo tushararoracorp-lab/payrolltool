@@ -340,12 +340,16 @@ function calcPF(vpfPct, proratedGross, proratedHRA, proratedReimbs, _calDays, _p
     pfMode='capped'; pfCapApplies=true;
     empPF_monthly   = capPF + vpf;
     erPF_monthly    = capPF;
-    empPF_thisMonth = capPF + vpfThisMonth;   // flat cap + prorated VPF
-    erPF_thisMonth  = capPF;
+    // This Month: 12% of the PF wages actually earned (prorated gross - HRA - variable), never above the cap.
+    // A part-month joiner has earned less than a full month, so the flat cap would overstate PF.
+    const earnedBase = Math.max(0, proratedGross - proratedHRA - proratedReimbs);
+    const thisPF = Math.min(R(earnedBase*0.12), capPF);
+    empPF_thisMonth = thisPF + vpfThisMonth;   // earned-wages PF + prorated VPF
+    erPF_thisMonth  = thisPF;
     if(entered!==capPF){
       const f=(n)=>'\u20B9'+n.toLocaleString('en-IN');
       pfNote = proYY===202609
-        ? `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. In September 2026 the ceiling changes mid-month (${f(15000)} to 16 Sep, ${f(25000)} from 17 Sep), so the statutory cap for a full month is ${f(capPF)}. This calculation uses ${f(capPF)}.`
+        ? `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. In September 2026 the ceiling changes mid-month (${f(15000)} to 16 Sep, ${f(25000)} from 17 Sep), so the statutory cap for a full month is ${f(capPF)}. This calculation uses ${f(capPF)}${_payable<_calDays?' as the upper limit on PF for the wages actually earned; for a part-month joiner in September, check EPFO\'s FAQ on the split month':''}.`
         : `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. For ${monthLabelYY(proYY)} the PF wage ceiling is ${f(ceilW)} (it changed on 17 Sep 2026), so the statutory cap is ${f(capPF)}. This calculation uses ${f(capPF)}.`;
     }
     // Sub-rule: if basic ≤ ₹15k → 12% of (gross−HRA−var), capped at ₹1,800
