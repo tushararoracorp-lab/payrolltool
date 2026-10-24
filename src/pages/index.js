@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -300,6 +299,7 @@ export default function Home() {
   const mapInitialized = useRef(false);
   const mapWrapRef = useRef(null);
   const popoverRef = useRef(null);
+  const mapLibsPromise = useRef(null);
 
   // The map must follow the live data, not whatever existed on the first hover. The old code
   // froze a snapshot when the map was first drawn, so a hover that landed before /api/stats
@@ -329,7 +329,46 @@ export default function Home() {
       .catch((err) => console.warn("Live stats unavailable, keeping interim figures:", err));
   }, []);
 
+  // d3 and topojson are only needed for the hover map, so they load on the first hover or focus,
+  // not on every page load, and come from our own /vendor folder (pinned versions, no third-party CDN).
+  function loadScriptOnce(src) {
+    return new Promise((resolve, reject) => {
+      const existing = document.querySelector(`script[data-lib="${src}"]`);
+      if (existing) {
+        if (existing.dataset.loaded === "1") { resolve(); return; }
+        existing.addEventListener("load", () => resolve());
+        existing.addEventListener("error", reject);
+        return;
+      }
+      const s = document.createElement("script");
+      s.src = src;
+      s.async = true;
+      s.dataset.lib = src;
+      s.onload = () => { s.dataset.loaded = "1"; resolve(); };
+      s.onerror = () => { s.remove(); reject(new Error("failed to load " + src)); };
+      document.body.appendChild(s);
+    });
+  }
+
+  function ensureMapLibs() {
+    if (!mapLibsPromise.current) {
+      mapLibsPromise.current = loadScriptOnce("/vendor/d3.min.js")
+        .then(() => loadScriptOnce("/vendor/topojson-client.min.js"));
+    }
+    return mapLibsPromise.current;
+  }
+
   function tryInitMap() {
+    if (mapInitialized.current) return;
+    ensureMapLibs()
+      .then(() => { d3Ready.current = true; topoReady.current = true; initMap(); })
+      .catch(() => {
+        mapLibsPromise.current = null;
+        if (mapWrapRef.current) mapWrapRef.current.innerHTML = '<div class="cm-loading">Map unavailable - see list below.</div>';
+      });
+  }
+
+  function initMap() {
     if (mapInitialized.current || !d3Ready.current || !topoReady.current) return;
     const wrap = mapWrapRef.current;
     const popoverEl = popoverRef.current;
@@ -348,7 +387,7 @@ export default function Home() {
     tooltip.className = "cm-tooltip";
     popoverEl.appendChild(tooltip);
 
-    d3.json("https://unpkg.com/world-atlas@2/countries-110m.json")
+    d3.json("/vendor/countries-110m.json")
       .then((world) => {
         const countries = topojson.feature(world, world.objects.countries).features;
         const projection = d3.geoNaturalEarth1().fitSize([width, height], { type: "Sphere" });
@@ -399,8 +438,7 @@ export default function Home() {
         <link rel="canonical" href="https://www.payrolltool.in/" />
         <meta name="theme-color" content="#7C3AED" />
 
-        {/* TODO: og-homepage.jpg doesn't exist yet - create a real 1200x630
-            image and deploy it to /public before relying on link previews. */}
+        {/* Share image: /public/og-homepage.jpg (1200x630) */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="PayrollTool.in" />
         <meta property="og:title" content="PayrollTool.in – Payroll Calculators for HR Teams in India" />
@@ -547,20 +585,9 @@ export default function Home() {
         />
       </Head>
 
-      {/* d3 / topojson, loaded lazily - only needed for the country-map hover card */}
-      <Script
-        src="https://unpkg.com/d3@7/dist/d3.min.js"
-        strategy="lazyOnload"
-        onLoad={() => { d3Ready.current = true; }}
-      />
-      <Script
-        src="https://unpkg.com/topojson-client@3/dist/topojson-client.min.js"
-        strategy="lazyOnload"
-        onLoad={() => { topoReady.current = true; }}
-      />
-
       <Header />
 
+      <main>
       {/* HERO */}
       <section className="hero">
         <div className="wrap">
@@ -569,7 +596,7 @@ export default function Home() {
               <span className="eyebrow"><span className="dot" />India Payroll</span>
               <h1>Calculate payroll compliance <span className="accent-word">in seconds</span></h1>
               <p>Powerful, accurate and fast payroll utilities designed for HR &amp; Payroll professionals. Do precise work in less time. Every time.</p>
-              <Link href="#tools" className="hero-cta">
+              <Link prefetch={false} href="#tools" className="hero-cta">
                 Explore Tools {Icon.arrowRight}
               </Link>
               <div className="trust-row">
@@ -667,7 +694,7 @@ export default function Home() {
                       <div className="hero-end-word">PayrollTool<span style={{ color: "var(--ink-soft)", fontWeight: 600 }}>.in</span></div>
                       <div className="hero-end-tagline">Built from real payroll work.</div>
                       <div className="hero-end-sub">Practical tools for getting payroll right.</div>
-                      <Link href="#tools" className="hero-end-btn">
+                      <Link prefetch={false} href="#tools" className="hero-end-btn">
                         Explore Tools
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
                       </Link>
@@ -774,7 +801,7 @@ export default function Home() {
                 <div className="tool-card-icon">{t.icon}</div>
                 <h4>{t.name}</h4>
                 <p>{t.desc}</p>
-                <Link href={t.href}>Use Tool →</Link>
+                <Link prefetch={false} href={t.href}>Use Tool →</Link>
               </div>
             ))}
           </div>
@@ -884,7 +911,7 @@ export default function Home() {
           </div>
           <div className="blog-grid">
             {blogPosts.map((post) => (
-              <Link key={post.href} href={post.href} className={`blog-card blog-card-${post.variant}`}>
+              <Link prefetch={false} key={post.href} href={post.href} className={`blog-card blog-card-${post.variant}`}>
                 <div className="blog-card-icon">{post.icon}</div>
                 <span className="tag">{post.tag}</span>
                 <h4>{post.title}</h4>
@@ -896,7 +923,7 @@ export default function Home() {
             ))}
           </div>
           <div style={{ textAlign: "center", marginTop: "40px" }}>
-            <Link href="/blog" className="browse-all">Browse all articles →</Link>
+            <Link prefetch={false} href="/blog" className="browse-all">Browse all articles →</Link>
           </div>
         </div>
       </section>
@@ -909,6 +936,7 @@ export default function Home() {
           />
         </div>
       </section>
+      </main>
 
       <button
         className={`back-to-top${showBackToTop ? " visible" : ""}`}

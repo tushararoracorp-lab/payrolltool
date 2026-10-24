@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Footer() {
   const [visible, setVisible] = useState(false);
   const [theme, setTheme] = useState("light");
+  const prefRef = useRef(null);
 
   useEffect(() => {
     function onScroll() {
@@ -16,6 +17,32 @@ export default function Footer() {
   useEffect(() => {
     const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
     setTheme(current);
+  }, []);
+
+  // Google's Preferred Sources button script is about 240 KiB, so it loads only when the footer
+  // is close to the screen (it used to load on every page, in the document head).
+  useEffect(() => {
+    const el = prefRef.current;
+    if (!el) return undefined;
+    let loaded = false;
+    function load() {
+      if (loaded || document.querySelector("script[data-swg-loader]")) return;
+      loaded = true;
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = "https://news.google.com/swg/js/v1/publisher.js";
+      s.setAttribute("data-swg-loader", "1");
+      document.body.appendChild(s);
+    }
+    if (!("IntersectionObserver" in window)) {
+      const timer = setTimeout(load, 5000);
+      return () => clearTimeout(timer);
+    }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { load(); io.disconnect(); }
+    }, { rootMargin: "400px" });
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   return (
@@ -34,7 +61,7 @@ export default function Footer() {
         <div className="wrap">
           <div className="footer-grid">
             <div className="footer-brand">
-              <Link href="/" className="logo">
+              <Link prefetch={false} href="/" className="logo">
                 <span className="mark">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="white" stroke="none">
                     <path d="M12 21s-7.5-4.6-10.2-9.3C0.1 8.9 1.4 5 5 4.1c2.2-.5 4.2.5 5.5 2.3l1.5 2 1.5-2C14.8 4.6 16.8 3.6 19 4.1c3.6.9 4.9 4.8 3.2 7.6C19.5 16.4 12 21 12 21z" />
@@ -50,21 +77,21 @@ export default function Footer() {
             <div className="footer-links">
               <div className="footer-col">
                 <h5>Tools</h5>
-                <Link href="/pf-ecr-creator">PF ECR Creator</Link>
-                <Link href="/esic-mc-creator">ESIC MC Creator</Link>
-                <Link href="/tax-calculator">Tax Calculator</Link>
-                <Link href="/salary-proration">Salary Proration</Link>
-                <Link href="/lop-splitter">LOP Splitter</Link>
-                <Link href="/final-settlement">Final Settlement</Link>
+                <Link prefetch={false} href="/pf-ecr-creator">PF ECR Creator</Link>
+                <Link prefetch={false} href="/esic-mc-creator">ESIC MC Creator</Link>
+                <Link prefetch={false} href="/tax-calculator">Tax Calculator</Link>
+                <Link prefetch={false} href="/salary-proration">Salary Proration</Link>
+                <Link prefetch={false} href="/lop-splitter">LOP Splitter</Link>
+                <Link prefetch={false} href="/final-settlement">Final Settlement</Link>
               </div>
               <div className="footer-col">
                 <h5>Company</h5>
-                <Link href="/about">About</Link>
-                <Link href="/blog">Blog</Link>
+                <Link prefetch={false} href="/about">About</Link>
+                <Link prefetch={false} href="/blog">Blog</Link>
                 <a href="mailto:support@payrolltool.in">Contact</a>
-                <Link href="/faq">FAQ</Link>
-                <Link href="/privacy-policy">Privacy Policy</Link>
-                <Link href="/terms-of-service">Terms of Service</Link> 
+                <Link prefetch={false} href="/faq">FAQ</Link>
+                <Link prefetch={false} href="/privacy-policy">Privacy Policy</Link>
+                <Link prefetch={false} href="/terms-of-service">Terms of Service</Link> 
               </div>
             </div>
           </div>
@@ -82,7 +109,7 @@ export default function Footer() {
             </a>
           </div>
 
-          <div className="preferred-source">
+          <div className="preferred-source" ref={prefRef}>
             <div google-add-preferred-source-btn="" data-theme={theme}></div>
           </div>
         </div>

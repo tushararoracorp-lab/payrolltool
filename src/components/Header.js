@@ -171,7 +171,7 @@ export default function Header() {
     <>
       <header>
         <div className="nav">
-          <Link href="/" className="logo">
+          <Link prefetch={false} href="/" className="logo">
             <span className="mark">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
                 <path d="M12 21s-7.5-4.6-10.2-9.3C0.1 8.9 1.4 5 5 4.1c2.2-.5 4.2.5 5.5 2.3l1.5 2 1.5-2C14.8 4.6 16.8 3.6 19 4.1c3.6.9 4.9 4.8 3.2 7.6C19.5 16.4 12 21 12 21z" />
@@ -191,7 +191,7 @@ export default function Header() {
                 <div className="mega-col">
                   <h5>Calculate</h5>
                   {toolLinks.map(({ href, label, icon }) => (
-                    <Link key={href} href={href} className="mega-link" onClick={() => setOpenMenu(null)}>
+                    <Link prefetch={false} key={href} href={href} className="mega-link" onClick={() => setOpenMenu(null)}>
                       <span className="mega-icon">{icon}</span>{label}
                     </Link>
                   ))}
@@ -199,7 +199,7 @@ export default function Header() {
                 <div className="mega-col">
                   <h5>&nbsp;</h5>
                   {toolLinksCol2.map(({ href, label, icon }) => (
-                    <Link key={href} href={href} className="mega-link" onClick={() => setOpenMenu(null)}>
+                    <Link prefetch={false} key={href} href={href} className="mega-link" onClick={() => setOpenMenu(null)}>
                       <span className="mega-icon">{icon}</span>{label}
                     </Link>
                   ))}
@@ -208,7 +208,7 @@ export default function Header() {
             </div>
 
             <div className={`nav-item${blogActive ? " active" : ""}${openMenu === "blog" ? " mega-open" : ""}`} ref={blogRef}>
-              <Link href="/blog" className="nav-link" onClick={handleBlogClick}>
+              <Link prefetch={false} href="/blog" className="nav-link" onClick={handleBlogClick}>
                 Blog {ICONS.chevron}
               </Link>
               <div className="mega">
@@ -216,7 +216,7 @@ export default function Header() {
                   <div key={`blog-col-${idx}`} className="mega-col">
                     <h5>{idx === 0 ? "GUIDES" : "\u00A0"}</h5>
                     {col.map(({ href, label, icon }) => (
-                      <Link key={href} href={href} className={`mega-link${href === router.pathname ? " active" : ""}`}>
+                      <Link prefetch={false} key={href} href={href} className={`mega-link${href === router.pathname ? " active" : ""}`}>
                         <div className="mega-icon">{icon}</div>
                         {label}
                       </Link>
@@ -227,11 +227,11 @@ export default function Header() {
             </div>                
               
             <div className={`nav-item${router.pathname.startsWith("/updates") ? " active" : ""}`}>
-              <Link href="/updates" className="nav-link">Updates</Link>
+              <Link prefetch={false} href="/updates" className="nav-link">Updates</Link>
             </div>
 
             <div className="nav-item">
-              <Link href="/faq" className={`nav-link${router.pathname === "/faq" ? " active" : ""}`}>FAQ</Link>
+              <Link prefetch={false} href="/faq" className={`nav-link${router.pathname === "/faq" ? " active" : ""}`}>FAQ</Link>
             </div>
           </div>
 
