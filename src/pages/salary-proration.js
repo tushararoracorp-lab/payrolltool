@@ -172,7 +172,7 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip5" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip5">
             <h5>🏦 EPF - from Appointment Letter</h5>
-            <p>Enter the EPF amounts exactly as shown in your appointment letter. These are <strong>fixed monthly figures</strong> and will not be auto-calculated.</p>
+            <p>Enter the EPF amounts exactly as shown in your appointment letter. These are <strong>fixed monthly figures</strong>. The PF wage ceiling is ₹15,000 until 16 Sep 2026 and ₹25,000 from 17 Sep 2026: where the letter shows the capped amount (₹1,800), the calculator applies the cap for the month you select (₹2,360 in Sep 2026, ₹3,000 from Oct 2026).</p>
             <p>The <strong>This Month</strong> column shows the prorated PF for joining month, calculated as: 12% of (prorated Gross − prorated HRA − prorated Variable pay).</p>
             <p><strong>VPF</strong> is an additional voluntary % of Basic on top of EPF. 80C benefit applies.</p>
           </div>
@@ -181,7 +181,7 @@ const TOOL_BODY_HTML = `
       <div class="row4">
         <div class="field">
           <label>Employee EPF (Rs./mo)</label>
-          <input type="number" class="pf-input" id="empPFInput" min="0" placeholder="e.g. 1800" oninput="syncErPF();updatePreviews()"/>
+          <input type="number" class="pf-input" id="empPFInput" min="0" placeholder="e.g. 3000" oninput="syncErPF();updatePreviews()"/>
           <div class="pf-hint">From appointment letter</div>
         </div>
         <div class="field">
@@ -678,7 +678,7 @@ export default function SalaryProration() {
       "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
       "__spPdfJsLoaded"
     )
-      .then(() => loadScriptOnce("/salary-proration-tool.js", "__spToolLoaded"))
+      .then(() => loadScriptOnce("/salary-proration-tool.js?v=20261024", "__spToolLoaded"))
       .then(() => {
         window.__spRoot = shadow;
         if (typeof window.__spInitTool === "function") {

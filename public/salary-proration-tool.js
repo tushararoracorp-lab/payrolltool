@@ -3,7 +3,33 @@ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/p
 
 // ══ STATE ══
 let regime='new', rows=[], rid=0, calcDone=false;
-const EPF_WAGE_CEILING=15000; // Statutory PF wage ceiling - update here if law changes
+// ── EPF wage ceiling, effective-dated ──────────────────────────────────────
+// Rs 15,000 up to 16 Sep 2026; Rs 25,000 from 17 Sep 2026 (MoLE S.O. 5109(E) of 17 Sep 2026,
+// which supersedes S.O. 2702(E) of 29 May 2026). September 2026 uses both ceilings for a full month:
+// 1-16 Sep on 15,000 and 17-30 Sep on 25,000 = 8,000 + 11,667 = 19,667 (EPFO FAQ on the revision).
+const EPF_CEILING_OLD=15000, EPF_CEILING_NEW=25000;
+const EPF_WAGE_CEILING=EPF_CEILING_OLD; // legacy name: the ceiling before 17 Sep 2026
+function epfWageCap(yymm){ // PF wage cap for a full wage month; yymm like 202610
+  if(!yymm||yymm<202609) return EPF_CEILING_OLD;
+  if(yymm===202609) return Math.round(EPF_CEILING_OLD*16/30+EPF_CEILING_NEW*14/30);
+  return EPF_CEILING_NEW;
+}
+function epfCapPF(yymm){ return Math.round(epfWageCap(yymm)*0.12); } // 12% of the cap: 1,800 / 2,360 / 3,000
+function addMonthsYY(y,n){ let yr=Math.floor(y/100), m=(y%100)-1+n; yr+=Math.floor(m/12); m=((m%12)+12)%12; return yr*100+m+1; }
+function proYYMMNow(){ const el=window.__spRoot&&window.__spRoot.getElementById('proMonth'); const p=((el&&el.value)||'').split('-'); return p.length===2?(parseInt(p[0],10)*100+parseInt(p[1],10)):0; }
+function monthLabelYY(y){ return new Date(Math.floor(y/100),(y%100)-1,1).toLocaleString('en-IN',{month:'long',year:'numeric'}); }
+// PF for one wage month in capped mode follows that month's ceiling; every other mode is a fixed monthly figure
+function pfMonthAmt(pfRes,yymm){
+  if(!pfRes||pfRes.pfMode!=='capped') return {emp:pfRes?pfRes.empPF_monthly:0, er:pfRes?pfRes.erPF_monthly:0};
+  const cap=epfCapPF(yymm), v=pfRes.vpf||0;
+  if(pfRes.pfSub){ const b=Math.max(0,getGross()-getHRA()-getReimbs()); const x=Math.min(R(b*0.12),cap); return {emp:x+v, er:x}; }
+  return {emp:cap+v, er:cap};
+}
+function pfSeries(pfRes,startYY,n){ // totals for the n wage months AFTER startYY
+  let y=startYY, emp=0, er=0;
+  for(let i=0;i<n;i++){ y=addMonthsYY(y,1); const a=pfMonthAmt(pfRes,y); emp+=a.emp; er+=a.er; }
+  return {emp,er};
+}
 
 // ══════════════════════════════════════════════════════
 // PT SLABS - read-only, backend-managed
@@ -287,8 +313,14 @@ function calcPF(vpfPct, proratedGross, proratedHRA, proratedReimbs, _calDays, _p
   }
 
   const twelveOfBasic = basic>0 ? R(basic*0.12) : 0;
+  // Ceiling in force for the selected wage month (15,000 / split September 2026 / 25,000)
+  const proYY = proYYMMNow();
+  const ceilW = epfWageCap(proYY);   // PF wage cap for this wage month
+  const capPF = epfCapPF(proYY);     // 12% of that cap: 1,800 / 2,360 / 3,000
   const isRuleA = basic>0 && Math.abs(entered-twelveOfBasic)<=5;
-  const isRuleB = entered===1800 && basic>EPF_WAGE_CEILING;
+  // Rule B: the letter shows the statutory cap (the old 1,800, or this month's cap) and Basic is above the old ceiling
+  const isRuleB = (entered===1800||entered===capPF) && basic>EPF_CEILING_OLD;
+  let pfNote='', pfSub=false;
 
   let empPF_monthly, empPF_thisMonth, erPF_monthly, erPF_thisMonth;
   let pfMode='letter_value', pfCapApplies=false;
@@ -305,20 +337,26 @@ function calcPF(vpfPct, proratedGross, proratedHRA, proratedReimbs, _calDays, _p
   } else if(isRuleB){
     // Rule B: statutory cap ₹1,800 (12% of ₹15k ceiling) when Basic > ₹15k
     // This Month = ₹1,800 flat - PF is on actual earnings, not day-prorated
-    pfMode='capped_1800'; pfCapApplies=true;
-    empPF_monthly   = 1800 + vpf;
-    erPF_monthly    = 1800;
-    empPF_thisMonth = 1800 + vpfThisMonth;   // flat ₹1,800 + prorated VPF
-    erPF_thisMonth  = 1800;
+    pfMode='capped'; pfCapApplies=true;
+    empPF_monthly   = capPF + vpf;
+    erPF_monthly    = capPF;
+    empPF_thisMonth = capPF + vpfThisMonth;   // flat cap + prorated VPF
+    erPF_thisMonth  = capPF;
+    if(entered!==capPF){
+      const f=(n)=>'\u20B9'+n.toLocaleString('en-IN');
+      pfNote = proYY===202609
+        ? `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. In September 2026 the ceiling changes mid-month (${f(15000)} to 16 Sep, ${f(25000)} from 17 Sep), so the statutory cap for a full month is ${f(capPF)}. This calculation uses ${f(capPF)}.`
+        : `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. For ${monthLabelYY(proYY)} the PF wage ceiling is ${f(ceilW)} (it changed on 17 Sep 2026), so the statutory cap is ${f(capPF)}. This calculation uses ${f(capPF)}.`;
+    }
     // Sub-rule: if basic ≤ ₹15k → 12% of (gross−HRA−var), capped at ₹1,800
-    if(basic<=EPF_WAGE_CEILING){
-      pfCapApplies=false;
+    if(basic<=ceilW){
+      pfCapApplies=false; pfSub=true;
       const actualBase=Math.max(0,proratedGross-proratedHRA-proratedReimbs);
-      empPF_thisMonth = Math.min(R(actualBase*0.12), 1800) + vpfThisMonth;
-      erPF_thisMonth  = Math.min(R(actualBase*0.12), 1800);
+      empPF_thisMonth = Math.min(R(actualBase*0.12), capPF) + vpfThisMonth;
+      erPF_thisMonth  = Math.min(R(actualBase*0.12), capPF);
       const monthlyBase=Math.max(0,getGross()-getHRA()-getReimbs());
-      empPF_monthly   = Math.min(R(monthlyBase*0.12), 1800) + vpf;
-      erPF_monthly    = Math.min(R(monthlyBase*0.12), 1800);
+      empPF_monthly   = Math.min(R(monthlyBase*0.12), capPF) + vpf;
+      erPF_monthly    = Math.min(R(monthlyBase*0.12), capPF);
     }
 
   } else {
@@ -326,7 +364,7 @@ function calcPF(vpfPct, proratedGross, proratedHRA, proratedReimbs, _calDays, _p
     pfMode='letter_value';
     empPF_monthly  = entered + vpf;
     erPF_monthly   = entered;
-    if(basic>0&&basic<=EPF_WAGE_CEILING){
+    if(basic>0&&basic<=ceilW){
       // Low basic → this month = 12% of prorated (gross−HRA−var), capped at entered
       const prorBase=Math.max(0,proratedGross-proratedHRA-proratedReimbs);
       empPF_thisMonth = R(prorBase*0.12) + vpfThisMonth;
@@ -337,7 +375,7 @@ function calcPF(vpfPct, proratedGross, proratedHRA, proratedReimbs, _calDays, _p
       erPF_thisMonth  = Math.round(entered*_payable/_calDays);
     }
   }
-  return{empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,vpf,vpfThisMonth,pfMode,pfCapApplies};
+  return{empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,vpf,vpfThisMonth,pfMode,pfCapApplies,pfNote,pfSub};
 }
 
 // ══════════════════════════════════════════════════════
@@ -699,10 +737,16 @@ function calculate(){
   const ptAnnual=R(ptMonthly+ptMonthly*fullMos+ptFebExtra);
   // Call DOJ-exact TDS
   // 80C: employee PF (joining month + remaining full months), cap ₹1.5L
+  // PF for the later months follows the ceiling in force each month (15,000, split Sep 2026, 25,000)
+  const _proYY=yr*100+mo;
+  const _dojYY=dojVal?(new Date(dojVal).getUTCFullYear()*100+new Date(dojVal).getUTCMonth()+1):_proYY;
+  const pfStartYY=dojInThisFY?_dojYY:_proYY;
+  const pfFut=pfSeries(pfRes,pfStartYY,fullMos);
   const pfAnnual80C=pfRes.pfMode!=='none'
-    ? Math.min(R(empPF_thisMonth + empPF_monthly*fullMos), 150000)
+    ? Math.min(R(empPF_thisMonth + pfFut.emp), 150000)
     : 0;
-  const tdsRes=calcTDS(totM,regime,npsM,basicM,erPF_monthly,ptAnnual,tdsGrossP,tdsNpsErP,tdsErEPFP,tdsBasicP,fullMos,totalMos,pfAnnual80C);
+  const erEPFAvg=fullMos>0?R(pfFut.er/fullMos):erPF_monthly;
+  const tdsRes=calcTDS(totM,regime,npsM,basicM,erEPFAvg,ptAnnual,tdsGrossP,tdsNpsErP,tdsErEPFP,tdsBasicP,fullMos,totalMos,pfAnnual80C);
   const tdsM=tdsRes.tdsM; // this month's actual TDS deduction
   const tdsProjected = fullMos > 0
     ? R((tdsRes.annualTax - tdsM) / fullMos)
@@ -775,13 +819,14 @@ function calculate(){
 
   const w=window.__spRoot.getElementById('resWarn');
   const _perqNote=tdsRes.perquisiteAdd>0?` EPF+NPS exceeded ₹${fmt(Math.round(750000*totalMos/12))} (₹7.5L × ${totalMos}/12 months) - retiral perquisite ₹${fmt(tdsRes.perquisiteAdd)} added to taxable income u/s 17(2)(vii).`:'';
+  const _pfNote=pfRes.pfNote?` <br><strong>PF:</strong> ${pfRes.pfNote}`:'';
   const _surNote=tdsRes.taxable>5000000?' Surcharge applied (taxable >₹50L).':'';
   const _priorFYNote=!dojInThisFY&&dojVal
     ?' Prior-FY joiner: TDS assumes full 12-month income. Actual may differ if earnings were lower earlier in FY.':'';
   const _esiSmallNote=esiApplies&&totP<5000
     ?` ESI deducted on monthly gross ≤₹21k - prorated gross this month is small (₹${fmt(totP)}) but ESI applies on full monthly basis.`:'';
   const _tdsDiffNote=tdsDiffers?` TDS this month (₹${fmt(tdsM)}) differs from projected monthly TDS (₹${fmt(tdsProjected)}) due to proration.`:'';
-  w.innerHTML=`<span>⚠</span><div><strong>TDS estimate</strong> (DOJ-exact ${totalMos}-month basis). Actual varies with 80C/HRA/80D.${_perqNote}${_surNote}${_tdsDiffNote}${_priorFYNote}${_esiSmallNote} Gratuity excluded.</div>`;
+  w.innerHTML=`<span>⚠</span><div><strong>TDS estimate</strong> (DOJ-exact ${totalMos}-month basis). Actual varies with 80C/HRA/80D.${_perqNote}${_pfNote}${_surNote}${_tdsDiffNote}${_priorFYNote}${_esiSmallNote} Gratuity excluded.</div>`;
   w.style.display='flex';
 
   const lwfFreq=getLWFFreq(state);
@@ -812,7 +857,7 @@ function calculate(){
   };
 
   // Now call buildTaxCmp - it will populate taxCmpResults, taxCmpBest, taxCmpDiff into _payslipData
-  buildTaxCmp({totM,totP,npsM,basicM,empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,esiApplies,esiEmp_monthly,esiEmp_thisMonth,ptMonthly,ptThisMonth,ptAnnual,lwfEm,lwfFreq,tdsM,tdsProjected,tdsRes,totalMos,fullMos,regime,calDays,payable,pfCapApplies,pfMode});
+  buildTaxCmp({totM,totP,npsM,basicM,empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,esiApplies,esiEmp_monthly,esiEmp_thisMonth,ptMonthly,ptThisMonth,ptAnnual,lwfEm,lwfFreq,tdsM,tdsProjected,tdsRes,totalMos,fullMos,regime,calDays,payable,pfCapApplies,pfMode,pfRes,pfStartYY,proYY:_proYY});
 
   if(!calcDone){calcDone=true;showToggles();}
   window.__spRoot.getElementById('emptyPanel').style.display='none';
@@ -828,21 +873,27 @@ function buildTaxCmp(o){
   const{totM,totP,npsM,basicM,empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,
         esiApplies,esiEmp_monthly,esiEmp_thisMonth,ptMonthly,ptThisMonth,ptAnnual,
         lwfEm,tdsM,tdsProjected,tdsRes,totalMos,fullMos,regime,calDays,payable,
-        pfMode,pfCapApplies}=o;
+        pfMode,pfCapApplies,pfRes,pfStartYY,proYY}=o;
 
   const regimes=['new','old'];
   const labels=['New Regime','Old Regime'];
   const npsPr=R(npsM/calDays*payable);
 
   // Compute full details for both regimes
-  const pf80CThis=pfMode&&pfMode!=='none'?Math.min(R(empPF_thisMonth+empPF_monthly*fullMos),150000):0;
-  const pf80CProj=pfMode&&pfMode!=='none'?Math.min(R(empPF_monthly*12),150000):0;
+  // PF follows the ceiling in force each month (15,000, split Sep 2026, 25,000)
+  const _fut=pfRes&&pfStartYY?pfSeries(pfRes,pfStartYY,fullMos):{emp:empPF_monthly*fullMos,er:erPF_monthly*fullMos};
+  const _p12=pfRes&&proYY?pfSeries(pfRes,addMonthsYY(proYY,-1),12):{emp:empPF_monthly*12,er:erPF_monthly*12};
+  const _p12first=pfRes&&proYY?pfMonthAmt(pfRes,proYY).er:erPF_monthly;
+  const erAvgThis=fullMos>0?R(_fut.er/fullMos):erPF_monthly;
+  const erAvg11=R((_p12.er-_p12first)/11);
+  const pf80CThis=pfMode&&pfMode!=='none'?Math.min(R(empPF_thisMonth+_fut.emp),150000):0;
+  const pf80CProj=pfMode&&pfMode!=='none'?Math.min(R(_p12.emp),150000):0;
 
   const results=regimes.map(r=>{
-    const res=calcTDS(totM,r,npsM,basicM,erPF_monthly,ptAnnual,
+    const res=calcTDS(totM,r,npsM,basicM,erAvgThis,ptAnnual,
                       totP,npsPr,erPF_thisMonth,R(basicM/calDays*payable),fullMos,totalMos,pf80CThis);
-    const resProj=calcTDS(totM,r,npsM,basicM,erPF_monthly,ptAnnual,
-                          totM,npsM,erPF_monthly,basicM,11,12,pf80CProj);
+    const resProj=calcTDS(totM,r,npsM,basicM,erAvg11,ptAnnual,
+                          totM,npsM,_p12first,basicM,11,12,pf80CProj);
 
     const stdDed=r==='new'?75000:50000;
     const capPct=r==='new'?0.14:0.10;
