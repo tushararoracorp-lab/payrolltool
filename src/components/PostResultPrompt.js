@@ -5,7 +5,8 @@ import { RESULT_EVENT, announceRated, inlineFeedbackVisible, wasRated } from "..
 // Rules: only after a successful download (never on page load or after a rejected file),
 // only when the inline "Was this helpful?" box is not already on screen,
 // at most once per visit, and not again for 30 days after it is answered or closed.
-// A corner card, not a modal: the result stays visible and the page never scroll-locks.
+// A small centred card over a light backdrop. It only ever appears after a download, never on
+// arrival, and the page never scroll-locks. Esc or a click on the backdrop closes it.
 
 const SNOOZE_DAYS = 30;
 const SHOW_DELAY_MS = 1500; // let the browser's download bar appear first
@@ -70,16 +71,18 @@ export default function PostResultPrompt() {
   useEffect(() => {
     if (!tool) return undefined;
     if (firstBtnRef.current) firstBtnRef.current.focus();
-    function onKey(e) { if (e.key === "Escape") close("dismissed"); }
-    function onDown(e) { if (boxRef.current && !boxRef.current.contains(e.target)) close("dismissed"); }
+    function onKey(e) {
+      if (e.key === "Escape") { close("dismissed"); return; }
+      if (e.key !== "Tab" || !boxRef.current) return;
+      // Keep keyboard focus inside the card while it is open.
+      const f = boxRef.current.querySelectorAll("button, input");
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
     document.addEventListener("keydown", onKey);
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("touchstart", onDown, { passive: true });
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("touchstart", onDown);
-    };
+    return () => document.removeEventListener("keydown", onKey);
   }, [tool, close]);
 
   // Close a few seconds after the thank-you.
@@ -115,7 +118,8 @@ export default function PostResultPrompt() {
   }
 
   return (
-    <div ref={boxRef} className="prp" role="dialog" aria-modal="false" aria-labelledby="prp-title">
+    <div className="prp-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) close("dismissed"); }}>
+    <div ref={boxRef} className="prp" role="dialog" aria-modal="true" aria-labelledby="prp-title">
       <button type="button" className="prp-close" aria-label="Close" onClick={() => close("dismissed")}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
           <path d="M6 6l12 12M18 6L6 18" />
@@ -155,36 +159,40 @@ export default function PostResultPrompt() {
       )}
 
       {step === "thanks" && <p id="prp-title" className="prp-title">Thank you, that helps.</p>}
+    </div>
 
       <style jsx>{`
+        .prp-backdrop {
+          position: fixed; inset: 0; z-index: 70; display: flex; align-items: center; justify-content: center;
+          padding: 16px; background: rgba(15, 10, 30, 0.28); animation: prp-fade 0.15s ease-out;
+        }
+        @keyframes prp-fade { from { opacity: 0; } to { opacity: 1; } }
         .prp {
-          position: fixed; left: 24px; bottom: 24px; z-index: 70; width: 340px; max-width: calc(100vw - 24px);
-          background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 16px;
+          position: relative; box-sizing: border-box; width: 380px; max-width: 100%;
+          background: var(--card, #ffffff); color: var(--ink, #1b1526); border: 1px solid var(--line, #e6e1f0); border-radius: 16px;
           box-shadow: 0 12px 32px rgba(20, 10, 40, 0.18); padding: 18px 52px 16px 18px;
         }
         .prp-close {
           position: absolute; top: 4px; right: 4px; width: 44px; height: 44px; border-radius: 50%;
-          display: flex; align-items: center; justify-content: center; color: var(--ink-soft); background: transparent;
+          display: flex; align-items: center; justify-content: center; color: var(--ink-soft, #5b5370); background: transparent;
         }
-        .prp-close:hover, .prp-close:focus-visible { color: var(--ink); background: var(--brand-50); }
-        .prp-title { font-size: 15px; font-weight: 600; line-height: 1.4; margin: 0 0 12px; color: var(--ink); }
-        .prp-label { display: block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+        .prp-close:hover, .prp-close:focus-visible { color: var(--ink, #1b1526); background: var(--brand-50, #f3eefe); }
+        .prp-title { font-size: 15px; font-weight: 600; line-height: 1.4; margin: 0 0 12px; color: var(--ink, #1b1526); }
+        .prp-label { display: block; font-size: 13px; color: var(--ink-soft, #5b5370); margin-bottom: 6px; }
         .prp-input {
-          width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; font-size: 14px;
-          background: var(--paper); color: var(--ink); margin-bottom: 10px;
+          width: 100%; border: 1px solid var(--line, #e6e1f0); border-radius: 10px; padding: 9px 11px; font-size: 14px;
+          background: var(--paper, #ffffff); color: var(--ink, #1b1526); margin-bottom: 10px;
         }
-        .prp-input:focus { outline: none; border-color: var(--brand-600); box-shadow: 0 0 0 3px var(--brand-50); }
+        .prp-input:focus { outline: none; border-color: var(--brand-600, #7c3aed); box-shadow: 0 0 0 3px var(--brand-50, #f3eefe); }
         .prp-row { display: flex; gap: 8px; }
         .prp-btn {
-          min-height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid var(--line);
-          font-size: 14px; font-weight: 600; color: var(--ink); background: transparent;
+          min-height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid var(--line, #e6e1f0);
+          font-size: 14px; font-weight: 600; color: var(--ink, #1b1526); background: transparent;
         }
-        .prp-btn:hover, .prp-btn:focus-visible { border-color: var(--brand-600); color: var(--brand-600); }
-        .prp-primary { background: var(--brand-600); border-color: var(--brand-600); color: #fff; }
-        .prp-primary:hover, .prp-primary:focus-visible { background: var(--brand-700); color: #fff; }
-        @media (max-width: 560px) {
-          .prp { left: 12px; right: 12px; bottom: 12px; width: auto; max-width: none; }
-        }
+        .prp-btn:hover, .prp-btn:focus-visible { border-color: var(--brand-600, #7c3aed); color: var(--brand-600, #7c3aed); }
+        .prp-primary { background: var(--brand-600, #7c3aed); border-color: var(--brand-600, #7c3aed); color: #fff; }
+        .prp-primary:hover, .prp-primary:focus-visible { background: var(--brand-700, #6d28d9); color: #fff; }
+        @media (prefers-reduced-motion: reduce) { .prp-backdrop { animation: none; } }
       `}</style>
     </div>
   );
