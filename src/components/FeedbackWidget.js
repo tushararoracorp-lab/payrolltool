@@ -1,4 +1,13 @@
 import { useState } from "react";
+import { markRated } from "../lib/resultPrompt";
+
+// Tap-only reasons shown after "No", so nobody has to type to tell us what went wrong.
+const NO_REASONS = [
+  { id: "numbers_mismatch", label: "Numbers don't match" },
+  { id: "confusing", label: "Confusing to use" },
+  { id: "case_missing", label: "My state or case is missing" },
+  { id: "file_rejected", label: "File got rejected" },
+];
 
 export default function FeedbackWidget({ toolName }) {
   const [rated, setRated] = useState(null);
@@ -6,6 +15,7 @@ export default function FeedbackWidget({ toolName }) {
   const [feedbackText, setFeedbackText] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [reason, setReason] = useState(null);
 
   const sendGA4Event = (eventName, params) => {
     if (typeof window !== "undefined" && window.gtag) {
@@ -15,11 +25,18 @@ export default function FeedbackWidget({ toolName }) {
 
   const handleRating = (value) => {
     setRated(value);
+    if (value !== "not_helpful") setReason(null);
     sendGA4Event("tool_feedback_rating", {
       tool_name: toolName,
       rating: value,
     });
+    markRated(toolName); // the post-result prompt will not ask again for this tool
     setShowText(true);
+  };
+
+  const handleReason = (id) => {
+    setReason(id);
+    sendGA4Event("tool_feedback_reason", { tool_name: toolName, reason: id });
   };
 
   const handleTextSubmit = async () => {
@@ -32,7 +49,9 @@ export default function FeedbackWidget({ toolName }) {
         body: JSON.stringify({
           tool: toolName,
           rating: rated,
-          feedback: feedbackText.trim(),
+          feedback: [reason ? `Reason: ${NO_REASONS.find((r) => r.id === reason)?.label}.` : "", feedbackText.trim()]
+            .filter(Boolean)
+            .join(" "),
         }),
       });
     } catch (err) {
@@ -90,6 +109,30 @@ export default function FeedbackWidget({ toolName }) {
             👎 No
           </button>
         </div>
+
+        {rated === "not_helpful" && (
+          <div className="mt-4" role="group" aria-label="What went wrong?">
+            <p className="text-sm mb-2" style={{ color: "var(--ink-soft)" }}>What went wrong? Tap one.</p>
+            <div className="flex flex-wrap gap-2">
+              {NO_REASONS.map((r) => (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => handleReason(r.id)}
+                  aria-pressed={reason === r.id}
+                  className={`px-3 py-2 rounded-full text-sm border transition-colors ${reason === r.id ? "" : "fw-btn-unselected"}`}
+                  style={
+                    reason === r.id
+                      ? { background: "var(--brand-600)", color: "#fff", borderColor: "var(--brand-600)" }
+                      : { borderColor: "var(--line)", color: "var(--ink-soft)" }
+                  }
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {showText && (
           <div className="mt-4">

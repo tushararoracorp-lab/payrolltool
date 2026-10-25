@@ -3,6 +3,7 @@ import "../styles/seo-blocks.css";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
+import PostResultPrompt from "../components/PostResultPrompt";
 
 const GA_ID = "G-YZKNE00CWX";
 
@@ -33,6 +34,7 @@ export default function App({ Component, pageProps }) {
         `}
       </Script>
       <Component {...pageProps} />
+      <PostResultPrompt />
     </>
   );
 }

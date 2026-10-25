@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import TOOLS from "../config/tools";
 
 export default function Footer() {
   const [visible, setVisible] = useState(false);
@@ -77,12 +78,9 @@ export default function Footer() {
             <div className="footer-links">
               <div className="footer-col">
                 <h5>Tools</h5>
-                <Link prefetch={false} href="/pf-ecr-creator">PF ECR Creator</Link>
-                <Link prefetch={false} href="/esic-mc-creator">ESI File Creator</Link>
-                <Link prefetch={false} href="/tax-calculator">Tax Calculator</Link>
-                <Link prefetch={false} href="/salary-proration">Salary Proration</Link>
-                <Link prefetch={false} href="/lop-splitter">LOP Splitter</Link>
-                <Link prefetch={false} href="/final-settlement">Final Settlement</Link>
+                {TOOLS.map((t) => (
+                  <Link key={t.href} prefetch={false} href={t.href}>{t.label}</Link>
+                ))}
               </div>
               <div className="footer-col">
                 <h5>Company</h5>

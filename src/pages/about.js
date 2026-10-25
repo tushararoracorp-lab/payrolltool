@@ -2,13 +2,14 @@ import Head from "next/head";
 import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import TOOLS from "../config/tools";
 
 export default function About() {
   return (
     <>
       <Head>
         <title>About - PayrollTool.in | Built by a Payroll Compliance Professional</title>
-        <meta name="description" content="The story behind PayrollTool.in - payroll calculators for PF ECR, salary proration, tax, LOP and final settlement, built from 8+ years of hands-on Indian payroll compliance experience." />
+        <meta name="description" content="The story behind PayrollTool.in - free payroll calculators and file generators for Indian HR teams, built from hands-on payroll compliance work since 2018." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.payrolltool.in/about" />
         <meta name="theme-color" content="#7C3AED" />
@@ -16,13 +17,13 @@ export default function About() {
         <meta property="og:type" content="profile" />
         <meta property="og:site_name" content="PayrollTool.in" />
         <meta property="og:title" content="About - PayrollTool.in | Built by a Payroll Compliance Professional" />
-        <meta property="og:description" content="The story behind PayrollTool.in - payroll calculators built from 8+ years of hands-on Indian payroll compliance experience." />
+        <meta property="og:description" content="The story behind PayrollTool.in - payroll calculators built from hands-on Indian payroll compliance work since 2018." />
         <meta property="og:url" content="https://www.payrolltool.in/about" />
         <meta property="og:locale" content="en_IN" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About - PayrollTool.in" />
-        <meta name="twitter:description" content="The story behind PayrollTool.in - built from 8+ years of hands-on Indian payroll compliance experience." />
+        <meta name="twitter:description" content="The story behind PayrollTool.in - built from hands-on Indian payroll compliance work since 2018." />
 
         <script
           type="application/ld+json"
@@ -47,7 +48,7 @@ export default function About() {
                 "@type": "Person",
                 name: "Tushar Arora",
                 jobTitle: "Payroll Compliance Expert",
-                description: "8+ years of payroll compliance experience across EPF, ESI, PT, LWF, NPS and TDS. Founder of PayrollTool.in.",
+                description: "Payroll compliance professional since 2018, working across EPF, ESI, PT, LWF, NPS and TDS. Founder of PayrollTool.in.",
                 knowsAbout: ["Payroll Compliance", "EPF", "ESI", "Professional Tax", "TDS", "Indian Labour Law"],
               },
             }),
@@ -104,7 +105,7 @@ export default function About() {
 
           <h2 style={{ fontSize: "26px", marginBottom: "16px" }}>Why this exists</h2>
           <p style={{ color: "var(--ink-soft)", lineHeight: 1.7, fontSize: "15.5px", marginBottom: "20px" }}>
-            I&apos;ve spent 8+ years in the weeds of Indian payroll compliance - EPF, ESI, Professional Tax, LWF, NPS, and TDS - working hands-on with statutory payroll across multiple client accounts, and closely with product, testing, and development teams when a payroll calculation needs to behave correctly across real employee data.
+            I&apos;ve worked in the weeds of Indian payroll compliance since July 2018 - EPF, ESI, Professional Tax, LWF, NPS, and TDS - working hands-on with statutory payroll across multiple client accounts, and closely with product, testing, and development teams when a payroll calculation needs to behave correctly across real employee data.
           </p>
           <p style={{ color: "var(--ink-soft)", lineHeight: 1.7, fontSize: "15.5px", marginBottom: "20px" }}>
             Over time, the same small problems kept coming up. Someone would need a quick salary-proration check, an LOP split, a final-settlement calculation or a payroll file in the right format, and the fastest option was often another spreadsheet, another formula, or another online calculator that didn&apos;t quite match how the payroll actually worked.
@@ -118,11 +119,13 @@ export default function About() {
 
           <h2 style={{ fontSize: "26px", margin: "48px 0 16px" }}>What&apos;s live today</h2>
           <ul className="trust-bullets" style={{ margin: "0 0 20px" }}>
-            <li><Link href="/pf-ecr-creator" style={{ color: "var(--brand-600)", fontWeight: 600 }}>PF ECR Creator</Link> - prepares ECR files for upload to the EPFO Unified Portal</li>
-            <li><Link href="/tax-calculator" style={{ color: "var(--brand-600)", fontWeight: 600 }}>Tax Regime Calculator</Link> - compares Old vs New regime for FY 2026‑27</li>
-            <li><Link href="/salary-proration" style={{ color: "var(--brand-600)", fontWeight: 600 }}>Salary Proration Calculator</Link> - handles mid-month joining and exit, state-wise PT, EPF ceiling</li>
-            <li><Link href="/lop-splitter" style={{ color: "var(--brand-600)", fontWeight: 600 }}>LOP Splitter</Link> - loss-of-pay calculations across month boundaries</li>
-            <li><Link href="/final-settlement" style={{ color: "var(--brand-600)", fontWeight: 600 }}>Final Settlement Calculator</Link> - gratuity, notice pay, leave encashment, and deductions in one place</li>
+            {TOOLS.map((t) => (
+              <li key={t.href}>
+                <span>
+                  <Link href={t.href} style={{ color: "var(--brand-600)", fontWeight: 600 }}>{t.name}</Link> - {t.about}
+                </span>
+              </li>
+            ))}
           </ul>
 
           <h2 style={{ fontSize: "26px", margin: "48px 0 16px" }}>How it&apos;s built</h2>

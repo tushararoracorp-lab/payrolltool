@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
         <div className="wrap">
           <p className="eyebrow">LEGAL</p>
           <h1>Privacy Policy</h1>
-          <p className="updated">Last updated: 10 September 2026</p>
+          <p className="updated">Last updated: 25 October 2026</p>
 
           <p className="lede">
             PayrollTool.in is built around one promise: your payroll numbers are yours.
@@ -36,8 +36,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2>What never leaves your browser</h2>
             <p>
-              Every calculator on PayrollTool.in - Salary Proration, LOP Splitter, PF ECR
-              Creator, Final Settlement, and the Tax Calculator - runs entirely on your
+              Every calculator and file generator on PayrollTool.in runs entirely on your
               device. The salary figures, employee details, and dates you enter are
               processed in your browser using JavaScript and are never transmitted to
               our servers, never stored in a database, and never seen by us. Closing the
@@ -149,6 +148,26 @@ export default function PrivacyPolicy() {
               an ad-blocker/analytics opt-out extension - the site works identically
               either way. To have any feedback or contact data deleted, email
               support@payrolltool.in.
+            </p>
+          </section>
+
+          <section>
+            <h2>Your rights under Indian data protection law</h2>
+            <p>
+              We handle personal data in line with the Digital Personal Data Protection
+              Act, 2023. The only personal data we hold is what you choose to send us:
+              feedback text and emails, together with any name or email address you
+              include in them. Calculator inputs and uploaded files are never collected,
+              so there is nothing to access or erase for them.
+            </p>
+            <p>
+              For the data we do hold, you can ask us for a summary of what we have and
+              how it is used, ask us to correct, complete or update it, ask us to erase
+              it, and nominate another person to exercise these rights for you. Write to{" "}
+              <a href="mailto:support@payrolltool.in">support@payrolltool.in</a> with
+              the subject &quot;Data request&quot;. The same address handles grievances
+              about how your data is processed. If we do not resolve a grievance, you
+              can approach the Data Protection Board of India.
             </p>
           </section>
 

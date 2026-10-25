@@ -5,6 +5,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
 import FeedbackWidget from "../components/FeedbackWidget";
+import { signalResult } from "../lib/resultPrompt";
 import SeoHead from "../components/SeoHead";
 import AnswerBox from "../components/AnswerBox";
 import RelatedLinks from "../components/RelatedLinks";
@@ -971,6 +972,7 @@ export default function EsicMcCreator() {
                       if (typeof window !== "undefined" && window.gtag) {
                         window.gtag("event", "tool_download_completed", { tool_name: "ESIC MC Creator", file_type: "xls" });
                       }
+                      signalResult("ESIC MC Creator");
                     }}
                     className="px-8 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
                     style={{ background: "linear-gradient(135deg,#059669 0%,#10B981 100%)" }}
@@ -983,6 +985,7 @@ export default function EsicMcCreator() {
                       if (typeof window !== "undefined" && window.gtag) {
                         window.gtag("event", "tool_download_completed", { tool_name: "ESIC MC Creator", file_type: "xlsx" });
                       }
+                      signalResult("ESIC MC Creator");
                     }}
                     className="px-8 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95"
                     style={{ background: "linear-gradient(135deg,#6D28D9 0%,#7C3AED 100%)" }}

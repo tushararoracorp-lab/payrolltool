@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import TOOLS from "../config/tools";
 
 // Icon set matching the new inline-SVG style used across the redesigned
 // site (payrolltool-homepage-icons-synced.html). No lucide/emoji.
@@ -68,16 +69,11 @@ const ICONS = {
   ),
 };
 
-const toolLinks = [
-  { href: "/pf-ecr-creator", label: "PF ECR Creator", icon: ICONS.pfEcr },
-  { href: "/esic-mc-creator", label: "ESI File Creator", icon: ICONS.esicMc },
-  { href: "/tax-calculator", label: "Tax Calculator", icon: ICONS.tax },
-];
-const toolLinksCol2 = [
-  { href: "/salary-proration", label: "Salary Proration", icon: ICONS.salaryProration },
-  { href: "/lop-splitter", label: "LOP Splitter", icon: ICONS.lopSplitter },
-  { href: "/final-settlement", label: "Final Settlement", icon: ICONS.finalSettlement },
-];
+// Tools come from src/config/tools.js (the one list shared with the footer and About page).
+const allToolLinks = TOOLS.map((t) => ({ href: t.href, label: t.label, icon: ICONS[t.icon] || ICONS.arrowRight }));
+const toolSplit = Math.ceil(allToolLinks.length / 2);
+const toolLinks = allToolLinks.slice(0, toolSplit);
+const toolLinksCol2 = allToolLinks.slice(toolSplit);
 
 // Blog links are fetched dynamically from /public/blog-meta.json
 // This allows infinite blog posts without manual header updates

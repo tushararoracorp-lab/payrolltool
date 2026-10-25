@@ -5,6 +5,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
 import FeedbackWidget from "../components/FeedbackWidget";
+import { signalResult } from "../lib/resultPrompt";
 import RelatedLinks from "../components/RelatedLinks";
 import RELATED from "../config/related";
 
@@ -1103,6 +1104,7 @@ export default function PfEcrCreator() {
                       if (typeof window !== "undefined" && window.gtag) {
                         window.gtag("event", "tool_download_completed", { tool_name: "PF ECR Creator", file_type: "xlsx" });
                       }
+                      signalResult("PF ECR Creator");
                     }}
                     className="px-8 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95"
                     style={{ background: "linear-gradient(135deg,#059669 0%,#10B981 100%)" }}
@@ -1115,6 +1117,7 @@ export default function PfEcrCreator() {
                       if (typeof window !== "undefined" && window.gtag) {
                         window.gtag("event", "tool_download_completed", { tool_name: "PF ECR Creator", file_type: "txt" });
                       }
+                      signalResult("PF ECR Creator");
                     }}
                     className="px-8 py-3 rounded-xl font-semibold text-sm text-white transition-all active:scale-95"
                     style={{ background: "linear-gradient(135deg,#6D28D9 0%,#7C3AED 100%)" }}
