@@ -6,7 +6,8 @@ import { RESULT_EVENT, announceRated, wasRated } from "../lib/resultPrompt";
 // not if the inline "Was this helpful?" box was already answered on this visit,
 // at most once per visit, and not again for 30 days after it is answered or closed.
 // A small centred card over a light backdrop. It only ever appears after a download, never on
-// arrival, and the page never scroll-locks. Esc or a click on the backdrop closes it.
+// arrival, and the page never scroll-locks. Only the cross (or Esc) closes it: a stray tap on the
+// backdrop does nothing, so feedback is not lost by accident. Closing counts as skipped.
 
 const SNOOZE_DAYS = 30;
 const SHOW_DELAY_MS = 1500; // let the browser's download bar appear first
@@ -36,9 +37,10 @@ export default function PostResultPrompt() {
   const timerRef = useRef(null);
 
   const close = useCallback((reason) => {
-    if (reason === "dismissed") ga("post_result_prompt_dismissed", { tool_name: tool });
-    // Closed or skipped before answering: settle the inline question too, without a thank-you.
-    if (reason === "dismissed" && tool) announceRated(tool, false);
+    // Closed with the cross (or Esc) before answering: recorded as skipped. The inline question
+    // is settled too, without a thank-you.
+    if (reason === "skipped") ga("post_result_prompt_skipped", { tool_name: tool });
+    if (reason === "skipped" && tool) announceRated(tool, false);
     storageSet("localStorage", "ptool:prompt:snoozedAt", String(Date.now()));
     setTool(null);
     const el = returnFocusRef.current;
@@ -72,7 +74,7 @@ export default function PostResultPrompt() {
     if (!tool) return undefined;
     if (firstBtnRef.current) firstBtnRef.current.focus();
     function onKey(e) {
-      if (e.key === "Escape") { close("dismissed"); return; }
+      if (e.key === "Escape") { close("skipped"); return; }
       if (e.key !== "Tab" || !boxRef.current) return;
       // Keep keyboard focus inside the card while it is open.
       const f = boxRef.current.querySelectorAll("button, input");
@@ -118,9 +120,9 @@ export default function PostResultPrompt() {
   }
 
   return (
-    <div className="prp-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) close("dismissed"); }}>
+    <div className="prp-backdrop">
     <div ref={boxRef} className="prp" role="dialog" aria-modal="true" aria-labelledby="prp-title">
-      <button type="button" className="prp-close" aria-label="Close" onClick={() => close("dismissed")}>
+      <button type="button" className="prp-close" aria-label="Close" onClick={() => close("skipped")}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
           <path d="M6 6l12 12M18 6L6 18" />
         </svg>
