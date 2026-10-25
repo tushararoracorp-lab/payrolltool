@@ -1087,63 +1087,68 @@ export default function EsicMcCreator() {
 
       <style jsx>{`
         /* Dark-mode overrides for this page's Tailwind utility classes.
+           The class part of each rule is wrapped in :global() because the
+           month/year selects and the drop zone are rendered by helper
+           functions (PeriodSelects, the drop zone), and styled-jsx only
+           scopes rules to elements written directly in this component's
+           return. Without :global() those elements never turned dark.
            Ported rule-for-rule from pf-ecr-creator.js's .pf-wrapper block -
            same color tokens, same [class~="..."] attribute-selector
            approach for hover:/focus:/opacity-slash modifiers (Tailwind
            compiles those into distinct literal class names that escaped
            selectors have repeatedly mishandled inside styled-jsx). */
-        .esic-wrapper[data-theme="dark"] .bg-white { background: #1c1730 !important; }
-        .esic-wrapper[data-theme="dark"] .bg-gray-50 { background: #16131c !important; }
-        .esic-wrapper[data-theme="dark"] .bg-gray-100 { background: #221c3a !important; }
-        .esic-wrapper[data-theme="dark"] .text-gray-400 { color: #b3aac7 !important; }
-        .esic-wrapper[data-theme="dark"] .text-gray-500 { color: #b3aac7 !important; }
-        .esic-wrapper[data-theme="dark"] .text-gray-600 { color: #d6cfe8 !important; }
-        .esic-wrapper[data-theme="dark"] .text-gray-700 { color: #f3f0fa !important; }
-        .esic-wrapper[data-theme="dark"] .text-gray-800 { color: #f3f0fa !important; }
-        .esic-wrapper[data-theme="dark"] .text-gray-900 { color: #f3f0fa !important; }
-        .esic-wrapper[data-theme="dark"] .border-gray-50 { border-color: #2a2536 !important; }
-        .esic-wrapper[data-theme="dark"] .border-gray-100 { border-color: #2a2536 !important; }
-        .esic-wrapper[data-theme="dark"] .border-gray-200 { border-color: #2a2536 !important; }
-        .esic-wrapper[data-theme="dark"] .bg-violet-50 { background: #2c2147 !important; }
-        .esic-wrapper[data-theme="dark"] .text-violet-500 { color: #9163f2 !important; }
-        .esic-wrapper[data-theme="dark"] .text-violet-600 { color: #9163f2 !important; }
-        .esic-wrapper[data-theme="dark"] .text-violet-700 { color: #a47df5 !important; }
-        .esic-wrapper[data-theme="dark"] .border-violet-300 { border-color: #9163f2 !important; }
-        .esic-wrapper[data-theme="dark"] .border-violet-400 { border-color: #9163f2 !important; }
-        .esic-wrapper[data-theme="dark"] .bg-amber-50,
-        .esic-wrapper[data-theme="dark"] [class~="bg-amber-50/60"] { background: #332411 !important; --tw-bg-opacity: 1 !important; }
-        .esic-wrapper[data-theme="dark"] .text-amber-600 { color: #fbbf54 !important; }
-        .esic-wrapper[data-theme="dark"] .text-amber-700 { color: #fbbf54 !important; }
-        .esic-wrapper[data-theme="dark"] .text-amber-800 { color: #fbbf54 !important; }
-        .esic-wrapper[data-theme="dark"] .border-amber-100 { border-color: #5c4a1f !important; }
-        .esic-wrapper[data-theme="dark"] .border-amber-200 { border-color: #5c4a1f !important; }
-        .esic-wrapper[data-theme="dark"] .bg-red-50 { background: #3d1f1f !important; }
-        .esic-wrapper[data-theme="dark"] .text-red-500 { color: #f87171 !important; }
-        .esic-wrapper[data-theme="dark"] .text-red-800 { color: #f87171 !important; }
-        .esic-wrapper[data-theme="dark"] .border-red-100 { border-color: #5c2e2e !important; }
+        .esic-wrapper[data-theme="dark"] :global(.bg-white) { background: #1c1730 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.bg-gray-50) { background: #16131c !important; }
+        .esic-wrapper[data-theme="dark"] :global(.bg-gray-100) { background: #221c3a !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-gray-400) { color: #b3aac7 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-gray-500) { color: #b3aac7 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-gray-600) { color: #d6cfe8 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-gray-700) { color: #f3f0fa !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-gray-800) { color: #f3f0fa !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-gray-900) { color: #f3f0fa !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-gray-50) { border-color: #2a2536 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-gray-100) { border-color: #2a2536 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-gray-200) { border-color: #2a2536 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.bg-violet-50) { background: #2c2147 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-violet-500) { color: #9163f2 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-violet-600) { color: #9163f2 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-violet-700) { color: #a47df5 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-violet-300) { border-color: #9163f2 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-violet-400) { border-color: #9163f2 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.bg-amber-50),
+        .esic-wrapper[data-theme="dark"] :global([class~="bg-amber-50/60"]) { background: #332411 !important; --tw-bg-opacity: 1 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-amber-600) { color: #fbbf54 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-amber-700) { color: #fbbf54 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-amber-800) { color: #fbbf54 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-amber-100) { border-color: #5c4a1f !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-amber-200) { border-color: #5c4a1f !important; }
+        .esic-wrapper[data-theme="dark"] :global(.bg-red-50) { background: #3d1f1f !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-red-500) { color: #f87171 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-red-800) { color: #f87171 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-red-100) { border-color: #5c2e2e !important; }
 
-        .esic-wrapper[data-theme="dark"] [class~="bg-gray-50/50"] { background: #16131c !important; --tw-bg-opacity: 1 !important; }
-        .esic-wrapper[data-theme="dark"] [class~="bg-violet-50/30"] { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
-        .esic-wrapper[data-theme="dark"] [class~="hover:bg-gray-50"]:hover { background: #221c3a !important; }
-        .esic-wrapper[data-theme="dark"] [class~="hover:bg-violet-50"]:hover { background: #2c2147 !important; }
-        .esic-wrapper[data-theme="dark"] [class~="hover:bg-violet-50/30"]:hover { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
-        .esic-wrapper[data-theme="dark"] [class~="hover:border-violet-300"]:hover { border-color: #9163f2 !important; }
-        .esic-wrapper[data-theme="dark"] [class~="hover:text-red-500"]:hover { color: #f87171 !important; }
-        .esic-wrapper[data-theme="dark"] [class~="hover:text-violet-600"]:hover { color: #9163f2 !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="bg-gray-50/50"]) { background: #16131c !important; --tw-bg-opacity: 1 !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="bg-violet-50/30"]) { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="hover:bg-gray-50"]:hover) { background: #221c3a !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="hover:bg-violet-50"]:hover) { background: #2c2147 !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="hover:bg-violet-50/30"]:hover) { background: #2c2147 !important; --tw-bg-opacity: 1 !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="hover:border-violet-300"]:hover) { border-color: #9163f2 !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="hover:text-red-500"]:hover) { color: #f87171 !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="hover:text-violet-600"]:hover) { color: #9163f2 !important; }
 
-        .esic-wrapper[data-theme="dark"] [class~="focus:border-violet-400"]:focus { border-color: #9163f2 !important; }
-        .esic-wrapper[data-theme="dark"] [class~="focus:ring-violet-100"]:focus { --tw-ring-color: rgba(145, 99, 242, 0.35) !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="focus:border-violet-400"]:focus) { border-color: #9163f2 !important; }
+        .esic-wrapper[data-theme="dark"] :global([class~="focus:ring-violet-100"]:focus) { --tw-ring-color: rgba(145, 99, 242, 0.35) !important; }
 
-        .esic-wrapper[data-theme="dark"] .border-violet-200 { border-color: #3d3654 !important; }
-        .esic-wrapper[data-theme="dark"] .text-green-500 { color: #34d399 !important; }
-        .esic-wrapper[data-theme="dark"] .text-green-600 { color: #34d399 !important; }
-        .esic-wrapper[data-theme="dark"] .text-red-600 { color: #f87171 !important; }
-        .esic-wrapper[data-theme="dark"] .border-red-200 { border-color: #5c2e2e !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-violet-200) { border-color: #3d3654 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-green-500) { color: #34d399 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-green-600) { color: #34d399 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-red-600) { color: #f87171 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-red-200) { border-color: #5c2e2e !important; }
 
-        .esic-wrapper[data-theme="dark"] .bg-blue-50 { background: #172033 !important; }
-        .esic-wrapper[data-theme="dark"] .border-blue-200 { border-color: #2d4a6b !important; }
-        .esic-wrapper[data-theme="dark"] .text-blue-500 { color: #60a5fa !important; }
-        .esic-wrapper[data-theme="dark"] .text-blue-700 { color: #60a5fa !important; }
+        .esic-wrapper[data-theme="dark"] :global(.bg-blue-50) { background: #172033 !important; }
+        .esic-wrapper[data-theme="dark"] :global(.border-blue-200) { border-color: #2d4a6b !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-blue-500) { color: #60a5fa !important; }
+        .esic-wrapper[data-theme="dark"] :global(.text-blue-700) { color: #60a5fa !important; }
       `}</style>
     </>
   );

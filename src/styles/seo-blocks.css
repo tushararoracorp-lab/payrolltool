@@ -10,3 +10,19 @@
 .related-links h2 { margin: 0 0 8px; font-size: 1.1em; }
 .related-links ul { margin: 0; padding-left: 18px; }
 .related-links li { margin: 4px 0; }
+
+/* Dark theme: the site sets data-theme="dark" on <html> (and on page wrappers), so these blocks
+   get explicit light text instead of inheriting a dark colour onto a dark background.
+   Colours match the tool pages' dark palette. */
+[data-theme="dark"] .answer-box { background: rgba(145, 99, 242, 0.14); border-left-color: #9163f2; }
+[data-theme="dark"] .answer-box .answer-text { color: #f3f0fa; }
+[data-theme="dark"] .answer-box .answer-meta { color: #b3aac7; opacity: 1; }
+[data-theme="dark"] .answer-box a,
+[data-theme="dark"] .related-links a { color: #a47df5; }
+[data-theme="dark"] .faq-block h2,
+[data-theme="dark"] .faq-block h3,
+[data-theme="dark"] .related-links h2 { color: #f3f0fa; }
+[data-theme="dark"] .faq-block p,
+[data-theme="dark"] .related-links li,
+[data-theme="dark"] .related-links span { color: #b3aac7; }
+[data-theme="dark"] .related-links { border-color: #2a2536; background: #1c1730; }
