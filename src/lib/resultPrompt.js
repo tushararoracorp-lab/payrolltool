@@ -29,13 +29,3 @@ export function announceRated(tool, answered = true) {
   markRated(tool);
   try { window.dispatchEvent(new CustomEvent(RATED_EVENT, { detail: { tool, answered } })); } catch (e) { /* ignore */ }
 }
-
-// True when the inline "Was this helpful?" box is on screen, so the prompt need not ask.
-export function inlineFeedbackVisible() {
-  try {
-    const el = document.querySelector('.feedback-widget');
-    if (!el) return false;
-    const r = el.getBoundingClientRect();
-    return r.height > 0 && r.top < window.innerHeight && r.bottom > 0;
-  } catch (e) { return false; }
-}

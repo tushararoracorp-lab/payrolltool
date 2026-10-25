@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { RESULT_EVENT, announceRated, inlineFeedbackVisible, wasRated } from "../lib/resultPrompt";
+import { RESULT_EVENT, announceRated, wasRated } from "../lib/resultPrompt";
 
 // One-tap "did this match?" card shown after a user downloads a result (audit section 8).
 // Rules: only after a successful download (never on page load or after a rejected file),
-// only when the inline "Was this helpful?" box is not already on screen,
+// not if the inline "Was this helpful?" box was already answered on this visit,
 // at most once per visit, and not again for 30 days after it is answered or closed.
 // A small centred card over a light backdrop. It only ever appears after a download, never on
 // arrival, and the page never scroll-locks. Esc or a click on the backdrop closes it.
@@ -54,8 +54,8 @@ export default function PostResultPrompt() {
       if (snoozed() || wasRated(name)) return;
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
-        // The inline "Was this helpful?" box is already in view: one question is enough.
-        if (inlineFeedbackVisible() || wasRated(name)) return;
+        // Answered inline in the meantime: one question is enough.
+        if (wasRated(name)) return;
         storageSet("sessionStorage", "ptool:prompt:shown", "1");
         returnFocusRef.current = document.activeElement;
         setStep("ask"); setAnswer(null); setComment("");
