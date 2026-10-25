@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { markRated } from "../lib/resultPrompt";
+import { useEffect, useState } from "react";
+import { markRated, RATED_EVENT } from "../lib/resultPrompt";
 
 // Tap-only reasons shown after "No", so nobody has to type to tell us what went wrong.
 const NO_REASONS = [
@@ -16,6 +16,19 @@ export default function FeedbackWidget({ toolName }) {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [reason, setReason] = useState(null);
+  const [hidden, setHidden] = useState(false);
+
+  // The post-result prompt already dealt with this tool on this visit: say thanks if it was
+  // answered, or hide quietly if it was skipped or closed, so the question is never asked twice.
+  useEffect(() => {
+    function onRated(e) {
+      if (!e || !e.detail || e.detail.tool !== toolName) return;
+      if (e.detail.answered === false) setHidden(true);
+      else setSubmitted(true);
+    }
+    window.addEventListener(RATED_EVENT, onRated);
+    return () => window.removeEventListener(RATED_EVENT, onRated);
+  }, [toolName]);
 
   const sendGA4Event = (eventName, params) => {
     if (typeof window !== "undefined" && window.gtag) {
@@ -60,6 +73,8 @@ export default function FeedbackWidget({ toolName }) {
     setIsSubmitting(false);
     setSubmitted(true);
   };
+
+  if (hidden) return null;
 
   if (submitted) {
     return (

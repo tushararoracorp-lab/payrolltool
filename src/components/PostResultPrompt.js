@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { RESULT_EVENT, markRated, wasRated } from "../lib/resultPrompt";
+import { RESULT_EVENT, announceRated, inlineFeedbackVisible, wasRated } from "../lib/resultPrompt";
 
 // One-tap "did this match?" card shown after a user downloads a result (audit section 8).
 // Rules: only after a successful download (never on page load or after a rejected file),
+// only when the inline "Was this helpful?" box is not already on screen,
 // at most once per visit, and not again for 30 days after it is answered or closed.
 // A corner card, not a modal: the result stays visible and the page never scroll-locks.
 
@@ -35,6 +36,8 @@ export default function PostResultPrompt() {
 
   const close = useCallback((reason) => {
     if (reason === "dismissed") ga("post_result_prompt_dismissed", { tool_name: tool });
+    // Closed or skipped before answering: settle the inline question too, without a thank-you.
+    if (reason === "dismissed" && tool) announceRated(tool, false);
     storageSet("localStorage", "ptool:prompt:snoozedAt", String(Date.now()));
     setTool(null);
     const el = returnFocusRef.current;
@@ -50,6 +53,8 @@ export default function PostResultPrompt() {
       if (snoozed() || wasRated(name)) return;
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
+        // The inline "Was this helpful?" box is already in view: one question is enough.
+        if (inlineFeedbackVisible() || wasRated(name)) return;
         storageSet("sessionStorage", "ptool:prompt:shown", "1");
         returnFocusRef.current = document.activeElement;
         setStep("ask"); setAnswer(null); setComment("");
@@ -88,7 +93,7 @@ export default function PostResultPrompt() {
 
   function choose(value) {
     setAnswer(value);
-    markRated(tool);
+    announceRated(tool);
     ga("post_result_prompt_answered", { tool_name: tool, answer: value });
     setStep("comment");
   }
