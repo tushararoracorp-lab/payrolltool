@@ -3,14 +3,13 @@ import { RESULT_EVENT, announceRated, wasRated } from "../lib/resultPrompt";
 
 // One-tap "did this match?" card shown after a tool delivers a result (audit section 8): a download
 // for file tools, or a completed calculation for calculators.
-// Rules: only after a successful download (never on page load or after a rejected file),
-// not if the inline "Was this helpful?" box was already answered on this visit,
-// at most once per visit, and not again for 30 days after it is answered or closed.
+// Rules: only after a result (never on page load or after a rejected file), not if the inline
+// "Was this helpful?" box was already answered on this visit, and at most once per tool per day:
+// each screen can ask once a day, independently of the other tools.
 // A small centred card over a light backdrop. It only ever appears after a download, never on
 // arrival, and the page never scroll-locks. Only the cross (or Esc) closes it: a stray tap on the
 // backdrop does nothing, so feedback is not lost by accident. Closing counts as skipped.
 
-const SNOOZE_DAYS = 30;
 const SHOW_DELAY_MS = 1500; // let the browser's download bar appear first
 
 function storageGet(store, key) {
@@ -19,9 +18,14 @@ function storageGet(store, key) {
 function storageSet(store, key, value) {
   try { window[store].setItem(key, value); } catch (e) { /* storage blocked: ignore */ }
 }
-function snoozed() {
-  const t = Number(storageGet("localStorage", "ptool:prompt:snoozedAt") || 0);
-  return t && Date.now() - t < SNOOZE_DAYS * 24 * 60 * 60 * 1000;
+// Local calendar date, e.g. "2026-10-25": the prompt for a tool resets at local midnight.
+function today() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+const dayKey = (tool) => `ptool:prompt:day:${tool}`;
+function askedToday(tool) {
+  return storageGet("localStorage", dayKey(tool)) === today();
 }
 function ga(name, params) {
   try { if (window.gtag) window.gtag("event", name, params); } catch (e) { /* ignore */ }
@@ -43,7 +47,6 @@ export default function PostResultPrompt() {
     // is settled too, without a thank-you.
     if (reason === "skipped") ga("post_result_prompt_skipped", { tool_name: tool });
     if (reason === "skipped" && tool) announceRated(tool, false);
-    storageSet("localStorage", "ptool:prompt:snoozedAt", String(Date.now()));
     setTool(null);
     const el = returnFocusRef.current;
     if (el && typeof el.focus === "function") { try { el.focus(); } catch (e) { /* ignore */ } }
@@ -56,13 +59,12 @@ export default function PostResultPrompt() {
       if (!name) return;
       const nextKind = e.detail.kind === "calc" ? "calc" : "file";
       const delay = typeof e.detail.delay === "number" ? e.detail.delay : SHOW_DELAY_MS;
-      if (storageGet("sessionStorage", "ptool:prompt:shown") === "1") return;
-      if (snoozed() || wasRated(name)) return;
+      if (askedToday(name) || wasRated(name)) return;
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         // Answered inline in the meantime: one question is enough.
-        if (wasRated(name)) return;
-        storageSet("sessionStorage", "ptool:prompt:shown", "1");
+        if (askedToday(name) || wasRated(name)) return;
+        storageSet("localStorage", dayKey(name), today());
         returnFocusRef.current = document.activeElement;
         setStep("ask"); setAnswer(null); setComment(""); setKind(nextKind);
         setTool(name);

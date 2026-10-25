@@ -635,12 +635,11 @@ export default function SalaryProration() {
 
   // The calculator runs inside a shadow root (public/salary-proration-tool.js), so its buttons are
   // not visible to ordinary listeners. composedPath() reaches inside: a click on Calculate signals
-  // a calculation, and a click on Download PDF in the payslip dialog signals a file.
+  // the result. (Download is not used: many people calculate without downloading a payslip.)
   useEffect(() => {
     function onClick(e) {
       const path = typeof e.composedPath === "function" ? e.composedPath() : [];
-      if (path.some((n) => n && n.id === "dlConfirm")) signalResult("Salary Proration");
-      else if (path.some((n) => n && n.id === "calcBtn")) signalResult("Salary Proration", "calc");
+      if (path.some((n) => n && n.id === "calcBtn")) signalResult("Salary Proration", "calc");
     }
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
