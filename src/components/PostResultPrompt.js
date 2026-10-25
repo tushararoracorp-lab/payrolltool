@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RESULT_EVENT, announceRated, wasRated } from "../lib/resultPrompt";
 
-// One-tap "did this match?" card shown after a user downloads a result (audit section 8).
+// One-tap "did this match?" card shown after a tool delivers a result (audit section 8): a download
+// for file tools, or a completed calculation for calculators.
 // Rules: only after a successful download (never on page load or after a rejected file),
 // not if the inline "Was this helpful?" box was already answered on this visit,
 // at most once per visit, and not again for 30 days after it is answered or closed.
@@ -31,6 +32,7 @@ export default function PostResultPrompt() {
   const [step, setStep] = useState("ask"); // ask -> comment -> thanks
   const [answer, setAnswer] = useState(null);
   const [comment, setComment] = useState("");
+  const [kind, setKind] = useState("file");
   const boxRef = useRef(null);
   const firstBtnRef = useRef(null);
   const returnFocusRef = useRef(null);
@@ -52,6 +54,8 @@ export default function PostResultPrompt() {
     function onResult(e) {
       const name = e && e.detail && e.detail.tool;
       if (!name) return;
+      const nextKind = e.detail.kind === "calc" ? "calc" : "file";
+      const delay = typeof e.detail.delay === "number" ? e.detail.delay : SHOW_DELAY_MS;
       if (storageGet("sessionStorage", "ptool:prompt:shown") === "1") return;
       if (snoozed() || wasRated(name)) return;
       clearTimeout(timerRef.current);
@@ -60,10 +64,10 @@ export default function PostResultPrompt() {
         if (wasRated(name)) return;
         storageSet("sessionStorage", "ptool:prompt:shown", "1");
         returnFocusRef.current = document.activeElement;
-        setStep("ask"); setAnswer(null); setComment("");
+        setStep("ask"); setAnswer(null); setComment(""); setKind(nextKind);
         setTool(name);
         ga("post_result_prompt_shown", { tool_name: name });
-      }, SHOW_DELAY_MS);
+      }, delay);
     }
     window.addEventListener(RESULT_EVENT, onResult);
     return () => { window.removeEventListener(RESULT_EVENT, onResult); clearTimeout(timerRef.current); };
@@ -130,7 +134,9 @@ export default function PostResultPrompt() {
 
       {step === "ask" && (
         <>
-          <p id="prp-title" className="prp-title">Did this file match your payroll system?</p>
+          <p id="prp-title" className="prp-title">
+            {kind === "calc" ? "Did this result match your payroll calculation?" : "Did this file match your payroll system?"}
+          </p>
           <div className="prp-row">
             <button ref={firstBtnRef} type="button" className="prp-btn" onClick={() => choose("yes")}>Yes</button>
             <button type="button" className="prp-btn" onClick={() => choose("no")}>No</button>

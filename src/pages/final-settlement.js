@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FeedbackWidget from "../components/FeedbackWidget";
+import { signalResult } from "../lib/resultPrompt";
 import Lenis from "lenis";
 
 const MONEY_CAP = 5e7; // Rs. 5,00,00,000
@@ -267,6 +268,7 @@ export default function FinalSettlement() {
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "tool_calculate_click", { tool_name: "Final Settlement" });
     }
+    signalResult("Final Settlement", "calc");
     setOpenSections({ employment: false, salary: false, notice: false, other: false });
   };
 

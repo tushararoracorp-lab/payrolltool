@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEffect, useRef, useState } from "react";
 import FeedbackWidget from "../components/FeedbackWidget";
+import { signalResult } from "../lib/resultPrompt";
 
 const INFO_CARDS = [
   {
@@ -631,6 +632,19 @@ export default function SalaryProration() {
   useEffect(() => {
     if (hostRef.current) hostRef.current.setAttribute("data-theme", theme);
   }, [theme]);
+
+  // The calculator runs inside a shadow root (public/salary-proration-tool.js), so its buttons are
+  // not visible to ordinary listeners. composedPath() reaches inside: a click on Calculate signals
+  // a calculation, and a click on Download PDF in the payslip dialog signals a file.
+  useEffect(() => {
+    function onClick(e) {
+      const path = typeof e.composedPath === "function" ? e.composedPath() : [];
+      if (path.some((n) => n && n.id === "dlConfirm")) signalResult("Salary Proration");
+      else if (path.some((n) => n && n.id === "calcBtn")) signalResult("Salary Proration", "calc");
+    }
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

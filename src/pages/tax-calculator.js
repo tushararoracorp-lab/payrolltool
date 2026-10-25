@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FeedbackWidget from "../components/FeedbackWidget";
+import { signalResult } from "../lib/resultPrompt";
 import Lenis from "lenis";
 
 /* ================= constants ================= */
@@ -345,6 +346,7 @@ export default function TaxCalculator() {
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "tool_calculate_click", { tool_name: "Tax Calculator" });
     }
+    signalResult("Tax Calculator", "calc");
     setOpenCards({
       income: false, slabs: false, sec123: false, d80: false,
       hra: false, other: false, pt: false, npser: false,

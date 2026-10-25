@@ -5,6 +5,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
 import FeedbackWidget from "../components/FeedbackWidget";
+import { signalResult } from "../lib/resultPrompt";
 
 // ─── DATE UTILITIES ───────────────────────────────────────────────────────────
 
@@ -753,6 +754,7 @@ export default function Home() {
     if (!ws) return;
     XLSX.utils.book_append_sheet(wb2, ws, "Export");
     XLSX.writeFile(wb2, "LOP_Export.xlsx");
+    signalResult("LOP Splitter");
   }
 
   function downloadObs() {
@@ -761,6 +763,7 @@ export default function Home() {
     const ws  = result.wb.Sheets["Observations"];
     XLSX.utils.book_append_sheet(wb2, ws, "Observations");
     XLSX.writeFile(wb2, "LOP_Observations.xlsx");
+    signalResult("LOP Splitter");
   }
 
   const handleDownloadTemplate = (e) => {

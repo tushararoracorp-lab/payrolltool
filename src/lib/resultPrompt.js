@@ -5,11 +5,15 @@
 export const RESULT_EVENT = 'ptool:result';
 export const RATED_EVENT = 'ptool:rated';
 
-// Call right after a successful download or copy. The prompt decides whether to show.
-export function signalResult(tool) {
+// Call right after a result is delivered. The prompt decides whether to show.
+//   kind 'file' (default): after a download - asks "Did this file match your payroll system?"
+//   kind 'calc': after a calculation - asks about the result, and waits longer (10 s by default)
+//   so the user can read it first. A new signal (e.g. a recalculation) restarts the wait.
+export function signalResult(tool, kind = 'file', delayMs) {
   if (typeof window === 'undefined') return;
+  const delay = typeof delayMs === 'number' ? delayMs : (kind === 'calc' ? 10000 : 1500);
   try {
-    window.dispatchEvent(new CustomEvent(RESULT_EVENT, { detail: { tool } }));
+    window.dispatchEvent(new CustomEvent(RESULT_EVENT, { detail: { tool, kind, delay } }));
   } catch (e) { /* very old browsers: no prompt, nothing else affected */ }
 }
 
