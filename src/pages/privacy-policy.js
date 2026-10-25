@@ -60,8 +60,8 @@ export default function PrivacyPolicy() {
 
             <h3>Feedback you choose to send</h3>
             <p>
-              If you use the feedback form on the site, the text you submit is stored in
-              a private Google Sheet so we can read and act on it. If you voluntarily
+              If you use the feedback form on the site, the text you submit is stored
+              privately so we can read and act on it. If you voluntarily
               include your name or email in that message, we retain that too, only to
               follow up if needed. Nothing here is public, sold, or shared with
               advertisers.
@@ -113,20 +113,23 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2>Third-party services we use</h2>
-            <ul>
-              <li><strong>Google Analytics</strong> - site usage measurement</li>
-              <li><strong>Google AdSense</strong> - displays advertising, may set advertising cookies as described above</li>
-              <li><strong>Google Fonts</strong> - typefaces on this site are served directly by Google</li>
-              <li><strong>Vercel</strong> - hosting for payrolltool.in</li>
-              <li><strong>Resend</strong> - delivery of transactional emails (such as support replies)</li>
-              <li><strong>Google Sheets</strong> - storage for feedback form submissions</li>
-            </ul>
+            <h2>Service providers</h2>
             <p>
-              Each of these providers has its own privacy policy governing how they
-              handle data on their end. We only send them the minimum needed for the
-              purpose described above.
+              We rely on a small number of established providers for hosting, site
+              analytics, advertising, fonts and email delivery. Each has its own privacy
+              policy, and we share only the minimum each one needs for its purpose.
             </p>
+            <details className="providers">
+              <summary>See the list of providers</summary>
+              <ul>
+                <li><strong>Google Analytics</strong> - site usage measurement</li>
+                <li><strong>Google AdSense</strong> - advertising, which may set cookies as described above</li>
+                <li><strong>Google Fonts</strong> - typefaces used on this site</li>
+                <li><strong>Vercel</strong> - website hosting</li>
+                <li><strong>Resend</strong> - email delivery</li>
+                <li><strong>Google Sheets</strong> - storage for feedback submissions</li>
+              </ul>
+            </details>
           </section>
 
           <section>
@@ -281,6 +284,21 @@ export default function PrivacyPolicy() {
         a {
           color: var(--brand-600);
           font-weight: 600;
+        }
+        .providers {
+          margin-top: 4px;
+        }
+        .providers summary {
+          cursor: pointer;
+          font-size: 14px;
+          color: var(--ink-soft);
+          list-style-position: inside;
+        }
+        .providers summary:hover {
+          color: var(--brand-600);
+        }
+        .providers ul {
+          margin-top: 10px;
         }
         .back {
           margin-top: 8px;
