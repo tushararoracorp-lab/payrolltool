@@ -108,7 +108,7 @@ const Icon = {
 
 const toolCards = [
   { icon: Icon.pfEcr, name: "PF ECR Creator", href: "/pf-ecr-creator", desc: "Prepares your ECR file for upload to the EPFO Unified Portal. Upload your spreadsheet, verify, download." },
-  { icon: Icon.esicMc, name: "ESIC MC Creator", href: "/esic-mc-creator", desc: "Builds your ESIC monthly contribution file for the ESIC portal. Upload your sheet, fix any flagged rows, and download a portal-ready .xls." },
+  { icon: Icon.esicMc, name: "ESI File Creator", href: "/esic-mc-creator", desc: "Builds your ESIC monthly contribution file for the ESIC portal. Upload your sheet, fix any flagged rows, and download a portal-ready .xls." },
   { icon: Icon.tax, name: "Tax Regime Calculator", href: "/tax-calculator", desc: "Compare Old vs New tax regimes for FY 2026\u201127. See which saves you more with deductions, surcharge, and cess." },
   { icon: Icon.salaryProration, name: "Salary Proration", href: "/salary-proration", desc: "Calculate prorated salary for mid-month joining or exit. Handles partial months, joining/resignation dates, and statutory deductions." },
   { icon: Icon.lopSplitter, name: "LOP Splitter", href: "/lop-splitter", desc: "Determine Loss of Pay for partial month absences. Handles unpaid leave, disciplinary action, and month-boundary calculations." },
@@ -539,7 +539,7 @@ export default function Home() {
                 },
                 {
                   "@type": "SoftwareApplication",
-                  name: "ESIC MC Creator",
+                  name: "ESI File Creator",
                   url: "https://www.payrolltool.in/esic-mc-creator",
                   applicationCategory: "BusinessApplication",
                   operatingSystem: "Any (browser-based)",
@@ -653,7 +653,7 @@ export default function Home() {
                           { name: "PF ECR Creator", icon: Icon.download },
                           { name: "Final Settlement", icon: Icon.check },
                           { name: "Tax Calculator", icon: Icon.bolt },
-                          { name: "ESIC MC Creator", icon: Icon.esicMc },
+                          { name: "ESI File Creator", icon: Icon.esicMc },
                         ].map((tool, i) => (
                           <div className={`hero-tool-card${heroToolsIn[i] ? " in" : ""}`} key={tool.name}>
                             <div className="hero-tool-icon">{tool.icon}</div>

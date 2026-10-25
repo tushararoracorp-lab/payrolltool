@@ -737,7 +737,7 @@ export default function EsicMcCreator() {
         description={PAGE_SEO.description}
         path="/esic-mc-creator"
         jsonLd={[
-          webApplicationSchema({ name: "ESIC MC File Generator", path: "/esic-mc-creator", description: PAGE_SEO.description, features: PAGE_SEO.features }),
+          webApplicationSchema({ name: "ESI File Creator", path: "/esic-mc-creator", description: PAGE_SEO.description, features: PAGE_SEO.features }),
           faqSchema(ALL_FAQ),
           breadcrumbSchema([{ name: "Home", path: "/" }, { name: "ESI File Creator", path: "/esic-mc-creator" }]),
         ]}

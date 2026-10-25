@@ -78,7 +78,7 @@ export default function Footer() {
               <div className="footer-col">
                 <h5>Tools</h5>
                 <Link prefetch={false} href="/pf-ecr-creator">PF ECR Creator</Link>
-                <Link prefetch={false} href="/esic-mc-creator">ESIC MC Creator</Link>
+                <Link prefetch={false} href="/esic-mc-creator">ESI File Creator</Link>
                 <Link prefetch={false} href="/tax-calculator">Tax Calculator</Link>
                 <Link prefetch={false} href="/salary-proration">Salary Proration</Link>
                 <Link prefetch={false} href="/lop-splitter">LOP Splitter</Link>

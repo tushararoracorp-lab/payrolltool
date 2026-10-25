@@ -70,7 +70,7 @@ const ICONS = {
 
 const toolLinks = [
   { href: "/pf-ecr-creator", label: "PF ECR Creator", icon: ICONS.pfEcr },
-  { href: "/esic-mc-creator", label: "ESIC MC Creator", icon: ICONS.esicMc },
+  { href: "/esic-mc-creator", label: "ESI File Creator", icon: ICONS.esicMc },
   { href: "/tax-calculator", label: "Tax Calculator", icon: ICONS.tax },
 ];
 const toolLinksCol2 = [
