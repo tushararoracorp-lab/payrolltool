@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import RequestForm from "../components/RequestForm";
+import SEO_PAGES from "../config/seoPages";
+
+const HOME_SEO = SEO_PAGES["/"];
 
 const Icon = {
   globe: (
@@ -431,8 +434,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>PayrollTool.in – Payroll Calculators for HR Teams in India</title>
-        <meta name="description" content="PF ECR, ESIC MC, income tax, salary proration, LOP and final settlement tools for Indian HR teams - browser-based, no sign-up required." />
+        <title>{HOME_SEO.title}</title>
+        <meta name="description" content={HOME_SEO.description} />
         <meta name="keywords" content="PF ECR generator, payroll calculator India, salary proration calculator, LOP calculator, income tax calculator India, final settlement calculator, EPFO ECR format, ESIC MC file generator, ESIC contribution file, payroll compliance tools" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.payrolltool.in/" />
@@ -441,8 +444,8 @@ export default function Home() {
         {/* Share image: /public/og-homepage.jpg (1200x630) */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="PayrollTool.in" />
-        <meta property="og:title" content="PayrollTool.in – Payroll Calculators for HR Teams in India" />
-        <meta property="og:description" content="PF ECR, ESIC MC, income tax, salary proration, LOP and final settlement tools for Indian HR teams - browser-based, no sign-up required." />
+        <meta property="og:title" content={HOME_SEO.title} />
+        <meta property="og:description" content={HOME_SEO.description} />
         <meta property="og:url" content="https://www.payrolltool.in/" />
         <meta property="og:image" content="https://www.payrolltool.in/og-homepage.jpg" />
         <meta property="og:image:width" content="1200" />
@@ -450,8 +453,8 @@ export default function Home() {
         <meta property="og:locale" content="en_IN" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="PayrollTool.in – Payroll Calculators for HR Teams in India" />
-        <meta name="twitter:description" content="PF ECR, ESIC MC, income tax, salary proration, LOP and final settlement tools for Indian HR teams - browser-based, no sign-up required." />
+        <meta name="twitter:title" content={HOME_SEO.title} />
+        <meta name="twitter:description" content={HOME_SEO.description} />
         <meta name="twitter:image" content="https://www.payrolltool.in/og-homepage.jpg" />
 
         <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='%237C3AED'/><path d='M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z' fill='white'/></svg>" />

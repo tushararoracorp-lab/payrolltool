@@ -1,0 +1,12 @@
+/* Neutral styles that inherit your theme. Import once in _app.js: import '../styles/seo-blocks.css'; */
+.answer-box { border-left: 4px solid #7c3aed; background: rgba(124, 58, 237, 0.07); padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+.answer-box .answer-text { margin: 0 0 6px; font-size: 1.05em; line-height: 1.5; }
+.answer-box .answer-meta { margin: 0; font-size: 0.85em; opacity: 0.75; }
+.faq-block { margin: 32px 0; }
+.faq-block .faq-item { margin: 0 0 16px; }
+.faq-block h3 { margin: 0 0 4px; font-size: 1.05em; }
+.faq-block p { margin: 0; line-height: 1.55; }
+.related-links { margin: 32px 0; padding: 16px; border: 1px solid rgba(127, 127, 127, 0.3); border-radius: 8px; }
+.related-links h2 { margin: 0 0 8px; font-size: 1.1em; }
+.related-links ul { margin: 0; padding-left: 18px; }
+.related-links li { margin: 4px 0; }

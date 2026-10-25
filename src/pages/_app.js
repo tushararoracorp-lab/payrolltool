@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/seo-blocks.css";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";

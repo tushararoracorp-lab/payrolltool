@@ -5,6 +5,14 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
 import FeedbackWidget from "../components/FeedbackWidget";
+import SeoHead from "../components/SeoHead";
+import AnswerBox from "../components/AnswerBox";
+import RelatedLinks from "../components/RelatedLinks";
+import { webApplicationSchema, faqSchema, breadcrumbSchema } from "../lib/seoSchemas";
+import SEO_PAGES from "../config/seoPages";
+import RELATED from "../config/related";
+
+const PAGE_SEO = SEO_PAGES["/esic-mc-creator"];
 
 /* ══════════════════════════════════════════════════════════════════════════
    ESIC MC Creator (pages/esic-mc-creator.js)
@@ -559,6 +567,13 @@ const MC_FAQ = [
   },
 ];
 
+// One FAQ list for the page: the tool FAQs plus the "ESI file" questions from the SEO config.
+// The visible FAQ and the FAQPage schema both come from this array, so they always match.
+const ALL_FAQ = [
+  ...MC_FAQ,
+  ...(PAGE_SEO.faqs || []).filter((f) => !MC_FAQ.some((m) => m.q === f.q)),
+];
+
 export default function EsicMcCreator() {
   // Mirror <html data-theme> onto this page's own wrapper - same pattern
   // as pf-ecr-creator.js. This file is built entirely with Tailwind
@@ -717,55 +732,18 @@ export default function EsicMcCreator() {
 
   return (
     <>
+      <SeoHead
+        title={PAGE_SEO.title}
+        description={PAGE_SEO.description}
+        path="/esic-mc-creator"
+        jsonLd={[
+          webApplicationSchema({ name: "ESIC MC File Generator", path: "/esic-mc-creator", description: PAGE_SEO.description, features: PAGE_SEO.features }),
+          faqSchema(ALL_FAQ),
+          breadcrumbSchema([{ name: "Home", path: "/" }, { name: "ESI File Creator", path: "/esic-mc-creator" }]),
+        ]}
+      />
       <Head>
-        <title>ESIC MC File Generator - PayrollTool.in</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Generate ESIC-compliant Monthly Contribution files for upload to the ESIC portal. Employee status dropdown, auto-validation, contribution summary at 0.75% and 3.25%. Free, browser-based." />
-        <meta name="robots" content="index, follow" />
-        <meta name="author" content="PayrollTool.in" />
-        <link rel="canonical" href="https://www.payrolltool.in/esic-mc-creator" />
-
-        <meta property="og:title" content="ESIC MC File Generator - PayrollTool.in" />
-        <meta property="og:description" content="Generate ESIC-compliant Monthly Contribution files for upload to the ESIC portal. Employee status dropdown, auto-validation, contribution summary at 0.75% and 3.25%. Free, browser-based." />
-        <meta property="og:url" content="https://www.payrolltool.in/esic-mc-creator" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="PayrollTool.in" />
-        <meta property="og:locale" content="en_IN" />
-        <meta property="og:image" content="https://www.payrolltool.in/icon.png" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="ESIC MC File Generator - PayrollTool.in" />
-        <meta name="twitter:description" content="Generate ESIC-compliant Monthly Contribution files for upload to the ESIC portal. Employee status dropdown, auto-validation, contribution summary at 0.75% and 3.25%. Free, browser-based." />
-        <meta name="twitter:image" content="https://www.payrolltool.in/icon.png" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              name: "ESIC MC Creator",
-              url: "https://www.payrolltool.in/esic-mc-creator",
-              applicationCategory: "BusinessApplication",
-              operatingSystem: "Any (browser-based)",
-              description: "Prepares ESIC Monthly Contribution files for upload to the ESIC portal from an uploaded Excel spreadsheet.",
-              offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
-            }),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: MC_FAQ.map((f) => ({
-                "@type": "Question",
-                name: f.q,
-                acceptedAnswer: { "@type": "Answer", text: f.a },
-              })),
-            }),
-          }}
-        />
+        <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <div
@@ -779,10 +757,10 @@ export default function EsicMcCreator() {
         <div className={`pt-6 pb-4 px-4 mx-auto w-full scroll-mt-24 transition-all duration-300 ${hasResult ? "max-w-4xl" : "max-w-lg"}`}>
           <div className="flex flex-col items-center text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 whitespace-nowrap">
-              ESIC MC <span className="text-violet-500">File Generator</span>
+              ESI File <span className="text-violet-500">Creator</span>
             </h1>
             <p className="mt-3 text-sm text-gray-500 max-w-sm mx-auto leading-relaxed">
-              Upload your ESI sheet and instantly generate an ESIC-compliant Monthly Contribution file - ready for portal upload.
+              Upload your ESI sheet and generate the ESIC MC (Monthly Contribution) file - ready for portal upload.
             </p>
             <div className="w-full flex justify-end mt-3 pr-1">
               <div className="flex items-center gap-1">
@@ -1037,7 +1015,13 @@ export default function EsicMcCreator() {
             ))}
           </div>
 
-          <div className="max-w-5xl mx-auto mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="w-full max-w-3xl mx-auto mt-10">
+            <AnswerBox reviewed={PAGE_SEO.reviewed} source={{ href: "https://www.esic.gov.in/", label: "ESIC portal" }}>
+              {PAGE_SEO.answer}
+            </AnswerBox>
+          </div>
+
+          <div className="max-w-5xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
             {MC_INFO_CARDS.map((c) => (
               <div key={c.title} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
                 <div className="text-lg mb-1.5">{c.icon}</div>
@@ -1084,12 +1068,16 @@ export default function EsicMcCreator() {
 
           <div className="max-w-3xl mx-auto mt-6 mb-10 bg-white border border-gray-100 rounded-2xl p-6">
             <h4 className="text-sm font-bold text-gray-900 mb-4">Frequently asked questions</h4>
-            {MC_FAQ.map((f, i) => (
+            {ALL_FAQ.map((f, i) => (
               <div key={f.q} className={`py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}>
                 <h5 className="text-sm font-semibold text-violet-700 mb-1.5">{f.q}</h5>
                 <p className="text-sm leading-relaxed text-gray-500">{f.a}</p>
               </div>
             ))}
+          </div>
+
+          <div className="w-full max-w-3xl mx-auto">
+            <RelatedLinks links={RELATED.esic} />
           </div>
 
         </main>

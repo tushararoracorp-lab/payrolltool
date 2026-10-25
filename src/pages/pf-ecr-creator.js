@@ -5,6 +5,8 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
 import FeedbackWidget from "../components/FeedbackWidget";
+import RelatedLinks from "../components/RelatedLinks";
+import RELATED from "../config/related";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
 const C = {
@@ -1205,6 +1207,10 @@ export default function PfEcrCreator() {
                 <p className="text-sm leading-relaxed text-gray-500">{f.a}</p>
               </div>
             ))}
+          </div>
+
+          <div className="w-full max-w-3xl mx-auto">
+            <RelatedLinks links={RELATED["pf-ecr"]} />
           </div>
 
         </main>
