@@ -5,22 +5,33 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { CSS } from "../lib/compliance-calendar/styles";
 import { APP_HTML } from "../lib/compliance-calendar/markup";
-import { buildFor, userBasis, STATES, FYM, MONTHS, DOW, NO_PT, NO_LWF, parse, FY_LABEL } from "../lib/compliance-calendar/data";
+import { NO_PT, FY_LABEL } from "../lib/compliance-calendar/data";
 
 const PAGE_URL = "https://www.payrolltool.in/compliance-calendar";
 const TITLE = "Payroll Compliance Calendar FY 2026-27 - EPF, ESI, TDS, PT and LWF Due Dates";
 const DESCRIPTION =
   "Every EPF, ESI, TDS, professional tax and LWF due date for FY 2026-27 in one free calendar. Pick your states, set reminders and download a printable wall calendar.";
-const UPDATED = "29 October 2026";
 
 const FAQ = [
   {
     q: "What are the EPF and ESI due dates?",
     a: "The EPF contribution and ECR, and the ESI contribution, are due by the 15th of the following month. October wages are due by 15 November.",
+    more: (
+      <>
+        Prepare the files with the{" "}
+        <Link prefetch={false} href="/pf-ecr-creator">PF ECR Creator</Link> and the{" "}
+        <Link prefetch={false} href="/esic-mc-creator">ESI File Creator</Link>.
+      </>
+    ),
   },
   {
     q: "When is TDS on salary deposited?",
     a: "By the 7th of the following month. Tax deducted in March is deposited by 30 April (Income-tax Rules, 2026, rule 218).",
+    more: (
+      <>
+        Work out the tax with the <Link prefetch={false} href="/tax-calculator">Tax Calculator</Link>.
+      </>
+    ),
   },
   {
     q: "What are the salary TDS return due dates for FY 2026-27?",
@@ -33,6 +44,20 @@ const FAQ = [
   {
     q: "Which states do not levy professional tax?",
     a: `${NO_PT.join(", ")}. Odisha abolished professional tax from 1 April 2026, and Punjab levies the State Development Tax instead.`,
+    more: (
+      <>
+        See rates and changes by state in <Link prefetch={false} href="/updates/professional-tax">Professional Tax updates</Link>.
+      </>
+    ),
+  },
+  {
+    q: "When is Labour Welfare Fund paid?",
+    a: "Most states collect it twice a year, around July and January. Some collect it once a year: Haryana and Tamil Nadu by 31 December, and Karnataka by 15 January. Pick your state above to see its exact dates.",
+    more: (
+      <>
+        See rates and changes by state in <Link prefetch={false} href="/updates/labour-welfare-fund">Labour Welfare Fund updates</Link>.
+      </>
+    ),
   },
   {
     q: "How do the reminders work?",
@@ -44,42 +69,7 @@ const FAQ = [
   },
 ];
 
-export async function getStaticProps() {
-  const fmt = (k) => {
-    const d = parse(k);
-    return { day: d.getDate(), dow: DOW[d.getDay()] };
-  };
-  const central = ["epf", "esi", "tds"].flatMap((t) => buildFor(t, "IN"));
-  const months = FYM.map(({ y, m }) => ({
-    label: `${MONTHS[m]} ${y}`,
-    items: central
-      .filter((e) => e.date.slice(0, 7) === `${y}-${String(m + 1).padStart(2, "0")}`)
-      .sort((a, b) => a.date.localeCompare(b.date))
-      .map((e) => ({ date: e.date, ...fmt(e.date), title: e.title })),
-  }));
-  const states = STATES.map((s) => {
-    const sections = [
-      ["Professional Tax", buildFor("pt", s)],
-      ["Labour Welfare Fund", buildFor("lwf", s)],
-    ]
-      .filter(([, ev]) => ev.length)
-      .map(([label, ev]) => ({
-        label,
-        basis: userBasis(ev[0]) || "",
-        items: ev
-          .slice()
-          .sort((a, b) => a.date.localeCompare(b.date))
-          .map((e) => {
-            const d = parse(e.date);
-            return { date: e.date, text: `${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)} ${d.getFullYear()}`, title: e.title };
-          }),
-      }));
-    return { state: s, sections };
-  }).filter((x) => x.sections.length);
-  return { props: { months, states, noLwf: NO_LWF } };
-}
-
-export default function ComplianceCalendarPage({ months, states, noLwf }) {
+export default function ComplianceCalendarPage() {
   const hostRef = useRef(null);
 
   useEffect(() => {
@@ -142,80 +132,17 @@ export default function ComplianceCalendarPage({ months, states, noLwf }) {
 
           <div ref={hostRef} dangerouslySetInnerHTML={{ __html: APP_HTML }} />
 
-          <p className="disc">
-            Last updated {UPDATED}. Due dates are general rules and can change by notification, extension or holiday. This is information, not legal or tax advice.
-          </p>
-
           <section className="seo">
-            <h2>EPF, ESI and TDS due dates {FY_LABEL}</h2>
-            <div className="seo-months">
-              {months.map((mo) => (
-                <div key={mo.label} className="seo-m">
-                  <h3>{mo.label}</h3>
-                  <ul>
-                    {mo.items.map((it) => (
-                      <li key={it.date + it.title}>
-                        <b>
-                          {it.day} {it.dow}
-                        </b>{" "}
-                        {it.title}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            <h2>Professional Tax and LWF due dates by state</h2>
-            <p className="seo-note">
-              Each state sets its own dates. Open a state to see every due date for {FY_LABEL} and the law it comes from. For slabs and rates, read the{" "}
-              <Link prefetch={false} href="/blog/professional-tax-india-state-wise-guide">
-                state-wise professional tax guide
-              </Link>
-              .
-            </p>
-            {states.map((st) => (
-              <details key={st.state} className="seo-st">
-                <summary>
-                  {st.state}: {st.sections.map((s) => s.label).join(" and ")}
-                </summary>
-                {st.sections.map((sec) => (
-                  <div key={sec.label} className="seo-sec">
-                    <h3>
-                      {st.state} {sec.label}
-                    </h3>
-                    {sec.basis && <p className="seo-basis">Basis: {sec.basis}</p>}
-                    <ul>
-                      {sec.items.map((it) => (
-                        <li key={it.date + it.title}>
-                          <b>{it.text}</b> {it.title}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </details>
-            ))}
-            <p className="seo-note">
-              No professional tax in {NO_PT.join(", ")}. No Labour Welfare Fund in {noLwf.join(", ")}.
-            </p>
-
             <h2>Frequently asked questions</h2>
             <div className="seo-faq">
-              {FAQ.map(({ q, a }) => (
+              {FAQ.map(({ q, a, more }) => (
                 <details key={q}>
                   <summary>{q}</summary>
                   <p>{a}</p>
+                  {more && <p className="faq-more">{more}</p>}
                 </details>
               ))}
             </div>
-            <p className="seo-note">
-              Preparing the monthly PF return? Read{" "}
-              <Link prefetch={false} href="/blog/pf-ecr-file-format">
-                the ECR file format guide
-              </Link>
-              .
-            </p>
           </section>
         </main>
       </div>
@@ -225,17 +152,12 @@ export default function ComplianceCalendarPage({ months, states, noLwf }) {
       <style jsx>{`
         .seo { margin: 40px 0 24px; }
         .seo h2 { font-size: 22px; margin: 32px 0 12px; }
-        .seo h3 { font-size: 15px; margin: 0 0 8px; }
-        .seo-months { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-        .seo-m, .seo-st, .seo-faq details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
-        .seo ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.6; }
-        .seo-st { margin: 8px 0; }
-        .seo-st summary, .seo-faq summary { cursor: pointer; font-weight: 600; }
-        .seo-sec { margin-top: 12px; }
-        .seo-basis { font-size: 13px; color: var(--ink-soft); margin: 0 0 6px; }
+        .seo-faq details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+        .seo-faq summary { cursor: pointer; font-weight: 600; }
         .seo-note { font-size: 14px; color: var(--ink-soft); margin: 12px 0; }
         .seo-faq { display: grid; gap: 8px; }
         .seo-faq p { margin: 8px 0 0; font-size: 14px; }
+        .seo-faq .faq-more { margin-top: 6px; color: var(--ink-soft); }
       `}</style>
     </>
   );
