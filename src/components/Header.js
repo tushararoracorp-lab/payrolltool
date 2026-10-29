@@ -75,6 +75,34 @@ const toolSplit = Math.ceil(allToolLinks.length / 2);
 const toolLinks = allToolLinks.slice(0, toolSplit);
 const toolLinksCol2 = allToolLinks.slice(toolSplit);
 
+// Compliance calendar shortcut. The icon shows today's date; a dot appears when
+// one of the dates every employer has (TDS deposit, PF and ESI, quarterly TDS
+// return) is within 3 days. Ship this together with the /compliance-calendar page.
+const CAL_HREF = "/compliance-calendar";
+const MON3 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const DOW3 = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+export function nextCentralDue(now) {
+  const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const items = [];
+  for (let k = 0; k < 2; k++) {
+    const y = t0.getFullYear();
+    const m = t0.getMonth() + k;
+    const mm = ((m % 12) + 12) % 12;
+    // TDS for March is deposited by 30 April; every other month by the 7th
+    items.push({ date: new Date(y, m, mm === 3 ? 30 : 7), label: "TDS deposit" });
+    items.push({ date: new Date(y, m, 15), label: "PF and ESI" });
+    // Quarterly salary TDS returns: 31 Jan, 31 May, 31 Jul, 31 Oct
+    if ([0, 4, 6, 9].includes(mm)) items.push({ date: new Date(y, m, 31), label: "TDS return" });
+  }
+  const upcoming = items.filter((i) => i.date >= t0).sort((a, b) => a.date - b.date);
+  if (!upcoming.length) return null;
+  const first = upcoming[0];
+  const sameDay = upcoming.filter((i) => i.date.getTime() === first.date.getTime()).map((i) => i.label);
+  const days = Math.round((first.date - t0) / 86400000);
+  return { date: first.date, label: sameDay.join(" and "), days };
+}
+
 // Blog links are fetched dynamically from /public/blog-meta.json
 // This allows infinite blog posts without manual header updates
 
@@ -83,6 +111,7 @@ export default function Header() {
   const [theme, setTheme] = useState("light");
   const [openMenu, setOpenMenu] = useState(null); // null | "tools" | "blog"
   const [blogCols, setBlogCols] = useState([[], [], []]); // 3 columns of blog links
+  const [cal, setCal] = useState(null); // filled in the browser, so the date is the visitor's own
   const toolsRef = useRef(null);
   const blogRef = useRef(null);
 
@@ -131,6 +160,15 @@ export default function Header() {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const now = new Date();
+    const next = nextCentralDue(now);
+    const tip = next
+      ? `Compliance calendar · next: ${next.label}, ${DOW3[next.date.getDay()]} ${next.date.getDate()} ${MON3[next.date.getMonth()]}`
+      : "Compliance calendar";
+    setCal({ day: now.getDate(), tip, soon: !!next && next.days <= 3 });
+  }, []);
 
   // Touch devices: tap toggles the mega menu instead of relying on :hover.
   // Click outside closes it.
@@ -232,6 +270,23 @@ export default function Header() {
           </div>
 
           <div className="nav-right">
+            <Link
+              prefetch={false}
+              href={CAL_HREF}
+              className={`cal-btn${router.pathname.startsWith(CAL_HREF) ? " active" : ""}`}
+              aria-label={cal ? cal.tip : "Compliance calendar"}
+              data-tip={cal ? cal.tip : "Compliance calendar"}
+            >
+              <svg viewBox="0 0 34 36" fill="none" aria-hidden="true">
+                <rect x="2" y="5" width="30" height="29" rx="6" stroke="currentColor" strokeWidth="2.2" />
+                <path d="M2 13h30" stroke="currentColor" strokeWidth="2.2" />
+                <path d="M10 2v6M24 2v6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                <text x="17" y="29" textAnchor="middle" fontSize="13" fontWeight="700" fill="currentColor" style={{ fontFamily: "Sora, sans-serif" }}>
+                  {cal ? cal.day : ""}
+                </text>
+              </svg>
+              {cal && cal.soon && <span className="cal-dot" aria-hidden="true" />}
+            </Link>
             <button
               id="themeToggle"
               className="theme-toggle"
@@ -374,6 +429,30 @@ export default function Header() {
         html[data-theme="dark"] .icon-sun { opacity: 0; transform: scale(0.5) rotate(40deg); }
         html[data-theme="dark"] .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
 
+        .cal-btn {
+          position: relative; width: 40px; height: 40px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          color: var(--brand-600); flex-shrink: 0;
+        }
+        .cal-btn:hover, .cal-btn.active { background: var(--brand-50); }
+        .cal-btn:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+        .cal-btn svg { width: 26px; height: 28px; }
+        .cal-dot {
+          position: absolute; top: 4px; right: 5px; width: 10px; height: 10px; border-radius: 50%;
+          background: var(--amber); border: 2px solid var(--paper);
+        }
+        @media (hover: hover) {
+          .cal-btn::after {
+            content: attr(data-tip); position: absolute; top: calc(100% + 8px); right: 0;
+            white-space: nowrap; background: var(--card); border: 1px solid var(--line);
+            border-radius: var(--radius-sm); box-shadow: var(--shadow-card);
+            padding: 7px 10px; font-size: 12.5px; font-weight: 500; color: var(--ink);
+            opacity: 0; visibility: hidden; transition: opacity .15s ease, visibility .15s;
+            pointer-events: none; z-index: 70;
+          }
+          .cal-btn:hover::after, .cal-btn:focus-visible::after { opacity: 1; visibility: visible; }
+        }
+
         .mega {
           position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
           background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
@@ -423,6 +502,18 @@ export default function Header() {
         .nav-item:hover .ck-steam-path { animation: ckSteam 1.6s ease-out infinite; }
         .nav-item:hover .ck-steam-path.s2 { animation-delay: .5s; }
 
+        @media (max-width: 640px) {
+          /* phones: logo and icons on the first row, menu links on the second */
+          .nav { flex-wrap: wrap; row-gap: 6px; padding: 10px 16px; }
+          .nav-center { order: 3; width: 100%; justify-content: space-between; }
+          .nav-item { position: static; }
+          .mega, .cooking-panel {
+            left: 12px; right: 12px; top: 100%; transform: none; min-width: 0;
+            flex-direction: column; gap: 14px; max-height: 70vh; overflow-y: auto;
+          }
+          .mega-col { min-width: 0; }
+          .mega-col h5:empty, .mega-col h5:only-child { display: none; }
+        }
         @media (max-width: 768px) {
           .nav-center { gap: 0; }
           .nav-link { padding: 8px 10px; font-size: 13.5px; }
