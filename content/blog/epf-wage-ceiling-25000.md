@@ -1,11 +1,11 @@
 ---
 title: "EPF Wage Ceiling Hike 2026: Rs 15,000 to Rs 25,000 - What Changed, and How to File September's ECR"
-description: "EPFO's EPF wage ceiling rose to Rs 25,000 on 17 September 2026 (S.O. 5109(E)). What it changes for PF, EPS and EDLI, plus exactly how to file the split September ECR before 15 October."
+description: "EPFO's EPF wage ceiling rose to Rs 25,000 on 17 September 2026 (S.O. 5109(E)). What it changes for PF, EPS and EDLI, plus exactly how to file the split September ECR by the extended 31 October deadline."
 date: "2026-09-26"
 slug: "epf-wage-ceiling-25000"
 ---
 
-**Quick answer:** The statutory EPF wage ceiling is now **Rs 25,000 per month**, up from Rs 15,000, effective **17 September 2026** (Notification S.O. 5109(E)). Any employee drawing wages up to Rs 25,000 is now within mandatory EPF, EPS and EDLI coverage. If you run payroll, the immediate task is the September 2026 ECR - it has to be filed as a single return split across the old and new ceiling, due **15 October 2026**.
+**Quick answer:** The statutory EPF wage ceiling is now **Rs 25,000 per month**, up from Rs 15,000, effective **17 September 2026** (Notification S.O. 5109(E)). Any employee drawing wages up to Rs 25,000 is now within mandatory EPF, EPS and EDLI coverage. If you run payroll, the immediate task is the September 2026 ECR - it has to be filed as a single return split across the old and new ceiling, due **31 October 2026**. EPFO extended the deadline from 15 October for the September 2026 wage month only, by a circular dated 13 October 2026.
 
 ## At a glance: what actually changed
 
@@ -21,7 +21,7 @@ slug: "epf-wage-ceiling-25000"
 
 ## Why now
 
-This wasn't a routine revision. The Supreme Court, in an order dated **5 January 2026** (Bench of Justices J.K. Maheshwari and Atul S. Chandurkar), directed the Centre to decide on revising the ceiling - unchanged for over a decade - within four months. The government's first response, a notification dated 29 May 2026 (S.O. 2702(E)), actually left the ceiling untouched at Rs 15,000. It was only after the Expenditure Finance Committee's recommendation on 16 June 2026 and Union Cabinet approval on 16 September 2026 that the increase to Rs 25,000 was formally notified the next day, superseding the May notification.
+This wasn't a routine revision. In January 2026, the Supreme Court directed the Centre and EPFO to decide on revising the ceiling - unchanged for over a decade - within four months. The government's first response, a notification dated 29 May 2026 (S.O. 2702(E)), actually left the ceiling untouched at Rs 15,000. It was only after the Expenditure Finance Committee's recommendation on 16 June 2026 and Union Cabinet approval on 16 September 2026 that the increase to Rs 25,000 was formally notified the next day, superseding the May notification.
 
 The government's own estimate: **over 51 lakh additional employees** brought into mandatory EPFO coverage, at an annual outgo of roughly **Rs 11,339 crore** (up from Rs 10,250 crore currently budgeted) - about **Rs 56,696 crore over five years**.
 
@@ -60,9 +60,9 @@ This is a **single ECR for September**, not two separate filings - but the contr
 - Employee EPF (12%): on Rs 9,333.33
 - Employer split: 3.67% EPF + 8.33% EPS
 
-Total statutory remittance for the month works out to roughly **Rs 5,000** across employee and employer shares combined for this example - the exact figures depend on which of the three common scenarios applies to a given employee (already excluded, already an EPF-only member becoming EPS-eligible, or already contributing at the old Rs 15,000 cap).
+Total statutory remittance for this employee for September is **Rs 5,000**, including EDLI and administrative charges. This matches EPFO's own illustration (Scenario B in its wage ceiling FAQs). The figures differ for the other two common scenarios: an employee who was excluded until 16 September, and one already contributing at the old Rs 15,000 cap.
 
-**If payroll couldn't deduct the additional employee share in time:** you're permitted to recover it in the October payroll cycle for take-home computation purposes, without needing prior approval from the Inspector-cum-Facilitator. That flexibility applies only to the *internal payroll deduction* - the ECR itself, and the full statutory remittance (both shares), still has to be filed and paid by **15 October 2026**.
+**If payroll couldn't deduct the additional employee share in time:** you're permitted to recover it in the October payroll cycle for take-home computation purposes, without needing prior approval from the Inspector-cum-Facilitator. That flexibility applies only to the *internal payroll deduction* - the ECR itself, and the full statutory remittance (both shares), still has to be filed and paid by the due date, now **31 October 2026**.
 
 Once you've worked out the correct wage base for each employee across both periods, generating the actual file is the next step - our [PF ECR File Generator](/pf-ecr-creator) handles the field structure and validation so the September transition doesn't also become a formatting problem.
 
@@ -82,7 +82,7 @@ No - one ECR for the wage month, with contributions calculated separately for th
 
 **When is the September 2026 ECR due?**
 
-15 October 2026, same as the standard monthly deadline.
+31 October 2026. The usual deadline is the 15th, but EPFO extended it for the September 2026 wage month only, by a circular dated 13 October 2026. The October 2026 ECR is due on 15 November 2026 as usual.
 
 **Will take-home salary go down because of this?**
 
@@ -98,4 +98,4 @@ No - it stays at Rs 7 lakh under the current EDLI Scheme, 2026, even though the 
 
 ## Key takeaway
 
-The EPF wage ceiling is Rs 25,000 as of 17 September 2026. The immediate compliance task isn't the ceiling itself - it's getting the September ECR right, split correctly across the two periods, filed by 15 October. If you have employees between Rs 15,001 and Rs 25,000 who weren't previously covered, get them identified and enrolled now, not at your next audit.
+The EPF wage ceiling is Rs 25,000 as of 17 September 2026. The immediate compliance task isn't the ceiling itself - it's getting the September ECR right, split correctly across the two periods, filed by 31 October. If you have employees between Rs 15,001 and Rs 25,000 who weren't previously covered, get them identified and enrolled now, not at your next audit.

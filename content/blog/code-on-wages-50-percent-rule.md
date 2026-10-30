@@ -48,14 +48,14 @@ Take an employee with total monthly remuneration of Rs 60,000, structured as:
 
 **Confirmed to move with the recalculated wage base:**
 
-- **PF contributions** - EPF is calculated on "wages," so a higher recalculated wage base means a higher PF contribution for both employee and employer. This now applies up to the statutory wage ceiling, raised to Rs 25,000 in September 2026 - see our [full explainer on the EPFO ceiling change](/blog/epf-wage-ceiling-25000).
+- **PF contributions** - under the EPF Scheme, 2026 (notified 29 June 2026), PF is calculated on "wages" as defined in the Code, so a higher recalculated wage base means a higher PF contribution for both employee and employer. This now applies up to the statutory wage ceiling, raised to Rs 25,000 in September 2026 - see our [full explainer on the EPFO ceiling change](/blog/epf-wage-ceiling-25000).
 - **ESI contributions** - ESI's own wage definition under the ESI Act is generally broader than the Code on Wages definition, but the underlying principle is the same: contributions reflect actual remuneration, not a structured-down basic salary.
 
 **Commonly cited as affected, but genuinely contested:**
 
 - **Gratuity** - most compliance commentary lists gratuity alongside PF and ESI. But gratuity itself sits in the "not part of remuneration" tier above, and some specialist commentary argues the 50% add-back doesn't apply to gratuity's 15/26 calculation the same way it applies to a monthly accrual like PF. Not settled the way PF's treatment is - worth a direct conversation with your compliance advisor if your gratuity liability is material.
-- **Leave encashment** - a Ministry of Labour and Employment FAQ (No. 5, dated 30 December 2025) addresses this directly: leave encashment is not part of the allowance pool tested under Section 2(y). Continues to be governed by your state's Shops & Establishments rules or company policy on a basic + DA basis, separate from this provision.
-- **Performance incentives and ESOPs** - the same Ministry FAQ set (No. 3, 30 December 2025) states that performance-based incentives, ESOPs, variable pay, and reimbursement-based payments are not part of wages under this definition. Worth knowing if your comp structure leans on variable pay - it doesn't get pulled into the 50% test pool either way.
+- **Leave encashment** - a Ministry of Labour and Employment FAQ (No. 5, dated 30 December 2025) addresses this directly: leave encashment is not part of the allowance pool tested under Section 2(y).
+- **Performance incentives and ESOPs** - the same 30 December 2025 FAQ set states that ESOPs, performance incentives and reimbursements are not part of wages under this definition, and the Ministry's further FAQs of 16 March 2026 confirm that annual performance-based incentives are not wages. Worth knowing if your comp structure leans on variable pay - it doesn't get pulled into the 50% test pool either way.
 
 **Not affected, despite sometimes being grouped with it:**
 

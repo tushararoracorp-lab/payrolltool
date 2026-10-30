@@ -91,7 +91,13 @@ export function nextCentralDue(now) {
     const mm = ((m % 12) + 12) % 12;
     // TDS for March is deposited by 30 April; every other month by the 7th
     items.push({ date: new Date(y, m, mm === 3 ? 30 : 7), label: "TDS deposit" });
-    items.push({ date: new Date(y, m, 15), label: "PF and ESI" });
+    // EPFO moved the September 2026 PF due date to 31 October 2026 (circular dated 13 October 2026)
+    if (y === 2026 && m === 9) {
+      items.push({ date: new Date(y, m, 15), label: "ESI" });
+      items.push({ date: new Date(y, m, 31), label: "PF" });
+    } else {
+      items.push({ date: new Date(y, m, 15), label: "PF and ESI" });
+    }
     // Quarterly salary TDS returns: 31 Jan, 31 May, 31 Jul, 31 Oct
     if ([0, 4, 6, 9].includes(mm)) items.push({ date: new Date(y, m, 31), label: "TDS return" });
   }

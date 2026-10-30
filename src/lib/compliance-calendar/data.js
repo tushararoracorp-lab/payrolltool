@@ -31,9 +31,11 @@ let uid=0;
 function mk(o){return Object.assign({id:'e'+(++uid),stateId:'IN',link:null,note:''},o)}
 
 /* ---------- central rules ---------- */
-function epf(){return FYM.map(({y,m})=>{const p=prevM(y,m);return mk({topic:'epf',date:key(y,m,15),
+// Due dates EPFO has extended for a single wage month (key: wage month 'YYYY-MM').
+const EPF_EXT={'2026-09':{date:'2026-10-31',note:'EPFO extended this due date from 15 October to 31 October 2026 (circular dated 13 October 2026, paragraph 28(3)), for the September 2026 wage month only.'}};
+function epf(){return FYM.map(({y,m})=>{const p=prevM(y,m),ext=EPF_EXT[p.y+'-'+pad(p.m+1)];return mk({topic:'epf',date:ext?ext.date:key(y,m,15),
   title:'PF contribution and ECR - '+monthName(p.y,p.m)+' wages',
-  detail:'File the ECR and pay the challan on the EPFO Unified Portal by the 15th of the month after the wage month.',
+  detail:ext?'File the ECR and pay the challan on the EPFO Unified Portal by 31 October 2026. '+ext.note:'File the ECR and pay the challan on the EPFO Unified Portal by the 15th of the month after the wage month.',
   status:'verified',source:'Paragraph 38, EPF Scheme 1952 (within 15 days of the close of the month).',
   link:{label:'Generate the ECR file',href:'/pf-ecr-creator'}})})}
 function esi(){return FYM.map(({y,m})=>{const p=prevM(y,m);
@@ -205,8 +207,8 @@ function buildRaw(topic,stateId){
 // users only ever get dates that have passed validation
 function buildFor(topic,stateId){return buildRaw(topic,stateId).filter(e=>e.status==='verified'||e.status==='mine')}
 // what to say when a state has no dates for a topic. Lists follow wide agreement across published state-wise guides.
-const NO_PT=['Andaman and Nicobar Islands','Arunachal Pradesh','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Haryana','Himachal Pradesh','Jammu and Kashmir','Ladakh','Lakshadweep','Rajasthan','Uttar Pradesh','Uttarakhand'];
-const NO_LWF=['Andaman and Nicobar Islands','Arunachal Pradesh','Assam','Bihar','Himachal Pradesh','Jammu and Kashmir','Jharkhand','Ladakh','Lakshadweep','Manipur','Meghalaya','Mizoram','Nagaland','Puducherry','Sikkim','Tripura','Uttar Pradesh','Uttarakhand'];
+const NO_PT=['Andaman and Nicobar Islands','Arunachal Pradesh','Chandigarh','Chhattisgarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Haryana','Himachal Pradesh','Jammu and Kashmir','Ladakh','Lakshadweep','Rajasthan','Uttar Pradesh','Uttarakhand'];
+const NO_LWF=['Andaman and Nicobar Islands','Arunachal Pradesh','Assam','Bihar','Himachal Pradesh','Jammu and Kashmir','Jharkhand','Ladakh','Lakshadweep','Manipur','Meghalaya','Mizoram','Nagaland','Puducherry','Rajasthan','Sikkim','Tripura','Uttar Pradesh','Uttarakhand'];
 function noticeFor(topic,stateId){
   if(buildFor(topic,stateId).length)return null;
   if(topic==='pt'){

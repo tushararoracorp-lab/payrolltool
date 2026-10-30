@@ -154,15 +154,42 @@ const blogPosts = [
   { href: "/blog/final-settlement-calculator", variant: "brand", icon: Icon.finalSettlement, tag: "Guide", title: "Full & Final Settlement Calculator | Gratuity, Leave Encashment" },
 ];
 
-// No placeholder figures: until /api/stats answers, the country list stays empty and the
-// headline shows "Loading..." instead of inventing numbers (the old placeholders put India at 105).
-const DEFAULT_COUNTRY_DATA = [];
+// Stats are real numbers at all times: the page is built with the latest /api/stats figures (refreshed at most
+// once an hour), and the browser then updates them on load. No invented placeholders. If both the build-time
+// fetch and the browser fetch fail, the block stays hidden.
+const STATS_URL = "https://www.payrolltool.in/api/stats";
 
-export default function Home() {
+export async function getStaticProps() {
+  let initialStats = null;
+  try {
+    const res = await fetch(STATS_URL, { signal: AbortSignal.timeout(8000) });
+    if (res.ok) {
+      const d = await res.json();
+      if (typeof d.countries === "number") {
+        initialStats = {
+          countries: d.countries,
+          activeUsers: d.activeUsers ?? null,
+          indiaUsers: d.indiaUsers ?? null,
+          byCountry: Array.isArray(d.byCountry) ? d.byCountry : [],
+        };
+      }
+    }
+  } catch (e) {
+    // build continues; the browser fetch below still runs
+  }
+  return { props: { initialStats }, revalidate: 3600 };
+}
+
+export default function Home({ initialStats = null }) {
   const [scenario, setScenario] = useState("joining");
   const [openFaq, setOpenFaq] = useState(null);
-  const [stats, setStats] = useState({ countries: "Loading...", activeUsers: "Loading...", indiaUsers: "Loading..." });
-  const [countryData, setCountryData] = useState(DEFAULT_COUNTRY_DATA);
+  const [stats, setStats] = useState(
+    initialStats
+      ? { countries: initialStats.countries, activeUsers: initialStats.activeUsers, indiaUsers: initialStats.indiaUsers }
+      : { countries: null, activeUsers: null, indiaUsers: null }
+  );
+  const statsReady = typeof stats.countries === "number";
+  const [countryData, setCountryData] = useState(initialStats ? initialStats.byCountry : []);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Hero card animation state - converted from hero-card-v2.html. 4 scenes:
@@ -316,8 +343,7 @@ export default function Home() {
       .attr("class", (d) => "cm-country" + (byIsoRef.current[+d.id] ? " active" : ""));
   }, [countryData]);
 
-  // Live stats + country breakdown, falling back to interim figures if the
-  // endpoint isn't wired up yet.
+  // Refresh the stats in the browser so they are current even between hourly page rebuilds.
   useEffect(() => {
     fetch("/api/stats")
       .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
@@ -329,7 +355,7 @@ export default function Home() {
           setCountryData(data.byCountry);
         }
       })
-      .catch((err) => console.warn("Live stats unavailable, keeping interim figures:", err));
+      .catch((err) => console.warn("Live stats unavailable, keeping the figures from the last page build:", err));
   }, []);
 
   // d3 and topojson are only needed for the hover map, so they load on the first hover or focus,
@@ -645,7 +671,7 @@ export default function Home() {
                   {/* Panel 2: 6-tool grid */}
                   {HERO_SCENES[heroScene].panel === 2 && (
                     <div className="hero-panel">
-                      <div className="hero-tools-caption">Then came five more - each built, then shipped.</div>
+                      <div className="hero-tools-caption">Then came more - each built, then shipped.</div>
                       <div className="hero-tools-grid">
                         {[
                           { name: "LOP Splitter", icon: Icon.file },
@@ -676,9 +702,6 @@ export default function Home() {
                             <path key={`ecg-line-${heroEcgKey}`} className="hero-ecg-line-anim" d="M0,50 L60,50 L72,50 L80,15 L88,80 L96,50 L118,50 L130,50 L138,25 L146,72 L154,50 L176,50 L184,50 L192,20 L200,75 L208,50 L230,50 L340,50" fill="none" stroke="var(--brand-600)" strokeWidth="2.2" />
                             <circle key={`ecg-dot-${heroEcgKey}`} className="hero-ecg-dot" r="4" fill="var(--brand-600)" />
                           </svg>
-                          <div className={`hero-ecg-callout${heroCalloutsIn[1] ? " in" : ""}`} style={{ top: "58%", left: "38%" }}>
-                            <b>Compliance Updates</b><span style={{ color: "var(--amber)" }}>Planned</span>
-                          </div>
                           <div className={`hero-ecg-callout${heroCalloutsIn[2] ? " in" : ""}`} style={{ top: "-4px", left: "58%" }}>
                             <b>Dashboard</b><span style={{ color: "var(--amber)" }}>Planned</span>
                           </div>
@@ -711,8 +734,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS */}
-      <section style={{ padding: "16px 0 48px" }}>
+      {/* STATS - shown only once real numbers have arrived */}
+      {statsReady && (
+      <section className="stats-in" style={{ padding: "16px 0 48px" }}>
         <div className="wrap">
           <div className="stats-section">
             <div
@@ -731,7 +755,7 @@ export default function Home() {
                   <span>Active users by country</span>
                 </div>
                 <div className="country-map-svg-wrap" ref={mapWrapRef}>
-                  <div className="cm-loading">Loading map…</div>
+                  <div className="cm-loading" aria-hidden="true" />
                 </div>
                 <ul className="country-map-list">
                   {topCountries.map((c) => (
@@ -739,7 +763,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <p className="country-map-note">
-                  {stats.countries === "Loading..." ? "Loading…" : `Top ${topCountries.length} of ${stats.countries} countries shown`}
+                  {`Top ${topCountries.length} of ${stats.countries} countries shown`}
                 </p>
               </div>
             </div>
@@ -762,6 +786,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
 
       {/* WHY THESE TOOLS (narrative) */}
       <section style={{ padding: "40px 0 12px" }}>
@@ -793,7 +818,7 @@ export default function Home() {
           <div className="section-head center">
             <span className="eyebrow"><span className="dot" />Calculate</span>
             <h2>Payroll compliance, simplified</h2>
-            <p>Six powerful tools for the most common HR calculations in India. No HRMS setup required - just upload a file or enter numbers.</p>
+            <p>Practical tools for the most common HR calculations in India. No HRMS setup required - just upload a file or enter numbers.</p>
             <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", maxWidth: "640px", margin: "12px auto 0", opacity: 0.85 }}>
               PayrollTool.in is a browser-based suite of payroll calculators for Indian HR and payroll teams - covering PF ECR and ESIC MC file generation, income tax (Old vs New regime), salary proration, LOP calculation, and final settlement.
             </p>
@@ -1101,6 +1126,8 @@ export default function Home() {
         .tool-card a { display: inline-flex; align-items: center; gap: 8px; color: var(--brand-600); font-weight: 600; font-size: 14px; padding: 8px 0; border-bottom: 2px solid transparent; transition: all .2s ease; }
         .tool-card a:hover { border-bottom-color: var(--brand-600); }
 
+        .stats-in { animation: statsIn .4s ease both; }
+        @keyframes statsIn { from { opacity: 0; } to { opacity: 1; } }
         .stats-section { padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: left; }
         .stat-item { display: flex; align-items: center; gap: 14px; padding: 20px; border-radius: var(--radius-lg); transition: translate .15s ease, box-shadow .15s ease; position: relative; }
         .stat-item:nth-child(1) { background: var(--brand-50); }
