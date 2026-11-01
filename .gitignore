@@ -13,3 +13,11 @@ dist/
 out/
 public/sitemap.xml
 public/sitemap-0.xml
+   # one-off local files, never commit
+   updates-export.json
+   scripts/updates-fixes.json
+   *.zip
+# one-off local files, never commit
+updates-export.json
+scripts/updates-fixes.json
+*.zip
