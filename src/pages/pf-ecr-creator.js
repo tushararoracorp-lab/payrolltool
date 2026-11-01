@@ -125,7 +125,7 @@ function processWorkbook(buffer, month, year) {
   if (ceilingInfo.mode === "transition") {
     infoBanners.push({
       type: "info",
-      text: `<strong>September 2026 is a transition month.</strong> EPS wage is split into two periods: 1-16 Sept (based on Pension Wages, capped Rs. ${ceilingInfo.pre.toLocaleString()}) and 17-30 Sept (based on PF Wages, capped Rs. ${ceilingInfo.post.toLocaleString()}). EDLI wage is always based on PF Wages for both periods, regardless of EPS membership` +
+      text: `<strong>September 2026 is a transition month.</strong> EPS wage is split into two periods: 1-16 Sept (based on Pension Wages, capped Rs. ${ceilingInfo.pre.toLocaleString()}) and 17-30 Sept (based on PF Wages, capped Rs. ${ceilingInfo.post.toLocaleString()}). EDLI wage is the PF Wages up to Rs. ${ceilingInfo.post.toLocaleString()} for the whole month, regardless of EPS membership` +
         (colEpsMember
           ? `. Period 1 uses the "${C.epsMemberBefore}" column to determine whether each employee was already an EPS member before 17 Sept.`
           : ` - the "${C.epsMemberBefore}" column was <strong>not found</strong>, so every employee has been treated as though they were <strong>not</strong> an EPS member before 17 Sept: Period 1 (1-16 Sept) has been set to Rs. 0 for everyone. If anyone was already an EPS member before the change, add this column and re-process, or their EPS contribution will be understated.`)
@@ -238,6 +238,7 @@ function processWorkbook(buffer, month, year) {
       // ── EDLI wage is ALWAYS derived from PF Wages too, with no gating at all -
       //    every EPF member gets EDLI coverage regardless of EPS membership.
       let ec;              // EPS wage (final)
+      let epsSplit = null; // September 2026: EPS contribution worked out per period
       let edliWages;        // EDLI wage (final)
 
       if (ceilingInfo.mode === "transition") {
@@ -255,7 +256,12 @@ function processWorkbook(buffer, month, year) {
         const p2Gate = wasEpsMemberBefore || epsWages > 0;
         const p2 = p2Gate ? Math.min(epfWages, ceilingInfo.post) * ceilingInfo.daysPost / ceilingInfo.totalDays : 0;
 
-        ec = p1 + p2;
+        // Wages and the 8.33% EPS share are rounded per period, the way EPFO splits the month.
+        // Rounding once on the combined wage can come out Re. 1 above the sum of the two periods,
+        // which the portal rejects as more than 8.33% of EPS wages (RFE-212).
+        const p1w = rnd(p1), p2w = rnd(p2);
+        ec = p1w + p2w;
+        epsSplit = rnd(p1w * 0.0833) + rnd(p2w * 0.0833);
 
         if (!colEpsMember) {
           remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: "${C.epsMemberBefore}" column not found - Period 1 (1-16 Sept) EPS wage treated as Rs. 0. Add this column and re-process for an accurate September ECR.` });
@@ -263,14 +269,10 @@ function processWorkbook(buffer, month, year) {
           remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: September transition - EPS wage Rs. ${Math.round(p1).toLocaleString()} (1-16 Sept) + Rs. ${Math.round(p2).toLocaleString()} (17-30 Sept) = Rs. ${Math.round(ec).toLocaleString()}.` });
         }
 
-        // EDLI: always PF Wages, both periods, capped at 15,000/25,000, then the
-        // combined figure is capped at Rs. 19,667 as a safety net - structurally
-        // this cap-then-prorate approach can never actually exceed that figure,
-        // since MIN(PF,15000)*16/30 + MIN(PF,25000)*14/30 tops out there by
-        // construction once PF Wages reaches Rs. 25,000.
-        const edliP1 = Math.min(epfWages, ceilingInfo.pre)  * ceilingInfo.daysPre  / ceilingInfo.totalDays;
-        const edliP2 = Math.min(epfWages, ceilingInfo.post) * ceilingInfo.daysPost / ceilingInfo.totalDays;
-        edliWages = Math.min(rnd(edliP1 + edliP2), 19667);
+        // EDLI: PF Wages up to the new Rs. 25,000 ceiling for the whole month. EPFO rejects a
+        // September 2026 ECR where EDLI wages differ from EPF wages below Rs. 25,000 (RFE-206),
+        // and its own worked example (Rs. 20,000 wage, total remittance Rs. 5,000) uses the full wage.
+        edliWages = Math.min(epfWages, ceilingInfo.post);
       } else {
         const cap = ceilingInfo.ceiling;
         ec = epsWages > 0 ? Math.min(epfWages, cap) : 0;
@@ -287,7 +289,7 @@ function processWorkbook(buffer, month, year) {
       }
 
       let epfC  = rnd(epfWages * 0.12);
-      let epsC  = rnd(ec * 0.0833);
+      let epsC  = epsSplit !== null ? epsSplit : rnd(ec * 0.0833);
       ec = rnd(ec);
       let epfD  = epfC - epsC;
       if (empPFin > 0 && empPFin !== epfC) remarks.push({ type: "warn", text: `<span class="font-semibold">${name}</span>: EPF Contribution adjusted Rs. ${empPFin.toLocaleString()} → Rs. ${epfC.toLocaleString()}.` });
@@ -562,7 +564,7 @@ const ECR_FAQ = [
   },
   {
     q: "What is the EPS wage cap, and why does my EPF wage look different from my EPS wage?",
-    a: "Employees' Pension Scheme (EPS) contributions are calculated on wages capped at a statutory ceiling, regardless of actual salary - EPF contributions themselves are not capped in most establishments. This ceiling changed on 17 September 2026: it's Rs. 15,000 for wage months up to August 2026, and Rs. 25,000 from October 2026 onward. September 2026 itself is a transition month - EPFO requires a single ECR with contributions split across 1-16 Sept (old cap) and 17-30 Sept (new cap). This tool applies the correct cap automatically based on the Wage Month and Year you select, and blends the two periods for September 2026. EDLI wages follow the same ceiling and the same September blend, since EDLI's own maximum assurance benefit is fixed regardless of wage.",
+    a: "Employees' Pension Scheme (EPS) contributions are calculated on wages capped at a statutory ceiling, regardless of actual salary - EPF contributions themselves are not capped in most establishments. This ceiling changed on 17 September 2026: it's Rs. 15,000 for wage months up to August 2026, and Rs. 25,000 from October 2026 onward. September 2026 itself is a transition month - EPFO requires a single ECR with contributions split across 1-16 Sept (old cap) and 17-30 Sept (new cap). This tool applies the correct cap automatically based on the Wage Month and Year you select, and blends the two periods for September 2026. EDLI wages follow the same ceiling, except in September 2026, when EPFO requires EDLI wages to equal PF wages up to Rs. 25,000 for the whole month.",
   },
   {
     q: "Does this tool submit the ECR file to EPFO for me?",
@@ -1143,7 +1145,7 @@ export default function PfEcrCreator() {
             {[
               { label: "EPFO-compliant format",   tip: "Output matches the official ECR #~# delimited format accepted by the EPFO unified portal." },
               { label: "Duplicate UAN guard",      tip: "Detects and flags duplicate UANs, names, or UAN+Name combos before generating the ECR." },
-              { label: "EPS & EDLI wage auto-cap", tip: "EPS and EDLI wages are both automatically capped at the correct ceiling for your selected wage month - Rs. 15,000 before 17 Sept 2026, blended for September 2026, Rs. 25,000 from October 2026 onward." },
+              { label: "EPS & EDLI wage auto-cap", tip: "EPS and EDLI wages are both automatically capped at the correct ceiling for your selected wage month: Rs. 15,000 before 17 Sept 2026 and Rs. 25,000 from October 2026. For September 2026, EPS is split across the two periods and EDLI uses PF wages up to Rs. 25,000 for the whole month." },
               { label: "100% browser processing",  tip: "All processing happens in your browser. No data sent to any server." },
             ].map(({ label, tip }) => (
               <span key={label} className="flex items-center gap-1">
