@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import TOOLS from "../config/tools";
@@ -47,6 +48,7 @@ export default function About() {
               mainEntity: {
                 "@type": "Person",
                 name: "Tushar Arora",
+                image: "https://www.payrolltool.in/tushar-about-square.webp",
                 jobTitle: "Payroll Compliance Expert",
                 description: "Payroll compliance professional since 2018, working across EPF, ESI, PT, LWF, NPS and TDS. Founder of PayrollTool.in.",
                 knowsAbout: ["Payroll Compliance", "EPF", "ESI", "Professional Tax", "TDS", "Indian Labour Law"],
@@ -78,7 +80,16 @@ export default function About() {
             background: "var(--card)", border: "1px solid var(--line)", borderRadius: "var(--radius-lg)",
             boxShadow: "var(--shadow-card)", marginBottom: "56px",
           }}>
-            <div className="trust-photo" style={{ width: "88px", height: "88px", fontSize: "34px", margin: 0, flexShrink: 0 }}>TA</div>
+            <Image
+              src="/tushar-about-square.webp"
+              alt="Tushar Arora, founder of PayrollTool.in"
+              width={88}
+              height={88}
+              priority
+              unoptimized
+              className="trust-photo"
+              style={{ width: "88px", height: "88px", objectFit: "cover", margin: 0, flexShrink: 0 }}
+            />
             <div>
               <div className="trust-name" style={{ fontSize: "22px" }}>Tushar Arora</div>
               <div className="trust-title" style={{ marginBottom: 0 }}>Payroll Compliance Professional · Founder, PayrollTool.in</div>
