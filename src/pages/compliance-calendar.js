@@ -8,7 +8,7 @@ import { APP_HTML } from "../lib/compliance-calendar/markup";
 import { NO_PT, FY_LABEL } from "../lib/compliance-calendar/data";
 
 const PAGE_URL = "https://www.payrolltool.in/compliance-calendar";
-const TITLE = "Payroll Compliance Calendar FY 2026-27 - EPF, ESI, TDS, PT and LWF Due Dates";
+const TITLE = "Payroll Compliance Calendar FY 2026-27: EPF, ESI, TDS, PT, LWF";
 const DESCRIPTION =
   "Every EPF, ESI, TDS, professional tax and LWF due date for FY 2026-27 in one free calendar. Pick your states, set reminders and download a printable wall calendar.";
 

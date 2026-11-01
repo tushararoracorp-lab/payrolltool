@@ -31,12 +31,12 @@ export default function UpdatesPage({ data, indexable }) {
   return (
     <>
       <Head>
-        <title>Payroll Compliance Updates, Minimum Wage Rates, PT and LWF by State | PayrollTool.in</title>
-        <meta name="description" content="Statutory notifications that affect Indian payroll (wages, EPF, ESI, PT, LWF, NPS, TDS) explained in plain English and Hindi, with minimum wage rates and Professional Tax and Labour Welfare Fund details for every state and a link to the official source." />
+        <title>Payroll Compliance Updates and State Rates | PayrollTool.in</title>
+        <meta name="description" content="Payroll compliance updates for India: EPF, ESI, TDS, PT, LWF and minimum wage notifications explained in English and Hindi, with state-wise rates." />
         <link rel="canonical" href={SITE + '/updates'} />
         <meta name="robots" content={indexable ? 'index,follow' : 'noindex,nofollow'} />
-        <meta property="og:title" content="Payroll Compliance Updates, Minimum Wage Rates, PT and LWF by State | PayrollTool.in" />
-        <meta property="og:description" content="Statutory notifications that affect Indian payroll (wages, EPF, ESI, PT, LWF, NPS, TDS) explained in plain English and Hindi, with minimum wage rates and Professional Tax and Labour Welfare Fund details for every state and a link to the official source." />
+        <meta property="og:title" content="Payroll Compliance Updates and State Rates | PayrollTool.in" />
+        <meta property="og:description" content="Payroll compliance updates for India: EPF, ESI, TDS, PT, LWF and minimum wage notifications explained in English and Hindi, with state-wise rates." />
         <meta property="og:url" content={SITE + '/updates'} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={SITE + '/og-homepage.jpg'} />
