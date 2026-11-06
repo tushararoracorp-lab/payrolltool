@@ -11,6 +11,8 @@ import { RESULT_EVENT, announceRated, wasRated } from "../lib/resultPrompt";
 // backdrop does nothing, so feedback is not lost by accident. Closing counts as skipped.
 
 const SHOW_DELAY_MS = 1500; // let the browser's download bar appear first
+const MAX_NO = 1000; // message length after "No" (the feedback sheet keeps up to this much)
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function storageGet(store, key) {
   try { return window[store].getItem(key); } catch (e) { return null; }
@@ -36,6 +38,13 @@ export default function PostResultPrompt() {
   const [step, setStep] = useState("ask"); // ask -> comment -> thanks
   const [answer, setAnswer] = useState(null);
   const [comment, setComment] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [updates, setUpdates] = useState(false); // unticked by default: only a clear "yes" counts
+  const [emailError, setEmailError] = useState("");
+  const [replyTo, setReplyTo] = useState("");
+  const sendingRef = useRef(false); // stops a second send while the first is still saving (Enter + click)
+  const [sending, setSending] = useState(false);
   const [kind, setKind] = useState("file");
   const boxRef = useRef(null);
   const firstBtnRef = useRef(null);
@@ -66,7 +75,8 @@ export default function PostResultPrompt() {
         if (askedToday(name) || wasRated(name)) return;
         storageSet("localStorage", dayKey(name), today());
         returnFocusRef.current = document.activeElement;
-        setStep("ask"); setAnswer(null); setComment(""); setKind(nextKind);
+        setStep("ask"); setAnswer(null); setComment(""); setEmail(""); setName(""); setUpdates(false); setEmailError(""); setReplyTo(""); setKind(nextKind);
+        sendingRef.current = false; setSending(false);
         setTool(name);
         ga("post_result_prompt_shown", { tool_name: name });
       }, delay);
@@ -83,7 +93,7 @@ export default function PostResultPrompt() {
       if (e.key === "Escape") { close("skipped"); return; }
       if (e.key !== "Tab" || !boxRef.current) return;
       // Keep keyboard focus inside the card while it is open.
-      const f = boxRef.current.querySelectorAll("button, input");
+      const f = boxRef.current.querySelectorAll("button, input, textarea");
       if (!f.length) return;
       const first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -93,12 +103,12 @@ export default function PostResultPrompt() {
     return () => document.removeEventListener("keydown", onKey);
   }, [tool, close]);
 
-  // Close a few seconds after the thank-you.
+  // Close a few seconds after the thank-you (a little longer when it mentions a reply).
   useEffect(() => {
     if (step !== "thanks") return undefined;
-    const t = setTimeout(() => close("answered"), 2500);
+    const t = setTimeout(() => close("answered"), replyTo ? 4500 : 2500);
     return () => clearTimeout(t);
-  }, [step, close]);
+  }, [step, close, replyTo]);
 
   if (!tool) return null;
 
@@ -110,7 +120,14 @@ export default function PostResultPrompt() {
   }
 
   async function send() {
+    if (sendingRef.current) return;                 // already sending: ignore the second Enter or click
     const text = comment.trim();
+    const mail = email.trim();
+    const who = name.trim().slice(0, 80);
+    if (mail && !EMAIL_PATTERN.test(mail)) { setEmailError("That doesn't look like a valid email. Check it, or leave it empty."); return; }
+    if (mail && !text) { setEmailError("Add a line about what was different, so we know what to reply about."); return; }
+    setEmailError("");
+    sendingRef.current = true; setSending(true);
     try {
       await fetch("/api/feedback", {
         method: "POST",
@@ -119,9 +136,31 @@ export default function PostResultPrompt() {
           tool,
           rating: answer === "yes" ? "match_yes" : "match_no",
           feedback: ["Post-result prompt.", text].filter(Boolean).join(" "),
+          name: mail ? who : "",
+          email: mail,
+          updates: Boolean(mail && updates),
         }),
       });
     } catch (e) { /* network error: the GA answer is already counted */ }
+    // Email given (only offered after "No"): same flow as the homepage form - support gets the message
+    // with reply-to set to the person, and the person gets the "Got your message" email.
+    let replied = false;
+    if (mail) {
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: mail,
+            name: who,
+            subject: `Feedback on ${tool}`,
+            message: `Tool: ${tool}\nAnswer: the ${kind === "calc" ? "result" : "file"} did not match\n\n${text}`,
+          }),
+        });
+        replied = res.ok;
+      } catch (e) { /* falls back to the message below */ }
+    }
+    setReplyTo(mail ? (replied ? mail : "failed") : "");
     setStep("thanks");
   }
 
@@ -151,24 +190,99 @@ export default function PostResultPrompt() {
           <p id="prp-title" className="prp-title">
             {answer === "yes" ? "Thanks. Anything we could do better?" : "Sorry about that. What was different?"}
           </p>
-          <label className="prp-label" htmlFor="prp-input">One line is enough (optional)</label>
-          <input
-            id="prp-input"
-            className="prp-input"
-            value={comment}
-            maxLength={300}
-            onChange={(e) => setComment(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") send(); }}
-            autoFocus
-          />
+          {answer === "no" ? (
+            <>
+              <label className="prp-label" htmlFor="prp-input">What was different? (optional)</label>
+              {/* Longer box after "No": people often explain an error or ask for help. Enter adds a new line. */}
+              <textarea
+                id="prp-input"
+                className="prp-input prp-area"
+                value={comment}
+                rows={3}
+                maxLength={MAX_NO}
+                onChange={(e) => setComment(e.target.value)}
+                autoFocus
+              />
+              {comment.length >= MAX_NO * 0.8 && <p className="prp-count">{comment.length}/{MAX_NO}</p>}
+            </>
+          ) : (
+            <>
+              <label className="prp-label" htmlFor="prp-input">One line is enough (optional)</label>
+              <input
+                id="prp-input"
+                className="prp-input"
+                value={comment}
+                maxLength={300}
+                onChange={(e) => setComment(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") send(); }}
+                autoFocus
+              />
+            </>
+          )}
+          {answer === "no" && (
+            <>
+              <label className="prp-label" htmlFor="prp-name">Your name (optional)</label>
+              <input
+                id="prp-name"
+                className="prp-input"
+                value={name}
+                maxLength={80}
+                autoComplete="name"
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") send(); }}
+              />
+              <label className="prp-label" htmlFor="prp-email">Want a reply? Add your email (optional)</label>
+              <input
+                id="prp-email"
+                className="prp-input"
+                type="email"
+                value={email}
+                maxLength={120}
+                autoComplete="email"
+                placeholder="you@company.com"
+                onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
+                onKeyDown={(e) => { if (e.key === "Enter") send(); }}
+              />
+              <label className={`prp-check${email.trim() ? "" : " prp-check-off"}`}>
+                <input
+                  type="checkbox"
+                  checked={updates}
+                  disabled={!email.trim()}
+                  onChange={(e) => setUpdates(e.target.checked)}
+                />
+                <span>Send me occasional PayrollTool.in updates. You can stop them any time.</span>
+              </label>
+              <p className="prp-hint">
+                Your name and email are kept with your feedback to reply to you, and for updates only if you tick the box.{" "}
+                <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+              </p>
+              {emailError && <p className="prp-error">{emailError}</p>}
+              <p className="prp-hint prp-mail">
+                Prefer email?{" "}
+                <a
+                  href={`mailto:support@payrolltool.in?subject=${encodeURIComponent(`Help with ${tool}`)}&body=${encodeURIComponent(comment.trim() ? `${comment.trim()}\n\n` : "Tell us what was different:\n\n")}`}
+                >
+                  support@payrolltool.in
+                </a>
+              </p>
+            </>
+          )}
           <div className="prp-row">
-            <button type="button" className="prp-btn prp-primary" onClick={send}>Send</button>
+            <button type="button" className="prp-btn prp-primary" onClick={send} disabled={sending}>{sending ? "Sending…" : "Send"}</button>
             <button type="button" className="prp-btn" onClick={() => close("answered")}>Skip</button>
           </div>
         </>
       )}
 
-      {step === "thanks" && <p id="prp-title" className="prp-title">Thank you, that helps.</p>}
+      {step === "thanks" && (
+        <p id="prp-title" className="prp-title">
+          {replyTo === "failed"
+            ? <>Thank you. We could not send your message for a reply - please email <a href="mailto:support@payrolltool.in">support@payrolltool.in</a>.</>
+            : replyTo
+              ? <>Thank you. We will reply to <b>{replyTo}</b>, and a confirmation is on its way to your inbox.</>
+              : "Thank you, that helps."}
+        </p>
+      )}
     </div>
 
       <style jsx>{`
@@ -181,6 +295,7 @@ export default function PostResultPrompt() {
           position: relative; box-sizing: border-box; width: 380px; max-width: 100%;
           background: var(--card, #ffffff); color: var(--ink, #1b1526); border: 1px solid var(--line, #e6e1f0); border-radius: 16px;
           box-shadow: 0 12px 32px rgba(20, 10, 40, 0.18); padding: 18px 52px 16px 18px;
+          max-height: calc(100vh - 32px); overflow-y: auto;
         }
         .prp-close {
           position: absolute; top: 4px; right: 4px; width: 44px; height: 44px; border-radius: 50%;
@@ -194,6 +309,17 @@ export default function PostResultPrompt() {
           background: var(--paper, #ffffff); color: var(--ink, #1b1526); margin-bottom: 10px;
         }
         .prp-input:focus { outline: none; border-color: var(--brand-600, #7c3aed); box-shadow: 0 0 0 3px var(--brand-50, #f3eefe); }
+        .prp-area { resize: vertical; min-height: 72px; font-family: inherit; line-height: 1.45; display: block; }
+        .prp-count { font-size: 12px; color: var(--ink-soft, #5b5370); text-align: right; margin: -6px 0 8px; }
+        .prp-hint { font-size: 12px; color: var(--ink-soft, #5b5370); margin: -6px 0 10px; }
+        .prp-error { font-size: 13px; color: #dc2626; margin: -4px 0 10px; }
+        .prp-title a, .prp-mail a { color: var(--brand-600, #7c3aed); font-weight: 600; }
+        .prp-mail { margin: 0 0 12px; }
+        .prp-hint a { color: var(--brand-600, #7c3aed); font-weight: 600; }
+        .prp-check { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--ink, #1b1526); margin: 0 0 10px; cursor: pointer; line-height: 1.4; }
+        .prp-check input { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--brand-600, #7c3aed); flex-shrink: 0; }
+        .prp-check-off { opacity: 0.5; cursor: default; }
+        .prp-btn:disabled { opacity: 0.6; cursor: default; }
         .prp-row { display: flex; gap: 8px; }
         .prp-btn {
           min-height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid var(--line, #e6e1f0);

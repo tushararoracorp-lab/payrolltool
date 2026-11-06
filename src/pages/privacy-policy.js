@@ -7,13 +7,13 @@ export default function PrivacyPolicy() {
   return (
     <>
       <Head>
-        <title>Privacy Policy – PayrollTool</title>
+        <title>Privacy Policy | PayrollTool.in</title>
         <meta
           name="description"
           content="How PayrollTool.in handles your data. Your payroll numbers never leave your browser - read exactly what we collect and why."
         />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Privacy Policy – PayrollTool" />
+        <meta property="og:title" content="Privacy Policy | PayrollTool.in" />
         <meta property="og:url" content="https://www.payrolltool.in/privacy-policy" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://www.payrolltool.in/privacy-policy" />
@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
         <div className="wrap">
           <p className="eyebrow">LEGAL</p>
           <h1>Privacy Policy</h1>
-          <p className="updated">Last updated: 25 October 2026</p>
+          <p className="updated">Last updated: 7 November 2026</p>
 
           <p className="lede">
             PayrollTool.in is built around one promise: your payroll numbers are yours.
@@ -60,11 +60,25 @@ export default function PrivacyPolicy() {
 
             <h3>Feedback you choose to send</h3>
             <p>
-              If you use the feedback form on the site, the text you submit is stored
-              privately so we can read and act on it. If you voluntarily
-              include your name or email in that message, we retain that too, only to
-              follow up if needed. Nothing here is public, sold, or shared with
-              advertisers.
+              After you use a tool, we may ask whether the result matched your payroll.
+              If you answer, we store your answer, the tool name, the time and any
+              comment you type, so we can read and act on it.
+            </p>
+            <p>
+              If you also choose to give your name and email address, we store them with
+              that feedback and use them to reply to you. We send you a confirmation email
+              and a copy of your message reaches our support inbox. Giving your name or
+              email is optional, and the tools work the same without it.
+            </p>
+            <p>
+              <strong>Updates.</strong> We send occasional PayrollTool.in updates only if
+              you tick &quot;Send me occasional PayrollTool.in updates&quot;. The box is
+              never ticked for you. You can stop updates at any time by replying
+              &quot;Stop&quot; to any update or by writing to support@payrolltool.in, and
+              we will stop within a few days.
+            </p>
+            <p>
+              Your name and email are never public, sold, or shared with advertisers.
             </p>
 
             <h3>Contact via email</h3>
@@ -126,8 +140,9 @@ export default function PrivacyPolicy() {
                 <li><strong>Google AdSense</strong> - advertising, which may set cookies as described above</li>
                 <li><strong>Google Fonts</strong> - typefaces used on this site</li>
                 <li><strong>Vercel</strong> - website hosting</li>
-                <li><strong>Resend</strong> - email delivery</li>
-                <li><strong>Google Sheets</strong> - storage for feedback submissions</li>
+                <li><strong>Gmail (Google)</strong> - our support inbox, replies and confirmation emails</li>
+                <li><strong>Resend</strong> - internal email notifications for site administration</li>
+                <li><strong>Google Sheets</strong> - storage for feedback, and for names and email addresses you choose to give</li>
               </ul>
             </details>
           </section>
@@ -136,9 +151,11 @@ export default function PrivacyPolicy() {
             <h2>How long we keep data</h2>
             <p>
               Analytics data is retained according to our Google Analytics settings.
-              Feedback and support emails are kept as long as useful for improving the
-              site, and are deleted on request - email support@payrolltool.in and we
-              will remove anything associated with you.
+              Feedback is kept as long as it is useful for improving the site. A name and
+              email address you give with feedback are kept for up to 12 months after our
+              last contact with you, or for as long as you receive updates if you asked
+              for them. Anything associated with you is deleted on request - email
+              support@payrolltool.in.
             </p>
           </section>
 
@@ -159,8 +176,8 @@ export default function PrivacyPolicy() {
             <p>
               We handle personal data in line with the Digital Personal Data Protection
               Act, 2023. The only personal data we hold is what you choose to send us:
-              feedback text and emails, together with any name or email address you
-              include in them. Calculator inputs and uploaded files are never collected,
+              feedback, emails, and any name or email address you give, together with
+              your choice about receiving updates. Calculator inputs and uploaded files are never collected,
               so there is nothing to access or erase for them.
             </p>
             <p>
