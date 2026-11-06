@@ -320,6 +320,9 @@ export default function FinalSettlement() {
           content="Calculate your full and final settlement - gratuity, notice pay, and leave encashment - browser-based, no login required."
         />
         <meta property="og:url" content="https://www.payrolltool.in/final-settlement" />
+        <meta property="og:image" content="https://www.payrolltool.in/og-homepage.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="PayrollTool.in" />
         <meta property="og:locale" content="en_IN" />

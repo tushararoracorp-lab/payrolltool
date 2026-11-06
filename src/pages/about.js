@@ -1,9 +1,7 @@
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import TOOLS from "../config/tools";
 
 export default function About() {
   return (
@@ -64,7 +62,7 @@ export default function About() {
         <div className="wrap">
           <span className="eyebrow"><span className="dot" />About</span>
           <h1 style={{ fontSize: "40px", maxWidth: "680px", marginTop: "16px" }}>
-            A payroll professional, tired of tools that get compliance wrong, <span className="accent-word">built his own</span>.
+            A payroll professional who built the tools <span className="accent-word">he needed</span>.
           </h1>
           <p style={{ fontSize: "16.5px", lineHeight: 1.6, color: "var(--ink-soft)", maxWidth: "620px", marginTop: "18px" }}>
             PayrollTool.in is a browser-based suite of calculators for Indian HR and payroll teams.
@@ -119,7 +117,7 @@ export default function About() {
             I&apos;ve worked in the weeds of Indian payroll compliance since July 2018 - EPF, ESI, Professional Tax, LWF, NPS, and TDS - working hands-on with statutory payroll across multiple client accounts, and closely with product, testing, and development teams when a payroll calculation needs to behave correctly across real employee data.
           </p>
           <p style={{ color: "var(--ink-soft)", lineHeight: 1.7, fontSize: "15.5px", marginBottom: "20px" }}>
-            Over time, the same small problems kept coming up. Someone would need a quick salary-proration check, an LOP split, a final-settlement calculation or a payroll file in the right format, and the fastest option was often another spreadsheet, another formula, or another online calculator that didn&apos;t quite match how the payroll actually worked.
+            Over time, the same small problems kept coming up. Someone would need a quick salary-proration check, an LOP split, a final-settlement calculation or a payroll file in the right format, and the fastest option was often another spreadsheet or another formula built from scratch.
           </p>
           <p style={{ color: "var(--ink-soft)", lineHeight: 1.7, fontSize: "15.5px", marginBottom: "20px" }}>
             So the tools here were built to solve that directly. Take the rules and edge cases that matter in real payroll work, and turn them into small, focused utilities that are easy to use when you need them.
@@ -127,17 +125,6 @@ export default function About() {
           <p style={{ color: "var(--ink-soft)", lineHeight: 1.7, fontSize: "15.5px", marginBottom: "20px" }}>
             PayrollTool.in is not an HRMS, and it&apos;s not trying to replace one. It&apos;s a collection of practical payroll tools, built from hands-on payroll experience, for the people who actually have to get these calculations right.
           </p>
-
-          <h2 style={{ fontSize: "26px", margin: "48px 0 16px" }}>What&apos;s live today</h2>
-          <ul className="trust-bullets" style={{ margin: "0 0 20px" }}>
-            {TOOLS.map((t) => (
-              <li key={t.href}>
-                <span>
-                  <Link href={t.href} style={{ color: "var(--brand-600)", fontWeight: 600 }}>{t.name}</Link> - {t.about}
-                </span>
-              </li>
-            ))}
-          </ul>
 
           <h2 style={{ fontSize: "26px", margin: "48px 0 16px" }}>How it&apos;s built</h2>
           <p style={{ color: "var(--ink-soft)", lineHeight: 1.7, fontSize: "15.5px", marginBottom: "20px" }}>

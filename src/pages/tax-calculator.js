@@ -202,7 +202,7 @@ const TC_INFO_CARDS = [
   {
     icon: "\ud83d\udcdd",
     title: "Worked Example",
-    body: "Rs. 12,00,000 gross with typical HRA and Section 123 claims: Old Regime tax is about Rs. 54,600, New Regime about Rs. 60,660. The full breakdown is below.",
+    body: "Rs. 12,00,000 gross with typical HRA and Section 123 claims: Old Regime tax is Rs. 67,912, New Regime nil because the full rebate applies. The full breakdown is below.",
   },
   {
     icon: "\u2696\ufe0f",
@@ -1080,26 +1080,26 @@ export default function TaxCalculator() {
               <div className="tc-we-col">
                 <h5>Old Regime</h5>
                 <p>
-                  HRA exemption Rs. 2,16,000 (least of rent minus 10% of salary, 50% of salary, or
+                  HRA exemption Rs. 1,56,000 (least of rent minus 10% of salary, 50% of salary, or
                   HRA received), Section 123 deduction Rs. 1,50,000, health insurance Rs. 20,000,
                   standard deduction Rs. 50,000, employer NPS Rs. 60,000. Taxable income comes to
-                  roughly Rs. 7,04,000, with tax of approximately Rs. 54,600 including cess.
+                  Rs. 7,64,000, with tax of Rs. 67,912 including cess.
                 </p>
               </div>
               <div className="tc-we-col tc-we-new">
                 <h5>New Regime</h5>
                 <p>
                   No HRA or Section 123 deduction available. Standard deduction Rs. 75,000 and
-                  employer NPS Rs. 60,000 still apply. Taxable income comes to roughly Rs. 10,65,000,
-                  with tax of approximately Rs. 60,660 including cess.
+                  employer NPS Rs. 60,000 still apply. Taxable income comes to Rs. 10,65,000. That is
+                  below Rs. 12,00,000, so the full rebate applies and tax is nil.
                 </p>
               </div>
             </div>
             <p className="tc-we-verdict">
-              For this profile the Old Regime saves roughly Rs. 6,000 - almost entirely because of
-              the HRA and Section 123 claims. Someone with the same salary but no rent and no
-              investments would see the New Regime win instead. Enter your own numbers above to see
-              which side wins for you.
+              For this profile the New Regime saves Rs. 67,912. Its taxable income stays under
+              Rs. 12,00,000, so the rebate removes the tax, while the Old Regime still taxes
+              Rs. 7,64,000 even after the HRA and Section 123 claims. Enter your own numbers above to
+              see which side wins for you.
             </p>
           </div>
 

@@ -784,7 +784,6 @@ export default function Home() {
         <title>LOP Splitter for Payroll &amp; HRMS Uploads | PayrollTool.in</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="LOP Splitter tool for payroll and HR teams. Upload Excel sheets and instantly generate HRMS-ready LOP rows securely in your browser." />
-        <meta name="keywords" content="LOP splitter, payroll tool, HRMS upload, salary proration, payroll automation, payroll excel utility, loss of pay calculator" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="LOP Splitter for Payroll &amp; HRMS Uploads | PayrollTool.in" />
         <meta property="og:description" content="Upload payroll sheets and generate HRMS-ready LOP rows instantly." />

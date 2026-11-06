@@ -147,13 +147,13 @@ export default function Faq() {
           <div style={{ background: "var(--brand-50)", borderRadius: "var(--radius-lg)", padding: "32px 36px" }}>
             <h2 style={{ fontSize: "22px", marginBottom: "14px" }}>What is PayrollTool.in?</h2>
             <p style={{ color: "var(--ink)", fontSize: "15px", lineHeight: 1.7, marginBottom: "16px" }}>
-              PayrollTool.in is a free, browser-based suite of payroll calculators built specifically for Indian HR and payroll professionals. It was created to replace the spreadsheets, manual formulas, and error-prone online calculators that most payroll teams in India rely on - with tools that are checked against real statutory rules and updated for the current financial year.
+              PayrollTool.in is a free, browser-based set of payroll tools for Indian HR and payroll professionals. Each tool does one specific job - a calculation, a check or a file for upload - alongside the payroll system you already use, with the statutory rules for the current financial year built in.
             </p>
             <p style={{ color: "var(--ink)", fontSize: "15px", lineHeight: 1.7, marginBottom: "16px" }}>
-              The suite currently covers five of the most common payroll calculations in India: a <strong>PF ECR Creator</strong> that prepares files for upload to the EPFO Unified Portal, a <strong>Tax Regime Calculator</strong> that compares Old vs New income tax regimes for FY 2026‑27, a <strong>Salary Proration Calculator</strong> for mid-month joining and exit cases (including state-wise Professional Tax and the EPF wage ceiling), a <strong>LOP Splitter</strong> for Loss of Pay calculations across month boundaries, and a <strong>Final Settlement Calculator</strong> covering gratuity, notice pay, and leave encashment.
+              The tools cover the jobs that come up every month: PF ECR and ESI contribution files, salary proration for joiners and leavers, Loss of Pay splits across months, tax regime comparison and final settlement figures.
             </p>
             <p style={{ color: "var(--ink)", fontSize: "15px", lineHeight: 1.7, marginBottom: 0 }}>
-              Every calculator runs entirely in your browser - no employee data is uploaded to any server, no account is required, and there&apos;s no cost to use the core tools. PayrollTool.in is built and maintained by a single payroll compliance professional with 8+ years of hands-on experience in Indian statutory payroll (EPF, ESI, Professional Tax, LWF, NPS, and TDS), not by a generic software team - the goal is to turn recurring, error-prone payroll calculations into small, reliable tools that get the compliance details right the first time.
+              Every calculator runs in your browser: employee data is not uploaded to a server for calculation, and no account is needed. PayrollTool.in is built and maintained by a payroll compliance professional with 8+ years of hands-on experience in Indian statutory payroll (EPF, ESI, Professional Tax, LWF, NPS and TDS).
             </p>
           </div>
         </div>

@@ -3,6 +3,7 @@ import "../styles/seo-blocks.css";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
+import Head from "next/head";
 import PostResultPrompt from "../components/PostResultPrompt";
 
 const GA_ID = "G-YZKNE00CWX";
@@ -20,6 +21,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />
+      </Head>
       {/* Google Analytics */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}

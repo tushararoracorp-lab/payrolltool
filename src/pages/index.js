@@ -111,7 +111,7 @@ const toolCards = [
   { icon: Icon.esicMc, name: "ESI File Creator", href: "/esic-mc-creator", desc: "Builds your ESIC monthly contribution file for the ESIC portal. Upload your sheet, fix any flagged rows, and download a portal-ready .xls." },
   { icon: Icon.tax, name: "Tax Regime Calculator", href: "/tax-calculator", desc: "Compare Old vs New tax regimes for FY 2026\u201127. See which saves you more with deductions, surcharge, and cess." },
   { icon: Icon.salaryProration, name: "Salary Proration", href: "/salary-proration", desc: "Calculate prorated salary for mid-month joining or exit. Handles partial months, joining/resignation dates, and statutory deductions." },
-  { icon: Icon.lopSplitter, name: "LOP Splitter", href: "/lop-splitter", desc: "Determine Loss of Pay for partial month absences. Handles unpaid leave, disciplinary action, and month-boundary calculations." },
+  { icon: Icon.lopSplitter, name: "LOP Splitter", href: "/lop-splitter", desc: "Split Loss of Pay date ranges that cross month boundaries into upload-ready rows for your HRMS." },
   { icon: Icon.finalSettlement, name: "Final Settlement", href: "/final-settlement", desc: "Calculate full and final settlement: gratuity, notice pay, leave encashment, and statutory deductions. Complete F&F in one place." },
 ];
 
@@ -119,7 +119,7 @@ const scenarioData = {
   joining: {
     label: "New joiner",
     without: ["Rebuilding the proration formula from scratch", "Guessing which PT slab applies for their state", "Manually checking the EPF wage ceiling"],
-    with: ["Salary Proration Calculator handles the split", "State-wise PT applied automatically", "EPF ceiling factored in by default"],
+    with: ["Salary Proration Calculator handles the split", "State-wise PT for the states it supports", "EPF ceiling factored in by default"],
   },
   exit: {
     label: "Employee exit",
@@ -462,7 +462,6 @@ export default function Home({ initialStats = null }) {
       <Head>
         <title>{HOME_SEO.title}</title>
         <meta name="description" content={HOME_SEO.description} />
-        <meta name="keywords" content="PF ECR generator, payroll calculator India, salary proration calculator, LOP calculator, income tax calculator India, final settlement calculator, EPFO ECR format, ESIC MC file generator, ESIC contribution file, payroll compliance tools" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.payrolltool.in/" />
         <meta name="theme-color" content="#7C3AED" />
@@ -625,7 +624,7 @@ export default function Home({ initialStats = null }) {
               <span className="eyebrow"><span className="dot" />India Payroll</span>
               <h1>Calculate payroll compliance <span className="accent-word">in seconds</span></h1>
               <p>Powerful, accurate and fast payroll utilities designed for HR &amp; Payroll professionals. Do precise work in less time. Every time.</p>
-              <Link prefetch={false} href="#tools" className="hero-cta">
+              <Link prefetch={false} href="/#tools" className="hero-cta">
                 Explore Tools {Icon.arrowRight}
               </Link>
               <div className="trust-row">
@@ -720,7 +719,7 @@ export default function Home({ initialStats = null }) {
                       <div className="hero-end-word">PayrollTool<span style={{ color: "var(--ink-soft)", fontWeight: 600 }}>.in</span></div>
                       <div className="hero-end-tagline">Built from real payroll work.</div>
                       <div className="hero-end-sub">Practical tools for getting payroll right.</div>
-                      <Link prefetch={false} href="#tools" className="hero-end-btn">
+                      <Link prefetch={false} href="/#tools" className="hero-end-btn">
                         Explore Tools
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
                       </Link>
@@ -887,12 +886,12 @@ export default function Home({ initialStats = null }) {
             <div className="pastel-card" style={{ background: "var(--amber-50)" }}>
               <div className="pastel-card-icon" style={{ background: "var(--amber)" }}>{Icon.bolt}</div>
               <h4 style={{ fontSize: "16.5px", marginBottom: "8px" }}>FY 2026‑27 compliant</h4>
-              <p style={{ color: "var(--ink-soft)", fontSize: "14px", lineHeight: 1.55 }}>Updated for latest tax brackets, deductions, exemptions, and statutory limits. Always current.</p>
+              <p style={{ color: "var(--ink-soft)", fontSize: "14px", lineHeight: 1.55 }}>Built on the current tax brackets, deductions, exemptions and statutory limits, and reviewed when the rules change.</p>
             </div>
             <div className="pastel-card" style={{ background: "var(--amber-50)" }}>
               <div className="pastel-card-icon" style={{ background: "var(--amber)" }}>{Icon.heart}</div>
               <h4 style={{ fontSize: "16.5px", marginBottom: "8px" }}>Made for humans</h4>
-              <p style={{ color: "var(--ink-soft)", fontSize: "14px", lineHeight: 1.55 }}>No clutter, no upsells, no forced sign-ups. Just the calculation you came for.</p>
+              <p style={{ color: "var(--ink-soft)", fontSize: "14px", lineHeight: 1.55 }}>No clutter and no forced sign-ups. Just the calculation you came for.</p>
             </div>
             <div className="pastel-card" style={{ background: "var(--brand-50)" }}>
               <div className="pastel-card-icon" style={{ background: "var(--brand-600)" }}>{Icon.user}</div>
