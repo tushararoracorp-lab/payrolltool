@@ -8,15 +8,17 @@ import { isIndexable } from '../../../lib/updates/flags';
 
 // Every notification gets a page. One added later (after an approval) is built the first time it is opened.
 export async function getStaticPaths() {
+  // Preview deployments build these pages on first visit instead of reading the database for all of them at build time.
+  if (process.env.VERCEL_ENV === 'preview') return { paths: [], fallback: 'blocking' };
   return { paths: (await listNotificationPaths()).map((p) => ({ params: p })), fallback: 'blocking' };
 }
 
 export async function getStaticProps({ params }) {
   const page = await getNotification(params.slug);
-  if (!page) return { notFound: true, revalidate: 600 };
+  if (!page) return { notFound: true, revalidate: 3600 };
   // an old or hand-typed address that still carries the right id goes to the canonical one
   if (page.canonical !== params.slug) return { redirect: { destination: '/updates/notifications/' + page.canonical, permanent: true } };
-  return { props: { ...page, indexable: isIndexable() }, revalidate: 600 };
+  return { props: { ...page, indexable: isIndexable() }, revalidate: 86400 };
 }
 
 const clip = (s, n) => (String(s).length > n ? String(s).slice(0, n - 1).trimEnd() + '\u2026' : String(s));

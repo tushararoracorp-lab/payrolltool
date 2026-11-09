@@ -8,14 +8,16 @@ import { isIndexable } from '../../../lib/updates/flags';
 
 // Every state that has data gets a page at build time. A state added later (after an approval) is built the first time it is requested.
 export async function getStaticPaths() {
+  // Preview deployments build these pages on first visit instead of reading the database for all of them at build time.
+  if (process.env.VERCEL_ENV === 'preview') return { paths: [], fallback: 'blocking' };
   const paths = (await listStatePaths()).map((p) => ({ params: p }));
   return { paths, fallback: 'blocking' };
 }
 
 export async function getStaticProps({ params }) {
   const page = await getStatePage(params.topic, params.state);
-  if (!page) return { notFound: true, revalidate: 600 };
-  return { props: { ...page, indexable: isIndexable() }, revalidate: 600 };
+  if (!page) return { notFound: true, revalidate: 3600 };
+  return { props: { ...page, indexable: isIndexable() }, revalidate: 86400 };
 }
 
 export default function StateRoute(props) {

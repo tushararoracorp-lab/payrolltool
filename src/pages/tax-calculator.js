@@ -498,7 +498,7 @@ export default function TaxCalculator() {
               {/* ---------- Income ---------- */}
               <div className={"card" + (openCards.income ? "" : " collapsed")} id="card-income">
                 <div className="card-head" onClick={() => toggleCard("income")}>
-                  <div className="card-icon">₹</div>
+                  <div className="card-icon" style={{ fontSize: "12px", fontWeight: 700 }}>Rs.</div>
                   <div className="card-titles">
                     <div className="card-title">Income</div>
                     <div className="card-sub">Gross annual salary, before any deduction</div>

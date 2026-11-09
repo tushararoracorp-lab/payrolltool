@@ -9,13 +9,13 @@ import { isIndexable } from '../lib/updates/flags';
 import { SITE } from '../components/updates/site';
 import { buildPublicData } from '../lib/updates/publicData';
 
-// Built from the database. Rebuilt in the background at most every 10 minutes, and immediately after you approve a change
+// Built from the database. Rebuilt in the background once a day, and immediately after you approve a change
 // (pages/api/decision.js calls res.revalidate('/updates')).
 export async function getStaticProps() {
   const data = await buildPublicData();
   // the cards only need the summary; the full English and Hindi text is on each notification's own page
   const light = { ...data, feed: data.feed.map(({ en, hi, ...rest }) => rest) };   // eslint-disable-line no-unused-vars
-  return { props: { data: JSON.parse(JSON.stringify(light)), indexable: isIndexable() }, revalidate: 600 };
+  return { props: { data: JSON.parse(JSON.stringify(light)), indexable: isIndexable() }, revalidate: 86400 };
 }
 
 export default function UpdatesPage({ data, indexable }) {

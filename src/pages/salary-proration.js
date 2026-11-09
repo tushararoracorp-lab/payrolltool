@@ -28,8 +28,8 @@ const INFO_CARDS = [
   },
   {
     icon: "📄",
-    title: "PDF In, PDF Out",
-    body: "Upload an appointment letter to auto-fill pay heads, then download a shareable, ready-to-send payslip PDF.",
+    title: "Appointment Letter Upload",
+    body: "Upload an appointment letter PDF to auto-fill pay heads and EPF amounts. Scanned PDFs need manual entry.",
   },
 ];
 
@@ -173,7 +173,7 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip5" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip5">
             <h5>🏦 EPF - from Appointment Letter</h5>
-            <p>Enter the EPF amounts exactly as shown in your appointment letter. These are <strong>fixed monthly figures</strong>. The PF wage ceiling is ₹15,000 until 16 Sep 2026 and ₹25,000 from 17 Sep 2026: where the letter shows the capped amount (₹1,800), the calculator applies the cap for the month you select (₹2,360 in Sep 2026, ₹3,000 from Oct 2026).</p>
+            <p>Enter the EPF amounts exactly as shown in your appointment letter. These are <strong>fixed monthly figures</strong>. The PF wage ceiling is Rs. 15,000 until 16 Sep 2026 and Rs. 25,000 from 17 Sep 2026: where the letter shows the capped amount (Rs. 1,800), the calculator applies the cap for the month you select (Rs. 2,360 in Sep 2026, Rs. 3,000 from Oct 2026).</p>
             <p>The <strong>This Month</strong> column shows the prorated PF for joining month, calculated as: 12% of (prorated Gross − prorated HRA − prorated Variable pay).</p>
             <p><strong>VPF</strong> is an additional voluntary % of Basic on top of EPF. 80C benefit applies.</p>
           </div>
@@ -330,10 +330,6 @@ const TOOL_BODY_HTML = `
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--pm)" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       <div class="res-title">Proration Result</div>
       <span class="res-emp" id="resEmp"></span>
-      <button class="dl-btn" onclick="openDlModal()" title="Download Payslip">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download
-      </button>
     </div>
     <div class="tiles" id="resTiles"></div>
     <table class="rtbl">
@@ -680,18 +676,16 @@ export default function SalaryProration() {
       return p;
     }
 
-    // jsPDF loads independently (only needed when the user downloads a payslip).
-    loadScriptOnce(
-      "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
-      "__spJsPdfLoaded"
-    );
+    // Payslip download is switched off for now (Nov 2026), so jsPDF is not loaded.
+    // To bring it back: restore the Download button in the result card and this loader:
+    // loadScriptOnce("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js", "__spJsPdfLoaded");
 
     // pdf.js must finish before the tool script (which references pdfjsLib) runs.
     loadScriptOnce(
       "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
       "__spPdfJsLoaded"
     )
-      .then(() => loadScriptOnce("/salary-proration-tool.js?v=20261024", "__spToolLoaded"))
+      .then(() => loadScriptOnce("/salary-proration-tool.js?v=20261109", "__spToolLoaded"))
       .then(() => {
         window.__spRoot = shadow;
         if (typeof window.__spInitTool === "function") {

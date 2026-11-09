@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const hub = await getHub(params.topic);
   if (!hub) return { notFound: true };
-  return { props: { hub, indexable: isIndexable() }, revalidate: 600 };
+  return { props: { hub, indexable: isIndexable() }, revalidate: 86400 };
 }
 
 export default function TopicHub({ hub, indexable }) {

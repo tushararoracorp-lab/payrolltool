@@ -730,6 +730,7 @@ export default function EsicMcCreator() {
         title={PAGE_SEO.title}
         description={PAGE_SEO.description}
         path="/esic-mc-creator"
+        image="/esi-file-creator-og-card.jpg"
         jsonLd={[
           webApplicationSchema({ name: "ESI File Creator", path: "/esic-mc-creator", description: PAGE_SEO.description, features: PAGE_SEO.features }),
           faqSchema(ALL_FAQ),

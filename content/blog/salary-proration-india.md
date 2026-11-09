@@ -48,7 +48,7 @@ Getting proration wrong in either direction creates two problems: underpaying a 
 
 ## Simplifying salary proration
 
-Handling EPF/VPF capping, ESI thresholds, state-wise PT rules, and TDS annualization together - for every new joiner - is exactly the kind of repetitive, rule-heavy calculation that's easy to get slightly wrong by hand. Our [Salary Proration Calculator](/salary-proration) applies all of these rules together and generates a clear payslip breakdown, so there are no surprises for the new joiner or the payroll team.
+Handling EPF/VPF capping, ESI thresholds, state-wise PT rules, and TDS annualization together - for every new joiner - is exactly the kind of repetitive, rule-heavy calculation that's easy to get slightly wrong by hand. Our [Salary Proration Calculator](/salary-proration) applies all of these rules together and shows a clear component-by-component breakdown, so there are no surprises for the new joiner or the payroll team.
 
 ## Key takeaway
 

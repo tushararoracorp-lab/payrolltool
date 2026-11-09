@@ -786,11 +786,11 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="PayrollTool.in" />
         <meta property="og:locale" content="en_IN" />
-        <meta property="og:image" content="https://www.payrolltool.in/preview.png" />
+        <meta property="og:image" content="https://www.payrolltool.in/lop-splitter-og-card.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="LOP Splitter for Payroll &amp; HRMS Uploads | PayrollTool.in" />
         <meta name="twitter:description" content="Upload payroll sheets and generate HRMS-ready LOP rows instantly." />
-        <meta name="twitter:image" content="https://www.payrolltool.in/preview.png" />
+        <meta name="twitter:image" content="https://www.payrolltool.in/lop-splitter-og-card.jpg" />
         <meta name="author" content="PayrollTool.in" />
         <link rel="canonical" href="https://www.payrolltool.in/lop-splitter" />
         <script

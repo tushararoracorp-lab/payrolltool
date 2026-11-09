@@ -73,10 +73,6 @@ export default function NotificationPage({ n, related, stateLink }) {
         ) : null}
       </div>
 
-      <div className="foot">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>
-        <p>Summaries are for guidance only and are not a substitute for the official notification or professional advice.</p>
-      </div>
     </main>
   );
 }
