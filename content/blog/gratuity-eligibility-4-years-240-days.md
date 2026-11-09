@@ -11,9 +11,9 @@ The short version: there's a real legal basis for gratuity before 5 calendar yea
 
 ## The headline rule, and its actual exception
 
-The Payment of Gratuity Act, 1972 requires **5 years of continuous service** to qualify for gratuity. That's the number everyone knows. What far fewer people know is that the Act never actually defines "one year" as a calendar year - and that gap is where the real rule lives.
+The Code on Social Security, 2020, in force since 21 November 2025, requires **5 years of continuous service** for gratuity. It replaced the Payment of Gratuity Act, 1972, and carried over that Act's rule on what a "year" of service means. That rule is where the real answer lives.
 
-**Section 2A of the Act** defines continuous service in terms of **days worked**, not calendar time: an employee who works at least **240 days in a 12-month period** (190 days for certain establishments) is deemed to have completed one year of continuous service. Courts have applied this same logic to the final, incomplete year before the 5-year mark - most notably in the Madras High Court's ruling in *Mettur Beardsell Ltd. v. Regional Labour Commissioner*, where an employee with 4 years, 10 months, and 18 days of service was held eligible for gratuity, because the days served in that fifth year comfortably exceeded 240.
+**Section 54 of the Code** (section 2A of the old Act) defines continuous service in terms of **days worked**, not calendar time: an employee who works at least **240 days in a 12-month period** (190 days where the establishment works fewer than six days a week) is treated as having completed one year of continuous service. Courts have applied this same logic to the final, incomplete year before the 5-year mark. In *Mettur Beardsell Ltd. v. Regional Labour Commissioner*, the Madras High Court held an employee with 4 years, 10 months and 18 days of service eligible for gratuity, because the days served in that fifth year exceeded 240. The case was decided under the 1972 Act, and the Code keeps the same 240-day test.
 
 This is now widely known as the **"4 years + 240 days" rule**: complete 4 full years, then work at least 240 days into the fifth year, and multiple courts have held that counts as having completed 5 years for gratuity purposes.
 
@@ -35,7 +35,7 @@ If an employee **dies** or becomes **permanently disabled** while employed, the 
 
 ## What changed for fixed-term employees
 
-The new Labour Codes introduced a genuinely significant change that predates and sits alongside the 240-day debate: **fixed-term employees are now entitled to gratuity on a pro-rata basis for whatever period they actually worked, without needing to complete 5 years at all.** This is new, and it doesn't touch the 5-year rule for permanent employees - it specifically carves out fixed-term contracts, which are increasingly common in IT, manufacturing, and consulting. If your engagement is on a defined-term contract rather than permanent rolls, the entire "4 years 240 days" debate may not even apply to you - a shorter, pro-rated entitlement kicks in regardless.
+The Code on Social Security changed the rule for fixed-term employees: **they qualify for gratuity after one year of service under the contract, counted from the start of the contract**, instead of five years. The Ministry of Labour and Employment's FAQs of 16 March 2026 confirm the one-year requirement and that fixed-term employment covers people the employer engages directly. An 11-month contract therefore does not qualify. Contract labour engaged through a contractor stays on the five-year rule, with the contractor paying the gratuity. The 5-year rule for permanent employees is unchanged.
 
 ## Forfeiture: the other thing people misunderstand
 
@@ -48,7 +48,7 @@ Even then, forfeiture is capped at the actual loss caused - an employer cannot f
 
 ## The formula and cap, briefly
 
-For employees covered under the Act: **Gratuity = (Last drawn salary × 15 × years of service) ÷ 26**, where "years of service" already accounts for the 240-day rule above where it applies. The statutory cap remains **Rs. 20 lakh** for private-sector employees, and this is also the Section 10(10) tax-exemption limit - gratuity paid correctly within the cap is tax-free.
+**Gratuity = (Last drawn wages × 15 × years of service) ÷ 26**, where "years of service" already reflects the 240-day rule above where it applies. Wages here means wages as defined in the Code, including the 50% add-back where excluded components exceed half of remuneration. The maximum is **Rs. 20 lakh**, which is also the lifetime tax-exemption limit under section 19(1) of the Income-tax Act, 2025 (formerly section 10(10)).
 
 ## What to actually do if you're in the 4-8-month zone
 
@@ -60,6 +60,4 @@ Gratuity is rarely the only number in play when someone leaves - leave encashmen
 
 ## Key takeaway
 
-"5 years" is the number everyone quotes, but it's not the whole rule. Section 2A's 240-day provision, tested and upheld across multiple High Court rulings, means genuine gratuity eligibility can exist well before an employee's fifth work anniversary - and forfeiture is far more restricted than most people assume. Both of these are worth knowing precisely, not approximately, before accepting an employer's first answer.
-
-**The 240-day rule is judicial interpretation, not explicit statute - widely followed, but not guaranteed in every dispute.** If your eligibility is contested, or involves fixed-term employment or misconduct-related forfeiture, consult a labour lawyer with your exact dates.
+"5 years" is the number everyone quotes, but it's not the whole rule. The 240-day provision in section 54 of the Code (section 2A of the old Act), tested and upheld across multiple High Court rulings, means genuine gratuity eligibility can exist well before an employee's fifth work anniversary - and forfeiture is far more restricted than most people assume. Both of these are worth knowing precisely, not approximately, before accepting an employer's first answer.

@@ -73,5 +73,3 @@ For rough orientation: a salaried employee on Rs. 19,00,000 gross needs somewher
 ## See where you land
 
 Our [Tax Regime Calculator](/tax-calculator) itemises the full Section 123 basket, applies the Rs. 1,50,000 cap, adds the separate Rs. 50,000 NPS deduction and shows the old and new regimes side by side for Tax Year 2026-27.
-
-**Investment decisions are not only tax decisions.** Before locking money into a fifteen-year PPF or a retirement-locked NPS account for a deduction, discuss the wider picture with a chartered accountant or a qualified financial adviser.

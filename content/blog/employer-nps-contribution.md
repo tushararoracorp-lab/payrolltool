@@ -25,9 +25,9 @@ Three separate NPS-related deductions exist, and they are constantly confused:
 
 The deduction is capped as a **percentage of salary**, where salary means Basic plus Dearness Allowance. It is not unlimited, and it is not a flat rupee figure.
 
-The percentage differs by employer type and, since the new regime's introduction, by regime. Because the applicable percentage has been revised more than once in recent years, check the current figure against your own payroll system's configuration or with your finance team before relying on a specific number - this is one of the details most likely to have moved.
+Under the **new regime** the limit is **14% of Basic plus DA** for every employee. Under the **old regime** it is **10% for private-sector employees** and 14% for Central and State Government employees. Separately, employer contributions to PF, NPS and superannuation funds above Rs. 7,50,000 a year in total are taxed as a perquisite.
 
-The structural point holds regardless of the exact percentage: **the higher your Basic, the more room you have.** An employee with a Basic of Rs. 4,00,000 has far less headroom than one with a Basic of Rs. 12,00,000 on the same CTC. Salary structures that suppress Basic to reduce gratuity and EPF liability also shrink this deduction.
+Because the limit is a percentage: **the higher your Basic, the more room you have.** An employee with a Basic of Rs. 4,00,000 has far less headroom than one with a Basic of Rs. 12,00,000 on the same CTC. Salary structures that suppress Basic to reduce gratuity and EPF liability also shrink this deduction.
 
 ## Why it matters more under the new regime
 
@@ -66,5 +66,3 @@ What does not work is claiming a deduction for an employer contribution that was
 ## Model it against your salary
 
 Our [Tax Regime Calculator](/tax-calculator) treats employer NPS as a deduction under both regimes, alongside the full old-regime deduction set, so you can see how it changes the comparison for Tax Year 2026-27.
-
-**Before restructuring your CTC around this, talk to a chartered accountant.** The applicable percentage limit, the interaction with your existing EPF and gratuity entitlements, and the retirement-stage taxation all depend on specifics that a general guide cannot address.

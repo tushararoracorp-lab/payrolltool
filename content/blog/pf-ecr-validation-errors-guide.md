@@ -41,10 +41,8 @@ Repeated rejection-and-resubmission cycles matter here specifically because each
 
 ## Reducing how often this happens in the first place
 
-Most of these errors are catchable before upload, not just after rejection: confirming every UAN is active and KYC-approved, checking wage-base components against the statutory ceiling, and making sure no employee appears twice - all before the file ever reaches the portal. Our [PF ECR File Generator](/pf-ecr-creator) builds the file with the correct delimiter structure and field order handled automatically, so structural rejections in particular - the ones that have nothing to do with employee data and everything to do with formatting - are eliminated at the source.
+Most of these errors are catchable before upload, not just after rejection: confirming every UAN is active and KYC-approved, checking wage-base components against the statutory ceiling, and making sure no employee appears twice - all before the file ever reaches the portal. Our [PF ECR Creator](/pf-ecr-creator) builds the file with the correct delimiter structure and field order handled automatically, so structural rejections in particular - the ones that have nothing to do with employee data and everything to do with formatting - are eliminated at the source.
 
 ## Key takeaway
 
 Most ECR rejections fall into two categories: employee-record problems (UAN, KYC, name mismatch) that need fixing at the EPFO member-portal level, and file-structure problems (delimiters, duplicates, wage base) that are fixable in the file itself before resubmission. Knowing which category an error falls into is most of the battle - the rest is just not letting a rejection eat into the days before the 15th.
-
-**This reflects EPFO's ECR system and common rejection patterns as currently documented - always cross-check specific error messages against the EPFO Unified Portal's own guidance, since validation rules are revised periodically.** For persistent rejections or compliance exposure from late filing, consult your compliance team or a chartered accountant directly.

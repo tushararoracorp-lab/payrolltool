@@ -5,7 +5,7 @@ date: "2026-10-18"
 slug: "esic-mc-file-upload-template-reason-codes"
 ---
 
-**Quick answer:** The ESIC monthly contribution (MC) file is a six-column Excel sheet - IP number, name, days, wages, reason code and last working day - saved as `.xls` and uploaded to the ESIC employer portal every month. [Download the blank template (.xls)](/esic-portal-template.xls) to fill in by hand, or use the free [ESIC MC Creator](/esic-mc-creator) to turn a normal spreadsheet into a portal-ready file and check every row before you upload.
+**Quick answer:** The ESIC monthly contribution (MC) file is a six-column Excel sheet - IP number, name, days, wages, reason code and last working day - saved as `.xls` and uploaded to the ESIC employer portal every month. [Download the blank template (.xls)](/esic-portal-template.xls) to fill in by hand, or use the free [ESI File Creator](/esic-mc-creator) to turn a normal spreadsheet into a portal-ready file and check every row before you upload.
 
 ## What the MC file is
 
@@ -94,11 +94,11 @@ One detail changes the total by a rupee or two: the employee share is rounded up
 
 The employee total is 139 + 150 + 115 = **Rs. 404**. The employer total is 601.25 + 650 + 495.625 = 1,746.875, rounded up once to **Rs. 1,747**. Rounding each person's employer share separately would give Rs. 1,748, so how you round changes the total. The amount payable is Rs. 2,151.
 
-The ESIC MC Creator applies this rounding and shows the totals. Always reconcile them with the challan the portal generates.
+The ESI File Creator applies this rounding and shows the totals. Always reconcile them with the challan the portal generates.
 
-## Skip the manual work: the ESIC MC Creator
+## Skip the manual work: the ESI File Creator
 
-The [ESIC MC Creator](/esic-mc-creator) does the formatting and the checking for you:
+The [ESI File Creator](/esic-mc-creator) does the formatting and the checking for you:
 
 - Upload your own payroll sheet, or use our simpler template where Employee Status is a dropdown of names instead of numeric codes.
 - It checks every row before you download: invalid or duplicate IP numbers, names cleaned to letters and spaces, day counts against the length of the month, zero-day rows, missing or unnecessary last working days, and the April/October rule for Out of Coverage.
@@ -108,7 +108,7 @@ The [ESIC MC Creator](/esic-mc-creator) does the formatting and the checking for
 - It shows the employee and employer totals so you can compare them with the challan.
 - It runs entirely in your browser, so your file is never uploaded to a server. It is free and needs no sign-up.
 
-If you also file PF every month, the [PF ECR File Generator](/pf-ecr-creator) works the same way.
+If you also file PF every month, the [PF ECR Creator](/pf-ecr-creator) works the same way.
 
 ## FAQs
 
@@ -128,11 +128,11 @@ Only when the days column is 0 and the reason code is 2, 3, 4, 5, 6 or 10. If th
 No. Code 4 is valid only when the wage period is April or October. In any other month the IP continues to appear in your list.
 
 **Do I need to calculate the contribution amounts myself?**
-No. You report days and wages, and the portal calculates the employee and employer contributions. The ESIC MC Creator shows the totals so you can check them against the challan.
+No. You report days and wages, and the portal calculates the employee and employer contributions. The ESI File Creator shows the totals so you can check them against the challan.
 
-**Is my data safe in the ESIC MC Creator?**
+**Is my data safe in the ESI File Creator?**
 Your file is read and converted inside your browser and is never sent to or stored on a PayrollTool.in server.
 
 ## Key takeaway
 
-The MC file is simple in content but strict in format: six columns, `.xls`, everything as Text, padded dates, a reason code for every zero-day row and a last working day only where the rules allow it. Get one row wrong and the whole upload can fail. Use the [blank template](/esic-portal-template.xls) if you prefer to fill it in by hand, or let the [ESIC MC Creator](/esic-mc-creator) check and format it for you.
+The MC file is simple in content but strict in format: six columns, `.xls`, everything as Text, padded dates, a reason code for every zero-day row and a last working day only where the rules allow it. Get one row wrong and the whole upload can fail. Use the [blank template](/esic-portal-template.xls) if you prefer to fill it in by hand, or let the [ESI File Creator](/esic-mc-creator) check and format it for you.

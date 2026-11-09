@@ -39,10 +39,10 @@ function calculate(f) {
     return clamp(n, max);
   }
 
-  const basic = clampMoney(f.basic, "Basic Salary");
-  const da = clampMoney(f.da, "Dearness Allowance");
+  // Wages as defined in the Labour Codes (basic pay, DA, retaining allowance and other pay not excluded,
+  // plus the 50% add-back). Used for gratuity, leave encashment and, by default, notice pay.
+  const wages = clampMoney(f.wages, "Wages");
   const gross = clampMoney(f.gross, "Gross Salary");
-  const basicDA = basic + da;
   const doj = new Date(f.doj);
   const dor = new Date(f.dor);
   const dol = new Date(f.dol);
@@ -52,13 +52,13 @@ function calculate(f) {
   const credit = clampMoney(f.credit, "Other amount owed to you");
   const debit = clampMoney(f.debit, "Dues to be deducted");
 
-  let noticeSalary = basicDA;
+  let noticeSalary = wages;
   const hasShortfall = served < req;
   if (f.noticeBasis === "gross") {
     if (gross > 0) {
       noticeSalary = gross;
     } else if (hasShortfall) {
-      capWarnings.push("Gross Salary not entered - using Basic + DA instead for notice pay.");
+      capWarnings.push("Gross Salary not entered - using Wages instead for notice pay.");
     }
   }
 
@@ -97,10 +97,14 @@ function calculate(f) {
     const daysUntilNext = Math.max(0, windowDays - extraDays);
     tenureLine = `${years} year(s) complete - ${daysUntilNext} day(s) until your next work anniversary`;
 
-    if (years >= 5) {
+    // Code on Social Security, 2020 (from 21 Nov 2025): regular employees qualify after 5 years of
+    // continuous service; fixed-term employees after 1 year of service under the contract.
+    const isFte = f.empType === "fte";
+    const minYears = isFte ? 1 : 5;
+    if (years >= minYears) {
       const gratuityYears = years + (extraDays >= 182 ? 1 : 0);
-      gratuity = (basicDA * 15) / 26 * gratuityYears;
-      let explain = `Qualifies at ${years} completed year(s) of service${
+      gratuity = (wages * 15) / 26 * gratuityYears;
+      let explain = `${isFte ? `Fixed-term employee (qualifies after 1 year): ${years} completed year(s) under the contract` : `Qualifies at ${years} completed year(s) of service`}${
         extraDays >= 182 ? `, rounded up to ${gratuityYears} for the payout (6+ months counts as a full year)` : ""
       }.`;
       if (gratuity > gratuityCap) {
@@ -109,19 +113,20 @@ function calculate(f) {
       }
       lines.push({ label: "Gratuity", amount: gratuity, explain });
     } else {
-      const shortMsg =
-        years === 4
+      const shortMsg = isFte
+        ? `Not applicable yet - a fixed-term employee qualifies after 1 year of service under the contract, and the service is ${daysUntilNext} day(s) short of that.`
+        : years === 4
           ? `So close - just ${daysUntilNext} more day(s) and you'd have qualified for gratuity.`
-          : `Not applicable yet - gratuity kicks in after 5 completed years, and you're at ${years}.`;
+          : `Not applicable yet - gratuity applies after 5 completed years, and you're at ${years}.`;
       lines.push({ label: "Gratuity", amount: 0, explain: shortMsg });
     }
   }
 
-  const leaveAmt = (basicDA / 30) * leaveDays;
+  const leaveAmt = (wages / 30) * leaveDays;
   let leaveExplain = `${leaveDays} unused leave day(s) paid out.`;
   let leaveTaxFlag = null;
   if (leaveAmt > LEAVE_EXEMPT_LIMIT) {
-    leaveTaxFlag = "This alone exceeds the Rs. 25L lifetime tax-exemption limit (assuming no prior use) - the excess is likely taxable.";
+    leaveTaxFlag = "This alone exceeds the Rs. 25L lifetime tax-exemption limit (assuming no prior use) - the excess is taxable.";
   }
   lines.push({ label: "Leave encashment", amount: leaveAmt, explain: leaveExplain, taxFlag: leaveTaxFlag });
 
@@ -133,7 +138,7 @@ function calculate(f) {
       label: "Notice period shortfall",
       amount: noticeAmt,
       explain: `Served ${served} of ${req} required days - ${shortfall} day(s) short, on ${
-        f.noticeBasis === "gross" && gross > 0 ? "Gross salary" : "Basic + DA"
+        f.noticeBasis === "gross" && gross > 0 ? "Gross salary" : "Wages"
       }.`,
     });
   } else {
@@ -153,13 +158,13 @@ const initialFields = {
   dor: "",
   dol: "",
   sector: "private",
-  basic: "",
-  da: "",
+  empType: "regular",
+  wages: "",
   gross: "",
   req: "60",
   served: "",
   servedAuto: true,
-  noticeBasis: "basic",
+  noticeBasis: "wages",
   leave: "",
   credit: "",
   debit: "",
@@ -176,45 +181,45 @@ const FS_INFO_CARDS = [
   {
     icon: "\ud83c\udfe6",
     title: "What counts as a full and final settlement?",
-    body: "Everything owed to you after your last working day: unpaid salary, gratuity if you have completed 5+ years, encashment of unused earned leave, any notice-pay shortfall, and other dues - minus anything you owe the company.",
+    body: "Everything owed after the last working day: unpaid salary, gratuity where the employee qualifies, encashment of unused earned leave and other dues, minus any notice-pay shortfall and amounts owed to the company.",
   },
   {
     icon: "\u2696\ufe0f",
     title: "Gratuity, in short",
-    body: "(Basic + DA) \u00d7 15 \u00f7 26 \u00d7 years worked, only after 5 or more years of service. A final year of 6 or more months rounds up. Capped at Rs. 20 lakh in the private sector under the Payment of Gratuity Act, 1972.",
+    body: "Wages \u00d7 15 \u00f7 26 \u00d7 years worked. Regular employees qualify after 5 years, fixed-term employees after 1 year under the contract (Code on Social Security, 2020). A final year of 6 or more months rounds up. Capped at Rs. 20 lakh in the private sector.",
   },
   {
     icon: "\ud83d\udcc5",
     title: "Notice period shortfall",
-    body: "If your last working day falls short of your notice period, the gap is deducted at your daily Basic + DA (or Gross, if your appointment letter says so) rate - the same rule most Indian employers apply.",
+    body: "If your last working day falls short of your notice period, the gap is deducted at your daily Wages (or Gross, if your appointment letter says so) rate - the same rule most Indian employers apply.",
   },
   {
     icon: "\ud83d\udee1\ufe0f",
     title: "What this does not cover",
-    body: "Bonus, variable pay, ESOP settlement, and TDS on the final payment are not computed here. This is an estimate of the settlement components themselves - always compare it against HR's written statement.",
+    body: "Bonus, variable pay, ESOP settlement and TDS on the final payment are not computed here. Enter any pending bonus or other dues in the amounts section, and handle TDS in the final payroll run.",
   },
 ];
 
 const FS_FAQ = [
   {
     q: "Am I entitled to gratuity if I resign before 5 years?",
-    a: "Generally no. The Payment of Gratuity Act, 1972 requires a minimum of 5 years of continuous service, with one narrow exception - death or disablement, where the 5-year requirement is waived. Resigning at 4 years 11 months, even by a few days, typically means no gratuity is payable.",
+    a: "A regular employee needs 5 years of continuous service under the Code on Social Security, 2020, which replaced the Payment of Gratuity Act, 1972 from 21 November 2025. A year counts once 240 days are worked in it (190 days in a five-day establishment). A fixed-term employee qualifies after 1 year of service under the contract. On death or disablement no minimum service applies.",
   },
   {
     q: "Is unused sick leave or casual leave encashable?",
-    a: "In most states and company policies, no. Only Earned Leave (also called Privilege Leave) is encashable at exit. Casual leave and sick leave usually lapse unused. Check your specific leave policy, since this varies by state and by employer.",
+    a: "Usually not. Under the Occupational Safety, Health and Working Conditions Code, 2020, a worker can encash the earned leave to their credit on leaving. Casual and sick leave are encashable only where the company's leave policy provides for it.",
   },
   {
     q: "What happens if I don't serve my full notice period?",
-    a: "Most appointment letters allow the employer to deduct pay in lieu of the shortfall, calculated per day on your Basic + DA or Gross salary. This calculator applies that same shortfall deduction automatically once you enter your resignation and last working dates.",
+    a: "Most appointment letters allow the employer to deduct pay in lieu of the shortfall, calculated per day on your Wages or Gross salary. This calculator applies that same shortfall deduction automatically once you enter your resignation and last working dates.",
   },
   {
     q: "Is my final settlement amount taxable?",
-    a: "Gratuity is tax-exempt up to the same limit used to cap it here (Rs. 20 lakh in the private sector, under Section 10(10)). Leave encashment is tax-exempt only up to a lifetime limit shared across all your employers (Section 10(10AA)); above that limit, it is taxable as salary. This calculator does not deduct that tax - treat the leave encashment figure as pre-tax if you are close to the lifetime limit.",
+    a: "Gratuity is exempt up to Rs. 20 lakh under section 19(1) of the Income-tax Act, 2025 (formerly section 10(10)), the same limit used to cap it here. Leave encashment on leaving is exempt up to Rs. 25 lakh (formerly section 10(10AA)). Both are lifetime limits shared across all employers, and both exemptions apply under the old and the new regime. Any amount above the limit is taxed as salary; this calculator does not deduct that tax.",
   },
   {
     q: "How long does an employer have to pay my final settlement?",
-    a: "There is no single central-law deadline that applies to every employer, and practice varies by state and company policy - commonly somewhere between 30 and 45 days from the last working day is treated as reasonable. If your settlement is significantly delayed beyond what your employer's own policy states, that is worth raising with HR directly, and interest may apply on delayed gratuity payments specifically.",
+    a: "Under section 17(2) of the Code on Wages, 2019, wages due to an employee who resigns, is removed, dismissed or retrenched must be paid within two working days of leaving.",
   },
 ];
 
@@ -305,14 +310,14 @@ export default function FinalSettlement() {
         <title>Final Settlement Calculator – Gratuity, Leave Encashment | PayrollTool.in</title>
         <meta
           name="description"
-          content="Calculate your full and final settlement - gratuity, notice pay, and leave encashment - browser-based, no login required."
+          content="Calculate full and final settlement for regular and fixed-term employees - gratuity, notice pay and leave encashment under the Code on Social Security. Browser-based, no login required."
         />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="PayrollTool.in" />
         <meta property="og:title" content="Final Settlement Calculator – PayrollTool.in" />
         <meta
           property="og:description"
-          content="Calculate your full and final settlement - gratuity, notice pay, and leave encashment - browser-based, no login required."
+          content="Calculate full and final settlement for regular and fixed-term employees - gratuity, notice pay and leave encashment under the Code on Social Security. Browser-based, no login required."
         />
         <meta property="og:url" content="https://www.payrolltool.in/final-settlement" />
         <meta property="og:image" content="https://www.payrolltool.in/og-homepage.jpg" />
@@ -325,7 +330,7 @@ export default function FinalSettlement() {
         <meta name="twitter:title" content="Final Settlement Calculator – PayrollTool.in" />
         <meta
           name="twitter:description"
-          content="Calculate your full and final settlement - gratuity, notice pay, and leave encashment - browser-based, no login required."
+          content="Calculate full and final settlement for regular and fixed-term employees - gratuity, notice pay and leave encashment under the Code on Social Security. Browser-based, no login required."
         />
         <link rel="canonical" href="https://www.payrolltool.in/final-settlement" />
         <script
@@ -366,7 +371,7 @@ export default function FinalSettlement() {
           <h1>
             Final Settlement <span>Calculator</span>
           </h1>
-          <p>Calculate your gratuity, notice pay, and leave encashment in one place - know your number before HR tells you theirs.</p>
+          <p>Work out gratuity, leave encashment and notice pay recovery for regular and fixed-term employees, under the Code on Social Security, 2020.</p>
         </div>
 
         <div className="layout">
@@ -404,6 +409,18 @@ export default function FinalSettlement() {
                     <div className="help info-mobile">Also known as your Date of Leaving.</div>
                   </div>
                   <div className="field field-full">
+                    <label htmlFor="empType">Employee type</label>
+                    <select id="empType" value={fields.empType} onChange={set("empType")}>
+                      <option value="regular">Regular/Permanent employee</option>
+                      <option value="fte">Fixed-term employee</option>
+                    </select>
+                    <div className="help">
+                      {fields.empType === "fte"
+                        ? "Gratuity after 1 year of service under the contract. Enter the contract start date as the Date of Joining."
+                        : "Gratuity after 5 years of continuous service."}
+                    </div>
+                  </div>
+                  <div className="field field-full">
                     <label htmlFor="sector">Sector</label>
                     <select id="sector" value={fields.sector} onChange={set("sector")}>
                       <option value="private">Private (gratuity capped at Rs. 20L)</option>
@@ -429,17 +446,14 @@ export default function FinalSettlement() {
               {openSections.salary && (
               <div className="section-body">
                 <div className="grid2">
-                  <div className="field">
-                    <label htmlFor="basic">Monthly Basic Salary (Rs. )</label>
-                    <input inputMode="decimal" type="number" id="basic" value={fields.basic} onChange={set("basic")} min="0" max="50000000" />
-                    <div className="help">Check your latest payslip - usually the largest single line item.</div>
-                  </div>
-                  <div className="field">
-                    <label htmlFor="da">
-                      Monthly Dearness Allowance (Rs. ) <span className="req-tag">optional</span>
-                    </label>
-                    <input inputMode="decimal" type="number" id="da" value={fields.da} onChange={set("da")} min="0" max="50000000" />
-                    <div className="help">If DA is a separate line on your payslip, enter it here - it&apos;s combined with Basic for gratuity and leave encashment.</div>
+                  <div className="field field-full">
+                    <label htmlFor="wages">Monthly Wages (Rs.)</label>
+                    <input inputMode="decimal" type="number" id="wages" value={fields.wages} onChange={set("wages")} min="0" max="50000000" />
+                    <div className="help">
+                      Wages as defined in the Labour Codes: basic pay, dearness allowance, retaining allowance and any other pay the Code does
+                      not exclude. If HRA, conveyance, bonus and the other excluded items add up to more than half of total pay, add the excess.
+                      Used for gratuity and leave encashment.
+                    </div>
                   </div>
                   <div className="field field-full">
                     <label htmlFor="gross">
@@ -481,10 +495,10 @@ export default function FinalSettlement() {
                   <div className="field field-full">
                     <label htmlFor="noticeBasis">Notice pay is based on</label>
                     <select id="noticeBasis" value={fields.noticeBasis} onChange={set("noticeBasis")}>
-                      <option value="basic">Basic + DA</option>
+                      <option value="wages">Wages</option>
                       <option value="gross">Gross Salary</option>
                     </select>
-                    <div className="help">Check your appointment letter to confirm - if unsure, most companies use Basic + DA.</div>
+                    <div className="help">Check your appointment letter to confirm - if unsure, most companies use Wages.</div>
                   </div>
                 </div>
               </div>
@@ -581,23 +595,24 @@ export default function FinalSettlement() {
                 <summary>How this is calculated</summary>
                 <div className="rules-box">
                   <p>
-                    <b>Gratuity</b> - paid only after 5+ years of service: <code>(Basic + DA) × 15 ÷ 26 × years worked</code>. A period of 6+ months
-                    in the final year rounds up to a full year. Capped at Rs. 20 lakh (private sector) or Rs. 25 lakh (government) per the Payment of
-                    Gratuity Act, 1972.
+                    <b>Gratuity</b> - <code>Wages × 15 ÷ 26 × years worked</code>, after 5 years of continuous service for a regular employee or
+                    1 year under the contract for a fixed-term employee (Code on Social Security, 2020). A period of 6+ months in the final year rounds up
+                    to a full year. Capped at Rs. 20 lakh (private sector) or Rs. 25 lakh (government).
                   </p>
                   <p>
-                    <b>Leave encashment</b> - <code>(Basic + DA) ÷ 30 × unused leave days</code>. Only Earned/Privilege Leave is encashable in most
+                    <b>Leave encashment</b> - <code>Wages ÷ 30 × unused leave days</code>. Only Earned/Privilege Leave is encashable in most
                     states - casual and sick leave typically aren&apos;t.
                   </p>
                   <p>
                     <b>Notice shortfall</b> - served days are worked out from your resignation and last working day; if that&apos;s less than the
-                    required notice, the shortfall is deducted at <code>(Basic+DA or Gross) ÷ 30</code> per day, based on whichever your appointment
-                    letter specifies. If you select Gross but don&apos;t enter it, this falls back to Basic + DA.
+                    required notice, the shortfall is deducted at <code>(Wages or Gross) ÷ 30</code> per day, based on whichever your appointment
+                    letter specifies. If you select Gross but don&apos;t enter it, this falls back to Wages.
                   </p>
                   <p>
-                    <b>Tax</b> - Gratuity above is capped at the same figure as its tax-exemption limit (Sec 10(10)), so it stays tax-free by
-                    construction. Leave encashment isn&apos;t capped here, so a high salary plus a large leave balance can push it past the Sec 10(10AA)
-                    exemption (a lifetime limit shared across employers) - anything above that limit is taxable, so treat that figure as pre-tax.
+                    <b>Tax</b> - Gratuity above is capped at the same figure as its tax-exemption limit (section 19(1) of the Income-tax Act, 2025,
+                    formerly Sec 10(10)), so it stays tax-free by construction. Leave encashment isn&apos;t capped here, so a high salary plus a large leave
+                    balance can push it past the Rs. 25 lakh exemption (formerly Sec 10(10AA), a lifetime limit shared across employers); anything above
+                    that limit is taxable, so treat that figure as pre-tax.
                   </p>
                 </div>
               </details>
@@ -626,9 +641,9 @@ export default function FinalSettlement() {
         </div>
 
         <div className="fsc-worked-example">
-          <h4>Worked example - 7 years 8 months, Basic + DA Rs. 50,000</h4>
+          <h4>Worked example - 7 years 8 months, wages Rs. 50,000</h4>
           <p>
-            Joined with Basic + DA of Rs. 50,000/month, resigned after 7 years 8 months of
+            A regular employee on wages of Rs. 50,000/month resigns after 7 years 8 months of
             continuous service, with 18 days of unused earned leave and no notice shortfall.
           </p>
           <div className="fsc-we-grid">
@@ -644,13 +659,13 @@ export default function FinalSettlement() {
               <h5>Leave encashment</h5>
               <p>
                 (Rs. 50,000 &divide; 30) &times; 18 days = <b>Rs. 30,000</b>. Well under the
-                lifetime Section 10(10AA) limit for most employees, so ordinarily tax-free too -
-                though that limit is shared across every employer you have worked for.
+                lifetime Rs. 25 lakh limit (formerly section 10(10AA)), so tax-free too. That limit
+                is shared across every employer the employee has worked for.
               </p>
             </div>
           </div>
           <p className="fsc-we-verdict">
-            Total settlement before any pending dues or deductions: roughly{" "}
+            Total settlement before any pending dues or deductions:{" "}
             <b>Rs. 2,60,769</b>. Add or subtract unpaid salary, notice shortfall, and any other
             dues specific to your case using the calculator above.
           </p>

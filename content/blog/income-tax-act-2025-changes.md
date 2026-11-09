@@ -60,5 +60,3 @@ The Act is a consolidation and renumbering exercise. That is genuinely useful - 
 ## Working out where you stand
 
 If you want to see the new section numbering applied to your own salary, our [Tax Regime Calculator](/tax-calculator) labels every deduction with both the 2025 Act section and its 1961 equivalent, and computes old against new regime for Tax Year 2026-27.
-
-**For anything beyond a straightforward salaried computation, take advice from a chartered accountant.** Renumbering exercises tend to surface edge cases in the first year, and a general guide cannot anticipate how a specific provision applies to your circumstances.

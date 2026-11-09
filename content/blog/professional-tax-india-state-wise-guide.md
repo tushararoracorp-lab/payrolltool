@@ -17,7 +17,7 @@ Employers deduct it every payroll cycle and remit it to the state; self-employed
 
 This is the fact that trips people up most. PT isn't a uniform, all-India deduction - a meaningful number of states don't charge it at all.
 
-**States and UTs that do levy PT** (as of 2026): Maharashtra, Karnataka, West Bengal, Andhra Pradesh, Telangana, Tamil Nadu, Gujarat, Madhya Pradesh, Kerala, Assam, Odisha, Jharkhand, Bihar, and several northeastern states.
+**States and UTs that do levy PT** (as of 2026): Maharashtra, Karnataka, West Bengal, Andhra Pradesh, Telangana, Tamil Nadu, Gujarat, Madhya Pradesh, Kerala, Assam, Jharkhand, Bihar, and several northeastern states. Odisha abolished Professional Tax from 1 April 2026.
 
 **States that don't**: Delhi, Uttar Pradesh, Haryana, Rajasthan, Punjab, Himachal Pradesh, and Uttarakhand, among others.
 
@@ -78,5 +78,3 @@ Between Rs. 2,500 caps, February true-ups, gender-specific thresholds in some st
 ## Key takeaway
 
 Professional Tax is small in absolute terms but genuinely state-specific in a way that catches multi-state employers more often than the amount involved would suggest. The two things worth checking today: whether your payroll is mapping PT to actual work location rather than registered office, and whether your slabs reflect the most recent state notification rather than whatever was correct when the sheet was first built.
-
-**Verify current slabs and due dates against your state's official notification - this guide reflects general structure, not a substitute for the source.** For anything beyond a standard salaried case, consult a chartered accountant or your compliance team.

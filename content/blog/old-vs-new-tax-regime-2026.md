@@ -77,5 +77,3 @@ The new regime wins by Rs. 64,740 - and that is with a near-maximum old regime c
 ## Run your own numbers
 
 Break-even tables are useful for orientation but no substitute for your actual figures, because HRA in particular varies enormously with your basic salary and the city you live in. Our [Tax Regime Calculator](/tax-calculator) computes both regimes side by side for Tax Year 2026-27, with the full deduction set and a monthly TDS estimate, so you can see exactly where you land.
-
-**Confirm your position with a chartered accountant before you make the declaration to payroll** - once the financial year is underway, switching is not always straightforward, and the right answer depends on details no calculator can see.

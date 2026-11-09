@@ -39,9 +39,9 @@ This matters most for salary structures built before the change, where a low Bas
 
 Fourteen employees at a small business earn a gross average of Rs. 17,500/month, all below the Rs. 21,000 ceiling and therefore covered.
 
-- **Employer contribution:** 3.25% × Rs. 17,500 = Rs. 569 per employee
-- **Employee contribution:** 0.75% × Rs. 17,500 = Rs. 131 per employee
-- **Employer's monthly ESI bill across all fourteen:** 14 × Rs. 569 = Rs. 7,966
+- **Employer contribution:** 3.25% × Rs. 17,500 = Rs. 568.75 per employee
+- **Employee contribution:** 0.75% × Rs. 17,500 = Rs. 131.25, rounded up to Rs. 132 per employee
+- **Employer's monthly ESI bill across all fourteen:** 14 × Rs. 568.75 = Rs. 7,962.50, rounded up once on the total to Rs. 7,963. The employee shares, rounded up for each person, total 14 × Rs. 132 = Rs. 1,848.
 
 If one of these employees receives a mid-year raise to Rs. 22,500 in November (inside the October-March period), ESI contributions continue on the full Rs. 22,500 - not frozen at Rs. 21,000, and not stopped - right through to 31 March. From 1 April, that employee is reassessed against the ceiling and, if still above it, drops out of ESI coverage for the new April-September period.
 
@@ -62,5 +62,3 @@ Between the wage ceiling, the mid-period coverage rule, and now a revised defini
 ## Key takeaway
 
 ESI's rate hasn't changed since 2019, but two things have kept genuinely tripping people up: the mid-period coverage rule (crossing the ceiling doesn't mean instant removal), and the newer wages redefinition under the Labour Codes, which can quietly raise the ESI wage base for allowance-heavy salary structures without anyone's actual pay changing.
-
-**Confirm current rates and the wage ceiling against the official ESIC portal before filing.** For salary structures affected by the new wages definition, consult a chartered accountant or your compliance team.

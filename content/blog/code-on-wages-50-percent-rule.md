@@ -25,35 +25,35 @@ The confusion almost always comes from that middle row. Special Allowance sounds
 
 ## The most common mistake, in a worked example
 
-Take an employee with total monthly remuneration of Rs 60,000, structured as:
+Take an employee with total monthly remuneration of Rs. 60,000, structured as:
 
-- Basic: Rs 20,000
-- HRA: Rs 15,000
-- Conveyance: Rs 5,000
-- Special Allowance: Rs 15,000
-- Bonus (monthly equivalent): Rs 5,000
+- Basic: Rs. 20,000
+- HRA: Rs. 15,000
+- Conveyance: Rs. 5,000
+- Special Allowance: Rs. 15,000
+- Bonus (monthly equivalent): Rs. 5,000
 
-**The mistake:** treating Special Allowance as one of the excluded components, then running the 50% test on HRA + Conveyance + Special Allowance + Bonus (Rs 40,000 - over half of Rs 60,000), and add-backing the excess to land on a "clean" Rs 30,000 wage base. It's a tidy number, and it's wrong.
+**The mistake:** treating Special Allowance as one of the excluded components, then running the 50% test on HRA + Conveyance + Special Allowance + Bonus (Rs. 40,000 - over half of Rs. 60,000), and add-backing the excess to land on a "clean" Rs. 30,000 wage base. It's a tidy number, and it's wrong.
 
 **The correct read:** Special Allowance isn't excluded at all - it's wages from the start, alongside Basic.
 
-- Wages baseline = Basic (Rs 20,000) + Special Allowance (Rs 15,000) = **Rs 35,000**
-- Components actually tested against 50%: HRA (Rs 15,000) + Conveyance (Rs 5,000) + Bonus (Rs 5,000) = Rs 25,000
-- 50% of total remuneration (Rs 60,000) = Rs 30,000
-- Rs 25,000 doesn't cross Rs 30,000, so **no add-back applies** - the 50% mechanism never fires
+- Wages baseline = Basic (Rs. 20,000) + Special Allowance (Rs. 15,000) = **Rs. 35,000**
+- Components actually tested against 50%: HRA (Rs. 15,000) + Conveyance (Rs. 5,000) + Bonus (Rs. 5,000) = Rs. 25,000
+- 50% of total remuneration (Rs. 60,000) = Rs. 30,000
+- Rs. 25,000 doesn't cross Rs. 30,000, so **no add-back applies** - the 50% mechanism never fires
 
-**Recalculated wages: Rs 35,000** - almost 58% of total remuneration, not the "exactly 50%" figure the flawed version produces. The takeaway isn't that the 50% rule doesn't matter here; it's that Special Allowance already did the work before the rule was even needed.
+**Recalculated wages: Rs. 35,000** - almost 58% of total remuneration, not the "exactly 50%" figure the flawed version produces. The takeaway isn't that the 50% rule doesn't matter here; it's that Special Allowance already did the work before the rule was even needed.
 
 ## What this changes - and what it doesn't
 
 **Confirmed to move with the recalculated wage base:**
 
-- **PF contributions** - under the EPF Scheme, 2026 (notified 29 June 2026), PF is calculated on "wages" as defined in the Code, so a higher recalculated wage base means a higher PF contribution for both employee and employer. This now applies up to the statutory wage ceiling, raised to Rs 25,000 in September 2026 - see our [full explainer on the EPFO ceiling change](/blog/epf-wage-ceiling-25000).
+- **PF contributions** - under the EPF Scheme, 2026 (notified 29 June 2026), PF is calculated on "wages" as defined in the Code, so a higher recalculated wage base means a higher PF contribution for both employee and employer. This now applies up to the statutory wage ceiling, raised to Rs. 25,000 in September 2026 - see our [full explainer on the EPFO ceiling change](/blog/epf-wage-ceiling-25000).
 - **ESI contributions** - ESI's own wage definition under the ESI Act is generally broader than the Code on Wages definition, but the underlying principle is the same: contributions reflect actual remuneration, not a structured-down basic salary.
+- **Gratuity** - the Ministry of Labour and Employment's FAQs of 16 March 2026 state that gratuity is paid on the revised definition of wages for employees who retire, resign or die on or after 21 November 2025. A higher recalculated wage base therefore means a higher gratuity, through the 15/26 formula, up to the Rs. 20 lakh maximum.
 
-**Commonly cited as affected, but genuinely contested:**
+**Not part of the tested pool, per the Ministry's FAQs:**
 
-- **Gratuity** - most compliance commentary lists gratuity alongside PF and ESI. But gratuity itself sits in the "not part of remuneration" tier above, and some specialist commentary argues the 50% add-back doesn't apply to gratuity's 15/26 calculation the same way it applies to a monthly accrual like PF. Not settled the way PF's treatment is - worth a direct conversation with your compliance advisor if your gratuity liability is material.
 - **Leave encashment** - a Ministry of Labour and Employment FAQ (No. 5, dated 30 December 2025) addresses this directly: leave encashment is not part of the allowance pool tested under Section 2(y).
 - **Performance incentives and ESOPs** - the same 30 December 2025 FAQ set states that ESOPs, performance incentives and reimbursements are not part of wages under this definition, and the Ministry's further FAQs of 16 March 2026 confirm that annual performance-based incentives are not wages. Worth knowing if your comp structure leans on variable pay - it doesn't get pulled into the 50% test pool either way.
 
@@ -81,7 +81,7 @@ No - that's only the outcome when the tested exclusions cross the 50% line by ex
 
 **Does this rule affect gratuity calculations?**
 
-It's commonly cited as affecting gratuity, but this is genuinely contested among practitioners - check with your compliance advisor if the amount involved is material.
+Yes. For exits on or after 21 November 2025, gratuity is calculated on wages under the revised definition, so the 50% add-back flows into the 15/26 gratuity formula.
 
 **Does this rule change how overtime is calculated?**
 

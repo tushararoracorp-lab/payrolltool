@@ -76,5 +76,3 @@ If your rent is modest relative to your salary, the old regime is unlikely to wi
 ## Check your own figures
 
 Our [Tax Regime Calculator](/tax-calculator) applies the three-way test to your basic, HRA received, rent and city, and shows the exemption alongside a full old-versus-new comparison for Tax Year 2026-27.
-
-**Where your circumstances are unusual - a mid-year move, rent to a family member, or claiming HRA alongside a home loan - confirm the position with a chartered accountant.** These are exactly the claims that attract scrutiny, and the documentation standard is higher than for a straightforward tenancy.

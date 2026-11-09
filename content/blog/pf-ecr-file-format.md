@@ -41,7 +41,7 @@ Getting these numbers to reconcile - especially when employees have partial mont
 
 Building this file by hand in Excel means manually managing delimiters, wage ceiling logic, and rounding rules for every employee, every month. One typo in formatting and the entire file gets rejected on the portal.
 
-This is exactly why we built the [PF ECR File Generator](/pf-ecr-creator) - upload your payroll sheet, and it generates a correctly formatted, EPFO-ready ECR file instantly, with the delimiter structure and field order handled for you.
+This is exactly why we built the [PF ECR Creator](/pf-ecr-creator) - upload your payroll sheet, and it generates a correctly formatted, EPFO-ready ECR file instantly, with the delimiter structure and field order handled for you.
 
 ## Key takeaway
 
