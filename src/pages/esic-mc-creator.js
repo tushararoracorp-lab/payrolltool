@@ -8,10 +8,8 @@ import FeedbackWidget from "../components/FeedbackWidget";
 import { signalResult } from "../lib/resultPrompt";
 import SeoHead from "../components/SeoHead";
 import AnswerBox from "../components/AnswerBox";
-import RelatedLinks from "../components/RelatedLinks";
 import { webApplicationSchema, faqSchema, breadcrumbSchema } from "../lib/seoSchemas";
 import SEO_PAGES from "../config/seoPages";
-import RELATED from "../config/related";
 
 const PAGE_SEO = SEO_PAGES["/esic-mc-creator"];
 
@@ -522,12 +520,7 @@ const MC_INFO_CARDS = [
   {
     icon: "🧮",
     title: "What this tool does",
-    body: "Reads your payroll Excel sheet, validates IP numbers, statuses and dates against ESIC's rules, computes Employee (0.75%) and Employer (3.25%) contributions, and writes the rows directly into the blank portal template - byte-identical to what ESIC issues.",
-  },
-  {
-    icon: "📝",
-    title: "Worked Example",
-    body: "An employee on Rs. 18,500 ESI wages: Employee contribution is 0.75% of Rs. 18,500 rounded up = Rs. 139. Employer contribution is 3.25% = Rs. 601.25, rounded up to Rs. 602 on a one-person file (across many employees it is summed first, then rounded once). Total payable: Rs. 741.",
+    body: "Reads your payroll Excel sheet, validates IP numbers, statuses and dates against ESIC's rules, computes Employee (0.75%) and Employer (3.25%) contributions, and writes the rows into the blank template downloaded from the ESIC portal, so the file keeps the portal's own layout.",
   },
   {
     icon: "⚖️",
@@ -552,7 +545,7 @@ const MC_FAQ = [
   },
   {
     q: "Why are Employee and Employer contributions rounded the way they are?",
-    a: "The two legs round differently. The employee's 0.75% is rounded UP for each employee individually, then those rounded figures are summed - this is what gets deducted from each employee's pay, so it has to be a whole rupee per person. The employer's 3.25% is kept as the exact per-employee amount, summed across everyone, and rounded UP only once at the total - since no individual employer amount is ever deducted from a person's pay, only the final payable figure needs to be a whole rupee. This tool applies both rules exactly as the portal does, verified against a real ESIC contribution-history export.",
+    a: "The two legs round differently. The employee's 0.75% is rounded UP for each employee individually, then those rounded figures are summed - this is what gets deducted from each employee's pay, so it has to be a whole rupee per person. The employer's 3.25% is kept as the exact per-employee amount, summed across everyone, and rounded UP only once at the total - since no individual employer amount is ever deducted from a person's pay, only the final payable figure needs to be a whole rupee. This tool applies both rules the same way the portal does.",
   },
   {
     q: "Does this tool submit the MC file to ESIC for me?",
@@ -1006,7 +999,7 @@ export default function EsicMcCreator() {
           {/* ── Feature pills ── */}
           <div className="flex flex-wrap justify-center gap-4 mt-6 text-xs text-gray-500">
             {[
-              { label: "Portal template preserved", tip: "Your rows are written into the blank template downloaded from the ESIC portal. Header row and instructions sheet stay byte-identical - fonts, colours, wrap, merged cells and all." },
+              { label: "Portal template preserved", tip: "Your rows are written into the blank template downloaded from the ESIC portal. The header row and the instructions sheet are left exactly as the portal supplies them." },
               { label: "Status dropdown",            tip: "The template carries an Excel dropdown of all 14 ESI statuses. Pick a status and the numeric code the portal wants is filled in for you." },
               { label: "Contribution summary",       tip: "Employee 0.75% rounds up per employee then sums; employer 3.25% sums raw per-employee amounts and rounds the total UP once - exactly as the portal does, so the total matches the challan before you submit." },
               { label: "100% browser processing",    tip: "All processing happens in your browser. No data sent to any server." },
@@ -1024,7 +1017,7 @@ export default function EsicMcCreator() {
             </AnswerBox>
           </div>
 
-          <div className="max-w-5xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="max-w-5xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {MC_INFO_CARDS.map((c) => (
               <div key={c.title} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
                 <div className="text-lg mb-1.5">{c.icon}</div>
@@ -1077,10 +1070,6 @@ export default function EsicMcCreator() {
                 <p className="text-sm leading-relaxed text-gray-500">{f.a}</p>
               </div>
             ))}
-          </div>
-
-          <div className="w-full max-w-3xl mx-auto">
-            <RelatedLinks links={RELATED.esic} />
           </div>
 
         </main>

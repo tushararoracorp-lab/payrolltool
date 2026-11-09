@@ -6,8 +6,6 @@ import ReactDOM from "react-dom";
 import * as XLSX from "xlsx";
 import FeedbackWidget from "../components/FeedbackWidget";
 import { signalResult } from "../lib/resultPrompt";
-import RelatedLinks from "../components/RelatedLinks";
-import RELATED from "../config/related";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
 const C = {
@@ -539,11 +537,6 @@ const ECR_INFO_CARDS = [
     icon: "\ud83e\uddee",
     title: "What this tool does",
     body: "Reads your payroll Excel sheet, validates UANs and wages, applies the correct EPS wage ceiling for the wage month you select (Rs. 15,000 before 17 Sept 2026, blended for September 2026, Rs. 25,000 from October 2026 onward), and outputs the exact #~# delimited text format the EPFO portal expects.",
-  },
-  {
-    icon: "\ud83d\udcdd",
-    title: "Worked Example",
-    body: "An employee on Rs. 20,000 EPF wage, for wage months from October 2026 onward: EPF wage stays Rs. 20,000, and EPS wage is also Rs. 20,000 under the new Rs. 25,000 cap. Employee EPF is 12% of Rs. 20,000 = Rs. 2,400; employer EPS is 8.33% of Rs. 20,000 = Rs. 1,666. Before 17 Sept 2026, the old Rs. 15,000 cap applies instead; September 2026 itself is blended across both periods.",
   },
   {
     icon: "\u2696\ufe0f",
@@ -1155,7 +1148,7 @@ export default function PfEcrCreator() {
             ))}
           </div>
 
-          <div className="max-w-5xl mx-auto mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="max-w-5xl mx-auto mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {ECR_INFO_CARDS.map((c) => (
               <div key={c.title} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
                 <div className="text-lg mb-1.5">{c.icon}</div>
@@ -1212,10 +1205,6 @@ export default function PfEcrCreator() {
                 <p className="text-sm leading-relaxed text-gray-500">{f.a}</p>
               </div>
             ))}
-          </div>
-
-          <div className="w-full max-w-3xl mx-auto">
-            <RelatedLinks links={RELATED["pf-ecr"]} />
           </div>
 
         </main>

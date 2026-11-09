@@ -24,7 +24,6 @@ export function buildMarkup(data) {
 </div>
 
 <div class="panel on" id="feed">
-<div class="banner alert"><b>Active fraud alert - Delhi.</b> A forged minimum wage order dated 13 October 2025, showing an unskilled rate of Rs. 19,846 and forging the signature of the Joint Labour Commissioner, is in circulation. The Delhi Labour Department confirmed on 14 October 2025 that no such order was issued. The genuine current rate is Rs. 18,456, effective 1 April 2025.</div>
 <div class="stats" id="fstats"></div>
 <div class="toolbar">
 <input id="q" placeholder="Search notifications, references, states&hellip;">
@@ -94,7 +93,6 @@ export function buildMarkup(data) {
 </div>
 
 <nav class="statelinks browse" aria-label="Browse by topic"><a href="/updates/minimum-wages">Minimum wages by state</a><a href="/updates/professional-tax">Professional Tax by state</a><a href="/updates/labour-welfare-fund">Labour Welfare Fund by state</a></nav>
-  <div class="foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><p>Summaries are for guidance only and are not a substitute for the official notification or professional advice.</p></div>
 
 `;
 }

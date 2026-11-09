@@ -10,10 +10,8 @@ import Footer from '../../components/Footer'
 import SeoHead from '../../components/SeoHead'
 import AnswerBox from '../../components/AnswerBox'
 import FaqBlock from '../../components/FaqBlock'
-import RelatedLinks from '../../components/RelatedLinks'
 import { articleSchema, breadcrumbSchema } from '../../lib/seoSchemas'
 import SEO_PAGES from '../../config/seoPages'
-import RELATED from '../../config/related'
 
 // Front matter dates are DD-MM-YYYY; schema.org needs ISO 8601 (YYYY-MM-DD).
 function toIsoDate(value) {
@@ -159,7 +157,6 @@ export default function BlogPost({ frontmatter, contentHtml, slug }) {
           />
 
           {seo?.faqs ? <FaqBlock faqs={seo.faqs} /> : null}
-          {seo?.related ? <RelatedLinks links={RELATED[seo.related]} /> : null}
         </main>
         <Footer />
       </div>

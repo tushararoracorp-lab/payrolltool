@@ -64,7 +64,7 @@ const PT_SLABS = {
   TG:[{from:0,to:15000,tax:0},{from:15001,to:20000,tax:150},{from:20001,to:Infinity,tax:200}],
   TR:[{from:0,to:13333,tax:0},{from:13334,to:25000,tax:125},{from:25001,to:Infinity,tax:208}],
   WB:[{from:0,to:10000,tax:0},{from:10001,to:15000,tax:110},{from:15001,to:25000,tax:130},{from:25001,to:40000,tax:150},{from:40001,to:75000,tax:174},{from:75001,to:Infinity,tax:208}],
-  UP:[{from:0,to:12000,tax:0},{from:12001,to:15000,tax:125},{from:15001,to:25000,tax:150},{from:25001,to:Infinity,tax:200}],
+  UP:[{from:0,to:Infinity,tax:0}],
   UK:[{from:0,to:Infinity,tax:0}],DL:[{from:0,to:Infinity,tax:0}],GA:[{from:0,to:Infinity,tax:0}],
   HP:[{from:0,to:Infinity,tax:0}],RJ:[{from:0,to:Infinity,tax:0}],CH:[{from:0,to:Infinity,tax:0}],
   JK:[{from:0,to:Infinity,tax:0}],DN:[{from:0,to:Infinity,tax:0}],

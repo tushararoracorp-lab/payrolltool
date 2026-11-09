@@ -611,11 +611,6 @@ const LOP_INFO_CARDS = [
     body: "Splits each employee's LOP period into individual, HRMS-ready date rows - the format most HR systems expect for bulk upload - rather than a single date-range entry most systems can't parse.",
   },
   {
-    icon: "\ud83d\udcdd",
-    title: "Worked Example",
-    body: "An employee on LOP from 28 March to 3 April splits into two HRMS-ready rows: 4 days in March, 3 days in April - each attributed to the correct payroll cycle, with no manual date-splitting.",
-  },
-  {
     icon: "\u2696\ufe0f",
     title: "Priority date protection",
     body: "Flags overlapping absence records instead of silently double-counting a day. If another row's start date falls mid-range, that row takes priority and the excess is logged for review.",
@@ -1061,7 +1056,7 @@ export default function Home() {
 
         {/* About / How it works - card grid, aligned with the other three tools */}
         <section className="max-w-5xl mx-auto w-full px-4 pb-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {LOP_INFO_CARDS.map((c) => (
               <div key={c.title} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
                 <div className="text-lg mb-1.5">{c.icon}</div>

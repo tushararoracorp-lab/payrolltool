@@ -200,11 +200,6 @@ const TC_INFO_CARDS = [
     body: "Both columns are computed from the same gross salary and the same inputs. Old Regime subtracts HRA, Section 123, health insurance and Professional Tax before applying its slabs. New Regime applies only the standard deduction and employer NPS before its own slabs.",
   },
   {
-    icon: "\ud83d\udcdd",
-    title: "Worked Example",
-    body: "Rs. 12,00,000 gross with typical HRA and Section 123 claims: Old Regime tax is Rs. 67,912, New Regime nil because the full rebate applies. The full breakdown is below.",
-  },
-  {
     icon: "\u2696\ufe0f",
     title: "What this does not cover",
     body: "House property income, capital gains, business or professional income, TDS already deducted, advance tax paid, Section 89 relief, and interest or fees for late filing are all outside this calculator's scope.",
@@ -566,7 +561,7 @@ export default function TaxCalculator() {
                   <div className="card-titles">
                     <div className="card-title">Tax slabs for reference</div>
                     <div className="card-sub">
-                      Under Section 202 (formerly Section 115BAC) · general taxpayer rates
+                      Old and New Regime · general taxpayer rates
                     </div>
                   </div>
                   <Chev open={openCards.slabs} />
@@ -591,7 +586,7 @@ export default function TaxCalculator() {
                       </div>
                     </div>
                     <div className="slab-box new">
-                      <div className="slab-box-head">New Tax Regime - Default Regime</div>
+                      <div className="slab-box-head">New Tax Regime - Default Regime (Section 202, formerly Section 115BAC)</div>
                       <table className="slabs">
                         <tbody>
                           <tr><td>Up to Rs. 4,00,000</td><td>Nil</td></tr>
@@ -1730,7 +1725,7 @@ export default function TaxCalculator() {
         }
                 .tc-info-cards {
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 14px;
           margin: 28px 0;
         }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import TOOLS from "../config/tools";
+import BLOG_META from "../../public/blog-meta.json";
 
 // Icon set matching the new inline-SVG style used across the redesigned
 // site (payrolltool-homepage-icons-synced.html). No lucide/emoji.
@@ -109,47 +110,27 @@ export function nextCentralDue(now) {
   return { date: first.date, label: sameDay.join(" and "), days };
 }
 
-// Blog links are fetched dynamically from /public/blog-meta.json
-// This allows infinite blog posts without manual header updates
+// Blog menu: top 12 posts by "order" from public/blog-meta.json, in 3 columns of 4,
+// plus "Browse all articles". Built once at build time.
+const BLOG_TOP = [...BLOG_META].sort((a, b) => (a.order || 0) - (b.order || 0)).slice(0, 12);
+const blogLink = (p) => ({ href: `/blog/${p.slug}`, label: p.title, icon: ICONS[p.icon] || ICONS.article });
+const BLOG_COLS = [
+  BLOG_TOP.slice(0, 4).map(blogLink),
+  BLOG_TOP.slice(4, 8).map(blogLink),
+  [...BLOG_TOP.slice(8, 12).map(blogLink), { href: "/blog", label: "Browse all articles", icon: ICONS.arrowRight }],
+];
 
 export default function Header() {
   const router = useRouter();
   const [theme, setTheme] = useState("light");
   const [openMenu, setOpenMenu] = useState(null); // null | "tools" | "blog"
-  const [blogCols, setBlogCols] = useState([[], [], []]); // 3 columns of blog links
   const [cal, setCal] = useState(null); // filled in the browser, so the date is the visitor's own
   const toolsRef = useRef(null);
   const blogRef = useRef(null);
 
-  // Fetch blog posts from blog-meta.json on component mount
-  useEffect(() => {
-    fetch("/blog-meta.json")
-      .then((res) => res.json())
-      .then((posts) => {
-        // Take top 12 posts, split into 3 columns of 4
-        const top12 = posts.slice(0, 12);
-        const col1 = top12.slice(0, 4).map((p) => ({
-          href: `/blog/${p.slug}`,
-          label: p.title,
-          icon: ICONS[p.icon] || ICONS.article,
-        }));
-        const col2 = top12.slice(4, 8).map((p) => ({
-          href: `/blog/${p.slug}`,
-          label: p.title,
-          icon: ICONS[p.icon] || ICONS.article,
-        }));
-        const col3 = [
-          ...top12.slice(8, 12).map((p) => ({
-            href: `/blog/${p.slug}`,
-            label: p.title,
-            icon: ICONS[p.icon] || ICONS.article,
-          })),
-          { href: "/blog", label: "Browse all articles", icon: ICONS.arrowRight },
-        ];
-        setBlogCols([col1, col2, col3]);
-      })
-      .catch((err) => console.error("Failed to load blog meta:", err));
-  }, []);
+  // Blog links come from public/blog-meta.json, read at build time so the links are in the
+  // page HTML that crawlers see (no fetch after the page loads).
+  const blogCols = BLOG_COLS;
 
   // Read the user's last saved choice first; only fall back to system
   // preference if they've never toggled it. Without this, navigating to

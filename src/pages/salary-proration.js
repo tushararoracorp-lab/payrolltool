@@ -269,17 +269,17 @@ const TOOL_BODY_HTML = `
             <option value="TN">Tamil Nadu</option>
             <option value="TG">Telangana</option>
             <option value="TR">Tripura</option>
-            <option value="UP">Uttar Pradesh</option>
             <option value="UK">Uttarakhand</option>
             <option value="WB">West Bengal</option>
             <optgroup label="No Professional Tax">
+            <option value="UP">Uttar Pradesh</option>
             <option value="DL">Delhi</option>
             <option value="GA">Goa</option>
             <option value="HP">Himachal Pradesh</option>
             <option value="JK">Jammu &amp; Kashmir</option>
             <option value="RJ">Rajasthan</option>
             <option value="CH">Chandigarh</option>
-            <option value="DN">Dadra &amp; Nagar Haveli</option>
+            <option value="DN">Dadra and Nagar Haveli and Daman and Diu</option>
             </optgroup>
           </select>
         </div>

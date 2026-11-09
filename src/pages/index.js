@@ -112,7 +112,7 @@ const toolCards = [
   { icon: Icon.tax, name: "Tax Regime Calculator", href: "/tax-calculator", desc: "Compare Old vs New tax regimes for FY 2026\u201127. See which saves you more with deductions, surcharge, and cess." },
   { icon: Icon.salaryProration, name: "Salary Proration", href: "/salary-proration", desc: "Calculate prorated salary for mid-month joining or exit. Handles partial months, joining/resignation dates, and statutory deductions." },
   { icon: Icon.lopSplitter, name: "LOP Splitter", href: "/lop-splitter", desc: "Split Loss of Pay date ranges that cross month boundaries into upload-ready rows for your HRMS." },
-  { icon: Icon.finalSettlement, name: "Final Settlement", href: "/final-settlement", desc: "Calculate full and final settlement: gratuity, notice pay, leave encashment, and statutory deductions. Complete F&F in one place." },
+  { icon: Icon.finalSettlement, name: "Final Settlement", href: "/final-settlement", desc: "Calculate full and final settlement: gratuity, notice pay, leave encashment, and statutory deductions." },
 ];
 
 const scenarioData = {
@@ -198,7 +198,6 @@ export default function Home({ initialStats = null }) {
   const HERO_SCENES = [
     { panel: 1, typed: true },
     { panel: 2, duration: 4500 },
-    { panel: 3, duration: 4600 },
     { panel: 4, duration: 2600 },
   ];
   const HERO_TYPE_LINES = [
@@ -623,7 +622,7 @@ export default function Home({ initialStats = null }) {
             <div>
               <span className="eyebrow"><span className="dot" />India Payroll</span>
               <h1>Calculate payroll compliance <span className="accent-word">in seconds</span></h1>
-              <p>Powerful, accurate and fast payroll utilities designed for HR &amp; Payroll professionals. Do precise work in less time. Every time.</p>
+              <p>Free browser-based payroll tools for HR and payroll teams in India, built from hands-on payroll work. Your files never leave your browser.</p>
               <Link prefetch={false} href="/#tools" className="hero-cta">
                 Explore Tools {Icon.arrowRight}
               </Link>
@@ -637,7 +636,7 @@ export default function Home({ initialStats = null }) {
             <div className="hero-visual">
               <div className="preview-card hero-card" role="group" aria-label="PayrollTool.in feature preview">
                 <span className="sr-only-hero">
-                  PayrollTool.in: browser-based payroll calculators for Indian HR and payroll professionals - LOP Splitter, salary proration, PF ECR filing, tax regime comparison, and final settlement. No sign-up required.
+                  PayrollTool.in: free browser-based payroll tools for HR and payroll professionals in India. No sign-up required.
                 </span>
                 <div className="hero-card-body">
 

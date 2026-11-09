@@ -184,11 +184,6 @@ const FS_INFO_CARDS = [
     body: "(Basic + DA) \u00d7 15 \u00f7 26 \u00d7 years worked, only after 5 or more years of service. A final year of 6 or more months rounds up. Capped at Rs. 20 lakh in the private sector under the Payment of Gratuity Act, 1972.",
   },
   {
-    icon: "\ud83d\udcdd",
-    title: "Worked Example",
-    body: "7 years 8 months of service on Basic + DA of Rs. 50,000, with 18 days of unused leave. Gratuity comes to roughly Rs. 2,30,769. The full breakdown is below.",
-  },
-  {
     icon: "\ud83d\udcc5",
     title: "Notice period shortfall",
     body: "If your last working day falls short of your notice period, the gap is deducted at your daily Basic + DA (or Gross, if your appointment letter says so) rate - the same rule most Indian employers apply.",
@@ -1095,7 +1090,7 @@ export default function FinalSettlement() {
           margin: 0 auto 24px;
           padding: 0 20px;
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 14px;
         }
         .fsc-info-card {
