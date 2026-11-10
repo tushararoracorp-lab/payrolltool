@@ -22,8 +22,8 @@ function monthLabelYY(y){ return new Date(Math.floor(y/100),(y%100)-1,1).toLocal
 function pfMonthAmt(pfRes,yymm){
   if(!pfRes||pfRes.pfMode!=='capped') return {emp:pfRes?pfRes.empPF_monthly:0, er:pfRes?pfRes.erPF_monthly:0};
   const cap=epfCapPF(yymm), v=pfRes.vpf||0;
-  if(pfRes.pfSub){ const b=Math.max(0,getGross()-getHRA()-getReimbs()); const x=Math.min(R(b*0.12),cap); return {emp:x+v, er:x}; }
-  return {emp:cap+v, er:cap};
+  const x=Math.min(R((pfRes.wagesM||0)*0.12),cap);
+  return {emp:x+v, er:x};
 }
 function pfSeries(pfRes,startYY,n){ // totals for the n wage months AFTER startYY
   let y=startYY, emp=0, er=0;
@@ -32,43 +32,35 @@ function pfSeries(pfRes,startYY,n){ // totals for the n wage months AFTER startY
 }
 
 // ══════════════════════════════════════════════════════
-// PT SLABS - read-only, backend-managed
-// Basis: Monthly Gross (for slab lookup only)
-// Deduction: applied on THIS MONTH'S prorated earnings (change #2)
-// Odisha (OR): abolished w.e.f. 1 Apr 2026 → all zeros (change #4)
-// Maharashtra Feb rule: top slab Rs. 300 instead of Rs. 200
-// Karnataka Feb rule: top slab Rs. 300 instead of Rs. 200
-// Maharashtra gender rule: women ≤ Rs. 25k/mo → exempt
+// PT RULES - aligned with the state rows published on /updates (Professional Tax).
+// bands: [upper limit (inclusive), amount]. Monthly states use monthly salary; annual and
+// half-yearly states use the income of that period and show the liability, not a monthly deduction.
 // ══════════════════════════════════════════════════════
-const PT_SLABS = {
-  AP:[{from:0,to:15000,tax:0},{from:15001,to:20000,tax:150},{from:20001,to:Infinity,tax:200}],
-  AS:[{from:0,to:10000,tax:0},{from:10001,to:15000,tax:150},{from:15001,to:24999,tax:180},{from:25000,to:Infinity,tax:208}],
-  BR:[{from:0,to:25000,tax:0},{from:25001,to:41667,tax:83},{from:41668,to:83333,tax:167},{from:83334,to:Infinity,tax:208}],
-  CG:[{from:0,to:8333,tax:0},{from:8334,to:12500,tax:130},{from:12501,to:16667,tax:150},{from:16668,to:20833,tax:200},{from:20834,to:Infinity,tax:208}],
-  GJ:[{from:0,to:11999,tax:0},{from:12000,to:Infinity,tax:200}],
-  HR:[{from:0,to:Infinity,tax:0}],
-  JH:[{from:0,to:25000,tax:0},{from:25001,to:41667,tax:100},{from:41668,to:66667,tax:150},{from:66668,to:83333,tax:175},{from:83334,to:Infinity,tax:208}],
-  KA:[{from:0,to:24999,tax:0},{from:25000,to:Infinity,tax:200}],
-  KL:[{from:0,to:11999,tax:0},{from:12000,to:17999,tax:120},{from:18000,to:29999,tax:180},{from:30000,to:44999,tax:300},{from:45000,to:59999,tax:450},{from:60000,to:74999,tax:600},{from:75000,to:99999,tax:750},{from:100000,to:124999,tax:1000},{from:125000,to:Infinity,tax:1250}],
-  MP:[{from:0,to:18750,tax:0},{from:18751,to:25000,tax:125},{from:25001,to:33333,tax:167},{from:33334,to:Infinity,tax:208}],
-  MH:[{from:0,to:7500,tax:0},{from:7501,to:10000,tax:175},{from:10001,to:Infinity,tax:200}],
-  MN:[{from:0,to:4167,tax:0},{from:4168,to:6250,tax:17},{from:6251,to:8333,tax:25},{from:8334,to:12500,tax:42},{from:12501,to:16667,tax:63},{from:16668,to:20833,tax:83},{from:20834,to:25000,tax:104},{from:25001,to:29167,tax:125},{from:29168,to:33333,tax:150},{from:33334,to:37500,tax:175},{from:37501,to:41667,tax:200},{from:41668,to:Infinity,tax:208}],
-  ML:[{from:0,to:25000,tax:0},{from:25001,to:33333,tax:125},{from:33334,to:Infinity,tax:208}],
-  MZ:[{from:0,to:13333,tax:0},{from:13334,to:25000,tax:125},{from:25001,to:Infinity,tax:208}],
-  NL:[{from:0,to:Infinity,tax:0}],
-  OR:[{from:0,to:Infinity,tax:0}], // ABOLISHED w.e.f. 1 April 2026 (Gazette 21 Apr 2026)
-  PB:[{from:0,to:Infinity,tax:0}],
-  PY:[{from:0,to:1000,tax:0},{from:1001,to:2000,tax:20},{from:2001,to:3000,tax:30},{from:3001,to:4000,tax:40},{from:4001,to:5000,tax:50},{from:5001,to:6000,tax:60},{from:6001,to:7000,tax:80},{from:7001,to:8000,tax:90},{from:8001,to:9000,tax:100},{from:9001,to:10000,tax:110},{from:10001,to:12000,tax:130},{from:12001,to:14000,tax:150},{from:14001,to:16000,tax:180},{from:16001,to:Infinity,tax:200}],
-  SK:[{from:0,to:8333,tax:0},{from:8334,to:12500,tax:42},{from:12501,to:16667,tax:83},{from:16668,to:20833,tax:125},{from:20834,to:25000,tax:167},{from:25001,to:Infinity,tax:208}],
-  TN:[{from:0,to:21000,tax:0},{from:21001,to:30000,tax:135},{from:30001,to:45000,tax:315},{from:45001,to:60000,tax:440},{from:60001,to:75000,tax:600},{from:75001,to:100000,tax:810},{from:100001,to:125000,tax:1040},{from:125001,to:Infinity,tax:1250}],
-  TG:[{from:0,to:15000,tax:0},{from:15001,to:20000,tax:150},{from:20001,to:Infinity,tax:200}],
-  TR:[{from:0,to:13333,tax:0},{from:13334,to:25000,tax:125},{from:25001,to:Infinity,tax:208}],
-  WB:[{from:0,to:10000,tax:0},{from:10001,to:15000,tax:110},{from:15001,to:25000,tax:130},{from:25001,to:40000,tax:150},{from:40001,to:75000,tax:174},{from:75001,to:Infinity,tax:208}],
-  UP:[{from:0,to:Infinity,tax:0}],
-  UK:[{from:0,to:Infinity,tax:0}],DL:[{from:0,to:Infinity,tax:0}],GA:[{from:0,to:Infinity,tax:0}],
-  HP:[{from:0,to:Infinity,tax:0}],RJ:[{from:0,to:Infinity,tax:0}],CH:[{from:0,to:Infinity,tax:0}],
-  JK:[{from:0,to:Infinity,tax:0}],DN:[{from:0,to:Infinity,tax:0}],
+const INF=Infinity;
+const PT_RULES = {
+  AP:{cycle:'monthly',bands:[[15000,0],[20000,150],[INF,200]]},
+  AS:{cycle:'monthly',bands:[[15000,0],[25000,180],[INF,208]]},
+  GJ:{cycle:'monthly',bands:[[12000,0],[INF,200]]},
+  KA:{cycle:'monthly',bands:[[24999,0],[INF,200]],feb300:true},
+  MP:{cycle:'monthly',bands:[[18750,0],[25000,125],[33333,166],[INF,208]],lastMonth:{166:174,208:212}},
+  MH:{cycle:'monthly',bands:[[7500,0],[10000,175],[INF,200]],women:[[25000,0],[INF,200]],feb300:true},
+  MZ:{cycle:'monthly',bands:[[5000,0],[8000,75],[10000,120],[12000,150],[15000,180],[20000,195],[INF,208]]},
+  NL:{cycle:'monthly',bands:[[4000,0],[5000,35],[7000,75],[9000,110],[12000,180],[INF,208]]},
+  SK:{cycle:'monthly',bands:[[20000,0],[30000,125],[40000,150],[INF,200]]},
+  TG:{cycle:'monthly',bands:[[15000,0],[20000,150],[INF,200]]},
+  TR:{cycle:'monthly',bands:[[7500,0],[15000,150],[INF,208]]},
+  WB:{cycle:'monthly',bands:[[20000,0],[30000,100],[50000,140],[100000,170],[INF,208]]},
+  PB:{cycle:'monthly',punjab:true}, // Rs. 200 a month above the annual-income limit of the chosen tax regime
+  BR:{cycle:'annual',bands:[[300000,0],[500000,1000],[1000000,2000],[INF,2500]],due:'by 30 November',deduct:[11]},
+  JH:{cycle:'annual',bands:[[300000,0],[500000,1200],[800000,1800],[1000000,2100],[INF,2500]],due:'quarterly by 15 May, 15 August, 15 November and 15 February'},
+  MN:{cycle:'annual',bands:[[50000,0],[75000,1200],[100000,2000],[125000,2400],[INF,2500]],due:'by 30 March',deduct:[3]},
+  ML:{cycle:'annual',bands:[[180000,0],[300000,500],[500000,1000],[750000,1500],[INF,2500]],due:'by the 28th of every month'},
+  // Kerala: liable only when employed 60 days or more in the half-year (Kerala Panchayat Raj Act, s.204; Municipality Act likewise)
+  KL:{cycle:'halfyearly',bands:[[11999,0],[17999,320],[29999,450],[44999,600],[99999,750],[124999,1000],[INF,1250]],due:'by 31 August (April to September) and by the end of February (October to March)',deduct:[8,2],minDays:60},
+  PY:{cycle:'halfyearly',bands:[[99999,0],[200000,250],[300000,500],[400000,750],[500000,1000],[INF,1250]],due:'by 31 July and 31 January',deduct:[7,1]},
+  TN:{cycle:'halfyearly',bands:[[21000,0],[30000,180],[45000,425],[60000,930],[75000,1025],[INF,1250]],due:'by 30 September and 31 March',deduct:[9,3]},
 };
+// Every other state and union territory levies no professional tax.
 
 // ══════════════════════════════════════════════════════
 // LWF DATA - read-only, backend-managed
@@ -79,19 +71,23 @@ const PT_SLABS = {
 // LWF is deducted on THIS MONTH'S prorated earnings (change #3)
 // ══════════════════════════════════════════════════════
 const LWF_DATA = {
-  AP:{emp:20,er:40,freq:'annual'},
-  AS:{emp:20,er:20,freq:'annual'},
-  GJ:{emp:6,er:12,freq:'halfyearly'},
-  HR:{emp:35,er:70,freq:'monthly'}, // Updated w.e.f. 1 Jan 2026
-  KA:{emp:50,er:100,freq:'annual'},
-  KL:{emp:40,er:160,freq:'annual'},
-  MH:{emp:25,er:75,freq:'halfyearly'},
-  MP:{emp:20,er:40,freq:'annual'},
-  OR:{emp:20,er:40,freq:'annual'},
-  PB:{emp:40,er:160,freq:'monthly'},
-  TN:{emp:20,er:40,freq:'annual'},
-  TG:{emp:2,er:5,freq:'halfyearly'},
-  WB:{emp:3,er:30,freq:'halfyearly'},
+  // Aligned with the state rows published on /updates (Labour Welfare Fund). Amounts per deduction.
+  AP:{emp:30,er:70,freq:'annual',months:[12]},
+  CH:{emp:5,er:20,freq:'monthly'},
+  CG:{emp:15,er:45,freq:'halfyearly',months:[6,12]},
+  DL:{emp:4.5,er:13.5,freq:'halfyearly',months:[6,12]},   // Rs. 0.75 and Rs. 2.25 a month, deducted for six months at a time
+  GA:{emp:60,er:180,freq:'halfyearly',months:[6,12]},
+  GJ:{emp:6,er:12,freq:'halfyearly',months:[6,12]},
+  HR:{emp:35,er:70,freq:'monthly',pct:0.002},             // 0.2% of wages, up to Rs. 35; employer twice the employee share
+  KA:{emp:50,er:100,freq:'annual',months:[12]},
+  KL:{emp:50,er:50,freq:'monthly'},
+  MP:{emp:10,er:50,freq:'halfyearly',months:[6,12]},
+  MH:{emp:25,er:75,freq:'halfyearly',months:[6,12]},
+  OR:{emp:10,er:20,freq:'halfyearly',months:[6,12]},
+  PB:{emp:5,er:20,freq:'monthly'},
+  TN:{emp:20,er:40,freq:'annual',months:[12]},
+  TG:{emp:2,er:5,freq:'annual',months:[12]},
+  WB:{emp:3,er:30,freq:'halfyearly',months:[6,12]},
 };
 
 // ══ CARD COLLAPSE ══
@@ -200,7 +196,7 @@ function doExtract(tokens){
   } else {
     filtered.forEach(c=>addRow(c.name,String(Math.round(c.amount)),isReimb(c.name)?'variable':'fixed'));
     const pfMsg=pfCandidates.length?` EPF amounts prefilled.`:'';
-    showMsg('ok',`✓ Extracted ${filtered.length} pay head${filtered.length>1?'s':''}.${pfMsg} Verify EPF fields in Step 4.`);
+    showMsg('ok',`Extracted ${filtered.length} pay head${filtered.length>1?'s':''}.${pfMsg} Verify EPF fields in Step 4.`);
   }
   renderRows();onStateChange();updatePreviews();
 }
@@ -280,164 +276,155 @@ function fmt(n){return R(n).toLocaleString('en-IN');}
 //
 // VPF = vpfPct% × Basic  (voluntary, capped at 88% OR 12% of Basic, whichever is lower)
 // ══════════════════════════════════════════════════════════════
-function calcPF(vpfPct, proratedGross, proratedHRA, proratedReimbs, _calDays, _payable){
+// Wages under the Labour Codes (Code on Wages s.2(y), the same definition in the Code on Social Security):
+// all pay except the excluded items (HRA, conveyance and travel, bonus, overtime, commission, incentives,
+// reimbursements, employer NPS); if the excluded items exceed half of total pay, the excess counts as wages.
+const PF_EXCLUDED=/\bhra\b|house\s*rent|conveyance|transport|\blta\b|leave\s*travel|travel|bonus|overtime|\bot\b|commission|incentive|gratuity|retrench/i;
+function codeWages(scale,npsMonthly){
+  let total=0,excl=0;
+  rows.forEach(r=>{const a=(parseFloat(r.amount)||0)*scale;if(!(a>0))return;total+=a;if(r.cat==='variable'||PF_EXCLUDED.test(r.name||''))excl+=a;});
+  const nps=(npsMonthly||0)*scale; excl+=Math.min(nps,Math.max(0,total-excl));
+  const wages=total-excl+Math.max(0,excl-total/2);
+  return R(wages);
+}
+function calcPF(vpfPct, _calDays, _payable, npsMonthly){
   const basic=getBasic();
-  
-  // ⚠ FIX: Cap VPF - cannot exceed 88% OR 12% of basic (whichever is lower)
-  let effectiveVpfPct = vpfPct || 0;
-  if (effectiveVpfPct > 0) {
-    const proposedVPF = basic * (effectiveVpfPct / 100);
-    const maxVPF_88pct = basic * 0.88;  // 88% cap
-    const maxVPF_12pct = basic * 0.12;  // 12% cap
-    const maxEligible = Math.min(maxVPF_88pct, maxVPF_12pct);  // Take lower limit
-    
-    if (proposedVPF > maxEligible) {
-      // Recalculate effective percentage to not exceed cap
-      effectiveVpfPct = (maxEligible / basic) * 100;
-    }
-  }
-  
-  const vpf=R(basic*(effectiveVpfPct||0)/100);          // Monthly VPF: capped
-  const vpfThisMonth=R(R(basic*_payable/_calDays)*(effectiveVpfPct||0)/100); // This month VPF: prorated
+  // VPF: employee PF plus VPF can reach 100% of Basic, so VPF can go up to 88%
+  const effectiveVpfPct=Math.min(Math.max(vpfPct||0,0),88);
+  const vpf=R(basic*effectiveVpfPct/100);
+  const vpfThisMonth=R(R(basic*_payable/_calDays)*effectiveVpfPct/100);
   const entered=R(parseFloat(window.__spRoot.getElementById('empPFInput').value)||0);
+  window.__spRoot.getElementById('erPFInput').value=entered?'Rs. '+entered.toLocaleString('en-IN')+'/mo':'';
 
-  // Sync readonly employer EPF display field
-  window.__spRoot.getElementById('erPFInput').value=
-    entered?'Rs. '+entered.toLocaleString('en-IN')+'/mo':'';
-
-  // Rule C - PF not opted
+  // PF not opted
   if(entered===0&&vpf===0){
     window.__spRoot.getElementById('erPFInput').value='Nil';
-    return{empPF_monthly:0,empPF_thisMonth:0,erPF_monthly:0,
-           erPF_thisMonth:0,vpf:0,pfMode:'none',pfCapApplies:false};
+    return{empPF_monthly:0,empPF_thisMonth:0,erPF_monthly:0,erPF_thisMonth:0,vpf:0,vpfThisMonth:0,pfMode:'none',pfCapApplies:false,pfNote:'',wagesM:0,wagesP:0};
   }
-
-  const twelveOfBasic = basic>0 ? R(basic*0.12) : 0;
-  // Ceiling in force for the selected wage month (15,000 / split September 2026 / 25,000)
-  const proYY = proYYMMNow();
-  const ceilW = epfWageCap(proYY);   // PF wage cap for this wage month
-  const capPF = epfCapPF(proYY);     // 12% of that cap: 1,800 / 2,360 / 3,000
-  const isRuleA = basic>0 && Math.abs(entered-twelveOfBasic)<=5;
-  // Rule B: the letter shows the statutory cap (the old 1,800, or this month's cap) and Basic is above the old ceiling
-  const isRuleB = (entered===1800||entered===capPF) && basic>EPF_CEILING_OLD;
-  let pfNote='', pfSub=false;
-
-  let empPF_monthly, empPF_thisMonth, erPF_monthly, erPF_thisMonth;
-  let pfMode='letter_value', pfCapApplies=false;
-
-  if(isRuleA){
-    // Rule A: 12% of Basic / 12% of prorated Basic
-    pfMode='12pct_basic';
-    empPF_monthly  = twelveOfBasic + vpf;
-    erPF_monthly   = twelveOfBasic;
-    const prorBasic = R(basic/_calDays*_payable);
-    empPF_thisMonth = R(prorBasic*0.12) + vpfThisMonth;
-    erPF_thisMonth  = R(prorBasic*0.12);
-
-  } else if(isRuleB){
-    // Rule B: statutory cap Rs. 1,800 (12% of Rs. 15k ceiling) when Basic > Rs. 15k
-    // This Month = Rs. 1,800 flat - PF is on actual earnings, not day-prorated
-    pfMode='capped'; pfCapApplies=true;
-    empPF_monthly   = capPF + vpf;
-    erPF_monthly    = capPF;
-    // This Month: 12% of the PF wages actually earned (prorated gross - HRA - variable), never above the cap.
-    // A part-month joiner has earned less than a full month, so the flat cap would overstate PF.
-    const earnedBase = Math.max(0, proratedGross - proratedHRA - proratedReimbs);
-    const thisPF = Math.min(R(earnedBase*0.12), capPF);
-    empPF_thisMonth = thisPF + vpfThisMonth;   // earned-wages PF + prorated VPF
-    erPF_thisMonth  = thisPF;
+  const wagesM=codeWages(1,npsMonthly);
+  const wagesP=codeWages(_payable/_calDays,npsMonthly);
+  const proYY=proYYMMNow();
+  const ceilW=epfWageCap(proYY), capPF=epfCapPF(proYY);
+  const f=(n)=>'Rs. '+n.toLocaleString('en-IN');
+  // The letter shows the statutory cap (Rs. 1,800 on the old ceiling, or this month's cap): PF is restricted to the ceiling.
+  const capped=(entered===1800||entered===capPF)&&wagesM>EPF_CEILING_OLD;
+  let empPF_monthly, empPF_thisMonth, erPF_monthly, erPF_thisMonth, pfMode, pfNote='';
+  if(capped){
+    pfMode='capped';
+    erPF_monthly=Math.min(R(wagesM*0.12),capPF);
+    erPF_thisMonth=Math.min(R(wagesP*0.12),capPF);   // the ceiling applies to wages earned, not a prorated ceiling
     if(entered!==capPF){
-      const f=(n)=>'\u20B9'+n.toLocaleString('en-IN');
-      pfNote = proYY===202609
-        ? `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. In September 2026 the ceiling changes mid-month (${f(15000)} to 16 Sep, ${f(25000)} from 17 Sep), so the statutory cap for a full month is ${f(capPF)}. This calculation uses ${f(capPF)}${_payable<_calDays?' as the upper limit on PF for the wages actually earned; for a part-month joiner in September, check EPFO\'s FAQ on the split month':''}.`
-        : `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. For ${monthLabelYY(proYY)} the PF wage ceiling is ${f(ceilW)} (it changed on 17 Sep 2026), so the statutory cap is ${f(capPF)}. This calculation uses ${f(capPF)}.`;
+      pfNote=proYY===202609
+        ? `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. In September 2026 the ceiling changes mid-month (${f(15000)} to 16 Sep, ${f(25000)} from 17 Sep), so the cap for a full month is ${f(capPF)}.`
+        : `Your letter shows ${f(entered)}, the cap on the old ${f(15000)} PF wage ceiling. For ${monthLabelYY(proYY)} the PF wage ceiling is ${f(ceilW)}, so the cap is ${f(capPF)}.`;
     }
-    // Sub-rule: if basic ≤ Rs. 15k → 12% of (gross−HRA−var), capped at Rs. 1,800
-    if(basic<=ceilW){
-      pfCapApplies=false; pfSub=true;
-      const actualBase=Math.max(0,proratedGross-proratedHRA-proratedReimbs);
-      empPF_thisMonth = Math.min(R(actualBase*0.12), capPF) + vpfThisMonth;
-      erPF_thisMonth  = Math.min(R(actualBase*0.12), capPF);
-      const monthlyBase=Math.max(0,getGross()-getHRA()-getReimbs());
-      empPF_monthly   = Math.min(R(monthlyBase*0.12), capPF) + vpf;
-      erPF_monthly    = Math.min(R(monthlyBase*0.12), capPF);
-    }
-
-  } else {
-    // Letter value (custom / non-standard)
-    pfMode='letter_value';
-    empPF_monthly  = entered + vpf;
-    erPF_monthly   = entered;
-    if(basic>0&&basic<=ceilW){
-      // Low basic → this month = 12% of prorated (gross−HRA−var), capped at entered
-      const prorBase=Math.max(0,proratedGross-proratedHRA-proratedReimbs);
-      empPF_thisMonth = R(prorBase*0.12) + vpfThisMonth;
-      erPF_thisMonth  = R(prorBase*0.12);
-    } else {
-      // High basic with custom value → prorate entered amount
-      empPF_thisMonth = Math.round(entered*_payable/_calDays) + vpfThisMonth;
-      erPF_thisMonth  = Math.round(entered*_payable/_calDays);
-    }
+  }else{
+    pfMode='code_wages';
+    erPF_monthly=R(wagesM*0.12);
+    erPF_thisMonth=R(wagesP*0.12);
+    if(Math.abs(entered-erPF_monthly)>5)
+      pfNote=`PF is worked out on wages under the Labour Codes (${f(wagesM)} a month: pay other than HRA, conveyance, bonus, reimbursements and the other excluded items, with the 50% rule applied). Your letter shows ${f(entered)}; on these wages PF is ${f(erPF_monthly)}.`;
   }
-  return{empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,vpf,vpfThisMonth,pfMode,pfCapApplies,pfNote,pfSub};
+  empPF_monthly=erPF_monthly+vpf;
+  empPF_thisMonth=erPF_thisMonth+vpfThisMonth;
+  return{empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,vpf,vpfThisMonth,pfMode,pfCapApplies:pfMode==='capped',pfNote,wagesM,wagesP};
 }
 
 // ══════════════════════════════════════════════════════
-// ESI - Change #3
-// Eligibility: monthly gross ≤ Rs. 21,000
-// Monthly column: 0.75% of monthly gross
-// This Month column: 0.75% of prorated gross (this month's earnings)
+// ESI - on ESI wages (gross pay without reimbursements). Ceiling Rs. 21,000, or Rs. 25,000 for a person with disability.
+// ESIC rounds the employee share up for each person and the employer share up on the total (one person here).
 // ══════════════════════════════════════════════════════
-function calcESI(monthlyGrossIn, proratedGross){
-  // #1+#8: monthlyGrossIn for eligibility & monthly col; proratedGross for thisMonth col
-  const monthlyGross=monthlyGrossIn||getGross();
-  if(!proratedGross) proratedGross=monthlyGross;
-  if(monthlyGross>21000)return{esiEmp_monthly:0,esiEmp_thisMonth:0,esiEr_monthly:0,esiEr_thisMonth:0,applies:false};
+function esiCeiling(){const el=window.__spRoot.getElementById('pwd');return el&&el.value==='Y'?25000:21000;}
+function ceilR(x){return Math.ceil(Math.round(x*100)/100);}
+function calcESI(wageM, wageP){
+  const monthly=wageM||0, prorated=(wageP==null?monthly:wageP);
+  if(monthly>esiCeiling())return{esiEmp_monthly:0,esiEmp_thisMonth:0,esiEr_monthly:0,esiEr_thisMonth:0,applies:false};
   return{
-    esiEmp_monthly:R(monthlyGross*0.0075),
-    esiEmp_thisMonth:R(proratedGross*0.0075),
-    esiEr_monthly:R(monthlyGross*0.0325),
-    esiEr_thisMonth:R(proratedGross*0.0325),
+    esiEmp_monthly:ceilR(monthly*0.0075),
+    esiEmp_thisMonth:ceilR(prorated*0.0075),
+    esiEr_monthly:ceilR(monthly*0.0325),
+    esiEr_thisMonth:ceilR(prorated*0.0325),
     applies:true
   };
 }
-
 // ══════════════════════════════════════════════════════
-// PT - Change #2
-// Slab lookup: on monthly gross (to find the applicable PT rate)
-// Deduction: PT flat amount deducted on THIS month's prorated earnings
-//   i.e. if PT slab says Rs. 200 but prorated gross is only Rs. 12,000,
-//   the actual deduction is Rs. 200 (PT is a flat amount, not a %)
-//   - PT remains flat in "this month" column because it is a flat slab amount
-//   - But it is only deducted if this month's earnings exceed the slab minimum
-// Note: PT is a fixed slab amount, so "deducting on earnings" means:
-//   we use the slab based on monthly gross, but only apply it if
-//   prorated earnings ≥ the slab's lower bound.
-// TN SPECIAL: Half-yearly PT for Sept(9) and March(3): 210 instead of 208
-//            Ensures yearly = 2500 and half-yearly = 1250
+// PT - the slab follows the salary actually earned in the month, so a part month uses its prorated earnings.
+// Monthly column: the full-month salary. This Month column: this month's earnings.
 // ══════════════════════════════════════════════════════
-function getPT(state, monthlyGross, proratedGross, month, gender){
-  if(!state||state==='NONE')return{ptMonthly:0,ptThisMonth:0};
-  const slabs=PT_SLABS[state];if(!slabs)return{ptMonthly:0,ptThisMonth:0};
-  // Maharashtra women exemption
-  if(state==='MH'&&gender==='F'&&monthlyGross<=25000)return{ptMonthly:0,ptThisMonth:0};
-  // Find slab from monthly gross
-  const slab=slabs.find(s=>monthlyGross>=s.from&&monthlyGross<=s.to);
-  if(!slab||slab.tax===0)return{ptMonthly:0,ptThisMonth:0};
-  // Feb special rules
-  let taxAmt=slab.tax;
-  if(state==='MH'&&month&&parseInt(month.split('-')[1])===2&&taxAmt===200)taxAmt=300;
-  if(state==='KA'&&month&&parseInt(month.split('-')[1])===2&&taxAmt===200)taxAmt=300;
-  // TN (Tamil Nadu) SPECIAL: Sept and March have 210 (half-yearly handling)
-  // This ensures 6 months × 210 = 1260 (approx 1250 half-yearly), 12 months total = ~2500
-  if(state==='TN'&&month){
-    const moNum=parseInt(month.split('-')[1]);
-    if((moNum===9||moNum===3)&&taxAmt===1250)taxAmt=210; // Sept & March special rate
+function ptBand(bands,x){for(const[u,a]of bands){if(x<=u)return a;}return 0;}
+function ptMonthAmt(rule,monthNum,amountBase,gender,annualIncome){
+  if(rule.punjab){const lim=regime==='old'?250000:300000;return annualIncome>lim?200:0;}
+  const bands=(rule.women&&gender==='F')?rule.women:rule.bands;
+  let a=ptBand(bands,amountBase);
+  if(rule.feb300&&monthNum===2&&a===200)a=300;
+  if(rule.lastMonth&&monthNum===3&&rule.lastMonth[a])a=rule.lastMonth[a];
+  return a;
+}
+function ptMonthsLeftInHalf(m){return m>=4&&m<=9?9-m:(m>=10?12-m+3:3-m);}
+const FY_ORDER=[4,5,6,7,8,9,10,11,12,1,2,3];
+const fyPos=(m)=>FY_ORDER.indexOf(m);
+const halfOf=(m)=>(m>=4&&m<=9)?1:2;
+const MONTH_NAME=(m)=>new Date(2026,m-1,1).toLocaleString('en-IN',{month:'long'});
+// the calendar year of month m, seen from proration month mo in year yr (m on or after mo in the tax year)
+const yearOfNext=(m,mo,yr)=>(fyPos(m)>=fyPos(mo)?(m<mo?yr+1:yr):yr);
+// Half-year liability. Current half: income from joining to the half's end; Kerala needs 60 days of employment in the half.
+function ptHalfLiability(rule,mo,monthlyGross,c,isCurrent){
+  if(!isCurrent)return ptBand(rule.bands,monthlyGross*6);
+  if(rule.minDays&&c.dojDate&&c.yr){
+    const endM=halfOf(mo)===1?9:3, endY=(halfOf(mo)===2&&mo>=10)?c.yr+1:c.yr;
+    const end=Date.UTC(endY,endM,0), start=Math.max(c.dojDate.getTime(),Date.UTC(endM===9?endY:endY-1,endM===9?3:9,1));
+    if((end-start)/86400000+1<rule.minDays)return 0;
   }
-  // PT is a flat amount - deducted in full if employee is in applicable slab
-  // In proration month, PT is deducted only if prorated earnings ≥ slab lower bound
-  const ptThisMonth=(proratedGross>=slab.from)?taxAmt:0;
-  return{ptMonthly:taxAmt,ptThisMonth};
+  return ptBand(rule.bands,c.halfIncome||monthlyGross*6);
+}
+// ctx: {annualIncome, halfIncome, dojDate, yr}
+function getPT(state, monthlyGross, proratedGross, month, gender, ctx){
+  const none={ptMonthly:0,ptThisMonth:0,cycle:'none',liability:0,due:''};
+  if(!state||state==='NONE')return none;
+  const rule=PT_RULES[state];if(!rule)return none;
+  const [yr,mo]=month?month.split('-').map(Number):[0,0];
+  const c=ctx||{};
+  if(rule.cycle==='monthly'){
+    const ai=c.annualIncome||monthlyGross*12;
+    return{ptMonthly:ptMonthAmt(rule,mo,monthlyGross,gender,ai),ptThisMonth:ptMonthAmt(rule,mo,proratedGross,gender,ai),cycle:'monthly',liability:0,due:''};
+  }
+  const out={ptMonthly:0,ptThisMonth:0,cycle:rule.cycle,liability:0,due:rule.due||'',next:null};
+  if(rule.cycle==='annual'){
+    out.liability=ptBand(rule.bands,c.annualIncome||monthlyGross*12);
+    if(rule.deduct){
+      const dm=rule.deduct[0];
+      if(mo===dm){out.ptMonthly=out.ptThisMonth=out.liability;}
+      else if(fyPos(dm)>fyPos(mo))out.next={month:dm,year:yearOfNext(dm,mo,yr),amount:out.liability};
+    }
+    return out;
+  }
+  // half-yearly
+  out.liability=ptHalfLiability(rule,mo,monthlyGross,{...c,yr},true);
+  if(rule.minDays&&out.liability===0&&ptBand(rule.bands,c.halfIncome||monthlyGross*6)>0)out.under60=true;
+  if(rule.deduct){
+    const dmThis=rule.deduct.find(m=>halfOf(m)===halfOf(mo));
+    if(mo===dmThis){out.ptMonthly=out.ptThisMonth=out.liability;}
+    else if(fyPos(dmThis)>fyPos(mo))out.next={month:dmThis,year:yearOfNext(dmThis,mo,yr),amount:out.liability};
+    else if(halfOf(mo)===1){const dm2=rule.deduct.find(m=>halfOf(m)===2);out.next={month:dm2,year:yearOfNext(dm2,mo,yr),amount:ptBand(rule.bands,monthlyGross*6)};}
+  }
+  return out;
+}
+// PT for the tax year from this month on (old-regime deduction). months: how many later months to add.
+function ptForYear(state,monthlyGross,proratedGross,month,gender,months,ctx){
+  const rule=PT_RULES[state];if(!rule)return 0;
+  const mo=month?parseInt(month.split('-')[1]):0;
+  if(rule.cycle==='monthly'){
+    const ai=(ctx&&ctx.annualIncome)||monthlyGross*12;
+    let t=ptMonthAmt(rule,mo,proratedGross,gender,ai);
+    for(let i=1;i<=months;i++){const m=((mo-1+i)%12)+1;t+=ptMonthAmt(rule,m,monthlyGross,gender,ai);}
+    return t;
+  }
+  if(rule.cycle==='annual')return ptBand(rule.bands,(ctx&&ctx.annualIncome)||monthlyGross*12);
+  // half-yearly: this half on its income (Kerala's 60-day rule applied), plus the second half when this month is in April to September
+  const yrNow=month?parseInt(month.split('-')[0]):0;
+  let t=ptHalfLiability(rule,mo,monthlyGross,{...(ctx||{}),yr:yrNow},true);
+  if(mo>=4&&mo<=9&&months>=ptMonthsLeftInHalf(mo)+6)t+=ptBand(rule.bands,monthlyGross*6);
+  return t;
 }
 
 // ══════════════════════════════════════════════════════
@@ -449,17 +436,26 @@ function getPT(state, monthlyGross, proratedGross, month, gender){
 // ══════════════════════════════════════════════════════
 function getLWFFreq(state){
   const d=LWF_DATA[state];
-  return d?d.freq:'monthly';
+  return d?d.freq:'nil';
 }
-function getLWF(state,month){
-  if(!state||state==='NONE')return{emp:0,er:0,active:false};
-  const d=LWF_DATA[state];if(!d||d.freq==='nil')return{emp:0,er:0,active:false};
-  if(d.freq==='monthly')return{emp:d.emp,er:d.er,active:true};
+function lwfAmounts(d,wage){
+  if(d.pct){const e=Math.min(Math.round(wage*d.pct*100)/100,d.emp);return{emp:e,er:Math.round(e*2*100)/100};}
+  return{emp:d.emp,er:d.er};
+}
+function getLWF(state,month,wage){
+  const off={emp:0,er:0,active:false,annualEmp:0,annualEr:0};
+  if(!state||state==='NONE')return off;
+  const d=LWF_DATA[state];if(!d)return off;
+  const a=lwfAmounts(d,wage||getGross());
+  const per=d.freq==='monthly'?12:d.freq==='halfyearly'?2:1;
+  const base={annualEmp:a.emp*per,annualEr:a.er*per};
+  if(d.freq==='monthly')return{...a,active:true,...base};
   const mo=month?parseInt(month.split('-')[1]):0;
-  if(d.freq==='halfyearly'&&(mo===6||mo===12))return{emp:d.emp,er:d.er,active:true};
-  if(d.freq==='annual'&&mo===12)return{emp:d.emp,er:d.er,active:true};
-  return{emp:0,er:0,active:false};
+  if((d.months||[]).includes(mo))return{...a,active:true,...base};
+  return{emp:0,er:0,active:false,...base};
 }
+function netText(n){return n<0?'<span style="font-size:.78rem;font-weight:600;color:#B91C1C;white-space:normal">Deductions exceed pay for this month</span>':`Rs. ${fmt(n)}`;}
+function fmtL(n){return Number.isInteger(n)?fmt(n):n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});}
 
 // ══ NPS Employer - % of Basic ══
 function calcNPS(npsPct){
@@ -481,7 +477,36 @@ function calcBaseSlabTax(taxable,r){
   }
   return tax;
 }
+// Surcharge bands: 10% above Rs. 50 lakh, 15% above Rs. 1 crore, 25% above Rs. 2 crore, 37% above Rs. 5 crore (old regime;
+// the new regime stops at 25%). Marginal relief: tax plus surcharge above a band never exceeds the amount at the band's
+// start plus the income above it.
+function surchargeRate(income,r){
+  if(income>50000000&&r==='old')return 0.37;
+  if(income>20000000)return 0.25;
+  if(income>10000000)return 0.15;
+  if(income>5000000)return 0.10;
+  return 0;
+}
+function taxWithSurcharge(income,r){
+  const t=calcBaseSlabTax(income,r);
+  let total=t*(1+surchargeRate(income,r));
+  for(const thr of [5000000,10000000,20000000,50000000]){
+    if(income>thr&&surchargeRate(income,r)!==surchargeRate(thr,r)){
+      const atThr=calcBaseSlabTax(thr,r)*(1+surchargeRate(thr,r));
+      total=Math.min(total,atThr+(income-thr));
+    }
+  }
+  return total;
+}
 function calcAnnualTax(taxable,r){
+  if(taxable>5000000)return R(taxWithSurcharge(taxable,r)*1.04);   // 4% health and education cess
+  let tax=calcBaseSlabTax(taxable,r);
+  // Rebate: new regime nil up to Rs. 12 lakh, and above it the tax never exceeds the income over Rs. 12 lakh (marginal relief)
+  if(r==='new'){ if(taxable<=1200000)tax=0; else tax=Math.min(tax,taxable-1200000); }
+  if(r==='old'&&taxable<=500000)tax=Math.max(0,tax-Math.min(tax,12500));
+  return R(tax*1.04);
+}
+function calcAnnualTaxLegacy(taxable,r){
   let tax=calcBaseSlabTax(taxable,r);
   // FIX13: proper 87A rebate - up to Rs. 12,500 off tax (not a cliff)
   if(r==='new'&&taxable<=1200000)tax=0; // New: full rebate ≤Rs. 12L
@@ -530,12 +555,12 @@ function calcTDS(grossM,r,npsErM,basicM,erEPFM,ptAnnual,grossP,npsErP,erEPFP,bas
   // This means perquisite is regime-neutral - same for New and Old regime.
   const erEPFAnnual=R(erEPFP+erEPFM*fullMos);
   const combinedRetiral=erEPFAnnual+npsErAnnual; // actual EPF + actual NPS contribution
-  const retiralThreshold=R(750000*totalMos/12);
+  const retiralThreshold=750000;   // a yearly limit, not reduced for a part year
   const perquisiteAdd=Math.max(0,combinedRetiral-retiralThreshold);
 
-  // PT u/s 16(iii) - old regime only
+  // Professional tax, Section 19 - old regime only
   const ptDed=r==='old'?ptAnnual:0;
-  // 80C: employee EPF - old regime only, cap already applied by caller
+  // Section 123: employee EPF - old regime only, cap already applied by caller
   const pfDed80C=r==='old'?pf80C:0;
 
   const taxable=Math.max(0,annualGross-stdDed-npsExemptAnnual+perquisiteAdd-ptDed-pfDed80C);
@@ -568,18 +593,21 @@ function updatePreviews(){
   const basic=getBasic();
   const basicMissing=basic===0&&rows.some(r=>r.name.trim()&&parseFloat(r.amount)>0);
   const vpfAmt=R(basic*(vpf||0)/100);
-  window.__spRoot.getElementById('vpfDisp').value=vpf>0&&basicMissing?'⚠ Add Basic Salary row':vpfAmt?`Rs. ${fmt(vpfAmt)}/mo`:'-';
+  window.__spRoot.getElementById('vpfDisp').value=vpf>0&&basicMissing?'⚠ Add Basic Salary row':vpfAmt?`Rs. ${fmt(vpfAmt)}`:'-';
   const npsAmt=calcNPS(nps);
-  window.__spRoot.getElementById('npsDisp').value=nps>0&&basicMissing?'⚠ Add Basic Salary row':npsAmt?`Rs. ${fmt(npsAmt)}/mo`:'-';
+  window.__spRoot.getElementById('npsDisp').value=nps>0&&basicMissing?'⚠ Add Basic Salary row':npsAmt?`Rs. ${fmt(npsAmt)}`:'-';
   const monthlyGross=getGross();
-  const esi=calcESI(monthlyGross, monthlyGross); // preview: no proration context
-  window.__spRoot.getElementById('esiEmpDisp').value=esi.applies?`Rs. ${fmt(esi.esiEmp_monthly)}/mo (0.75%)`:'Not applicable (Gross > Rs. 21k)';
-  window.__spRoot.getElementById('esiErDisp').value=esi.applies?`Rs. ${fmt(esi.esiEr_monthly)}/mo (3.25%)`:'-';
+  const esiWage=R(monthlyGross-getReimbs());
+  const esi=calcESI(esiWage, esiWage); // preview: no proration context
+  window.__spRoot.getElementById('esiEmpDisp').value=esi.applies?`Rs. ${fmt(esi.esiEmp_monthly)}`:'Not applicable';
+  window.__spRoot.getElementById('esiErDisp').value=esi.applies?`Rs. ${fmt(esi.esiEr_monthly)}`:'-';
   if(state==='NONE'){window.__spRoot.getElementById('ptDisp').value='-';window.__spRoot.getElementById('lwfDisp').value='-';return;}
   const pt=getPT(state,monthlyGross,monthlyGross,mv,gender);
-  window.__spRoot.getElementById('ptDisp').value=pt.ptMonthly?`Rs. ${fmt(pt.ptMonthly)}/mo`:'Rs. 0 (exempt/nil)';
-  const lwf=getLWF(state,mv);
-  window.__spRoot.getElementById('lwfDisp').value=lwf.active?`Rs. ${fmt(lwf.emp)} this month`:`Rs. 0 (not applicable)`;
+  window.__spRoot.getElementById('ptDisp').value=pt.cycle==='monthly'
+    ?(pt.ptMonthly?`Rs. ${fmt(pt.ptMonthly)}`:'Nil at this salary')
+    :(pt.cycle==='none'?'No professional tax':`Rs. ${fmt(pt.liability)} per ${pt.cycle==='annual'?'year':'half-year'}`);
+  const lwf=getLWF(state,mv,monthlyGross);
+  window.__spRoot.getElementById('lwfDisp').value=lwf.active?`Rs. ${fmtL(lwf.emp)} this month`:(LWF_DATA[state]?'Rs. 0 this month':'No labour welfare fund');
 }
 function onStateChange(){updatePreviews();}
 
@@ -686,25 +714,24 @@ function calculate(){
   // ── PF (Change #1/#5) ──
   // Monthly: from appointment letter inputs (fixed rate)
   // This Month: 12% of (prorated Gross − prorated HRA − prorated Variable)
-  const pfRes=calcPF(vpfPct,totP,proratedHRA,proratedReimbs,calDays,payable);
+  const pfRes=calcPF(vpfPct,calDays,payable,npsM);
   const{empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,vpf,pfCapApplies}=pfRes;
 
   // Update PF display fields
-  window.__spRoot.getElementById('vpfDisp').value=vpf?`Rs. ${fmt(vpf)}/mo`:'-';
-  window.__spRoot.getElementById('npsDisp').value=npsM?`Rs. ${fmt(npsM)}/mo (${npsPct}% of Basic)`:'-';
+  window.__spRoot.getElementById('vpfDisp').value=vpf?`Rs. ${fmt(vpf)}`:'-';
+  window.__spRoot.getElementById('npsDisp').value=npsM?`Rs. ${fmt(npsM)}`:'-';
 
   // ── ESI (Change #3) ──
-  const esiRes=calcESI(totM, totP); // monthly gross for eligibility; prorated for thisMonth
+  // ESI wages: gross pay without reimbursements
+  const esiRes=calcESI(R(totM-getReimbs()), R(totP-proratedReimbs));
   const{esiEmp_monthly,esiEmp_thisMonth,esiEr_monthly=0,esiEr_thisMonth=0,applies:esiApplies}=esiRes;
-  window.__spRoot.getElementById('esiEmpDisp').value=esiApplies?`Rs. ${fmt(esiEmp_monthly)}/mo (0.75%)`:'Not applicable (Gross > Rs. 21k)';
-  window.__spRoot.getElementById('esiErDisp').value=esiApplies?`Rs. ${fmt(esiEr_monthly)}/mo (3.25%)`:'-';
+  window.__spRoot.getElementById('esiEmpDisp').value=esiApplies?`Rs. ${fmt(esiEmp_monthly)}`:'Not applicable';
+  window.__spRoot.getElementById('esiErDisp').value=esiApplies?`Rs. ${fmt(esiEr_monthly)}`:'-';
 
   // ── PT (Change #2) - slab on monthly gross, deduct on prorated earnings ──
-  const ptRes=getPT(state,totM,totP,mv,gender); // monthlyGross=totM (slab), proratedGross=totP (deduct)
-  const{ptMonthly,ptThisMonth}=ptRes;
 
   // ── LWF - flat amount ──
-  const lwfR=getLWF(state,mv);
+  const lwfR=getLWF(state,mv,totP);
   const lwfEm=lwfR.emp;const lwfErm=lwfR.er;
 
   // ── TDS - DOJ-exact annualisation ──────────────────────────────────
@@ -730,15 +757,13 @@ function calculate(){
   const tdsBasicP=dojInThisFY?R(basicM/calDays*payable):basicM;
   const tdsNpsErP=dojInThisFY?R(npsM/calDays*payable):npsM;
   const tdsErEPFP=dojInThisFY?erPF_thisMonth:erPF_monthly;
-  // PT annual: full slab × all months from DOJ (joining month always full slab)
-  const dojMonthNum=dojVal?new Date(dojVal).getUTCMonth()+1:4;
-  // Feb PT extra: only when Feb actually falls between DOJ month and March
-  // AND we haven't already passed Feb (proration month must be before Feb, i.e. not March)
-  // In FY (Apr=4 to Mar=3): Feb is month 2. It falls after DOJ if dojMonth<=1 (Jan/Feb) or dojMonth>=4 (Apr-Dec)
-  // But if proration month is March (mo===3), Feb has already passed - no extra.
-  const febFallsAfterJoin=(dojMonthNum>=4||dojMonthNum<=1)&&mo!==3&&mo!==2;
-  const ptFebExtra=(state==='MH'||state==='KA')&&febFallsAfterJoin?100:0;
-  const ptAnnual=R(ptMonthly+ptMonthly*fullMos+ptFebExtra);
+  // PT: income for the period decides annual and half-yearly states; monthly states use each month's salary
+  const ptCtx={annualIncome:R(tdsGrossP+totM*fullMos),
+               halfIncome:dojInThisFY?R(totP+totM*Math.min(ptMonthsLeftInHalf(mo),fullMos)):totM*6,
+               dojDate:(dojVal&&dojInThisFY)?new Date(dojVal):null};
+  const ptRes=getPT(state,totM,totP,mv,gender,ptCtx);
+  const{ptMonthly,ptThisMonth}=ptRes;
+  const ptAnnual=R(ptForYear(state,totM,dojInThisFY?totP:totM,mv,gender,fullMos,ptCtx));
   // Call DOJ-exact TDS
   // 80C: employee PF (joining month + remaining full months), cap Rs. 1.5L
   // PF for the later months follows the ceiling in force each month (15,000, split Sep 2026, 25,000)
@@ -758,19 +783,20 @@ function calculate(){
   const tdsDiffers=Math.abs(tdsM-tdsProjected)>1;
 
   // ── Totals - both columns ──
-  const ptMonthlyForDed=regime==='old'?ptMonthly:0; // PT tax benefit old regime only
-  const dedM=empPF_monthly+(esiApplies?esiEmp_monthly:0)+ptMonthlyForDed+lwfEm+npsM+tdsProjected;
+  // PT is deducted from pay under both regimes; only its tax deduction is old-regime only
+  const lwfEmFull=lwfEm>0&&LWF_DATA[state]?lwfAmounts(LWF_DATA[state],totM).emp:0;   // full-month LWF for the Monthly column
+  const dedM=empPF_monthly+(esiApplies?esiEmp_monthly:0)+ptMonthly+lwfEmFull+npsM+tdsProjected;
   const npsPrForDed=R(npsM/calDays*payable);
   const dedP=empPF_thisMonth+(esiApplies?esiEmp_thisMonth:0)+ptThisMonth+lwfEm+npsPrForDed+tdsM;
 
   const netM=R(grossWithNPS_M-dedM);
-  const netP=Math.max(0,R(grossWithNPS_P-dedP)); // FIX26: cannot show negative take-home
+  const netP=R(grossWithNPS_P-dedP);   // may be below zero: shown as a message, never as a negative figure or a silent zero
 
   // ── Tiles ──
   window.__spRoot.getElementById('resTiles').innerHTML=`
     <div class="tile"><span class="tile-v">${payable}/${calDays}</span><div class="tile-l">Payable Days</div></div>
     <div class="tile tg"><span class="tile-v">Rs. ${fmt(grossWithNPS_P)}</span><div class="tile-l">Gross This Month</div></div>
-    <div class="tile tn"><span class="tile-v">Rs. ${fmt(netP)}</span><div class="tile-l">Net Take-Home</div></div>`;
+    <div class="tile tn">${netP<0?'<span class="tile-v" style="font-size:.9rem;line-height:1.3">Deductions exceed pay for this month</span>':`<span class="tile-v">Rs. ${fmt(netP)}</span>`}<div class="tile-l">Net Take-Home</div></div>`;
 
   // ── Result Table ──
   let tb='';
@@ -798,10 +824,31 @@ function calculate(){
 
   if(esiApplies)tb+=`<tr class="ded"><td>Employee ESI (0.75%)</td><td>Rs. ${fmt(esiEmp_monthly)}</td><td>Rs. ${fmt(esiEmp_thisMonth)}</td></tr>`;
 
-  if(state!=='NONE'&&ptMonthly>0)tb+=`<tr class="ded"><td>Professional Tax - ${eH(stateName)}</td><td style="color:var(--ts);font-style:italic">-</td><td>Rs. ${fmt(ptThisMonth)}</td></tr>`;
-  else if(state==='OR')tb+=`<tr class="sub"><td>Professional Tax - Odisha<span class="itnote">abolished Apr 2026</span></td><td>Rs. 0</td><td>Rs. 0</td></tr>`;
-
-  if(lwfEm>0)tb+=`<tr class="ded"><td>Labour Welfare Fund - ${eH(stateName)}</td><td style="color:var(--ts);font-style:italic">-</td><td>Rs. ${fmt(lwfEm)}</td></tr>`;
+  if(ptRes.cycle==='monthly'&&(ptMonthly>0||ptThisMonth>0))tb+=`<tr class="ded"><td>Professional Tax - ${eH(stateName)}</td><td>Rs. ${fmt(ptMonthly)}</td><td>Rs. ${fmt(ptThisMonth)}</td></tr>`;
+  // Explanations go to the notes box below Net Take-Home; the table lists only what is deducted.
+  const statNotes=[];
+  if(ptRes.cycle==='annual'||ptRes.cycle==='halfyearly'){
+    const _kind=ptRes.cycle==='annual'?'an annual tax':'a half-yearly tax';
+    if(ptRes.ptThisMonth>0)tb+=`<tr class="ded"><td>Professional Tax - ${eH(stateName)}</td><td>Rs. ${fmt(ptRes.ptMonthly)}</td><td>Rs. ${fmt(ptRes.ptThisMonth)}</td></tr>`;
+    if(ptRes.under60&&!(ptRes.next&&halfOf(ptRes.next.month)!==halfOf(mo)))
+      statNotes.push(`<strong>Professional Tax:</strong> not payable for this half-year in ${eH(stateName)}, as employment in it is under ${PT_RULES[state].minDays} days.`);
+    else if(ptRes.ptThisMonth>0)
+      statNotes.push(`<strong>Professional Tax:</strong> ${eH(stateName)} levies ${_kind}; this month's salary carries the deduction for ${ptRes.cycle==='annual'?'the year':'the half-year'}.`);
+    else if(ptRes.next)
+      statNotes.push(`<strong>Professional Tax:</strong> ${eH(stateName)} levies ${_kind}. The next deduction falls in the ${MONTH_NAME(ptRes.next.month)} ${ptRes.next.year} salary: Rs. ${fmt(ptRes.next.amount)}.`);
+    else
+      statNotes.push(`<strong>Professional Tax:</strong> ${eH(stateName)} levies ${_kind} of Rs. ${fmt(ptRes.liability)} for ${ptRes.cycle==='annual'?'the year':'this half-year'}, paid ${eH(ptRes.due)}.`);
+  }
+  else if(state==='OR')statNotes.push('<strong>Professional Tax:</strong> Odisha abolished professional tax from 1 April 2026.');
+  const _lwfFull=LWF_DATA[state]?lwfAmounts(LWF_DATA[state],totM):{emp:0,er:0};
+  if(lwfEm>0)tb+=`<tr class="ded"><td>Labour Welfare Fund - ${eH(stateName)}</td><td>Rs. ${fmtL(_lwfFull.emp)}</td><td>Rs. ${fmtL(lwfEm)}</td></tr>`;
+  else if(LWF_DATA[state]&&LWF_DATA[state].months){
+    const _lm=LWF_DATA[state].months.slice().sort((a,b)=>a-b);
+    const _nm=_lm.find(m=>m>mo)||_lm[0];
+    const _ny=_nm>mo?yr:yr+1;
+    const _la=lwfAmounts(LWF_DATA[state],totM);
+    statNotes.push(`<strong>Labour Welfare Fund:</strong> the next deduction falls in the ${MONTH_NAME(_nm)} ${_ny} salary: Rs. ${fmtL(_la.emp)} (employer Rs. ${fmtL(_la.er)}).`);
+  }
   if(npsM>0){
     const npsPrDed=R(npsM/calDays*payable);
     tb+=`<tr class="ded"><td>Employer NPS</td><td>Rs. ${fmt(npsM)}</td><td>Rs. ${fmt(npsPrDed)}</td></tr>`;
@@ -811,26 +858,25 @@ function calculate(){
   tb+=`<tr class="ded"><td>Income Tax / TDS${_tdsSub}</td><td>Rs. ${fmt(tdsProjected)}</td><td>Rs. ${fmt(tdsM)}</td></tr>`;
 
   tb+=`<tr class="ded-tot"><td><strong>Total Deductions</strong></td><td><strong>Rs. ${fmt(dedM)}</strong></td><td><strong>Rs. ${fmt(dedP)}</strong></td></tr>`;
-  tb+=`<tr class="net"><td><strong>Net Take-Home</strong></td><td><strong>Rs. ${fmt(netM)}</strong></td><td><strong>Rs. ${fmt(netP)}</strong></td></tr>`;
+  tb+=`<tr class="net"><td><strong>Net Take-Home</strong></td><td><strong>${netText(netM)}</strong></td><td><strong>${netText(netP)}</strong></td></tr>`;
 
   tb+=`<tr class="s-hdr"><td colspan="3">Employer Costs - Informational Only</td></tr>`;
   tb+=`<tr class="sub"><td>Employer PF</td><td>Rs. ${fmt(erPF_monthly)}</td><td>Rs. ${fmt(erPF_thisMonth)}</td></tr>`;
   if(esiApplies)tb+=`<tr class="sub"><td>Employer ESI (3.25%)</td><td>Rs. ${fmt(esiEr_monthly)}</td><td>Rs. ${fmt(esiEr_thisMonth)}</td></tr>`;
-  if(lwfErm>0)tb+=`<tr class="sub"><td>Employer LWF - ${eH(stateName)}</td><td style="color:var(--ts);font-style:italic">-</td><td>Rs. ${fmt(lwfErm)}</td></tr>`;
+  if(lwfErm>0)tb+=`<tr class="sub"><td>Employer LWF - ${eH(stateName)}</td><td>Rs. ${fmtL(_lwfFull.er)}</td><td>Rs. ${fmtL(lwfErm)}</td></tr>`;
 
   window.__spRoot.getElementById('resBody').innerHTML=tb;
   window.__spRoot.getElementById('resEmp').textContent=`${emp} · ${monthName}`;
 
   const w=window.__spRoot.getElementById('resWarn');
-  const _perqNote=tdsRes.perquisiteAdd>0?` EPF+NPS exceeded Rs. ${fmt(Math.round(750000*totalMos/12))} (Rs. 7.5L × ${totalMos}/12 months) - retiral perquisite Rs. ${fmt(tdsRes.perquisiteAdd)} added to taxable income u/s 17(2)(vii).`:'';
+  const _perqNote=tdsRes.perquisiteAdd>0?` Employer PF and NPS contributions exceed Rs. 7,50,000 for the year, so Rs. ${fmt(tdsRes.perquisiteAdd)} is added to taxable income as a perquisite.`:'';
   const _pfNote=pfRes.pfNote?` <br><strong>PF:</strong> ${pfRes.pfNote}`:'';
   const _surNote=tdsRes.taxable>5000000?' Surcharge applied (taxable >Rs. 50L).':'';
   const _priorFYNote=!dojInThisFY&&dojVal
     ?' Prior-FY joiner: TDS assumes full 12-month income. Actual may differ if earnings were lower earlier in FY.':'';
-  const _esiSmallNote=esiApplies&&totP<5000
-    ?` ESI deducted on monthly gross ≤Rs. 21k - prorated gross this month is small (Rs. ${fmt(totP)}) but ESI applies on full monthly basis.`:'';
+  const _esiSmallNote='';
   const _tdsDiffNote=tdsDiffers?` TDS this month (Rs. ${fmt(tdsM)}) differs from projected monthly TDS (Rs. ${fmt(tdsProjected)}) due to proration.`:'';
-  w.innerHTML=`<span>⚠</span><div><strong>TDS estimate</strong> (DOJ-exact ${totalMos}-month basis). Actual varies with 80C/HRA/80D.${_perqNote}${_pfNote}${_surNote}${_tdsDiffNote}${_priorFYNote}${_esiSmallNote} Gratuity excluded.</div>`;
+  w.innerHTML=`<span>⚠</span><div><strong>TDS estimate</strong> (DOJ-exact ${totalMos}-month basis). Old regime: HRA and Section 123 investments other than EPF, and Section 126, are not included.${_perqNote}${_pfNote}${_surNote}${_tdsDiffNote}${_priorFYNote}${_esiSmallNote} Gratuity excluded.${statNotes.length?'<br>'+statNotes.join('<br>'):''}</div>`;
   w.style.display='flex';
 
   const lwfFreq=getLWFFreq(state);
@@ -861,7 +907,7 @@ function calculate(){
   };
 
   // Now call buildTaxCmp - it will populate taxCmpResults, taxCmpBest, taxCmpDiff into _payslipData
-  buildTaxCmp({totM,totP,npsM,basicM,empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,esiApplies,esiEmp_monthly,esiEmp_thisMonth,ptMonthly,ptThisMonth,ptAnnual,lwfEm,lwfFreq,tdsM,tdsProjected,tdsRes,totalMos,fullMos,regime,calDays,payable,pfCapApplies,pfMode,pfRes,pfStartYY,proYY:_proYY});
+  buildTaxCmp({totM,totP,npsM,basicM,empPF_monthly,empPF_thisMonth,erPF_monthly,erPF_thisMonth,esiApplies,esiEmp_monthly,esiEmp_thisMonth,ptMonthly,ptThisMonth,ptAnnual,lwfEm,lwfFreq,lwfAnnualEmp:lwfR.annualEmp,tdsM,tdsProjected,tdsRes,totalMos,fullMos,regime,calDays,payable,pfCapApplies,pfMode,pfRes,pfStartYY,proYY:_proYY});
 
   if(!calcDone){calcDone=true;showToggles();}
   window.__spRoot.getElementById('emptyPanel').style.display='none';
@@ -906,7 +952,7 @@ function buildTaxCmp(o){
     const perqAdd=res.perquisiteAdd||0;
 
     // Monthly deductions for net calc
-    const ptForDed=r==='old'?ptMonthly:0;
+    const ptForDed=ptMonthly;   // PT is deducted from pay under both regimes
     const tdsForThis = res.tdsM; // this month's actual TDS
     const tdsForMonth = fullMos > 0
       ? R((res.annualTax - tdsForThis) / fullMos)
@@ -914,12 +960,12 @@ function buildTaxCmp(o){
     // #5: Use amortised LWF for monthly column (annual/half-yearly states should spread cost)
     // lwfEm is the this-month amount; for annual states this is 0 in most months
     // We use lwfAnnual/12 for comparison table monthly net to give a realistic monthly picture
-    const lwfAnnual=lwfEm*(o.lwfFreq==='monthly'?12:o.lwfFreq==='halfyearly'?2:1);
+    const lwfAnnual=o.lwfAnnualEmp||0;
     const lwfMonthlyAvg=R(lwfAnnual/12);
     const dedMonth=empPF_monthly+(esiApplies?esiEmp_monthly:0)+ptForDed+lwfMonthlyAvg+npsM+tdsForMonth;
     const dedThis=empPF_thisMonth+(esiApplies?esiEmp_thisMonth:0)+ptThisMonth+lwfEm+npsPr+tdsForThis;
     const netMonthly=R(totM-dedMonth);
-    const netThisMonth=Math.max(0,R(totP-dedThis));
+    const netThisMonth=R(totP-dedThis);
 
     return{
       stdDed,npsExempt,ptExempt,perqAdd,
@@ -958,11 +1004,11 @@ function buildTaxCmp(o){
   // 3. Standard Deduction
   tbl+=row('(-) Standard Deduction',`−Rs. ${fmt(results[0].stdDed)}`,`−Rs. ${fmt(results[1].stdDed)}`);
   // 4. NPS Exemption 80CCD(2)
-  tbl+=row('(-) NPS Exempt 80CCD(2)',
+  tbl+=row('(-) Employer NPS, Section 124',
     results[0].npsExempt>0?`−Rs. ${fmt(results[0].npsExempt)}`:dash,
     results[1].npsExempt>0?`−Rs. ${fmt(results[1].npsExempt)}`:dash);
   // 5. PT exemption - old regime only
-  tbl+=row('(-) Prof. Tax Exemption u/s 16(iii)',
+  tbl+=row('(-) Professional Tax, Section 19',
     dash,
     results[1].ptExempt>0?`−Rs. ${fmt(results[1].ptExempt)}`:dash);
   // 5b. 80C: Employee EPF contribution - old regime only, DOJ-aware, cap Rs. 1.5L/yr
@@ -970,7 +1016,7 @@ function buildTaxCmp(o){
   // e.g. DOJ June: 1800 (June) + 1800×9 (Jul-Mar) = Rs. 18,000
   if(pf80CThis>0){
     // #4: joining month is prorated; subsequent months are full monthly EPF
-    tbl+=row('(-) 80C EPF u/s 80C (Old Regime)<span style="display:block;font-size:.6rem;color:var(--ts)">Joining month prorated + full months × remaining</span>',
+    tbl+=row('(-) Employee EPF, Section 123 (Old Regime)<span style="display:block;font-size:.6rem;color:var(--ts)">Joining month prorated + full months × remaining</span>',
       dash,`−Rs. ${fmt(pf80CThis)}`);
   }
   // 6. Additional taxable income (perquisites)
@@ -978,9 +1024,9 @@ function buildTaxCmp(o){
   if(perqNew>0||perqOld>0){
     // Perquisite is now regime-neutral (based on actual contribution, not exemption cap)
     const _pNote=(perqNew>0)
-      ?`<span style="display:block;font-size:.62rem;color:#D97706;margin-top:1px">Employer EPF + NPS contribution exceeds Rs. 7.5L - taxed u/s 17(2)(vii)</span>`:'';
+      ?`<span style="display:block;font-size:.62rem;color:#D97706;margin-top:1px">Employer PF and NPS contributions exceed Rs. 7,50,000 for the year - taxed as a perquisite</span>`:'';
     tbl+=`<tr style="background:#FFFBEB">
-      <td style="padding:6px 8px;font-size:.77rem;color:#D97706">(+) Retiral Perquisite u/s 17(2)(vii)${_pNote}</td>
+      <td style="padding:6px 8px;font-size:.77rem;color:#D97706">(+) Retirement contributions above Rs. 7.5 lakh${_pNote}</td>
       <td style="text-align:right;padding:6px 8px;font-weight:600;color:#D97706">${perqNew>0?`+Rs. ${fmt(perqNew)}`:dash}</td>
       <td style="text-align:right;padding:6px 8px;font-weight:600;color:#D97706">${perqOld>0?`+Rs. ${fmt(perqOld)}`:dash}</td>
     </tr>`;
@@ -993,12 +1039,12 @@ function buildTaxCmp(o){
   tbl+=row('Monthly TDS (projected)',rupee(results[0].tdsMonthly),rupee(results[1].tdsMonthly));
   // 10. Monthly Net Take-Home
   tbl+=`<tr><td><strong>Monthly Net Take-Home</strong></td>
-    <td style="text-align:right" class="${best===0?'winner':'loser'}"><strong>${rupee(results[0].netMonthly)}</strong></td>
-    <td style="text-align:right" class="${best===1?'winner':'loser'}"><strong>${rupee(results[1].netMonthly)}</strong></td></tr>`;
+    <td style="text-align:right" class="${best===0?'winner':'loser'}"><strong>${netText(results[0].netMonthly)}</strong></td>
+    <td style="text-align:right" class="${best===1?'winner':'loser'}"><strong>${netText(results[1].netMonthly)}</strong></td></tr>`;
   // 11. This Month Net
   tbl+=`<tr><td>This Month Net</td>
-    <td style="text-align:right" class="${best===0?'winner':'loser'}">${rupee(results[0].netThisMonth)}</td>
-    <td style="text-align:right" class="${best===1?'winner':'loser'}">${rupee(results[1].netThisMonth)}</td></tr>`;
+    <td style="text-align:right" class="${best===0?'winner':'loser'}">${netText(results[0].netThisMonth)}</td>
+    <td style="text-align:right" class="${best===1?'winner':'loser'}">${netText(results[1].netThisMonth)}</td></tr>`;
 
   // Annual tax saving
   tbl+=`<tr><td colspan="3" style="text-align:center;font-weight:700;color:var(--pm);padding:8px 8px 4px">
@@ -1019,8 +1065,8 @@ function buildTaxCmp(o){
   const isOptimal=(regime==='new'&&best===0)||(regime==='old'&&best===1);
   // #13: Neutral message when both regimes are equal (diff===0)
   const verdictHTML=diff===0
-    ?`<div class="ok"><span>✓</span><div><strong>Both regimes are equivalent</strong> for your income level - Rs. 0 difference. No action needed.<span style="display:block;margin-top:3px;font-size:.62rem;opacity:.8">Old regime may improve further with 80C/HRA/80D declarations.</span></div></div>`
-    :`<div class="${isOptimal?'ok':'warn'}"><span>${isOptimal?'✓':'⚠'}</span><div><strong>${isOptimal?'You are on the optimal regime.':'Consider switching regime!'}</strong> ${labels[best]} saves Rs. ${fmt(diff)}/yr (Rs. ${fmt(R(diff/12))}/mo).<span style="display:block;margin-top:3px;font-size:.62rem;opacity:.8">Old regime may improve further with 80C/HRA/80D declarations.</span></div></div>`;
+    ?`<div class="ok"><span>✓</span><div><strong>Both regimes are equivalent</strong> for your income level - Rs. 0 difference. No action needed.<span style="display:block;margin-top:3px;font-size:.62rem;opacity:.8">Old regime can come out lower with HRA, Section 123 and Section 126 deductions.</span></div></div>`
+    :`<div class="${isOptimal?'ok':'warn'}"><span>${isOptimal?'✓':'⚠'}</span><div><strong>${isOptimal?'You are on the optimal regime.':'Consider switching regime!'}</strong> ${labels[best]} saves Rs. ${fmt(diff)}/yr (Rs. ${fmt(R(diff/12))}/mo).<span style="display:block;margin-top:3px;font-size:.62rem;opacity:.8">Old regime can come out lower with HRA, Section 123 and Section 126 deductions.</span></div></div>`;
   window.__spRoot.getElementById('taxCmpVerdict').innerHTML=verdictHTML;
 }
 
@@ -1167,14 +1213,14 @@ function downloadPayslip(){
     taxRows+=cmpRow('This Month Earnings', rv(d.grossP), rv(d.grossP));
     taxRows+=cmpRow('Projected Monthly Earnings', rv(d.grossM), rv(d.grossM));
     taxRows+=cmpRow('(−) Standard Deduction', rm(tr[0].stdDed), rm(tr[1].stdDed));
-    taxRows+=cmpRow('(−) NPS Exempt 80CCD(2)',
+    taxRows+=cmpRow('(−) Employer NPS, Section 124',
       tr[0].npsExempt>0?rm(tr[0].npsExempt):dash,
       tr[1].npsExempt>0?rm(tr[1].npsExempt):dash);
-    taxRows+=cmpRow('(−) Prof. Tax Exemption u/s 16(iii)',
+    taxRows+=cmpRow('(−) Professional Tax, Section 19',
       dash, tr[1].ptExempt>0?rm(tr[1].ptExempt):dash);
-    if(pf80C>0) taxRows+=cmpRow('(−) 80C EPF Deduction (Old Regime)', dash, rm(pf80C));
+    if(pf80C>0) taxRows+=cmpRow('(−) Employee EPF, Section 123 (Old Regime)', dash, rm(pf80C));
     if(tr[0].perqAdd>0||tr[1].perqAdd>0){
-      taxRows+=cmpRow('(+) Retiral Perquisite u/s 17(2)(vii)',
+      taxRows+=cmpRow('(+) Retirement contributions above Rs. 7.5 lakh',
         tr[0].perqAdd>0?'+Rs.'+f(Math.round(tr[0].perqAdd)):dash,
         tr[1].perqAdd>0?'+Rs.'+f(Math.round(tr[1].perqAdd)):dash,
         false, AP, AP, AM, AM);
@@ -1412,11 +1458,11 @@ function downloadPayslip(){
         crow('This Month Earnings', rupee(d.totP||d.grossP), rupee(d.totP||d.grossP)); // #14: use totP same as screen
         crow('Projected Monthly Earnings', rupee(d.grossM), rupee(d.grossM));
         crow('(-) Standard Deduction', neg(tcr[0].stdDed), neg(tcr[1].stdDed));
-        if(d.npsM>0) crow('(-) NPS Exempt 80CCD(2)', tcr[0].npsExempt>0?neg(tcr[0].npsExempt):'--', tcr[1].npsExempt>0?neg(tcr[1].npsExempt):'--');
-        crow('(-) Prof. Tax Exemption u/s 16(iii)', '--', tcr[1].ptExempt>0?neg(tcr[1].ptExempt):'--');
-        if(pf80Cv>0) crow('(-) 80C EPF Deduction (Old Regime)', '--', neg(pf80Cv));
+        if(d.npsM>0) crow('(-) Employer NPS, Section 124', tcr[0].npsExempt>0?neg(tcr[0].npsExempt):'--', tcr[1].npsExempt>0?neg(tcr[1].npsExempt):'--');
+        crow('(-) Professional Tax, Section 19', '--', tcr[1].ptExempt>0?neg(tcr[1].ptExempt):'--');
+        if(pf80Cv>0) crow('(-) Employee EPF, Section 123 (Old Regime)', '--', neg(pf80Cv));
         if(tcr[0].perqAdd>0||tcr[1].perqAdd>0){
-          crow('(+) Retiral Perquisite u/s 17(2)(vii)',
+          crow('(+) Retirement contributions above Rs. 7.5 lakh',
             tcr[0].perqAdd>0?'+Rs.'+f(Math.round(tcr[0].perqAdd)):'--',
             tcr[1].perqAdd>0?'+Rs.'+f(Math.round(tcr[1].perqAdd)):'--',
             false,'#FFFBEB','#D97706','#D97706');

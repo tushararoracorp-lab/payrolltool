@@ -173,9 +173,9 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip5" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip5">
             <h5>🏦 EPF - from Appointment Letter</h5>
-            <p>Enter the EPF amounts exactly as shown in your appointment letter. These are <strong>fixed monthly figures</strong>. The PF wage ceiling is Rs. 15,000 until 16 Sep 2026 and Rs. 25,000 from 17 Sep 2026: where the letter shows the capped amount (Rs. 1,800), the calculator applies the cap for the month you select (Rs. 2,360 in Sep 2026, Rs. 3,000 from Oct 2026).</p>
-            <p>The <strong>This Month</strong> column shows the prorated PF for joining month, calculated as: 12% of (prorated Gross − prorated HRA − prorated Variable pay).</p>
-            <p><strong>VPF</strong> is an additional voluntary % of Basic on top of EPF. 80C benefit applies.</p>
+            <p>Enter the employee EPF from the appointment letter. PF is worked out on <strong>wages under the Labour Codes</strong>: all pay except HRA, conveyance and travel, bonus, overtime, commission, incentives, reimbursements and employer NPS, with the excluded items above half of total pay added back. Where the letter shows the capped amount (Rs. 1,800, or the cap for the month), PF is limited to the wage ceiling: Rs. 15,000 until 16 Sep 2026 and Rs. 25,000 from 17 Sep 2026.</p>
+            <p>The <strong>This Month</strong> column is 12% of the wages earned this month, within the ceiling where it applies.</p>
+            <p><strong>VPF</strong> is an additional voluntary % of Basic on top of EPF, up to 88% of Basic. It counts under Section 123 in the old regime.</p>
           </div>
         </div>
       </div>
@@ -206,7 +206,7 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip6" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip6">
             <h5>🏛️ Employer NPS</h5>
-            <p>Employer NPS is funded from <strong>Special Allowance</strong> (flexi basket) - SA is reduced by the NPS amount, so total gross stays the same.</p><p>Tax-exempt u/s 80CCD(2): up to 14% of Basic (New Regime) / 10% (Old Regime).</p>
+            <p>Employer NPS is funded from <strong>Special Allowance</strong> (flexi basket) - SA is reduced by the NPS amount, so total gross stays the same.</p><p>Deductible under Section 124: up to 14% of Basic (New Regime) / 10% (Old Regime, private sector).</p>
           </div>
         </div>
       </div>
@@ -221,7 +221,8 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip7" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip7">
             <h5>🏥 ESI</h5>
-            <p>Applies when monthly gross ≤ Rs. 21,000. ESI deduction amount is calculated on <strong>this month's prorated earnings</strong>.</p>
+            <p>Applies when monthly ESI wages (gross pay without reimbursements) are up to Rs. 21,000, or Rs. 25,000 for a person with disability. ESI is calculated on <strong>this month's earned wages</strong>, and ESIC rounds each share up to the next rupee.</p>
+            <p>An employee covered at the start of a contribution period (April or October) stays covered until it ends (30 September or 31 March), even if pay rises above the ceiling.</p>
             <p>Employee: 0.75% &nbsp;|&nbsp; Employer: 3.25%</p>
           </div>
         </div>
@@ -230,6 +231,14 @@ const TOOL_BODY_HTML = `
         <div class="field"><label>Employee ESI</label><input type="text" id="esiEmpDisp" readonly placeholder="After Calculate"/></div>
         <div class="field"><label>Employer ESI (info)</label><input type="text" id="esiErDisp" readonly placeholder="After Calculate"/></div>
       </div>
+      <div class="row2">
+        <div class="field"><label>Person with disability</label>
+          <select id="pwd" onchange="updatePreviews()">
+            <option value="N">No</option>
+            <option value="Y">Yes (ESI ceiling Rs. 25,000)</option>
+          </select>
+        </div>
+      </div>
 
       <!-- ── PT & LWF ── -->
       <div class="sdiv">Professional Tax &amp; LWF
@@ -237,9 +246,9 @@ const TOOL_BODY_HTML = `
           <button class="tip-btn" data-tip="tip8" onmouseenter="tipShow(this)" onmouseleave="tipHide(this)" onfocus="tipShow(this)" onblur="tipHide(this)">i</button>
           <div class="tip-box" id="tip8">
             <h5>🗺️ PT &amp; LWF</h5>
-            <p><strong>PT</strong> is looked up from the monthly gross slab but deducted on this month's prorated earnings amount.</p>
-            <p><strong>LWF</strong> is a flat Rs. amount, deducted only in applicable months (monthly / half-yearly Jun+Dec / annual Dec).</p>
-            <p>Odisha: PT abolished w.e.f. 1 Apr 2026. &nbsp;Haryana LWF: Rs. 35/emp revised w.e.f. 1 Jan 2026.</p>
+            <p><strong>PT</strong> follows the salary actually earned in the month. States that collect PT annually or half-yearly show the tax for that period instead of a monthly deduction.</p>
+            <p><strong>LWF</strong> is deducted in each state's own months: monthly, half-yearly (June and December) or annually (December).</p>
+            <p>Odisha abolished PT from 1 April 2026. Haryana LWF is 0.2% of wages, up to Rs. 35.</p>
           </div>
         </div>
       </div>
@@ -250,9 +259,15 @@ const TOOL_BODY_HTML = `
             <option value="AP">Andhra Pradesh</option>
             <option value="AS">Assam</option>
             <option value="BR">Bihar</option>
+            <option value="CH">Chandigarh</option>
             <option value="CG">Chhattisgarh</option>
+            <option value="DN">Dadra and Nagar Haveli and Daman and Diu</option>
+            <option value="DL">Delhi</option>
+            <option value="GA">Goa</option>
             <option value="GJ">Gujarat</option>
             <option value="HR">Haryana</option>
+            <option value="HP">Himachal Pradesh</option>
+            <option value="JK">Jammu and Kashmir</option>
             <option value="JH">Jharkhand</option>
             <option value="KA">Karnataka</option>
             <option value="KL">Kerala</option>
@@ -262,25 +277,17 @@ const TOOL_BODY_HTML = `
             <option value="ML">Meghalaya</option>
             <option value="MZ">Mizoram</option>
             <option value="NL">Nagaland</option>
-            <option value="OR">Odisha (PT abolished Apr 2026)</option>
-            <option value="PB">Punjab</option>
+            <option value="OR">Odisha</option>
             <option value="PY">Puducherry</option>
+            <option value="PB">Punjab</option>
+            <option value="RJ">Rajasthan</option>
             <option value="SK">Sikkim</option>
             <option value="TN">Tamil Nadu</option>
             <option value="TG">Telangana</option>
             <option value="TR">Tripura</option>
+            <option value="UP">Uttar Pradesh</option>
             <option value="UK">Uttarakhand</option>
             <option value="WB">West Bengal</option>
-            <optgroup label="No Professional Tax">
-            <option value="UP">Uttar Pradesh</option>
-            <option value="DL">Delhi</option>
-            <option value="GA">Goa</option>
-            <option value="HP">Himachal Pradesh</option>
-            <option value="JK">Jammu &amp; Kashmir</option>
-            <option value="RJ">Rajasthan</option>
-            <option value="CH">Chandigarh</option>
-            <option value="DN">Dadra and Nagar Haveli and Daman and Diu</option>
-            </optgroup>
           </select>
         </div>
         <div class="field"><label>Professional Tax</label><input type="text" id="ptDisp" readonly placeholder="Select state"/></div>
@@ -294,14 +301,14 @@ const TOOL_BODY_HTML = `
           <div class="tip-box" id="tip9">
             <h5>📊 Tax Regime</h5>
             <p><strong>New Regime:</strong> Std deduction Rs. 75,000. Zero tax if annual taxable ≤ Rs. 12L.</p>
-            <p><strong>Old Regime:</strong> Std deduction Rs. 50,000. 80C/HRA/80D deductions allowed. Zero tax if ≤ Rs. 5L.</p>
+            <p><strong>Old Regime:</strong> Std deduction Rs. 50,000. HRA, Section 123 and Section 126 deductions allowed. Zero tax if ≤ Rs. 5L.</p>
             <p>TDS shown is an estimate based on gross only.</p>
           </div>
         </div>
       </div>
       <div class="tabs c2">
         <button class="tab on2" id="btnNew" onclick="setRegime('new')">New Regime (Default)<span class="tab-sub">Rs. 75k std ded · 87A ≤Rs. 12L</span></button>
-        <button class="tab" id="btnOld" onclick="setRegime('old')">Old Regime<span class="tab-sub">80C/HRA etc · Rs. 50k std ded</span></button>
+        <button class="tab" id="btnOld" onclick="setRegime('old')">Old Regime<span class="tab-sub">Section 123/HRA · Rs. 50k std ded</span></button>
       </div>
 
     </div>
@@ -556,7 +563,7 @@ input[type=number]{-moz-appearance:textfield}
 .rtbl th{background:var(--pp);padding:6px 8px;text-align:left;font-size:.56rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--pm);border-bottom:2px solid var(--bd)}
 .rtbl th:not(:first-child){text-align:right}
 .rtbl td{padding:6px 8px;border-bottom:1px solid var(--bd);color:var(--tm)}
-.rtbl td:not(:first-child){text-align:right;font-weight:600;color:var(--td)}
+.rtbl td:not(:first-child){text-align:right;font-weight:600;color:var(--td);white-space:nowrap}
 .rtbl tr:last-child td{border-bottom:none}
 .rtbl .s-hdr td{background:var(--pg);font-size:.57rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--pm);border-top:1.5px solid var(--bd);padding:5px 8px}
 .rtbl .sub td{color:var(--ts)!important;font-weight:400!important}
@@ -685,7 +692,7 @@ export default function SalaryProration() {
       "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
       "__spPdfJsLoaded"
     )
-      .then(() => loadScriptOnce("/salary-proration-tool.js?v=20261109", "__spToolLoaded"))
+      .then(() => loadScriptOnce("/salary-proration-tool.js?v=20261114", "__spToolLoaded"))
       .then(() => {
         window.__spRoot = shadow;
         if (typeof window.__spInitTool === "function") {

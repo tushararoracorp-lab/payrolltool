@@ -817,9 +817,6 @@ export default function Home({ initialStats = null }) {
             <span className="eyebrow"><span className="dot" />Calculate</span>
             <h2>Payroll compliance, simplified</h2>
             <p>Practical tools for the most common HR calculations in India. No HRMS setup required - just upload a file or enter numbers.</p>
-            <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", maxWidth: "640px", margin: "12px auto 0", opacity: 0.85 }}>
-              PayrollTool.in is a browser-based suite of payroll calculators for Indian HR and payroll teams - covering PF ECR and ESIC MC file generation, income tax (Old vs New regime), salary proration, LOP calculation, and final settlement.
-            </p>
           </div>
           <div className="tools-grid">
             {toolCards.map((t) => (
