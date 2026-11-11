@@ -79,6 +79,23 @@ function dueText(v, frequency, errors) {
 }
 const amount = (v, field, errors) => { const s = text(v, { min: 3, max: 120, field }, errors); if (!/\d/.test(s)) errors.push(`${field}: must contain an amount`); return s; };
 
+// State-page explainer for a rule (Phase 2). Optional: both languages together, or neither.
+// When present, the same standard as notifications: 250+ words each, English in English, Hindi in Devanagari.
+function explainers(p, errors) {
+  const hasEn = typeof p.explainer_en === 'string' && p.explainer_en.trim() !== '';
+  const hasHi = typeof p.explainer_hi === 'string' && p.explainer_hi.trim() !== '';
+  if (!hasEn && !hasHi) return { explainer_en: null, explainer_hi: null, words_en: null, words_hi: null };
+  if (!hasEn || !hasHi) { errors.push('explainer_en and explainer_hi: give both languages or neither'); return {}; }
+  const explainer_en = text(p.explainer_en, { min: 800, max: 9000, multiline: true, field: 'explainer_en' }, errors);
+  const explainer_hi = text(p.explainer_hi, { min: 800, max: 14000, multiline: true, field: 'explainer_hi' }, errors);
+  const words_en = words(explainer_en), words_hi = words(explainer_hi);
+  if (words_en < 250) errors.push(`explainer_en: ${words_en} words, minimum is 250`);
+  if (words_hi < 250) errors.push(`explainer_hi: ${words_hi} words, minimum is 250`);
+  if (explainer_hi && devanagariShare(explainer_hi) < 0.6) errors.push('explainer_hi: must be written in Hindi (Devanagari)');
+  if (explainer_en && devanagariShare(explainer_en) > 0.05) errors.push('explainer_en: must be written in English');
+  return { explainer_en, explainer_hi, words_en, words_hi };
+}
+
 // ------------------------------------------------------------------ per-kind sanitizers
 const KINDS = {
   notification(p, errors) {
@@ -126,7 +143,7 @@ const KINDS = {
       act: plain(p.act, { min: 8, max: 260, field: 'act' }, errors),
       annual_cap: plain(p.annual_cap, { min: 5, max: 140, field: 'annual_cap' }, errors),
       slab_tables, notes: p.notes ? text(p.notes, { max: 900, multiline: true, field: 'notes' }, errors) : null,
-      official_url: officialUrl(p.official_url, 'official_url', errors) };
+      official_url: officialUrl(p.official_url, 'official_url', errors), ...explainers(p, errors) };
   },
   lwf_rule(p, errors) {
     const frequency = oneOf(p.frequency, FREQUENCIES, 'frequency', errors);
@@ -136,7 +153,7 @@ const KINDS = {
       due_text: dueText(p.due_text, frequency, errors),
       act: plain(p.act, { min: 8, max: 260, field: 'act' }, errors),
       notes: p.notes ? text(p.notes, { max: 900, multiline: true, field: 'notes' }, errors) : null,
-      official_url: officialUrl(p.official_url, 'official_url', errors) };
+      official_url: officialUrl(p.official_url, 'official_url', errors), ...explainers(p, errors) };
   },
   mw_rate(p, errors) {
     const cats = Array.isArray(p.categories) ? p.categories : [];
@@ -156,7 +173,7 @@ const KINDS = {
       label: p.label ? text(p.label, { max: 100, field: 'label' }, errors) : null, categories,
       reference: p.reference ? text(p.reference, { max: 240, field: 'reference' }, errors) : null,
       note: p.note ? text(p.note, { max: 600, field: 'note' }, errors) : null,
-      official_url: officialUrl(p.official_url, 'official_url', errors) };
+      official_url: officialUrl(p.official_url, 'official_url', errors), ...explainers(p, errors) };
   },
 };
 

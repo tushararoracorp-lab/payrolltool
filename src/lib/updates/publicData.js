@@ -27,11 +27,11 @@ async function buildPublicData() {
       const top = rows[0];
       return { name, eff: d(top.effective_from), prevEff: rows[1] ? d(rows[1].effective_from) : null, flag: top.flag, cad: top.cadence, zones: top.zones,
         struct: top.structure, auth: top.authority, ref: top.reference, url: top.official_url, notes: top.note || '',
-        categories: toPage(top.categories), ...rates(top.categories),
+        categories: toPage(top.categories), ...rates(top.categories), en: top.explainer_en || '', hi: top.explainer_hi || '',
         hist: rows.map((r) => ({ eff: d(r.effective_from), label: r.label || '', ...rates(r.categories), ref: r.reference, note: r.note || '', gap: false })) };
     }),
-    pt: { ...split('PT', ptFull.map((r) => ({ name: r.state, basis: r.basis, cycle: r.cycle_text, due: r.due_text, act: r.act, cap: r.annual_cap, tables: r.slab_tables, notes: r.notes || '' })).sort((a, b) => a.name.localeCompare(b.name))), tags: {} },
-    lwf: { ...split('LWF', lwFull.map((r) => ({ name: r.state, emp: r.employee_amount, empr: r.employer_amount, ratio: r.ratio, freq: r.frequency, due: r.due_text, act: r.act, notes: r.notes || '' })).sort((a, b) => a.name.localeCompare(b.name))), tags: {} },
+    pt: { ...split('PT', ptFull.map((r) => ({ name: r.state, basis: r.basis, cycle: r.cycle_text, due: r.due_text, act: r.act, cap: r.annual_cap, tables: r.slab_tables, notes: r.notes || '', en: r.explainer_en || '', hi: r.explainer_hi || '' })).sort((a, b) => a.name.localeCompare(b.name))), tags: {} },
+    lwf: { ...split('LWF', lwFull.map((r) => ({ name: r.state, emp: r.employee_amount, empr: r.employer_amount, ratio: r.ratio, freq: r.frequency, due: r.due_text, act: r.act, notes: r.notes || '', en: r.explainer_en || '', hi: r.explainer_hi || '' })).sort((a, b) => a.name.localeCompare(b.name))), tags: {} },
   };
 }
 module.exports = { buildPublicData };

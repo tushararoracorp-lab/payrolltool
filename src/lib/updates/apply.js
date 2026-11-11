@@ -3,9 +3,10 @@ const { TABLE } = require('./sanitize');
 
 const COLUMNS = {
   notifications: ['category','state','title','short_summary','reference','effective_date','published_date','flag','status','issued_by','official_url','note','explainer_en','explainer_hi','words_en','words_hi','dedupe_key'],
-  pt_rules: ['state','effective_from','frequency','cycle_text','basis','due_text','act','annual_cap','slab_tables','notes','official_url'],
-  lwf_rules: ['state','effective_from','employee_amount','employer_amount','ratio','frequency','due_text','act','notes','official_url'],
-  mw_rates: ['state','effective_from','structure','flag','cadence','zones','authority','label','categories','reference','note','official_url'],
+  // explainer_* and words_* need the Phase 2 migration (scripts/migrate-explainers.js) to have run first
+  pt_rules: ['state','effective_from','frequency','cycle_text','basis','due_text','act','annual_cap','slab_tables','notes','official_url','explainer_en','explainer_hi','words_en','words_hi'],
+  lwf_rules: ['state','effective_from','employee_amount','employer_amount','ratio','frequency','due_text','act','notes','official_url','explainer_en','explainer_hi','words_en','words_hi'],
+  mw_rates: ['state','effective_from','structure','flag','cadence','zones','authority','label','categories','reference','note','official_url','explainer_en','explainer_hi','words_en','words_hi'],
 };
 const JSON_COLS = new Set(['slab_tables', 'categories']);
 

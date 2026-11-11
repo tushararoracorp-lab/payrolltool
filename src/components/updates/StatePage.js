@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import TopicNav from './TopicNav';
 
+const paras = (t) => String(t || '').split(/\n\n+/).filter(Boolean);
 const dtf = (s) => (s ? new Date(s).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }) : '-');
 const fmt = (n) => (n == null ? '-' : Number(n).toLocaleString('en-IN'));
 
@@ -137,6 +138,19 @@ export default function StatePage({ topic, state, row, notifications, others, to
         <div className="sp-card">
           {topic.key === 'pt' ? <PtBody row={row} /> : topic.key === 'lwf' ? <LwfBody row={row} /> : <MwBody row={row} />}
         </div>
+
+        {row.en ? (
+          <section className="sp-sec">
+            <h2>{topic.label} in {state.name}, explained</h2>
+            <div className="np-body">{paras(row.en).map((p, i) => <p key={i}>{p}</p>)}</div>
+            {row.hi ? (
+              <details className="ex hi">
+                <summary lang="hi">हिंदी में पढ़ें</summary>
+                <div className="ex-body" lang="hi">{paras(row.hi).map((p, i) => <p key={i}>{p}</p>)}</div>
+              </details>
+            ) : null}
+          </section>
+        ) : null}
 
         {notifications.length ? (
           <section className="sp-sec">

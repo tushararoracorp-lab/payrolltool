@@ -14,7 +14,9 @@ import { buildPublicData } from '../lib/updates/publicData';
 export async function getStaticProps() {
   const data = await buildPublicData();
   // the cards only need the summary; the full English and Hindi text is on each notification's own page
-  const light = { ...data, feed: data.feed.map(({ en, hi, ...rest }) => rest) };   // eslint-disable-line no-unused-vars
+  const strip = ({ en, hi, ...rest }) => rest;   // eslint-disable-line no-unused-vars
+  const light = { ...data, feed: data.feed.map(strip), mw: data.mw.map(strip),
+    pt: { ...data.pt, rows: data.pt.rows.map(strip) }, lwf: { ...data.lwf, rows: data.lwf.rows.map(strip) } };
   return { props: { data: JSON.parse(JSON.stringify(light)), indexable: isIndexable() }, revalidate: 86400 };
 }
 
