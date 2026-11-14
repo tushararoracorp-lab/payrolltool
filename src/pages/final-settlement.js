@@ -49,7 +49,7 @@ function calculate(f) {
   const leaveDays = clampDays(f.leave, "Unused paid leave", 365);
   const req = clampDays(f.req, "Notice period required", DAYS_CAP);
   const served = clampDays(f.served, "Notice period served", DAYS_CAP);
-  const credit = clampMoney(f.credit, "Other amount owed to you");
+  const credit = clampMoney(f.credit, "Other amount owed to the employee");
   const debit = clampMoney(f.debit, "Dues to be deducted");
 
   let noticeSalary = wages;
@@ -76,7 +76,7 @@ function calculate(f) {
   const lines = [];
   let gratuity = 0;
   const gratuityCap = f.sector === "government" ? 2500000 : 2000000;
-  let tenureLine = "Let's see what you're owed - press Calculate below";
+  let tenureLine = "Enter the dates and press Calculate";
 
   if (!datesValid) {
     tenureLine = "Enter valid dates to see the tenure";
@@ -123,8 +123,8 @@ function calculate(f) {
       const shortMsg = isFte
         ? `Not applicable yet - a fixed-term employee qualifies after 1 year of service under the contract, and the service is ${daysUntilNext} day(s) short of that.`
         : years === 4
-          ? `So close - just ${daysUntilNext} more day(s) and you'd have qualified for gratuity.`
-          : `Not applicable yet - gratuity applies after 5 completed years, and you're at ${years}.`;
+          ? `Not eligible yet - ${daysUntilNext} more day(s) of service were needed to qualify for gratuity.`
+          : `Not eligible - gratuity applies after 5 completed years of service; this service has ${years}.`;
       lines.push({ label: "Gratuity", amount: 0, explain: shortMsg });
     }
   }
@@ -152,7 +152,7 @@ function calculate(f) {
     lines.push({ label: "Notice period", amount: 0, explain: `Served ${served} of ${req} required days - no deduction.` });
   }
 
-  if (credit > 0) lines.push({ label: "Other amount owed to you", amount: credit, explain: "As entered above." });
+  if (credit > 0) lines.push({ label: "Other amount owed to the employee", amount: credit, explain: "As entered above." });
   if (debit > 0) lines.push({ label: "Dues deducted", amount: -debit, explain: "As entered above." });
 
   const net = gratuity + leaveAmt + noticeAmt + credit - debit;
@@ -584,7 +584,7 @@ export default function FinalSettlement() {
 
           <div className="summary">
             <div className="summary-card">
-              <div className="summary-title" style={{display:"flex",alignItems:"center",gap:"7px"}}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8" y2="10"/><line x1="12" y1="10" x2="12" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="8" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="8" y2="18"/><line x1="12" y1="18" x2="12" y2="18"/><line x1="16" y1="18" x2="16" y2="18"/></svg>Your Settlement Summary</div>
+              <div className="summary-title" style={{display:"flex",alignItems:"center",gap:"7px"}}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8" y2="10"/><line x1="12" y1="10" x2="12" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="8" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="8" y2="18"/><line x1="12" y1="18" x2="12" y2="18"/><line x1="16" y1="18" x2="16" y2="18"/></svg>Settlement Summary</div>
 
               {!results ? (
                 <div className="summary-placeholder">
@@ -624,7 +624,7 @@ export default function FinalSettlement() {
               <div className={`stamp ${results.net < 0 ? "recover" : ""}`}>
                 <div className="stamp-label">{results.net < 0 ? "Employee owes the company" : "Net payable to the employee"}</div>
                 <div className="stamp-amt">{fmt(results.net)}</div>
-                <div className="stamp-sub">Estimate only - confirm with HR.</div>
+                <div className="stamp-sub">Based on the inputs above.</div>
               </div>
 
               <div className="feedback-slot">
