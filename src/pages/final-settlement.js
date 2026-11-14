@@ -207,7 +207,7 @@ const FS_MISTAKES = [
   },
   {
     t: "Rounding the final year the wrong way",
-    d: "A final part-year of six months or more counts as a full year; less than six months is ignored. 7 years 8 months is 8 years; 7 years 5 months is 7 years.",
+    d: "A final part-year of more than six months counts as a full year; six months or less is ignored. 7 years 8 months is 8 years; 7 years 5 months is 7 years.",
   },
   {
     t: "Applying the 5-year rule to fixed-term staff",
@@ -234,7 +234,7 @@ const FS_FAQ = [
   },
   {
     q: "Which wages are used to calculate gratuity?",
-    a: "Wages under the Code: basic pay, dearness allowance and retaining allowance. Where the excluded allowances, such as HRA and conveyance, are more than 50% of total remuneration, the excess is added back to wages. The formula is wages x 15 / 26 x completed years, with a final part-year of six months or more counted as a full year.",
+    a: "Wages under the Code: basic pay, dearness allowance and retaining allowance. Where the excluded allowances, such as HRA and conveyance, are more than 50% of total remuneration, the excess is added back to wages. The formula is wages x 15 / 26 x completed years, with a final part-year of more than six months counted as a full year.",
   },
   {
     q: "Which leave balances are paid out in the settlement?",
@@ -254,7 +254,7 @@ const FS_FAQ = [
   },
   {
     q: "Does a fixed-term employee get gratuity for a part year?",
-    a: "A fixed-term employee who completes 1 year under the contract qualifies, and the same formula applies: wages x 15 / 26 x years, with a final part-year of six months or more counted as a full year.",
+    a: "A fixed-term employee who completes 1 year under the contract qualifies, and the same formula applies: wages x 15 / 26 x years, with a final part-year of more than six months counted as a full year.",
   },
 ];
 
@@ -709,20 +709,20 @@ export default function FinalSettlement() {
         <div className="fsc-faq">
           <h4>Common mistakes</h4>
           {FS_MISTAKES.map((m) => (
-            <div className="fsc-faq-item" key={m.t}>
-              <h5>{m.t}</h5>
+            <details className="fsc-faq-item acc" key={m.t}>
+              <summary><h5>{m.t}</h5></summary>
               <p>{m.d}</p>
-            </div>
+            </details>
           ))}
         </div>
 
         <div className="fsc-faq">
           <h4>Frequently asked questions</h4>
           {FS_FAQ.map((f) => (
-            <div className="fsc-faq-item" key={f.q}>
-              <h5>{f.q}</h5>
+            <details className="fsc-faq-item acc" key={f.q}>
+              <summary><h5>{f.q}</h5></summary>
               <p>{f.a}</p>
-            </div>
+            </details>
           ))}
         </div>
 
@@ -1278,6 +1278,35 @@ export default function FinalSettlement() {
           line-height: 1.65;
           color: var(--ink-mid);
           margin: 0;
+        }
+      
+        .acc > summary {
+          list-style: none;
+          cursor: pointer;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .acc > summary::-webkit-details-marker {
+          display: none;
+        }
+        .acc > summary > :first-child {
+          flex: 1;
+          margin-bottom: 0;
+        }
+        .acc > summary::after {
+          content: "+";
+          color: #8b5cf6;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 1.2;
+        }
+        .acc[open] > summary::after {
+          content: "−";
+        }
+        .acc[open] > summary > :first-child {
+          margin-bottom: 6px;
         }
       `}</style>
     </>

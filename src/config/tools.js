@@ -17,6 +17,10 @@ const TOOLS = [
     about: 'loss-of-pay calculations across month boundaries' },
   { href: '/final-settlement', label: 'Final Settlement', name: 'Final Settlement Calculator', icon: 'finalSettlement',
     about: 'gratuity, notice pay, leave encashment and deductions in one place' },
+  { href: '/gratuity-calculator', label: 'Gratuity Calculator', name: 'Gratuity Calculator', icon: 'gratuity',
+    about: 'gratuity from the dates of service under the Code on Social Security, with the 240-day rule and the tax-exempt amount' },
+  { href: '/date-calculator', label: 'Date Calculator', name: 'Payroll Date Calculator', icon: 'dateCalc',
+    about: 'days between dates, notice period end dates, working days and retirement dates' },
 ];
 
 module.exports = TOOLS;

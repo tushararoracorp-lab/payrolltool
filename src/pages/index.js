@@ -74,6 +74,16 @@ const Icon = {
       <path d="M9 11l3 3L22 4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   ),
+  gratuity: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="8" width="18" height="13" rx="2" /><path d="M12 8v13M3 12h18M12 8c-1.5-3-5-3.5-5-1.2C7 8 9 8 12 8zM12 8c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z" />
+    </svg>
+  ),
+  dateCalc: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18M8 15l2.5 2.5L16 13" />
+    </svg>
+  ),
   shield: (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -113,6 +123,8 @@ const toolCards = [
   { icon: Icon.salaryProration, name: "Salary Proration", href: "/salary-proration", desc: "Calculate prorated salary for mid-month joining or exit. Handles partial months, joining/resignation dates, and statutory deductions." },
   { icon: Icon.lopSplitter, name: "LOP Splitter", href: "/lop-splitter", desc: "Split Loss of Pay date ranges that cross month boundaries into upload-ready rows for your HRMS." },
   { icon: Icon.finalSettlement, name: "Final Settlement", href: "/final-settlement", desc: "Calculate full and final settlement: gratuity, notice pay, leave encashment, and statutory deductions." },
+  { icon: Icon.gratuity, name: "Gratuity Calculator", href: "/gratuity-calculator", desc: "Work out gratuity from the dates of service under the Code on Social Security: the 240-day rule, the 50% wage rule and the tax-exempt amount." },
+  { icon: Icon.dateCalc, name: "Date Calculator", href: "/date-calculator", desc: "Count days between dates, find the last working day of a notice period, count working days with Saturday offs and holidays, and work out retirement dates." },
 ];
 
 const scenarioData = {
@@ -542,7 +554,7 @@ export default function Home({ initialStats = null }) {
           }}
         />
         {/* SoftwareApplication schema - one per tool.
-            NOTE: price is 0 for all six tools below because that's accurate
+            NOTE: price is 0 for all the tools below because that's accurate
             today. Update per-tool when the paid plan launches - a schema
             that still claims free after that changes is the same class of
             problem as the earlier FAQ-schema mismatch. */}
@@ -604,6 +616,24 @@ export default function Home({ initialStats = null }) {
                   applicationCategory: "BusinessApplication",
                   operatingSystem: "Any (browser-based)",
                   description: "Calculates full and final settlement - gratuity, notice pay, leave encashment, and statutory deductions - in one place.",
+                  offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "Gratuity Calculator",
+                  url: "https://www.payrolltool.in/gratuity-calculator",
+                  applicationCategory: "BusinessApplication",
+                  operatingSystem: "Any (browser-based)",
+                  description: "Calculates gratuity from the dates of service under the Code on Social Security, 2020, with the 240-day rule, the 50% wage rule and the tax-exempt amount.",
+                  offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "Payroll Date Calculator",
+                  url: "https://www.payrolltool.in/date-calculator",
+                  applicationCategory: "BusinessApplication",
+                  operatingSystem: "Any (browser-based)",
+                  description: "Counts days between dates, adds months with the month-end rule, finds notice period end dates, counts working days and works out retirement dates.",
                   offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
                 },
               ],
@@ -1112,14 +1142,18 @@ export default function Home({ initialStats = null }) {
         .section-head.center p { margin-left: auto; margin-right: auto; }
 
         .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .tool-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 24px; transition: all .2s ease; }
+        .tool-card { position: relative; cursor: pointer; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 24px; transition: all .2s ease; }
         .tool-card:hover { border-color: var(--brand-600); box-shadow: var(--shadow-card-hover); translate: 0 -4px; }
         .tool-card-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--brand-50); color: var(--brand-600); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
         .tool-card-icon svg { width: 24px; height: 24px; }
         .tool-card h4 { font-size: 18px; margin-bottom: 8px; }
         .tool-card p { color: var(--ink-soft); font-size: 14.5px; line-height: 1.5; margin-bottom: 20px; }
         .tool-card a { display: inline-flex; align-items: center; gap: 8px; color: var(--brand-600); font-weight: 600; font-size: 14px; padding: 8px 0; border-bottom: 2px solid transparent; transition: all .2s ease; }
-        .tool-card a:hover { border-bottom-color: var(--brand-600); }
+        .tool-card a:hover, .tool-card:hover a { border-bottom-color: var(--brand-600); }
+        /* The whole card opens the tool: the link's overlay stretches over the card, so there is still one link per card. */
+        .tool-card a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+        .tool-card a:focus-visible { outline: none; }
+        .tool-card a:focus-visible::after { box-shadow: 0 0 0 2px var(--brand-600); }
 
         .stats-in { animation: statsIn .4s ease both; }
         @keyframes statsIn { from { opacity: 0; } to { opacity: 1; } }

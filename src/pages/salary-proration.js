@@ -935,7 +935,8 @@ export default function SalaryProration() {
             prorated figures, not on the full monthly salary. That is where most part-month errors come from: the
             gross is prorated correctly, but PF, ESI or professional tax is still taken on the full month.
           </p>
-          <h3>What changes in a part month, and what does not</h3>
+          <details className="acc sp-block">
+            <summary><h3>What changes in a part month, and what does not</h3></summary>
           <ul>
             <li><b>EPF</b> is 12% of the basic actually paid, so it falls in proportion. The employer&apos;s EPS share is limited by the wage ceiling, Rs. 25,000 from 17 September 2026.</li>
             <li><b>ESI coverage</b> does not change. It depends on the monthly wage rate (Rs. 21,000 or less). The contribution, 0.75% from the employee and 3.25% from the employer, is taken on the wages actually paid.</li>
@@ -943,9 +944,10 @@ export default function SalaryProration() {
             <li><b>Labour welfare fund</b> is deducted only in the months the state collects it, such as June and December in half-yearly states.</li>
             <li><b>TDS</b> for a joiner is estimated on the salary for the rest of the year, plus any declared income from a previous employer, and spread over the remaining months.</li>
           </ul>
+          </details>
           {SP_EXAMPLES.map((ex) => (
-            <div className="sp-example" key={ex.h}>
-              <h3>{ex.h}</h3>
+            <details className="acc sp-example" key={ex.h}>
+              <summary><h3>{ex.h}</h3></summary>
               <p>{ex.setup}</p>
               <div className="sp-table-wrap">
                 <table>
@@ -961,21 +963,21 @@ export default function SalaryProration() {
                 </table>
               </div>
               <p className="sp-note">{ex.note}</p>
-            </div>
+            </details>
           ))}
           <h3>Common mistakes</h3>
           {SP_MISTAKES.map((m) => (
-            <div className="sp-item" key={m.t}>
-              <h4>{m.t}</h4>
+            <details className="acc sp-item" key={m.t}>
+              <summary><h4>{m.t}</h4></summary>
               <p>{m.d}</p>
-            </div>
+            </details>
           ))}
           <h3>Frequently asked questions</h3>
           {SP_FAQ.map((f) => (
-            <div className="sp-item" key={f.q}>
-              <h4>{f.q}</h4>
+            <details className="acc sp-item" key={f.q}>
+              <summary><h4>{f.q}</h4></summary>
               <p>{f.a}</p>
-            </div>
+            </details>
           ))}
         </section>
 
@@ -1091,8 +1093,20 @@ export default function SalaryProration() {
         .sp-example {
           background: #f5f3ff;
           border-radius: 12px;
-          padding: 4px 18px 8px;
-          margin-top: 18px;
+          padding: 12px 18px;
+          margin-top: 12px;
+        }
+        .sp-example h3,
+        .sp-block h3 {
+          margin: 0;
+        }
+        .sp-block {
+          padding: 12px 0;
+          margin-top: 8px;
+          border-top: 1px solid #ece9f5;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-block {
+          border-top-color: #2a2536;
         }
         .sp-table-wrap {
           overflow-x: auto;
@@ -1168,6 +1182,35 @@ export default function SalaryProration() {
           .sp-cards-row {
             grid-template-columns: 1fr;
           }
+        }
+      
+        .acc > summary {
+          list-style: none;
+          cursor: pointer;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .acc > summary::-webkit-details-marker {
+          display: none;
+        }
+        .acc > summary > :first-child {
+          flex: 1;
+          margin-bottom: 0;
+        }
+        .acc > summary::after {
+          content: "+";
+          color: #8b5cf6;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 1.2;
+        }
+        .acc[open] > summary::after {
+          content: "−";
+        }
+        .acc[open] > summary > :first-child {
+          margin-bottom: 6px;
         }
       `}</style>
     </>

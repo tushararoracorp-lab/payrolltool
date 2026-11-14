@@ -1089,20 +1089,20 @@ export default function EsicMcCreator() {
           <div className="max-w-3xl mx-auto mt-6 bg-white border border-gray-100 rounded-2xl p-6">
             <h4 className="text-sm font-bold text-gray-900 mb-4">Common mistakes</h4>
             {MC_MISTAKES.map((m, i) => (
-              <div key={m.t} className={`py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}>
-                <h5 className="text-sm font-semibold text-violet-700 mb-1.5">{m.t}</h5>
+              <details key={m.t} className={`acc py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}>
+                <summary><h5 className="text-sm font-semibold text-violet-700 mb-1.5">{m.t}</h5></summary>
                 <p className="text-sm leading-relaxed text-gray-500">{m.d}</p>
-              </div>
+              </details>
             ))}
           </div>
 
           <div className="max-w-3xl mx-auto mt-6 mb-10 bg-white border border-gray-100 rounded-2xl p-6">
             <h4 className="text-sm font-bold text-gray-900 mb-4">Frequently asked questions</h4>
             {ALL_FAQ.map((f, i) => (
-              <div key={f.q} className={`py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}>
-                <h5 className="text-sm font-semibold text-violet-700 mb-1.5">{f.q}</h5>
+              <details key={f.q} className={`acc py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}>
+                <summary><h5 className="text-sm font-semibold text-violet-700 mb-1.5">{f.q}</h5></summary>
                 <p className="text-sm leading-relaxed text-gray-500">{f.a}</p>
-              </div>
+              </details>
             ))}
           </div>
 
@@ -1175,6 +1175,35 @@ export default function EsicMcCreator() {
         .esic-wrapper[data-theme="dark"] :global(.border-blue-200) { border-color: #2d4a6b !important; }
         .esic-wrapper[data-theme="dark"] :global(.text-blue-500) { color: #60a5fa !important; }
         .esic-wrapper[data-theme="dark"] :global(.text-blue-700) { color: #60a5fa !important; }
+
+        .acc > summary {
+          list-style: none;
+          cursor: pointer;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .acc > summary::-webkit-details-marker {
+          display: none;
+        }
+        .acc > summary > :first-child {
+          flex: 1;
+          margin-bottom: 0;
+        }
+        .acc > summary::after {
+          content: "+";
+          color: #8b5cf6;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 1.2;
+        }
+        .acc[open] > summary::after {
+          content: "−";
+        }
+        .acc[open] > summary > :first-child {
+          margin-bottom: 6px;
+        }
       `}</style>
     </>
   );

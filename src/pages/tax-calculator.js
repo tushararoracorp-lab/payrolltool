@@ -1124,20 +1124,20 @@ export default function TaxCalculator() {
           <div className="tc-faq">
             <h4>Common mistakes</h4>
             {TC_MISTAKES.map((m) => (
-              <div className="tc-faq-item" key={m.t}>
-                <h5>{m.t}</h5>
-                <p>{m.d}</p>
-              </div>
+              <details className="tc-faq-item acc" key={m.t}>
+              <summary><h5>{m.t}</h5></summary>
+              <p>{m.d}</p>
+            </details>
             ))}
           </div>
 
           <div className="tc-faq">
             <h4>Frequently asked questions</h4>
             {TC_FAQ.map((f) => (
-              <div className="tc-faq-item" key={f.q}>
-                <h5>{f.q}</h5>
-                <p>{f.a}</p>
-              </div>
+              <details className="tc-faq-item acc" key={f.q}>
+              <summary><h5>{f.q}</h5></summary>
+              <p>{f.a}</p>
+            </details>
             ))}
           </div>
 
@@ -1988,6 +1988,35 @@ export default function TaxCalculator() {
             padding-right: 14px;
             font-size: 12px;
           }
+        }
+      
+        .acc > summary {
+          list-style: none;
+          cursor: pointer;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .acc > summary::-webkit-details-marker {
+          display: none;
+        }
+        .acc > summary > :first-child {
+          flex: 1;
+          margin-bottom: 0;
+        }
+        .acc > summary::after {
+          content: "+";
+          color: #8b5cf6;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 1.2;
+        }
+        .acc[open] > summary::after {
+          content: "−";
+        }
+        .acc[open] > summary > :first-child {
+          margin-bottom: 6px;
         }
       `}</style>
     </>
