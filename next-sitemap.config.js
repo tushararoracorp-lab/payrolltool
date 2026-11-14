@@ -7,11 +7,12 @@ module.exports = {
   generateRobotsTxt: false,
   changefreq: "weekly",
   priority: 0.8,
-  exclude: ["/admin", "/admin/*", "/api/*", ...(updatesIndexable ? [] : ["/updates", "/updates/*"])],
+  // /updates/notifications only redirects to /updates, so it stays out of the sitemap.
+  exclude: ["/admin", "/admin/*", "/api/*", "/updates/notifications", ...(updatesIndexable ? [] : ["/updates", "/updates/*"])],
   transform: async (config, path) => {
     let priority = 0.7;
     if (path === "/") priority = 1.0;
-    if (["/salary-proration", "/lop-splitter", "/pf-ecr-creator", "/final-settlement", "/tax-calculator"].includes(path)) {
+    if (["/salary-proration", "/lop-splitter", "/pf-ecr-creator", "/esic-mc-creator", "/final-settlement", "/tax-calculator", "/gratuity-calculator", "/date-calculator"].includes(path)) {
       priority = 0.9;
     }
     if (path === "/updates") priority = 0.8;

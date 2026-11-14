@@ -39,7 +39,7 @@ const CONTENT = {
     "p": [
       "A notice period sets the last working day, and two choices in the policy decide it: whether notice starts on the day of resignation or the day after, and whether the period is counted in days or in months.",
       "When notice starts on the resignation date, that date is day one. A 60-day notice from 12 November 2026 then ends on 10 January 2027. When it starts the next day, everything moves one day later. Many appointment letters say \"with effect from the date of resignation\", which points to the first reading, but the letter decides.",
-      "Notice in months is counted to the day before the same date of the final month. Two months from 15 January ends on 14 March. When the start date does not exist in the final month, the month-end rule applies, so one month from 31 January ends on the day before 28 February. Payroll teams often treat \"two months\" and \"60 days\" as the same, but over February they can differ by two or three days.",
+      "Notice in months is counted to the day before the same date of the final month. Two months from 15 January ends on 14 March. When the start date does not exist in the final month, the month-end rule applies, so one month from 31 January ends on 28 February. Payroll teams often treat \"two months\" and \"60 days\" as the same, but over February they can differ by two or three days.",
       "Days the employee has already served, or days the employer waives or settles by a notice payment, bring the last working day forward. Enter them in the optional field, and the date moves earlier by that many days. The result also shows the weekday of the last working day, because a notice period ending on a Sunday or a holiday is still a valid last working day under most policies, but the relieving letter and the full and final settlement date should match it.",
       "The number of notice days actually served is what the shortfall recovery in a full and final settlement is based on. A shortfall is usually recovered at the daily rate the appointment letter names, on wages or on gross salary."
     ]
@@ -151,7 +151,8 @@ function calcDates(mode, f) {
   if (mode === "add") {
     const a = parse(f.a1), r0 = evalAmt(f.aN), u = f.aU;
     if (a == null) return err("Enter a start date.");
-    if (!r0.ok) return err("Use a whole number, with - to subtract.");
+    if (String(f.aN).trim() === "") return err("Enter how many days, weeks, months or years to add.");
+    if (!r0.ok || !Number.isInteger(r0.val)) return err("Use a whole number, with - to subtract.");
     const k = Math.trunc(r0.val), op = k < 0 ? -1 : 1, abs = Math.abs(k);
     let r = u === "d" ? a + k * DAY : u === "w" ? a + k * 7 * DAY : u === "m" ? addMonths(a, k) : addMonths(a, 12 * k);
     const raw = r;
@@ -168,19 +169,21 @@ function calcDates(mode, f) {
   if (mode === "notice") {
     const a = parse(f.n1), r0 = evalAmt(f.nN), u = f.nU, s0 = evalAmt(f.nServed);
     if (a == null) return err("Enter the resignation date.");
-    if (!r0.ok || !s0.ok) return err("Use whole numbers for the notice period.");
+    if (String(f.nN).trim() === "") return err("Enter the notice period.");
+    if (!r0.ok || !s0.ok || !Number.isInteger(r0.val) || !Number.isInteger(s0.val)) return err("Use whole numbers for the notice period.");
     const k = Math.max(0, Math.trunc(r0.val)), served = Math.max(0, Math.trunc(s0.val));
     const start = f.nStart === "next" ? a + DAY : a;
     const fm = addMonths(start, k), fmClamped = new Date(fm).getUTCDate() !== new Date(start).getUTCDate();
     const full = u === "d" ? start + (k - 1) * DAY : fmClamped ? fm : fm - DAY;
-    const last = full - served * DAY;
-    const days = Math.max(0, Math.round((last - start) / DAY) + 1), fullDays = Math.round((full - start) / DAY) + 1;
+    const last = Math.max(a, full - served * DAY);
+    const fullDays = Math.round((full - start) / DAY) + 1;
+    const days = Math.max(0, Math.min(fullDays - served, Math.round((last - start) / DAY) + 1));
     const rows = [
       ["Resignation", show(a), wd(a)],
       ["Notice starts", show(start), f.nStart === "next" ? "The day after resignation." : "The resignation date is day one."],
       ["Notice period", pl(k, u === "d" ? "day" : "month"), u === "m" ? "Counted to the day before the same date of the final month: " + pl(fullDays, "day") + "." : ""],
     ];
-    if (served) rows.push(["Served or waived", pl(served, "day"), "Brings the last working day forward."]);
+    if (served) rows.push(["Served or waived", pl(served, "day"), last === a && full - served * DAY < a ? "Covers the whole notice, so the last working day is the resignation date." : "Brings the last working day forward."]);
     rows.push(["Last working day", show(last), wd(last)], ["Notice days served", pl(days, "day")]);
     const note = new Date(last).getUTCDay() === 0 ? ["no", "The last working day falls on a Sunday. Use this date on the relieving letter and in the full and final settlement."] : null;
     return { tiles: [[show(last), "Last working day"], [wd(last), "Weekday"], [pl(days, "day"), "Notice served"]], rows, note };
@@ -217,14 +220,19 @@ function calcDates(mode, f) {
   // retire
   const dob = parse(f.r1), age = parseInt(f.rAge, 10);
   if (dob == null) return err("Enter the date of birth.");
-  const bday = addMonths(dob, 12 * age), attain = bday - DAY, d = new Date(attain);
+  const db = new Date(dob), leapBorn = db.getUTCMonth() === 1 && db.getUTCDate() === 29;
+  let bday = addMonths(dob, 12 * age);
+  // Born on 29 February: in a year without one, the birthday is taken as 1 March, so the age is attained on 28 February.
+  if (leapBorn && new Date(bday).getUTCDate() !== 29) bday += DAY;
+  const attain = bday - DAY, d = new Date(attain);
+  const ord = (n) => n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th"));
   const eom = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), dim(d.getUTCFullYear(), d.getUTCMonth()));
   const r = f.rRule === "eom" ? eom : attain, now = today();
   const left = r >= now ? short(ymd(now, r + DAY)) : "Retired on " + show(r);
   return {
     tiles: [[show(r), "Retirement date"], [wd(r), "Weekday"], [r >= now ? short(ymd(now, r + DAY)) : "Past", "Time left"]],
     rows: [
-      ["Date of birth", show(dob)], [age + "th birthday", show(bday)],
+      ["Date of birth", show(dob)], [ord(age) + " birthday", show(bday)],
       ["Age attained on", show(attain), "A person attains an age on the day before the birthday."],
       ["Retires on", show(r), f.rRule === "eom" ? "The last day of the month in which the age is attained." : "The day the age is attained."],
       ["From today", left],
@@ -264,11 +272,11 @@ const DC_FAQ = [
 ];
 
 const INITIAL = {
-  b1: "2026-03-28", b2: "2026-04-03", bIncl: true,
-  a1: "2026-01-31", aN: "6", aU: "m", aLess: true,
-  n1: "2026-11-12", nN: "60", nU: "d", nStart: "same", nServed: "0",
-  w1: "2026-11-01", w2: "2026-11-30", wSun: "sun24", wHol: "09-11-2026\n24-11-2026",
-  r1: "1968-12-01", rAge: "58", rRule: "eom",
+  b1: "", b2: "", bIncl: true,
+  a1: "", aN: "", aU: "m", aLess: true,
+  n1: "", nN: "", nU: "d", nStart: "same", nServed: "",
+  w1: "", w2: "", wSun: "sun24", wHol: "",
+  r1: "", rAge: "58", rRule: "eom",
 };
 
 export default function DateCalculator() {
@@ -430,7 +438,7 @@ export default function DateCalculator() {
                 <div className="dc-ch"><span>1</span><h2>Start date and period</h2></div>
                 <div className="dc-f"><label htmlFor="a1">Start date</label><input type="date" id="a1" value={f.a1} onChange={set("a1")} /></div>
                 <div className="dc-row">
-                  <div className="dc-f"><label htmlFor="aN">Add (use - to subtract)</label><input type="text" id="aN" value={f.aN} onChange={set("aN")} /></div>
+                  <div className="dc-f"><label htmlFor="aN">Add (use - to subtract)</label><input type="text" id="aN" placeholder="e.g. 6" value={f.aN} onChange={set("aN")} /></div>
                   <div className="dc-f">
                     <label htmlFor="aU">Unit</label>
                     <select id="aU" value={f.aU} onChange={set("aU")}><option value="d">Days</option><option value="w">Weeks</option><option value="m">Months</option><option value="y">Years</option></select>
@@ -445,7 +453,7 @@ export default function DateCalculator() {
                 <div className="dc-ch"><span>1</span><h2>Resignation and notice</h2></div>
                 <div className="dc-f"><label htmlFor="n1">Resignation date</label><input type="date" id="n1" value={f.n1} onChange={set("n1")} /></div>
                 <div className="dc-row">
-                  <div className="dc-f"><label htmlFor="nN">Notice period</label><input type="text" id="nN" inputMode="numeric" value={f.nN} onChange={set("nN")} /></div>
+                  <div className="dc-f"><label htmlFor="nN">Notice period</label><input type="text" id="nN" inputMode="numeric" placeholder="e.g. 60" value={f.nN} onChange={set("nN")} /></div>
                   <div className="dc-f">
                     <label htmlFor="nU">Unit</label>
                     <select id="nU" value={f.nU} onChange={set("nU")}><option value="d">Days</option><option value="m">Months</option></select>
@@ -457,7 +465,7 @@ export default function DateCalculator() {
                 </div>
                 <details className="dc-more">
                   <summary>Days already served or waived (optional)</summary>
-                  <div className="dc-inner dc-f"><input type="text" inputMode="numeric" value={f.nServed} onChange={set("nServed")} aria-label="Days already served or waived" /></div>
+                  <div className="dc-inner dc-f"><input type="text" inputMode="numeric" placeholder="0" value={f.nServed} onChange={set("nServed")} aria-label="Days already served or waived" /></div>
                 </details>
               </section>
             )}
@@ -477,7 +485,7 @@ export default function DateCalculator() {
                 </div>
                 <div className="dc-f dc-last">
                   <label htmlFor="wHol">Holidays, one per line (DD-MM-YYYY)</label>
-                  <textarea id="wHol" value={f.wHol} onChange={set("wHol")} />
+                  <textarea id="wHol" placeholder={"e.g. 09-11-2026\n24-11-2026"} value={f.wHol} onChange={set("wHol")} />
                 </div>
               </section>
             )}

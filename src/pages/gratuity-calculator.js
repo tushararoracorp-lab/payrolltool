@@ -49,11 +49,15 @@ const pl = (k, w) => k + " " + w + (k === 1 ? "" : "s");
 function calcGratuity(f) {
   const doj = parse(f.doj), lwd = parse(f.lwd), rows = [];
   const row = (k, v, why) => rows.push([k, v, why || ""]);
-  if (doj == null || lwd == null || lwd < doj) return { err: "Enter a joining date and a last working day on or after it." };
+  if (doj == null || lwd == null) return { err: "Enter the date of joining and the last working day." };
+  if (lwd < doj) return { err: "The last working day must be on or after the date of joining." };
   if (["tot", "exc", "wages", "prior", "unpaid"].some((k) => !evalAmt(f[k]).ok))
     return { err: "Use numbers with + and - only in the amount fields." };
 
   const end = lwd + DAY, underCode = lwd >= CODE_START;
+  const usingRule = underCode && amtOf(f.tot) > 0;
+  if (usingRule && amtOf(f.exc) > amtOf(f.tot)) return { err: "Excluded items cannot be more than total monthly pay." };
+  if (!usingRule && amtOf(f.wages) <= 0) return { err: "Enter the monthly wages." };
   let years = 0;
   while (addYears(doj, years + 1) <= end) years++;
   const anniv = addYears(doj, years);
@@ -64,10 +68,10 @@ function calcGratuity(f) {
   const overSix = addMonths(anniv, 6) < end;
   const law = underCode ? "Code on Social Security, 2020" : "Payment of Gratuity Act, 1972";
   row("Service", pl(years, "year") + ", " + pl(rm, "month") + ", " + pl(rd, "day"),
-    show(doj) + " to " + show(lwd) + ", both days included: " + totalDays.toLocaleString("en-IN") + " days.");
+    show(doj) + " to " + show(lwd) + ", both days included: " + totalDays.toLocaleString("en-IN") + (totalDays === 1 ? " day." : " days."));
 
   let wages = amtOf(f.wages), wageNote = "";
-  if (underCode && amtOf(f.tot) > 0) {
+  if (usingRule) {
     const tot = amtOf(f.tot), exc = Math.min(amtOf(f.exc), tot), add = Math.max(0, exc - tot / 2);
     wages = tot - exc + add;
     wageNote = "Total pay " + fmt(tot) + " less excluded items " + fmt(exc) +
@@ -76,6 +80,7 @@ function calcGratuity(f) {
   row(underCode ? "Wages used" : "Basic + DA used", fmt(wages), wageNote || (underCode ? "As entered." : "The 1972 Act applies to this exit."));
 
   const need = f.fiveday ? 190 : 240, unpaid = amtOf(f.unpaid), worked = Math.max(0, remDays - unpaid);
+  const sec = underCode ? "section 54" : "section 2A of the 1972 Act";
   const rounded = years + (overSix ? 1 : 0);
   let eligible = false, counted = 0, why = "", from = null;
   if (f.reason === "death") {
@@ -90,12 +95,13 @@ function calcGratuity(f) {
     if (years >= 5) { eligible = true; counted = rounded; why = "Five or more years of continuous service."; }
     else if (years === 4 && worked >= need) {
       eligible = true; counted = 5;
-      why = "4 years plus " + worked + " days worked in the fifth year (at least " + need + "), so service counts as 5 years under section 54.";
+      why = "4 years plus " + worked + " days worked in the fifth year (at least " + need + "), so service counts as 5 years under " + sec + ".";
     } else {
       why = years === 4
         ? "4 years plus " + worked + " days worked in the fifth year; " + need + " needed, so " + pl(need - worked, "day") + " short."
         : "Five years of continuous service are needed; this service has " + pl(years, "full year") + ".";
     }
+    if (f.type === "fte" && !underCode) why += " The one-year rule for fixed-term employees applies to exits from 21 November 2025.";
   }
   row("Eligible", eligible ? "Yes" : "No", why);
   if (from != null && f.reason !== "death")
@@ -103,7 +109,8 @@ function calcGratuity(f) {
       : "The day the fifth year reaches " + need + " days worked" + (unpaid ? " (after " + pl(unpaid, "unpaid day") + ")" : "") + ".");
   if (!eligible) return { law, rows, eligible, why, g: 0, counted: 0, exempt: 0 };
 
-  row("Years counted", String(counted), counted > years ? "The final part-year is over six months, so it counts as a year."
+  row("Years counted", String(counted), counted === 0 ? "Service is six months or less, so no year is counted and the formula gives nil."
+    : counted > years ? "The final part-year is over six months, so it counts as a year."
     : remDays > 0 ? "The final part-year is six months or less, so it is not counted." : "");
   const div = f.cov === "covered" ? 26 : 30;
   let g = (wages * 15) / div * counted;
@@ -148,8 +155,8 @@ const GC_FAQ = [
 ];
 
 const INITIAL = {
-  doj: "2021-03-01", lwd: "2025-12-15", type: "regular", reason: "leave",
-  wages: "45000", tot: "", exc: "", cov: "covered", sec: "pvt", unpaid: "0", prior: "0", fiveday: false,
+  doj: "", lwd: "", type: "regular", reason: "leave",
+  wages: "", tot: "", exc: "", cov: "covered", sec: "pvt", unpaid: "", prior: "", fiveday: false,
 };
 
 export default function GratuityCalculator() {
@@ -277,7 +284,7 @@ export default function GratuityCalculator() {
               <div className="gc-ch"><span>2</span><h2>Wages</h2></div>
               <div className="gc-f">
                 <label htmlFor="wages">Monthly wages (Rs.)</label>
-                <input type="text" id="wages" inputMode="decimal" value={f.wages} onChange={set("wages")} />
+                <input type="text" id="wages" inputMode="decimal" placeholder="e.g. 45000" value={f.wages} onChange={set("wages")} />
                 <div className="gc-help">
                   {preCode ? "For exits before 21 November 2025, wages mean Basic + DA under the 1972 Act." : "Basic pay, DA, retaining allowance and other pay not excluded by the Code."}
                 </div>
@@ -311,8 +318,8 @@ export default function GratuityCalculator() {
                     </div>
                   </div>
                   <div className="gc-row">
-                    <div className="gc-f"><label htmlFor="unpaid">Unpaid days in final year</label><input type="text" id="unpaid" inputMode="numeric" value={f.unpaid} onChange={set("unpaid")} /></div>
-                    <div className="gc-f"><label htmlFor="prior">Gratuity exempted earlier (Rs.)</label><input type="text" id="prior" inputMode="decimal" value={f.prior} onChange={set("prior")} /></div>
+                    <div className="gc-f"><label htmlFor="unpaid">Unpaid days in final year</label><input type="text" id="unpaid" inputMode="numeric" placeholder="0" value={f.unpaid} onChange={set("unpaid")} /></div>
+                    <div className="gc-f"><label htmlFor="prior">Gratuity exempted earlier (Rs.)</label><input type="text" id="prior" inputMode="decimal" placeholder="0" value={f.prior} onChange={set("prior")} /></div>
                   </div>
                   <label className="gc-check"><input type="checkbox" checked={f.fiveday} onChange={set("fiveday")} /> The establishment works fewer than six days a week (190-day test)</label>
                 </div>

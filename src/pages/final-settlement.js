@@ -101,11 +101,18 @@ function calculate(f) {
     // continuous service; fixed-term employees after 1 year of service under the contract.
     const isFte = f.empType === "fte";
     const minYears = isFte ? 1 : 5;
+    // A final part-year counts as a full year only when it is more than six months:
+    // service runs to the end of the last working day, and must pass the date six months after the anniversary.
+    const sixMonthMark = new Date(anniversary);
+    sixMonthMark.setMonth(sixMonthMark.getMonth() + 6);
+    const serviceEnd = new Date(dol);
+    serviceEnd.setDate(serviceEnd.getDate() + 1);
+    const overSixMonths = serviceEnd > sixMonthMark;
     if (years >= minYears) {
-      const gratuityYears = years + (extraDays >= 182 ? 1 : 0);
+      const gratuityYears = years + (overSixMonths ? 1 : 0);
       gratuity = (wages * 15) / 26 * gratuityYears;
       let explain = `${isFte ? `Fixed-term employee (qualifies after 1 year): ${years} completed year(s) under the contract` : `Qualifies at ${years} completed year(s) of service`}${
-        extraDays >= 182 ? `, rounded up to ${gratuityYears} for the payout (6+ months counts as a full year)` : ""
+        overSixMonths ? `, rounded up to ${gratuityYears} for the payout (a final part-year of more than six months counts as a full year)` : ""
       }.`;
       if (gratuity > gratuityCap) {
         gratuity = gratuityCap;
@@ -186,7 +193,7 @@ const FS_INFO_CARDS = [
   {
     icon: "\u2696\ufe0f",
     title: "Gratuity, in short",
-    body: "Wages \u00d7 15 \u00f7 26 \u00d7 years worked. Regular employees qualify after 5 years, fixed-term employees after 1 year under the contract (Code on Social Security, 2020). A final year of 6 or more months rounds up. Capped at Rs. 20 lakh in the private sector.",
+    body: "Wages \u00d7 15 \u00f7 26 \u00d7 years worked. Regular employees qualify after 5 years, fixed-term employees after 1 year under the contract (Code on Social Security, 2020). A final part-year of more than six months counts as a full year. Capped at Rs. 20 lakh in the private sector.",
   },
   {
     icon: "\ud83d\udcc5",
