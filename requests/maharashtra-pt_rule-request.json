@@ -1,0 +1,53 @@
+{
+  "action": "REPLACE",
+  "kind": "pt_rule",
+  "target_id": "5f17763a-fe22-4b54-a4f1-43807c2fe831",
+  "payload": {
+    "state": "Maharashtra",
+    "effective_from": "2026-03-01",
+    "frequency": "Annual",
+    "cycle_text": "Monthly (annual return if the PTRC liability is below Rs. 1,00,000)",
+    "basis": "Gender-split slab with a February true-up",
+    "due_text": "By the 15th of each month from March 2026; annual return by 15 March",
+    "act": "Maharashtra State Tax on Professions, Trades, Callings and Employments Act, 1975",
+    "annual_cap": "Rs. 2,500 a year (11 months x Rs. 200 + 1 month x Rs. 300)",
+    "slab_tables": [
+      {
+        "rows": [
+          {
+            "amt": "Nil",
+            "band": "Up to Rs. 7,500"
+          },
+          {
+            "amt": "Rs. 175 a month",
+            "band": "Rs. 7,501 to Rs. 10,000"
+          },
+          {
+            "amt": "Rs. 200 a month (Rs. 300 in February)",
+            "band": "Above Rs. 10,000"
+          }
+        ],
+        "unit": "Monthly salary",
+        "title": "Men"
+      },
+      {
+        "rows": [
+          {
+            "amt": "Nil",
+            "band": "Up to Rs. 25,000"
+          },
+          {
+            "amt": "Rs. 200 a month (Rs. 300 in February)",
+            "band": "Above Rs. 25,000"
+          }
+        ],
+        "unit": "Monthly salary",
+        "title": "Women"
+      }
+    ],
+    "notes": "Persons above 65 years of age pay no PT.",
+    "official_url": "https://mahagst.gov.in/en",
+    "explainer_en": "Maharashtra levies professional tax under the Maharashtra State Tax on Professions, Trades, Callings and Employments Act, 1975, administered by the Goods and Services Tax Department. Employers register under a PTRC to deduct the tax from salaries; the business itself enrols separately under a PTEC and pays its own yearly tax.\n\nThe salary slabs differ for men and women. For men, there is no tax up to Rs. 7,500 a month, Rs. 175 a month from Rs. 7,501 to Rs. 10,000, and Rs. 200 a month above Rs. 10,000. For women, there is no tax up to Rs. 25,000 a month, and Rs. 200 a month above it. In both cases the February deduction is Rs. 300 instead of Rs. 200, which brings the yearly total to exactly Rs. 2,500, the limit in Article 276 of the Constitution. Persons above 65 years of age pay no professional tax.\n\nThe due dates changed in 2026. The Finance Department's notification of 28 February 2026 amended rule 11(3) of the Rules: a monthly return and payment, previously due by the last day of the month, is now due by the 15th, and an annual return is due by 15 March instead of 31 March. A payroll calendar still set to the month end now pays late, and late payment attracts interest and penalty.\n\nThe slab follows the salary actually paid for the month, so a mid-month joiner or an employee on loss of pay may fall into a lower slab for that month. The February step-up applies to anyone in the Rs. 200 slab, so the February payroll needs Rs. 300, not Rs. 200.",
+    "explainer_hi": "महाराष्ट्र व्यवसाय कर महाराष्ट्र राज्य व्यवसाय, व्यापार, आजीविका और रोज़गार कर अधिनियम, 1975 के तहत लेता है, जिसका प्रशासन वस्तु एवं सेवा कर विभाग करता है। नियोक्ता वेतन से कर काटने के लिए PTRC के तहत पंजीकरण कराते हैं; व्यवसाय स्वयं PTEC के तहत अलग से नामांकन कराकर अपना सालाना कर देता है।\n\nवेतन के स्लैब पुरुषों और महिलाओं के लिए अलग हैं। पुरुषों के लिए 7,500 रुपये प्रति माह तक कोई कर नहीं, 7,501 से 10,000 रुपये तक 175 रुपये प्रति माह, और 10,000 रुपये से ऊपर 200 रुपये प्रति माह है। महिलाओं के लिए 25,000 रुपये प्रति माह तक कोई कर नहीं, और उससे ऊपर 200 रुपये प्रति माह है। दोनों ही स्थितियों में फरवरी की कटौती 200 के बजाय 300 रुपये होती है, जिससे सालाना कुल ठीक 2,500 रुपये होता है, जो संविधान के अनुच्छेद 276 की सीमा है। 65 वर्ष से अधिक आयु के व्यक्ति व्यवसाय कर नहीं देते।\n\n2026 में देय तिथियाँ बदलीं। वित्त विभाग की 28 फरवरी 2026 की अधिसूचना ने नियमावली के नियम 11(3) में संशोधन किया: मासिक विवरणी और भुगतान, जो पहले महीने के अंतिम दिन तक देय था, अब 15 तारीख तक देय है, और वार्षिक विवरणी 31 मार्च के बजाय 15 मार्च तक देय है। जो पेरोल कैलेंडर अब भी महीने के अंत पर सेट है, वह देर से भुगतान करता है, और देर से भुगतान पर ब्याज और दंड लगता है।\n\nस्लैब उस महीने वास्तव में दिए गए वेतन से तय होता है, इसलिए महीने के बीच में जुड़ने वाला या वेतन कटौती (LOP) वाला कर्मचारी उस महीने निचले स्लैब में आ सकता है। फरवरी की बढ़ोतरी 200 रुपये वाले स्लैब के हर व्यक्ति पर लागू होती है, इसलिए फरवरी के पेरोल में 200 के बजाय 300 रुपये चाहिए।"
+  }
+}

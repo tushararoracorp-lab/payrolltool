@@ -1,4 +1,4 @@
-﻿import Head from "next/head";
+import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useState, useRef, useCallback, useEffect } from "react";
@@ -622,6 +622,29 @@ const LOP_INFO_CARDS = [
   },
 ];
 
+const LOP_MISTAKES = [
+  {
+    t: "Using one month's per-day rate for days in another month",
+    d: "An absence from 28 March to 3 April is two deductions: four days at March's per-day rate and three at April's. One rate across the whole span over- or under-deducts whenever the two months have a different number of days or a different salary.",
+  },
+  {
+    t: "Mixing divisors between employees",
+    d: "Calendar days, 30 and 26 each give a different per-day rate. Use the divisor your policy or appointment letter states, and use the same one for every employee and every month.",
+  },
+  {
+    t: "Counting the same day twice",
+    d: "An absence entered by hand and the same absence imported from attendance overlap. Without an overlap check, both rows are deducted. Check each employee's dates for overlaps before upload.",
+  },
+  {
+    t: "Forgetting that LOP lowers PF and ESI wages",
+    d: "PF and ESI are calculated on wages actually paid. LOP days reduce those wages and appear as NCP days in the ECR, so the contribution for the month falls too.",
+  },
+  {
+    t: "Uploading a date range the HRMS cannot read",
+    d: "Many HR systems expect one row per absence day, or one row per month. A single row from 28 March to 3 April can be rejected or silently cut at the month end.",
+  },
+];
+
 const LOP_FAQ = [
   {
     q: "How is Loss of Pay calculated when an absence spans two months?",
@@ -1098,6 +1121,18 @@ export default function Home() {
               deduction. Feed each row&apos;s day count into your payroll system or a salary
               proration calculator to get the actual LOP amount for that cycle.
             </p>
+          </div>
+        </section>
+
+        <section className="max-w-lg mx-auto w-full px-4 pb-4">
+          <div className="bg-white rounded-2xl p-6">
+            <h4 className="text-sm font-bold text-gray-900 mb-4">Common mistakes</h4>
+            {LOP_MISTAKES.map((m, i) => (
+              <div key={m.t} className={`py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}>
+                <h5 className="text-sm font-semibold text-violet-700 mb-1.5">{m.t}</h5>
+                <p className="text-sm leading-relaxed text-gray-500">{m.d}</p>
+              </div>
+            ))}
           </div>
         </section>
 

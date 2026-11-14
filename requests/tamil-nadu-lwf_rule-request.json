@@ -1,0 +1,19 @@
+{
+  "action": "REPLACE",
+  "kind": "lwf_rule",
+  "target_id": "5488314a-bad0-4f04-8d6b-2d7753399dfe",
+  "payload": {
+    "state": "Tamil Nadu",
+    "effective_from": "2022-12-02",
+    "employee_amount": "Rs. 20 a year",
+    "employer_amount": "Rs. 40 a year",
+    "ratio": "1 : 2",
+    "frequency": "Annual",
+    "due_text": "Deducted from the December salary; deposit and return by 31 January",
+    "act": "Tamil Nadu Labour Welfare Fund Act, 1972 (Tamil Nadu Act 36 of 1972); rule 11-A of the 1973 Rules as amended by G.O.(Ms) No. 161 dated 2 December 2022",
+    "notes": "Raised from Rs. 10 and Rs. 20. Applicability 5+ employees. Managerial staff and supervisors above Rs. 15,000 a month exempt.",
+    "official_url": "https://labour.gov.in/",
+    "explainer_en": "Tamil Nadu's Labour Welfare Fund runs under the Tamil Nadu Labour Welfare Fund Act, 1972, Tamil Nadu Act 36 of 1972, and is managed by the Tamil Nadu Labour Welfare Board, Chennai. The contribution amounts are not in the Act itself but in rule 11-A of the Tamil Nadu Labour Welfare Fund Rules, 1973, which the Government can amend under section 41.\n\nThe contribution is made once a year. The employee pays Rs. 20 and the employer Rs. 40 for each employee. These figures come from G.O.(Ms) No. 161 of the Labour Welfare and Skill Development (G2) Department, dated 2 December 2022, issued on a request from the Board's Secretary in October 2021. The notification appended to it amended rule 11-A: the expression \"rupees ten\", which occurs in two places, became \"rupees twenty\", and \"rupees twenty\" became \"rupees forty\". The amendment came into force on its publication in the Tamil Nadu Government Gazette.\n\nThat doubled the contribution. Before the change, the employee paid Rs. 10 and the employer Rs. 20 a year. The ratio stays at one to two.\n\nBecause the contribution is yearly, it appears in one salary only. The employer deducts the employee's Rs. 20 once in the year, adds Rs. 40 of its own for that employee, and pays the total to the Board.\n\nThe yearly cost is small per head, but it applies to every employee covered by the Act, so for a large workforce the employer's Rs. 40 adds up. A payroll that still deducts Rs. 10 is short by Rs. 10 from the employee and Rs. 20 from the employer for every employee, every year since the amended rule came into force.",
+    "explainer_hi": "तमिलनाडु का श्रम कल्याण कोष तमिलनाडु श्रम कल्याण कोष अधिनियम, 1972, तमिलनाडु अधिनियम 36 of 1972 के तहत चलता है, और इसका प्रबंधन तमिलनाडु श्रम कल्याण मंडल, चेन्नई करता है। अंशदान की राशियाँ स्वयं अधिनियम में नहीं, बल्कि तमिलनाडु श्रम कल्याण कोष नियमावली, 1973 के नियम 11-A में हैं, जिसे सरकार धारा 41 के तहत संशोधित कर सकती है।\n\nअंशदान साल में एक बार होता है। हर कर्मचारी के लिए कर्मचारी 20 रुपये और नियोक्ता 40 रुपये देता है। ये राशियाँ श्रम कल्याण और कौशल विकास (G2) विभाग के 2 दिसंबर 2022 के G.O.(Ms) No. 161 से आती हैं, जो अक्टूबर 2021 में मंडल के सचिव के अनुरोध पर जारी हुआ। इसके साथ जुड़ी अधिसूचना ने नियम 11-A में संशोधन किया: दो जगह आने वाला \"दस रुपये\" \"बीस रुपये\" हुआ, और \"बीस रुपये\" \"चालीस रुपये\" हुआ। संशोधन तमिलनाडु सरकार राजपत्र में प्रकाशन से लागू हुआ।\n\nइससे अंशदान दोगुना हो गया। बदलाव से पहले कर्मचारी साल में 10 रुपये और नियोक्ता 20 रुपये देता था। अनुपात एक और दो का ही रहा।\n\nचूँकि अंशदान सालाना है, यह केवल एक वेतन में दिखता है। नियोक्ता साल में एक बार कर्मचारी के 20 रुपये काटता है, उस कर्मचारी के लिए अपने 40 रुपये जोड़ता है, और कुल राशि मंडल को जमा करता है।\n\nप्रति व्यक्ति सालाना लागत कम है, लेकिन यह अधिनियम के दायरे में आने वाले हर कर्मचारी पर लागू होती है, इसलिए बड़े कार्यबल में नियोक्ता के 40 रुपये जुड़कर बड़ी राशि बनते हैं। जो पेरोल अब भी 10 रुपये काटता है, वह संशोधित नियम लागू होने के बाद से हर साल हर कर्मचारी के लिए कर्मचारी की ओर से 10 रुपये और नियोक्ता की ओर से 20 रुपये कम देता है।"
+  }
+}

@@ -1,0 +1,140 @@
+[
+  {
+    "match": {
+      "state": "West Bengal",
+      "title_contains": "West Bengal minimum wages"
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "Min Wages",
+      "state": "West Bengal",
+      "title": "West Bengal minimum wages",
+      "short_summary": "Effective 1 July 2026 to 31 December 2026. Zone A unskilled Rs. 10,558 a month (Rs. 406 a day); Zone B Rs. 9,760 (Rs. 375 a day). Two zones, revised on 1 January and 1 July.",
+      "reference": "No. 07/Stat/14/RW/24/2023/LCS/JLC (January cycle)",
+      "effective_date": "2026-07-01",
+      "published_date": "2026-06-22",
+      "issued_by": "Labour Commissionerate, West Bengal",
+      "official_url": "https://wblc.gov.in/",
+      "note": null,
+      "explainer_en": "West Bengal revised its minimum wages with effect from 1 July 2026, through circulars notified on 22 June 2026. The rates apply from 1 July 2026 to 31 December 2026. In Zone A, unskilled work in manufacturing is Rs. 10,558 a month, which is Rs. 406 a day. In Zone B, the unskilled rate is Rs. 9,760 a month, or Rs. 375 a day.\n\nWest Bengal revises its minimum wages twice a year, on 1 January and 1 July. Most states revise on 1 April and 1 October, and Maharashtra is the other large state on the January and July cycle. A payroll calendar built only around April and October will pick up West Bengal revisions three months late, so set this state's review dates separately.\n\nThe state fixes rates in two zones, A and B, and four skill grades: unskilled, semi-skilled, skilled and highly skilled. Each scheduled employment has its own circular, so the rate for a shop, a factory or a security agency comes from the circular for that employment.\n\nFor comparison, the January 2026 cycle, notified on 9 January 2026 for 31 scheduled employments, set Zone A unskilled for shops at Rs. 10,386 a month, or Rs. 399 a day. The July 2025 cycle set Zone A unskilled at Rs. 10,329, semi-skilled at Rs. 11,363, skilled at Rs. 12,499 and highly skilled at Rs. 13,748.\n\nWhat to do in payroll:\n- map each employee to the scheduled employment and the zone of the establishment;\n- check gross wages against the 1 July 2026 rate for that employee's grade;\n- if the July salary was processed on the older rate, pay the difference as arrears from 1 July 2026;\n- for a part month, prorate the monthly minimum by days in the same way as the salary;\n- watch for the January 2027 circulars in the last week of December.",
+      "explainer_hi": "पश्चिम बंगाल ने 1 जुलाई 2026 से अपनी न्यूनतम मज़दूरी संशोधित की है। ये दरें 22 जून 2026 को अधिसूचित परिपत्रों से लागू हुईं और 1 जुलाई 2026 से 31 दिसंबर 2026 तक चलेंगी। ज़ोन ए में विनिर्माण के अकुशल काम की दर 10,558 रुपये महीना है, यानी 406 रुपये रोज़। ज़ोन बी में अकुशल दर 9,760 रुपये महीना है, यानी 375 रुपये रोज़।\n\nपश्चिम बंगाल साल में दो बार, 1 जनवरी और 1 जुलाई को, न्यूनतम मज़दूरी बदलता है। ज़्यादातर राज्य 1 अप्रैल और 1 अक्टूबर को बदलते हैं, और जनवरी व जुलाई वाले चक्र पर चलने वाला दूसरा बड़ा राज्य महाराष्ट्र है। अगर पेरोल का कैलेंडर केवल अप्रैल और अक्टूबर पर बना है, तो पश्चिम बंगाल का संशोधन तीन महीने देर से पकड़ में आएगा। इसलिए इस राज्य की समीक्षा की तारीखें अलग से तय करें।\n\nराज्य दो ज़ोन, ए और बी, और चार कौशल श्रेणियों में दरें तय करता है: अकुशल, अर्ध-कुशल, कुशल और अति-कुशल। हर अनुसूचित रोज़गार का अपना परिपत्र होता है, इसलिए दुकान, कारखाने या सुरक्षा एजेंसी की दर उसी रोज़गार के परिपत्र से ली जाती है।\n\nतुलना के लिए, 9 जनवरी 2026 को 31 अनुसूचित रोज़गारों के लिए अधिसूचित जनवरी 2026 के चक्र में दुकानों के लिए ज़ोन ए की अकुशल दर 10,386 रुपये महीना, यानी 399 रुपये रोज़, थी। जुलाई 2025 के चक्र में ज़ोन ए की दरें अकुशल के लिए 10,329 रुपये, अर्ध-कुशल के लिए 11,363 रुपये, कुशल के लिए 12,499 रुपये और अति-कुशल के लिए 13,748 रुपये थीं।\n\nपेरोल में क्या करें:\n- हर कर्मचारी को प्रतिष्ठान के अनुसूचित रोज़गार और ज़ोन से जोड़ें;\n- कुल मज़दूरी को कर्मचारी की श्रेणी की 1 जुलाई 2026 वाली दर से मिलाएँ;\n- अगर जुलाई का वेतन पुरानी दर पर बना था, तो 1 जुलाई 2026 से अंतर की राशि बकाया के रूप में दें;\n- अधूरे महीने के लिए मासिक न्यूनतम राशि को दिनों के हिसाब से उसी तरह बाँटें जैसे वेतन बाँटा जाता है;\n- दिसंबर के आख़िरी हफ़्ते में जनवरी 2027 के परिपत्रों पर नज़र रखें।",
+      "flag": "current",
+      "status": "in_force"
+    }
+  },
+  {
+    "match": {
+      "state": "Manipur",
+      "title_contains": "Manipur minimum wages"
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "Min Wages",
+      "state": "Manipur",
+      "title": "Manipur minimum wages",
+      "short_summary": "Effective 12 March 2025 across 24 scheduled employments statewide: unskilled Rs. 12,000, semi-skilled Rs. 13,200 and skilled Rs. 14,400 a month. Replaces the 2016 and 2021 schedules.",
+      "reference": "No. LAB-1/22/2021-LAB, Gazette No. 46 (Part-II-A)",
+      "effective_date": "2025-03-12",
+      "published_date": "2025-03-12",
+      "issued_by": "Labour & Employment Department, Manipur",
+      "official_url": "https://manipur.gov.in/",
+      "note": null,
+      "explainer_en": "Manipur's current minimum wages took effect on 12 March 2025 under notification No. LAB-1/22/2021-LAB, published in Gazette No. 46 (Part-II-A). The schedule covers 24 scheduled employments across the whole state and replaces the schedules of 2016 and 2021.\n\nThe monthly rates are Rs. 12,000 for unskilled work, Rs. 13,200 for semi-skilled work and Rs. 14,400 for skilled work. Each grade is 10 per cent above the one below it. The schedule sets no separate rate for highly skilled work, so for staff who would be graded highly skilled elsewhere, the skilled rate of Rs. 14,400 is the minimum that applies. It is a floor: the actual pay for such roles is a matter for the employer, as long as it is not below Rs. 14,400.\n\nThe notification sets each rate as a single monthly amount. A new rate applies only from the date a new notification sets, so track Manipur by notification rather than by a fixed calendar. The effective date of the current schedule, 12 March, also differs from the 1 April or 1 October dates most states use, which is another reason not to assume the usual cycle.\n\nThe rates apply statewide, so there are no zones to map. Every establishment in Manipur covered by one of the 24 scheduled employments uses the same figures.\n\nWhat to do in payroll:\n- set the Manipur minimum at Rs. 12,000, Rs. 13,200 and Rs. 14,400 a month for the three grades;\n- check each employee's gross wages against the rate for their own grade, not only against the unskilled rate;\n- for a part month, prorate the monthly rate by days in the same way as the salary;\n- keep a copy of the gazette notification with the payroll records, because an inspector will ask for the rate and its source together.",
+      "explainer_hi": "मणिपुर की मौजूदा न्यूनतम मज़दूरी 12 मार्च 2025 से अधिसूचना संख्या LAB-1/22/2021-LAB के तहत लागू है, जो राजपत्र संख्या 46 (भाग-II-ए) में छपी थी। यह अनुसूची पूरे राज्य के 24 अनुसूचित रोज़गारों पर लागू है और 2016 तथा 2021 की अनुसूचियों की जगह लेती है।\n\nमासिक दरें अकुशल काम के लिए 12,000 रुपये, अर्ध-कुशल काम के लिए 13,200 रुपये और कुशल काम के लिए 14,400 रुपये हैं। हर श्रेणी अपने से नीचे वाली श्रेणी से 10 प्रतिशत ऊपर है। अनुसूची में अति-कुशल काम की अलग दर नहीं है, इसलिए जो कर्मचारी दूसरे राज्यों में अति-कुशल श्रेणी में आते, उनके लिए यहाँ कुशल श्रेणी की 14,400 रुपये की दर ही न्यूनतम है। यह केवल न्यूनतम सीमा है: ऐसी भूमिकाओं का असली वेतन नियोक्ता तय करता है, बस वह 14,400 रुपये से कम नहीं होना चाहिए।\n\nअधिसूचना हर दर को एक ही मासिक राशि के रूप में तय करती है। नई दर उसी तारीख से लागू होती है जो नई अधिसूचना तय करे, इसलिए मणिपुर पर किसी तय कैलेंडर से नहीं, बल्कि अधिसूचनाओं से नज़र रखें। मौजूदा अनुसूची की प्रभावी तिथि 12 मार्च भी ज़्यादातर राज्यों की 1 अप्रैल या 1 अक्टूबर वाली तारीखों से अलग है, यह भी एक कारण है कि सामान्य चक्र मानकर न चलें।\n\nदरें पूरे राज्य में एक जैसी हैं, इसलिए कोई ज़ोन नहीं है। 24 अनुसूचित रोज़गारों में आने वाला मणिपुर का हर प्रतिष्ठान यही दरें अपनाता है।\n\nपेरोल में क्या करें:\n- तीनों श्रेणियों के लिए मणिपुर की न्यूनतम दरें 12,000, 13,200 और 14,400 रुपये महीना रखें;\n- हर कर्मचारी की कुल मज़दूरी को उसकी अपनी श्रेणी की दर से मिलाएँ, केवल अकुशल दर से नहीं;\n- अधूरे महीने के लिए मासिक दर को दिनों के हिसाब से उसी तरह बाँटें जैसे वेतन बाँटा जाता है;\n- राजपत्र अधिसूचना की एक प्रति पेरोल रिकॉर्ड के साथ रखें, क्योंकि निरीक्षक दर और उसका स्रोत दोनों साथ माँगते हैं।",
+      "flag": "current",
+      "status": "in_force"
+    }
+  },
+  {
+    "match": {
+      "state": "Haryana",
+      "title_contains": "Haryana adds optional monthly online LWF remittance"
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "LWF",
+      "state": "Haryana",
+      "title": "Haryana adds optional monthly online LWF remittance",
+      "short_summary": "Notification No. HLWB/REV/2024/3755-3804 dated 9 July 2024 enables optional monthly online deposit of LWF contributions through the Haryana Labour e-Governance portal. Employee deduction remains monthly and the statutory annual remittance deadline remains 31 December.",
+      "reference": "Notification HLWB/REV/2024/3755-3804",
+      "effective_date": "2024-07-01",
+      "published_date": "2024-07-09",
+      "issued_by": "Labour Welfare Board, Government of Haryana",
+      "official_url": "https://hrylabour.gov.in/",
+      "note": null,
+      "explainer_en": "The Haryana Labour Welfare Board, by notification No. HLWB/REV/2024/3755-3804 dated 9 July 2024, lets employers deposit Labour Welfare Fund contributions online every month through the Haryana Labour e-Governance portal. The change applies from July 2024. Monthly deposit is an option, not a requirement.\n\nTwo things stay the same. The employee contribution is still deducted from wages every month, and the statutory deadline for remitting the year's contributions is still 31 December. An employer can keep paying once a year by that date, or can pay month by month as the deductions are made.\n\nThe amounts are set separately from this notification. The employee contributes 0.2 per cent of the month's wages, up to Rs. 35 a month from 1 January 2026, and the employer contributes twice the employee's share, up to Rs. 70 a month. The employer's share is a cost to the employer and is never recovered from wages.\n\nWhy monthly deposit helps: when deductions are held for up to twelve months before one annual payment, the payroll ledger carries a growing liability, and a single missed deadline affects the whole year. Paying each month keeps the amount deducted and the amount deposited equal at every month-end, which makes the year-end reconciliation simple.\n\nPractical points if you switch to monthly deposit:\n- register the portal login to an official email address and mobile number, not to one person, so access survives staff changes;\n- download and file the receipt for each payment;\n- before closing payroll, match the month's employee deductions plus the employer share against the receipt;\n- if you stay on annual payment, keep 31 December in the compliance calendar and check the full year's total in November.",
+      "explainer_hi": "हरियाणा श्रम कल्याण बोर्ड ने 9 जुलाई 2024 की अधिसूचना संख्या HLWB/REV/2024/3755-3804 से नियोक्ताओं को यह सुविधा दी है कि वे श्रम कल्याण कोष का अंशदान हर महीने हरियाणा श्रम ई-गवर्नेंस पोर्टल पर ऑनलाइन जमा कर सकें। यह बदलाव जुलाई 2024 से लागू है। हर महीने जमा करना एक विकल्प है, अनिवार्य नहीं।\n\nदो बातें पहले जैसी हैं। कर्मचारी का अंशदान अब भी हर महीने वेतन से काटा जाता है, और साल भर का अंशदान जमा करने की वैधानिक अंतिम तिथि अब भी 31 दिसंबर है। नियोक्ता चाहे तो इस तारीख तक साल में एक बार भुगतान करता रहे, या हर महीने कटौती के साथ ही जमा करे।\n\nराशियाँ इस अधिसूचना से अलग तय होती हैं। कर्मचारी महीने की मज़दूरी का 0.2 प्रतिशत देता है, जो 1 जनवरी 2026 से अधिकतम 35 रुपये महीना है, और नियोक्ता कर्मचारी के हिस्से का दोगुना देता है, अधिकतम 70 रुपये महीना। नियोक्ता का हिस्सा नियोक्ता की लागत है और कभी वेतन से नहीं काटा जाता।\n\nहर महीने जमा करना क्यों उपयोगी है: जब कटौतियाँ एक सालाना भुगतान से पहले बारह महीने तक रुकी रहती हैं, तो पेरोल के खाते में देनदारी बढ़ती जाती है, और एक भी अंतिम तिथि चूकने से पूरा साल प्रभावित होता है। हर महीने भुगतान करने से हर महीने के अंत में काटी गई राशि और जमा राशि बराबर रहती है, जिससे साल के अंत का मिलान आसान हो जाता है।\n\nहर महीने जमा करने पर ध्यान रखने वाली बातें:\n- पोर्टल का लॉगिन किसी एक व्यक्ति के नहीं, बल्कि संस्था के आधिकारिक ईमेल और मोबाइल नंबर पर रखें, ताकि कर्मचारी बदलने पर भी पहुँच बनी रहे;\n- हर भुगतान की रसीद डाउनलोड करके रखें;\n- पेरोल बंद करने से पहले महीने की कर्मचारी कटौती और नियोक्ता के हिस्से का जोड़ रसीद से मिलाएँ;\n- अगर सालाना भुगतान ही रखते हैं, तो 31 दिसंबर को अनुपालन कैलेंडर में रखें और नवंबर में पूरे साल का जोड़ जाँच लें।",
+      "flag": "current",
+      "status": "in_force"
+    }
+  },
+  {
+    "match": {
+      "state": "West Bengal",
+      "title_contains": "West Bengal mandates electronic LWF payment from 1 December "
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "LWF",
+      "state": "West Bengal",
+      "title": "West Bengal mandates electronic LWF payment from 1 December 2020",
+      "short_summary": "Notification No. Labr/1700/ESTT, effective 1 December 2020, amended the West Bengal Labour Welfare Fund Act 1974 to require that both employer and employee contributions be paid electronically through the designated portal.",
+      "reference": "Notification No. Labr/1700/ESTT",
+      "effective_date": "2020-12-01",
+      "published_date": "2020-12-01",
+      "issued_by": "Labour Welfare Board, Government of West Bengal",
+      "official_url": "https://lwf.wblabour.gov.in/",
+      "note": null,
+      "explainer_en": "West Bengal made Labour Welfare Fund payment electronic from 1 December 2020. Notification No. Labr/1700/ESTT amended the West Bengal Labour Welfare Fund Act, 1974 so that both the employer's and the employee's contributions are paid through the designated online portal. Payment by challan is no longer accepted, and the online route is mandatory.\n\nThe current amounts are Rs. 3 from the employee and Rs. 30 from the employer for each six-month period ending 30 June and 31 December, deemed in force from 1 January 2024 under Notification No. Labr/576641/2024/(LC-LW/MW) dated 19 November 2024. The deduction is made from the June and December salaries, and the deposit is due by 15 July and 15 January.\n\nThe employer's share is ten times the employee's share, the widest ratio of any state. The employee deduction is small, so most of the money that reaches the fund is the employer's contribution. A remittance that fails costs far more than a deduction that is slightly wrong.\n\nAn online-only system adds one risk that a challan never had: access. If the portal login is tied to the email address or mobile number of a person who has left, the payment cannot be made on time, and nothing in payroll shows the problem. The deduction still appears on the payslip while the money stays with the employer.\n\nWhat to do:\n- register the portal login to an official email address and mobile number;\n- deduct Rs. 3 from each covered employee in the June and December payroll and add the employer's Rs. 30;\n- complete the online payment by 15 July and 15 January and download the acknowledgement;\n- match the acknowledgement against the payroll deduction report before closing the cycle.",
+      "explainer_hi": "पश्चिम बंगाल ने 1 दिसंबर 2020 से श्रम कल्याण कोष का भुगतान इलेक्ट्रॉनिक कर दिया है। अधिसूचना संख्या Labr/1700/ESTT ने पश्चिम बंगाल श्रम कल्याण कोष अधिनियम, 1974 में संशोधन किया, ताकि नियोक्ता और कर्मचारी दोनों का अंशदान तय ऑनलाइन पोर्टल से ही जमा हो। चालान से भुगतान अब स्वीकार नहीं होता, और ऑनलाइन रास्ता अनिवार्य है।\n\nमौजूदा राशियाँ 30 जून और 31 दिसंबर को ख़त्म होने वाली हर छमाही के लिए कर्मचारी से 3 रुपये और नियोक्ता से 30 रुपये हैं। ये 19 नवंबर 2024 की अधिसूचना संख्या Labr/576641/2024/(LC-LW/MW) के तहत 1 जनवरी 2024 से लागू मानी गई हैं। कटौती जून और दिसंबर के वेतन से होती है, और जमा करने की अंतिम तिथि 15 जुलाई और 15 जनवरी है।\n\nनियोक्ता का हिस्सा कर्मचारी के हिस्से का दस गुना है, जो किसी भी राज्य में सबसे बड़ा अनुपात है। कर्मचारी की कटौती छोटी है, इसलिए कोष तक पहुँचने वाला ज़्यादातर पैसा नियोक्ता का अंशदान है। भुगतान का अटक जाना, थोड़ी ग़लत कटौती से कहीं ज़्यादा महँगा पड़ता है।\n\nकेवल ऑनलाइन व्यवस्था में एक जोखिम है जो चालान में नहीं था: पहुँच। अगर पोर्टल का लॉगिन किसी ऐसे व्यक्ति के ईमेल या मोबाइल नंबर से जुड़ा है जो संस्था छोड़ चुका है, तो भुगतान समय पर नहीं हो पाता, और पेरोल में यह समस्या दिखाई नहीं देती। वेतन पर्ची पर कटौती दिखती रहती है, जबकि पैसा नियोक्ता के पास ही रह जाता है।\n\nक्या करें:\n- पोर्टल का लॉगिन संस्था के आधिकारिक ईमेल और मोबाइल नंबर पर रखें;\n- जून और दिसंबर के पेरोल में हर कवर किए गए कर्मचारी से 3 रुपये काटें और नियोक्ता के 30 रुपये जोड़ें;\n- 15 जुलाई और 15 जनवरी तक ऑनलाइन भुगतान पूरा करें और पावती डाउनलोड करें;\n- चक्र बंद करने से पहले पावती को पेरोल की कटौती रिपोर्ट से मिलाएँ।",
+      "flag": "current",
+      "status": "in_force"
+    }
+  },
+  {
+    "match": {
+      "state": "Andhra Pradesh",
+      "title_contains": "Andhra Pradesh LWF contributions raised to Rs 30 employee / "
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "LWF",
+      "state": "Andhra Pradesh",
+      "title": "Andhra Pradesh LWF contributions raised to Rs 30 employee / Rs 70 employer",
+      "short_summary": "Act No. 07 of 2015 dated 8 April 2015 amended the AP Labour Welfare Fund Act 1987: deleted s.2(2)(i)(b), amended s.4, and added a proviso empowering Government to revise contributions by notification. Employee contribution rose from Rs 2 to Rs 30 and employer from Rs 5 to Rs 70, annually. Deduct by 31 December, remit by 31 January.",
+      "reference": "Andhra Pradesh Act No. 07 of 2015 dated 8 April 2015",
+      "effective_date": null,
+      "published_date": "2015-04-08",
+      "issued_by": "Labour Welfare Board, Government of Andhra Pradesh",
+      "official_url": "https://www.indiacode.nic.in/handle/123456789/3888",
+      "note": null,
+      "explainer_en": "Andhra Pradesh Act No. 07 of 2015, dated 8 April 2015, amended the Andhra Pradesh Labour Welfare Fund Act, 1987. It deleted section 2(2)(i)(b), amended section 4, and added a proviso that lets the Government revise the contributions by notification. Under the amended Act the employee contributes Rs. 30 and the employer Rs. 70 a year. The earlier amounts were Rs. 2 and Rs. 5.\n\nThe contribution is annual. The employer deducts the employee's Rs. 30 from wages by 31 December and remits both shares, Rs. 100 for each employee, by 31 January.\n\nThe employer's share is not a round multiple of the employee's share: Rs. 70 against Rs. 30. That makes Andhra Pradesh a clear example of why a payroll system should hold both amounts for each state as separate figures. A setup that derives the employer amount by doubling or tripling the employee amount, as it might for other states, gets Andhra Pradesh wrong.\n\nThe employer's Rs. 70 is a cost to the employer and is never recovered from wages.\n\nAndhra Pradesh and Telangana have had separate laws since the state was divided, so an Andhra Pradesh amount should never be taken from a Telangana table, or the reverse. The Labour Welfare Fund is also separate from Andhra Pradesh's professional tax, which is deducted every month on a salary slab.\n\nWhat to do in payroll:\n- deduct Rs. 30 from each covered employee in the December payroll;\n- add the employer's Rs. 70 for each employee;\n- remit the total to the Andhra Pradesh Labour Welfare Board by 31 January and keep the receipt;\n- for employees who leave before December, follow the Board's instructions on whether the year's contribution is still due.",
+      "explainer_hi": "आंध्र प्रदेश अधिनियम संख्या 07, 2015, दिनांक 8 अप्रैल 2015, ने आंध्र प्रदेश श्रम कल्याण कोष अधिनियम, 1987 में संशोधन किया। इसने धारा 2(2)(i)(b) हटाई, धारा 4 बदली, और एक परंतुक जोड़ा जिससे सरकार अधिसूचना द्वारा अंशदान बदल सकती है। संशोधित अधिनियम के तहत कर्मचारी साल में 30 रुपये और नियोक्ता 70 रुपये देता है। पहले ये राशियाँ 2 रुपये और 5 रुपये थीं।\n\nअंशदान सालाना है। नियोक्ता 31 दिसंबर तक कर्मचारी के 30 रुपये वेतन से काटता है और दोनों हिस्से, यानी हर कर्मचारी के लिए 100 रुपये, 31 जनवरी तक जमा करता है।\n\nनियोक्ता का हिस्सा कर्मचारी के हिस्से का कोई पूरा गुणज नहीं है: 30 रुपये के मुकाबले 70 रुपये। इसलिए आंध्र प्रदेश इस बात का साफ़ उदाहरण है कि पेरोल व्यवस्था में हर राज्य की दोनों राशियाँ अलग-अलग क्यों रखनी चाहिए। जो व्यवस्था कर्मचारी की राशि को दोगुना या तिगुना करके नियोक्ता की राशि निकालती है, जैसा वह दूसरे राज्यों के लिए कर सकती है, वह आंध्र प्रदेश में ग़लत होगी।\n\nनियोक्ता के 70 रुपये नियोक्ता की लागत हैं और कभी वेतन से नहीं काटे जाते।\n\nराज्य के बँटवारे के बाद से आंध्र प्रदेश और तेलंगाना के क़ानून अलग हैं, इसलिए आंध्र प्रदेश की राशि कभी तेलंगाना की तालिका से न लें, और न इसका उल्टा करें। श्रम कल्याण कोष आंध्र प्रदेश के व्यवसाय कर से भी अलग है, जो हर महीने वेतन की श्रेणी के हिसाब से काटा जाता है।\n\nपेरोल में क्या करें:\n- दिसंबर के पेरोल में हर कवर किए गए कर्मचारी से 30 रुपये काटें;\n- हर कर्मचारी के लिए नियोक्ता के 70 रुपये जोड़ें;\n- कुल राशि 31 जनवरी तक आंध्र प्रदेश श्रम कल्याण बोर्ड को जमा करें और रसीद रखें;\n- दिसंबर से पहले नौकरी छोड़ने वाले कर्मचारियों के लिए बोर्ड के निर्देश देखें कि साल का अंशदान देय है या नहीं।",
+      "flag": "current",
+      "status": "in_force"
+    }
+  },
+  {
+    "match": {
+      "state": "Chhattisgarh",
+      "title_contains": "Chhattisgarh LWF rates Rs 15 employee / Rs 45 employer (unch"
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "LWF",
+      "state": "Chhattisgarh",
+      "title": "Chhattisgarh LWF rates Rs 15 employee / Rs 45 employer (unchanged since 2012)",
+      "short_summary": "Under the Chhattisgarh Shram Kalyan Nidhi Adhiniyam, 1982: employee Rs. 15 and employer Rs. 45 per half-year. Deduction by 30 June and 31 December; returns by 15 July and 15 January. Covers employees in non-managerial and non-supervisory roles drawing up to Rs. 10,000 a month.",
+      "reference": "Rate revision",
+      "effective_date": "2012-03-01",
+      "published_date": "2012-03-01",
+      "issued_by": "Labour Welfare Board, Government of Chhattisgarh",
+      "official_url": "https://cglabour.nic.in/",
+      "note": null,
+      "explainer_en": "Chhattisgarh's Labour Welfare Fund contribution is Rs. 15 from the employee and Rs. 45 from the employer for each half-year. The amounts have applied since March 2012 under the Chhattisgarh Shram Kalyan Nidhi Adhiniyam, 1982.\n\nThe contribution is half-yearly. The employer deducts the employee's Rs. 15 by 30 June and by 31 December, adds the employer's Rs. 45, and files the return and pays by 15 July and 15 January. The fund covers employees in non-managerial and non-supervisory roles drawing up to Rs. 10,000 a month.\n\nThe employer pays three times the employee's share. Chhattisgarh was formed from Madhya Pradesh in 2000 and kept the same framework, but the amounts have moved apart: Madhya Pradesh now collects Rs. 10 from the employee and Rs. 50 from the employer under its own notification. A rate taken from one state must not be applied in the other, even though the two laws look alike. A payroll template copied from Madhya Pradesh will run without any error and still be wrong on every amount.\n\nThe Labour Welfare Fund and professional tax are separate obligations in Chhattisgarh. Check each against its own law rather than inferring one from the other.\n\nWhat to do in payroll:\n- set up Chhattisgarh as its own entry, not a copy of Madhya Pradesh;\n- keep the employee deduction and the employer contribution as two separate lines, so a later change to either amount can be applied without touching the other;\n- deduct Rs. 15 from each covered employee in the June and December payroll;\n- book the employer's Rs. 45 as an employer cost, never as a deduction from wages;\n- file and pay by 15 July and 15 January, and keep the receipt with the payroll records.",
+      "explainer_hi": "छत्तीसगढ़ में श्रम कल्याण कोष का अंशदान हर छमाही कर्मचारी से 15 रुपये और नियोक्ता से 45 रुपये है। ये राशियाँ छत्तीसगढ़ श्रम कल्याण निधि अधिनियम, 1982 के तहत मार्च 2012 से लागू हैं।\n\nअंशदान छमाही है। नियोक्ता 30 जून और 31 दिसंबर तक कर्मचारी के 15 रुपये काटता है, उसमें अपने 45 रुपये जोड़ता है, और 15 जुलाई और 15 जनवरी तक विवरणी दाख़िल करके भुगतान करता है। यह कोष उन कर्मचारियों पर लागू है जो प्रबंधकीय या पर्यवेक्षी भूमिका में नहीं हैं और जिनका वेतन 10,000 रुपये महीने तक है।\n\nनियोक्ता कर्मचारी के हिस्से का तीन गुना देता है। छत्तीसगढ़ 2000 में मध्य प्रदेश से बना और उसने वही ढाँचा रखा, लेकिन राशियाँ अलग हो चुकी हैं: मध्य प्रदेश अब अपनी अधिसूचना के तहत कर्मचारी से 10 रुपये और नियोक्ता से 50 रुपये लेता है। एक राज्य की दर दूसरे राज्य में लागू नहीं करनी चाहिए, भले ही दोनों क़ानून एक जैसे दिखें। मध्य प्रदेश से नकल किया गया पेरोल ढाँचा बिना किसी त्रुटि के चलेगा, फिर भी हर राशि ग़लत होगी।\n\nछत्तीसगढ़ में श्रम कल्याण कोष और व्यवसाय कर अलग-अलग दायित्व हैं। हर एक को उसके अपने क़ानून से जाँचें, एक से दूसरे का अनुमान न लगाएँ।\n\nपेरोल में क्या करें:\n- छत्तीसगढ़ को अलग प्रविष्टि के रूप में रखें, मध्य प्रदेश की नकल के रूप में नहीं;\n- कर्मचारी की कटौती और नियोक्ता का अंशदान दो अलग पंक्तियों में रखें, ताकि बाद में किसी एक राशि के बदलने पर दूसरी को छुए बिना बदलाव हो सके;\n- जून और दिसंबर के पेरोल में हर कवर किए गए कर्मचारी से 15 रुपये काटें;\n- नियोक्ता के 45 रुपये को नियोक्ता की लागत के रूप में दर्ज करें, वेतन से कटौती के रूप में कभी नहीं;\n- 15 जुलाई और 15 जनवरी तक विवरणी और भुगतान पूरा करें, और रसीद पेरोल रिकॉर्ड के साथ रखें।",
+      "flag": "reference",
+      "status": "reference"
+    }
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "action": "REPLACE",
+  "kind": "mw_rate",
+  "target_id": "75913207-9869-4477-9b37-92f9daa4075a",
+  "payload": {
+    "state": "Karnataka",
+    "effective_from": "2026-05-22",
+    "structure": "Basic + VDA",
+    "flag": "sub_judice",
+    "cadence": "Irregular",
+    "zones": "Zone 1/2/3",
+    "authority": "Labour Department, Karnataka",
+    "label": "In force; challenge pending, not stayed",
+    "categories": [
+      {
+        "name": "Unskilled",
+        "per_day": null,
+        "per_month": 23376
+      },
+      {
+        "name": "Highly skilled",
+        "per_day": null,
+        "per_month": 31114
+      }
+    ],
+    "reference": "Notification KA 411 LWA 2023 dated 22 May 2026",
+    "note": "Zone 1 basic rates shown; VDA of about Rs 1,031 a month (published calculations) is payable on top, so the unskilled total is about Rs 24,407. 81 scheduled employments, 3 zones, increases of up to about 60%. Challenged in WP 16145/2026: on 21 Sep 2026 the High Court declined interim relief and tagged the petitions with pending Division Bench appeals; validity undecided. The Court also stayed State circulars deferring the new rates for contract workers. Earlier Zone 1 unskilled rate: Rs 15,701 (1 Apr 2025).",
+    "official_url": "https://labour.karnataka.gov.in/",
+    "explainer_en": "Karnataka made the largest minimum wage revision in recent years with Notification KA 411 LWA 2023 dated 22 May 2026. It covers 81 scheduled employments across three zones, with increases of up to about 60%, and is now being challenged in the High Court.\n\nFor Zone 1, which covers Greater Bengaluru, the basic monthly rate for unskilled workers under the 2026 notification is Rs. 23,376, and for highly skilled workers Rs. 31,114. A variable dearness allowance is payable on top; published calculations put it at about Rs. 1,031 a month, which takes the unskilled total to about Rs. 24,407. Under the previous schedule, effective 1 April 2025, the Zone 1 unskilled rate was Rs. 15,701, so the increase is large.\n\nThe revision had a long path. A draft was published on 11 April 2025, with a corrigendum on 19 April 2025. The State Advisory Board took a decision on 29 July 2025, but a High Court order of 28 July 2025 had barred it from being implemented. The final notification came on 22 May 2026.\n\nEmployers then challenged it in Writ Petition 16145/2026. On 21 September 2026 the High Court declined to grant interim relief and tagged the petitions with Division Bench appeals that were already pending, so the question of validity is still open. The Court also stayed State circulars that had deferred the new rates for contract workers.\n\nThe practical position is that the 22 May 2026 rates are in force and not stayed. An employer that pays below them carries the risk of arrears if the notification is upheld, and the earlier Rs. 15,701 schedule is no longer the operative floor. The dearness allowance resets each April.",
+    "explainer_hi": "कर्नाटक ने 22 मई 2026 की अधिसूचना KA 411 LWA 2023 से हाल के वर्षों का सबसे बड़ा न्यूनतम मज़दूरी संशोधन किया। यह तीन ज़ोन में 81 अनुसूचित रोज़गारों को कवर करता है, जिसमें लगभग 60% तक की बढ़ोतरी है, और अब उच्च न्यायालय में इसे चुनौती दी गई है।\n\nग्रेटर बेंगलुरु वाले ज़ोन 1 के लिए, 2026 की अधिसूचना के तहत अकुशल कामगारों की मूल मासिक दर 23,376 रुपये और अति-कुशल कामगारों की 31,114 रुपये है। इसके ऊपर परिवर्तनशील महँगाई भत्ता देय है; प्रकाशित गणनाएँ इसे लगभग 1,031 रुपये प्रति माह बताती हैं, जिससे अकुशल का कुल लगभग 24,407 रुपये होता है। 1 अप्रैल 2025 से लागू पिछली अनुसूची में ज़ोन 1 की अकुशल दर 15,701 रुपये थी, इसलिए बढ़ोतरी बड़ी है।\n\nइस संशोधन का रास्ता लंबा रहा। 11 अप्रैल 2025 को मसौदा प्रकाशित हुआ, और 19 अप्रैल 2025 को शुद्धि-पत्र। राज्य सलाहकार बोर्ड ने 29 जुलाई 2025 को निर्णय लिया, लेकिन उच्च न्यायालय के 28 जुलाई 2025 के आदेश ने उसे लागू करने से रोक दिया था। अंतिम अधिसूचना 22 मई 2026 को आई।\n\nइसके बाद नियोक्ताओं ने रिट याचिका 16145/2026 में इसे चुनौती दी। 21 सितंबर 2026 को उच्च न्यायालय ने अंतरिम राहत देने से इनकार किया और याचिकाओं को पहले से लंबित खंडपीठ अपीलों के साथ जोड़ दिया, इसलिए वैधता का प्रश्न अभी खुला है। न्यायालय ने उन राज्य परिपत्रों पर भी रोक लगाई जिन्होंने अनुबंध कामगारों के लिए नई दरें टाल दी थीं।\n\nव्यावहारिक स्थिति यह है कि 22 मई 2026 की दरें लागू हैं और उन पर रोक नहीं है। जो नियोक्ता इनसे कम भुगतान करता है, वह अधिसूचना बरकरार रहने पर बकाया का जोखिम उठाता है, और 15,701 रुपये वाली पुरानी अनुसूची अब लागू न्यूनतम सीमा नहीं है। महँगाई भत्ता हर अप्रैल फिर से तय होता है।"
+  }
+}

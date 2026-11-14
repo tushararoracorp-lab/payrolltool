@@ -66,10 +66,10 @@ function calculate(f) {
   const datesValid = isValidDate(doj) && isValidDate(dol) && dol >= doj;
   if (!isValidDate(doj) || !isValidDate(dol) || dol < doj) {
     messages.push(
-      "Check your dates - enter a valid Date of Joining and Last Working Day (Last Working Day must be on or after Date of Joining)."
+      "Check the dates - enter a valid Date of Joining and Last Working Day (Last Working Day must be on or after Date of Joining)."
     );
   } else if (isValidDate(dor) && isValidDate(dol) && dol < dor) {
-    messages.push("Last working day should be on or after your resignation date.");
+    messages.push("Last working day should be on or after the resignation date.");
   }
   messages.push(...capWarnings);
 
@@ -79,7 +79,7 @@ function calculate(f) {
   let tenureLine = "Let's see what you're owed - press Calculate below";
 
   if (!datesValid) {
-    tenureLine = "Enter valid dates to see your tenure";
+    tenureLine = "Enter valid dates to see the tenure";
     lines.push({ label: "Gratuity", amount: 0, explain: "Enter a valid Date of Joining and Last Working Day to calculate this." });
   } else {
     let years = dol.getFullYear() - doj.getFullYear();
@@ -95,7 +95,7 @@ function calculate(f) {
     nextAnniversary.setFullYear(anniversary.getFullYear() + 1);
     const windowDays = daysBetween(anniversary, nextAnniversary);
     const daysUntilNext = Math.max(0, windowDays - extraDays);
-    tenureLine = `${years} year(s) complete - ${daysUntilNext} day(s) until your next work anniversary`;
+    tenureLine = `${years} year(s) complete - ${daysUntilNext} day(s) until the next work anniversary`;
 
     // Code on Social Security, 2020 (from 21 Nov 2025): regular employees qualify after 5 years of
     // continuous service; fixed-term employees after 1 year of service under the contract.
@@ -191,7 +191,7 @@ const FS_INFO_CARDS = [
   {
     icon: "\ud83d\udcc5",
     title: "Notice period shortfall",
-    body: "If your last working day falls short of your notice period, the gap is deducted at your daily Wages (or Gross, if your appointment letter says so) rate - the same rule most Indian employers apply.",
+    body: "When the last working day falls short of the notice period, the gap is recovered at the daily rate of Wages (or Gross, where the appointment letter says so), divided by 30.",
   },
   {
     icon: "\ud83d\udee1\ufe0f",
@@ -200,26 +200,61 @@ const FS_INFO_CARDS = [
   },
 ];
 
+const FS_MISTAKES = [
+  {
+    t: "Using gross salary for gratuity",
+    d: "Gratuity is calculated on wages: basic, dearness allowance and retaining allowance, with excluded allowances above 50% of total remuneration added back under the Code on Wages. Gross salary overstates it.",
+  },
+  {
+    t: "Rounding the final year the wrong way",
+    d: "A final part-year of six months or more counts as a full year; less than six months is ignored. 7 years 8 months is 8 years; 7 years 5 months is 7 years.",
+  },
+  {
+    t: "Applying the 5-year rule to fixed-term staff",
+    d: "Under the Code on Social Security, 2020, a fixed-term employee qualifies for gratuity after 1 year under the contract. Holding them to 5 years underpays.",
+  },
+  {
+    t: "Paying in the next monthly payroll run",
+    d: "Section 17(2) of the Code on Wages, 2019 requires wages to be paid within two working days of the employee leaving. Waiting for the next monthly run misses that date.",
+  },
+  {
+    t: "Encashing casual or sick leave by default",
+    d: "Earned leave is encashed on leaving. Casual and sick leave are encashed only where the leave policy says so.",
+  },
+  {
+    t: "Recovering notice shortfall without a contract basis",
+    d: "Recover pay in lieu of notice only as the appointment letter allows, and on the base it names, wages or gross.",
+  },
+];
+
 const FS_FAQ = [
   {
-    q: "Am I entitled to gratuity if I resign before 5 years?",
+    q: "When does an employee who resigns before 5 years get gratuity?",
     a: "A regular employee needs 5 years of continuous service under the Code on Social Security, 2020, which replaced the Payment of Gratuity Act, 1972 from 21 November 2025. A year counts once 240 days are worked in it (190 days in a five-day establishment). A fixed-term employee qualifies after 1 year of service under the contract. On death or disablement no minimum service applies.",
   },
   {
-    q: "Is unused sick leave or casual leave encashable?",
-    a: "Usually not. Under the Occupational Safety, Health and Working Conditions Code, 2020, a worker can encash the earned leave to their credit on leaving. Casual and sick leave are encashable only where the company's leave policy provides for it.",
+    q: "Which wages are used to calculate gratuity?",
+    a: "Wages under the Code: basic pay, dearness allowance and retaining allowance. Where the excluded allowances, such as HRA and conveyance, are more than 50% of total remuneration, the excess is added back to wages. The formula is wages x 15 / 26 x completed years, with a final part-year of six months or more counted as a full year.",
   },
   {
-    q: "What happens if I don't serve my full notice period?",
-    a: "Most appointment letters allow the employer to deduct pay in lieu of the shortfall, calculated per day on your Wages or Gross salary. This calculator applies that same shortfall deduction automatically once you enter your resignation and last working dates.",
+    q: "Which leave balances are paid out in the settlement?",
+    a: "Earned leave to the employee's credit is encashed on leaving under the Occupational Safety, Health and Working Conditions Code, 2020. Casual and sick leave are encashed only where the company's leave policy provides for it.",
   },
   {
-    q: "Is my final settlement amount taxable?",
-    a: "Gratuity is exempt up to Rs. 20 lakh under section 19(1) of the Income-tax Act, 2025 (formerly section 10(10)), the same limit used to cap it here. Leave encashment on leaving is exempt up to Rs. 25 lakh (formerly section 10(10AA)). Both are lifetime limits shared across all employers, and both exemptions apply under the old and the new regime. Any amount above the limit is taxed as salary; this calculator does not deduct that tax.",
+    q: "How is a notice period shortfall recovered?",
+    a: "Where the appointment letter allows pay in lieu of notice, the shortfall days are recovered at the daily rate of wages, or gross if the letter says gross, divided by 30. This calculator works out the served days from the resignation date and the last working day and applies that recovery.",
   },
   {
-    q: "How long does an employer have to pay my final settlement?",
+    q: "How is the final settlement taxed?",
+    a: "Gratuity is exempt up to Rs. 20 lakh under section 19(1) of the Income-tax Act, 2025 (formerly section 10(10)), the same limit used to cap it here. Leave encashment on leaving is exempt up to Rs. 25 lakh (formerly section 10(10AA)). Both are lifetime limits shared across all employers, and both apply under the old and the new regime. Any amount above the limit is taxed as salary in the final payroll run; this calculator does not compute that TDS.",
+  },
+  {
+    q: "By when must the settlement be paid?",
     a: "Under section 17(2) of the Code on Wages, 2019, wages due to an employee who resigns, is removed, dismissed or retrenched must be paid within two working days of leaving.",
+  },
+  {
+    q: "Does a fixed-term employee get gratuity for a part year?",
+    a: "A fixed-term employee who completes 1 year under the contract qualifies, and the same formula applies: wages x 15 / 26 x years, with a final part-year of six months or more counted as a full year.",
   },
 ];
 
@@ -396,17 +431,17 @@ export default function FinalSettlement() {
                   <div className="field">
                     <label htmlFor="dor">Date of Resignation</label>
                     <input type="date" id="dor" value={fields.dor} onChange={setDateField("dor")} />
-                    <div className="help">The date you submitted your resignation.</div>
+                    <div className="help">The date the employee submitted the resignation.</div>
                   </div>
                   <div className="field field-full">
                     <label htmlFor="dol">
                       Last Working Day{" "}
-                      <span className="info-dot" title="Also known as your Date of Leaving" tabIndex={0}>
+                      <span className="info-dot" title="Also known as the Date of Leaving" tabIndex={0}>
                         ⓘ
                       </span>
                     </label>
                     <input type="date" id="dol" value={fields.dol} onChange={setDateField("dol")} />
-                    <div className="help info-mobile">Also known as your Date of Leaving.</div>
+                    <div className="help info-mobile">Also known as the Date of Leaving.</div>
                   </div>
                   <div className="field field-full">
                     <label htmlFor="empType">Employee type</label>
@@ -460,7 +495,7 @@ export default function FinalSettlement() {
                       Monthly Gross Salary (Rs. ) <span className="req-tag">optional</span>
                     </label>
                     <input inputMode="decimal" type="number" id="gross" value={fields.gross} onChange={set("gross")} min="0" max="50000000" />
-                    <div className="help">Only needed if your notice pay below is based on Gross.</div>
+                    <div className="help">Only needed if the notice pay below is based on Gross.</div>
                   </div>
                 </div>
               </div>
@@ -483,7 +518,7 @@ export default function FinalSettlement() {
                   <div className="field">
                     <label htmlFor="req">Notice period required (days)</label>
                     <input inputMode="decimal" type="number" id="req" value={fields.req} onChange={set("req")} min="0" max="3650" />
-                    <div className="help">Check your contract - 60 is the common default.</div>
+                    <div className="help">From the employment contract - 60 is the common default.</div>
                   </div>
                   <div className="field">
                     <label htmlFor="served">
@@ -498,7 +533,7 @@ export default function FinalSettlement() {
                       <option value="wages">Wages</option>
                       <option value="gross">Gross Salary</option>
                     </select>
-                    <div className="help">Check your appointment letter to confirm - if unsure, most companies use Wages.</div>
+                    <div className="help">As the appointment letter states. Most companies use Wages.</div>
                   </div>
                 </div>
               </div>
@@ -523,7 +558,7 @@ export default function FinalSettlement() {
                     <input inputMode="decimal" type="number" id="leave" value={fields.leave} onChange={set("leave")} min="0" max="365" />
                   </div>
                   <div className="field">
-                    <label htmlFor="credit">Other amount owed to you (Rs. )</label>
+                    <label htmlFor="credit">Other amount owed to the employee (Rs. )</label>
                     <input inputMode="decimal" type="number" id="credit" value={fields.credit} onChange={set("credit")} min="0" max="50000000" />
                   </div>
                   <div className="field field-full">
@@ -548,7 +583,7 @@ export default function FinalSettlement() {
                 <div className="summary-placeholder">
                   <div className="placeholder-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg></div>
                   <p>
-                    Fill in the details on the left and tap <b>Calculate Settlement</b> to see your estimate.
+                    Fill in the details on the left and tap <b>Calculate Settlement</b> to see the settlement.
                   </p>
                   <p className="placeholder-sub">Results: Gratuity · Leave encashment · Notice pay · Net settlement</p>
                 </div>
@@ -580,7 +615,7 @@ export default function FinalSettlement() {
               </div>
 
               <div className={`stamp ${results.net < 0 ? "recover" : ""}`}>
-                <div className="stamp-label">{results.net < 0 ? "You'd owe your employer" : "You should receive"}</div>
+                <div className="stamp-label">{results.net < 0 ? "Employee owes the company" : "Net payable to the employee"}</div>
                 <div className="stamp-amt">{fmt(results.net)}</div>
                 <div className="stamp-sub">Estimate only - confirm with HR.</div>
               </div>
@@ -604,9 +639,9 @@ export default function FinalSettlement() {
                     states - casual and sick leave typically aren&apos;t.
                   </p>
                   <p>
-                    <b>Notice shortfall</b> - served days are worked out from your resignation and last working day; if that&apos;s less than the
-                    required notice, the shortfall is deducted at <code>(Wages or Gross) ÷ 30</code> per day, based on whichever your appointment
-                    letter specifies. If you select Gross but don&apos;t enter it, this falls back to Wages.
+                    <b>Notice shortfall</b> - served days are worked out from the resignation date and last working day; if that&apos;s less than the
+                    required notice, the shortfall is deducted at <code>(Wages or Gross) ÷ 30</code> per day, based on whichever the appointment
+                    letter specifies. If Gross is selected but not entered, this falls back to Wages.
                   </p>
                   <p>
                     <b>Tax</b> - Gratuity above is capped at the same figure as its tax-exemption limit (section 19(1) of the Income-tax Act, 2025,
@@ -620,10 +655,10 @@ export default function FinalSettlement() {
               <>
               <div className="next-step" style={{display:"flex",gap:"8px",alignItems:"flex-start"}}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2" style={{flexShrink:0,marginTop:"2px"}}><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
-                <span>Once you have this number, ask HR for a written FnF statement and compare it line by line - if anything doesn&apos;t match, ask which
-                formula or dates they used. It&apos;s a completely normal question to ask.</span>
+                <span>Share a written F&amp;F statement with the employee that shows each line, the dates and the formula used, so any question can be
+                answered from the statement itself.</span>
               </div>
-              <div className="closing-note">Whatever comes next, we hope it goes well for you.</div>
+              <div className="closing-note">Pay the settlement within two working days of the last working day.</div>
               </>
               )}
             </div>
@@ -667,8 +702,18 @@ export default function FinalSettlement() {
           <p className="fsc-we-verdict">
             Total settlement before any pending dues or deductions:{" "}
             <b>Rs. 2,60,769</b>. Add or subtract unpaid salary, notice shortfall, and any other
-            dues specific to your case using the calculator above.
+            dues specific to the case using the calculator above.
           </p>
+        </div>
+
+        <div className="fsc-faq">
+          <h4>Common mistakes</h4>
+          {FS_MISTAKES.map((m) => (
+            <div className="fsc-faq-item" key={m.t}>
+              <h5>{m.t}</h5>
+              <p>{m.d}</p>
+            </div>
+          ))}
         </div>
 
         <div className="fsc-faq">

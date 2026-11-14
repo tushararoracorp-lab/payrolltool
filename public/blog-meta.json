@@ -94,5 +94,23 @@
     "title": "Income Tax Act 2025 Changes",
     "icon": "tax",
     "order": 16
+  },
+  {
+    "slug": "minimum-wages-october-2026",
+    "title": "Minimum Wages October 2026",
+    "icon": "article",
+    "order": 17
+  },
+  {
+    "slug": "professional-tax-due-dates-by-state",
+    "title": "PT Due Dates by State",
+    "icon": "tax",
+    "order": 18
+  },
+  {
+    "slug": "labour-welfare-fund-india",
+    "title": "Labour Welfare Fund Guide",
+    "icon": "article",
+    "order": 19
   }
 ]

@@ -1,0 +1,19 @@
+{
+  "action": "REPLACE",
+  "kind": "lwf_rule",
+  "target_id": "9a028fc4-2f6a-4e89-8adb-2c69252b97c8",
+  "payload": {
+    "state": "Gujarat",
+    "effective_from": "2016-11-15",
+    "employee_amount": "Rs. 6 per half-year",
+    "employer_amount": "Rs. 12 per half-year",
+    "ratio": "1 : 2",
+    "frequency": "Half-yearly",
+    "due_text": "Deducted in June and December; deposit by 15 July and 15 January",
+    "act": "Gujarat Labour Welfare Fund Act, 1953, section 6B; rates under the Labour and Employment Department notification of 10 November 2016",
+    "notes": null,
+    "official_url": "https://labour.gov.in/",
+    "explainer_en": "Gujarat's Labour Welfare Fund runs under the Gujarat Labour Welfare Fund Act, 1953, and is administered by the Gujarat Shramyogi Kalyan Board, Ahmedabad. Under section 6B of the Act the Fund has three contributors: the worker, the employer and the State Government. The Board uses the Fund for welfare schemes for workers in the organised sector.\n\nThe rates in force were fixed by the Labour and Employment Department's notification dated 10 November 2016, published in the Gujarat Government Gazette Extraordinary on 15 November 2016. For every worker whose name is on the establishment's register in June or, as the case may be, in December, the worker contributes Rs. 6 and the employer Rs. 12 for each six-month period.\n\nThe 2016 notification doubled both figures. The Gujarat amendment Act of 2005 had set the worker's contribution at Rs. 3 and the employer's at Rs. 6 for every six months, and had allowed the State Government to raise the worker's share up to Rs. 6 and the employer's up to twice the worker's. More than ten years later the Government used that power in full, citing the growth of the Board's schemes.\n\nFor each worker, the yearly cost is Rs. 12 to the worker and Rs. 24 to the employer. The employer's share is twice the worker's, the ratio the 2005 amendment allows as a ceiling.\n\nThe register date is what matters for payroll. A worker who is on the register in June is counted for the first half-year and a worker on the register in December for the second, so the deduction is made from the June and December salaries, and the amounts are paid to the Board for those two periods.",
+    "explainer_hi": "गुजरात का श्रम कल्याण कोष गुजरात श्रम कल्याण कोष अधिनियम, 1953 के तहत चलता है, और इसका प्रशासन गुजरात श्रमयोगी कल्याण बोर्ड, अहमदाबाद करता है। अधिनियम की धारा 6B के तहत कोष में तीन अंशदाता हैं: कामगार, नियोक्ता और राज्य सरकार। बोर्ड इस कोष का उपयोग संगठित क्षेत्र के कामगारों की कल्याण योजनाओं के लिए करता है।\n\nलागू दरें श्रम और रोज़गार विभाग की 10 नवंबर 2016 की अधिसूचना से तय हुईं, जो 15 नवंबर 2016 को गुजरात सरकार राजपत्र असाधारण में प्रकाशित हुई। जिस कामगार का नाम जून में, या जैसी स्थिति हो, दिसंबर में प्रतिष्ठान के रजिस्टर में है, उसके लिए हर छह महीने में कामगार 6 रुपये और नियोक्ता 12 रुपये देता है।\n\n2016 की अधिसूचना ने दोनों राशियाँ दोगुनी कीं। 2005 के गुजरात संशोधन अधिनियम ने कामगार का अंशदान हर छह महीने 3 रुपये और नियोक्ता का 6 रुपये तय किया था, और राज्य सरकार को कामगार का हिस्सा 6 रुपये तक और नियोक्ता का कामगार के दोगुने तक बढ़ाने की अनुमति दी थी। दस साल से अधिक बाद सरकार ने बोर्ड की योजनाओं के विस्तार का हवाला देकर इस शक्ति का पूरा उपयोग किया।\n\nहर कामगार के लिए सालाना लागत कामगार पर 12 रुपये और नियोक्ता पर 24 रुपये है। नियोक्ता का हिस्सा कामगार का दोगुना है, जो 2005 के संशोधन द्वारा अनुमत अधिकतम अनुपात है।\n\nपेरोल के लिए रजिस्टर की तारीख मायने रखती है। जो कामगार जून में रजिस्टर में है, वह पहली छमाही के लिए गिना जाता है और दिसंबर में रजिस्टर वाला दूसरी के लिए, इसलिए कटौती जून और दिसंबर के वेतन से होती है, और राशि इन दो अवधियों के लिए बोर्ड को जमा होती है।"
+  }
+}

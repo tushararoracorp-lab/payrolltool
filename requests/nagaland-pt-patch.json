@@ -1,0 +1,40 @@
+{
+  "frequency": "Monthly",
+  "cycle_text": "Monthly",
+  "due_text": "Paid monthly by challan with the employer's return in Form V; statement of salaries and deductions by 30 April (Rule 15)",
+  "slab_tables": [
+    {
+      "rows": [
+        {
+          "amt": "Nil",
+          "band": "Below Rs. 4,000"
+        },
+        {
+          "amt": "Rs. 35 a month",
+          "band": "Rs. 4,000 to Rs. 4,999"
+        },
+        {
+          "amt": "Rs. 75 a month",
+          "band": "Rs. 5,000 to Rs. 6,999"
+        },
+        {
+          "amt": "Rs. 110 a month",
+          "band": "Rs. 7,000 to Rs. 8,999"
+        },
+        {
+          "amt": "Rs. 180 a month",
+          "band": "Rs. 9,000 to Rs. 11,999"
+        },
+        {
+          "amt": "Rs. 208 a month",
+          "band": "Rs. 12,000 and above"
+        }
+      ],
+      "unit": "Monthly salary",
+      "title": ""
+    }
+  ],
+  "annual_cap": "Rs. 2,496 a year (Rs. 208 x 12)",
+  "explainer_en": "Nagaland levies professional tax under the Nagaland Professions, Trades, Callings and Employments Taxation Act, 1968, with the procedure in the Rules of 1970. Each April the Commissioner of State Taxes publishes a notice directing employers and other liable persons to register or enrol, file returns and pay the tax for the year.\n\nFor salary and wage earners the tax is charged on monthly salary, in six slabs, as set out in the Commissioner's notice of February 2022. A monthly salary below Rs. 4,000 pays nothing. From Rs. 4,000 to Rs. 4,999 the tax is Rs. 35 a month, from Rs. 5,000 to Rs. 6,999 Rs. 75, from Rs. 7,000 to Rs. 8,999 Rs. 110, and from Rs. 9,000 to Rs. 11,999 Rs. 180. At Rs. 12,000 and above it is Rs. 208 a month, or Rs. 2,496 a year, within the Rs. 2,500 limit in Article 276 of the Constitution. Because the top slab starts at Rs. 12,000, almost every salaried employee in the State pays the full Rs. 208.\n\nUnder rule 15, as amended from 1 April 2013, the drawing and disbursing officer deducts the tax from salaries every month. The employer pays the deducted tax by challan in Form VI and files a monthly return in Form V with the receipted challan attached. By 30 April the employer sends the assessing authority a statement of the salaries paid and the tax deducted for the year, and the February salary cannot be drawn until the deductions for the earlier months are complete. The employer keeps a register of the tax deducted from each employee.\n\nLate payment carries interest of two rupees for every hundred rupees for each month or part of a month. The 30 September date often quoted for Nagaland applies to enrolled persons such as professionals and traders who pay their own tax, not to employers deducting from salaries.",
+  "explainer_hi": "नागालैंड व्यवसाय कर नागालैंड व्यवसाय, व्यापार, आजीविका और रोज़गार कराधान अधिनियम, 1968 के तहत लेता है, और प्रक्रिया 1970 की नियमावली में है। हर अप्रैल राज्य कर आयुक्त एक सूचना प्रकाशित करते हैं, जिसमें नियोक्ताओं और अन्य उत्तरदायी व्यक्तियों को पंजीकरण या नामांकन कराने, विवरणी दाखिल करने और साल का कर जमा करने का निर्देश होता है।\n\nवेतन और मज़दूरी पाने वालों के लिए कर मासिक वेतन पर छह स्लैब में लगता है, जैसा फरवरी 2022 की आयुक्त की सूचना में दिया गया है। 4,000 रुपये से कम मासिक वेतन पर कुछ नहीं देना होता। 4,000 से 4,999 रुपये पर कर 35 रुपये प्रति माह है, 5,000 से 6,999 रुपये पर 75 रुपये, 7,000 से 8,999 रुपये पर 110 रुपये, और 9,000 से 11,999 रुपये पर 180 रुपये। 12,000 रुपये और उससे अधिक पर 208 रुपये प्रति माह, यानी साल में 2,496 रुपये है, जो संविधान के अनुच्छेद 276 की 2,500 रुपये की सीमा के भीतर है। चूँकि सबसे ऊँचा स्लैब 12,000 रुपये से शुरू होता है, राज्य का लगभग हर वेतनभोगी कर्मचारी पूरे 208 रुपये देता है।\n\n1 अप्रैल 2013 से संशोधित नियम 15 के तहत आहरण और संवितरण अधिकारी हर महीने वेतन से कर काटता है। नियोक्ता काटा गया कर फॉर्म VI के चालान से जमा करता है और रसीद वाला चालान लगाकर फॉर्म V में मासिक विवरणी दाखिल करता है। 30 अप्रैल तक नियोक्ता निर्धारण अधिकारी को साल भर में दिए गए वेतन और काटे गए कर का विवरण भेजता है, और पिछले महीनों की कटौती पूरी होने तक फरवरी का वेतन नहीं निकाला जा सकता। नियोक्ता हर कर्मचारी से काटे गए कर का रजिस्टर रखता है।\n\nदेर से भुगतान पर हर महीने या उसके हिस्से के लिए हर सौ रुपये पर दो रुपये ब्याज लगता है। नागालैंड के लिए अक्सर बताई जाने वाली 30 सितंबर की तारीख नामांकित व्यक्तियों, जैसे अपना कर स्वयं देने वाले पेशेवरों और व्यापारियों पर लागू होती है, वेतन से कटौती करने वाले नियोक्ताओं पर नहीं।"
+}

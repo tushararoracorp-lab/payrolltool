@@ -1,0 +1,103 @@
+[
+  {
+    "state": "Jharkhand",
+    "effective_from": "2026-04-01",
+    "patch": {
+      "note": "Notification dated 25 May 2026. Area A unskilled Rs. 515 a day. Issued under section 6 of the Code on Wages, 2019. Scheduled employments are grouped into Category A (49) and Category B (41).",
+      "label": "Superseded by the 1 October 2026 VDA notification"
+    }
+  },
+  {
+    "state": "Karnataka",
+    "effective_from": "2026-05-22",
+    "patch": {
+      "note": "Zone 1 basic rates shown; VDA is payable on top. 81 scheduled employments in 3 zones. Challenged in WP 16145/2026: on 21 September 2026 the High Court declined interim relief and tagged the petitions with the Division Bench appeals, so the revision stays in force. The Court also stayed State circulars deferring the new rates for contract workers. Earlier Zone 1 unskilled rate: Rs. 15,701 (1 April 2025)."
+    }
+  },
+  {
+    "state": "Karnataka",
+    "effective_from": "2025-04-11",
+    "patch": {
+      "note": "Draft proposal: Zone 1 unskilled Rs. 23,276 to Rs. 23,410. The Advisory Board decision of 29 July 2025 was barred from implementation by the High Court order of 28 July 2025."
+    }
+  },
+  {
+    "state": "Karnataka",
+    "effective_from": "2025-04-01",
+    "patch": {
+      "label": "Superseded by the 22 May 2026 notification",
+      "note": "Zone 1 (Greater Bengaluru). Basic plus VDA at 4 paise a point above the 6537 base."
+    }
+  },
+  {
+    "state": "Central Sphere",
+    "effective_from": "2024-10-01",
+    "patch": {
+      "note": "CPI-IW 402.09 from 399.70 (+2.40 points). Area A daily: unskilled Rs. 783, semi-skilled Rs. 868, skilled and clerical Rs. 954, highly skilled Rs. 1,035. Area B unskilled Rs. 655 a day; Area C Rs. 526 a day."
+    }
+  },
+  {
+    "state": "Central Sphere",
+    "effective_from": "2022-10-01",
+    "patch": {
+      "note": "CPI-IW 365.76 from 357.65 (+8.11 points, base 2016=100). Area A daily: unskilled Rs. 711, semi-skilled Rs. 788, skilled Rs. 866, highly skilled Rs. 940. Area B unskilled Rs. 595 a day; Area C Rs. 477 a day."
+    }
+  },
+  {
+    "state": "Central Sphere",
+    "effective_from": "2021-10-01",
+    "patch": {
+      "note": "Area A daily: unskilled Rs. 654, semi-skilled Rs. 724, skilled Rs. 795, highly skilled Rs. 864. Area B Rs. 546, 617, 724 and 795; Area C Rs. 437, 512, 617 and 724."
+    }
+  },
+  {
+    "state": "Arunachal Pradesh",
+    "effective_from": "2016-04-01",
+    "patch": {
+      "note": "Last revised with effect from 1 April 2016. Zone I / Zone II: unskilled Rs. 6,000 / Rs. 6,600; skilled Rs. 6,600 / Rs. 7,200."
+    }
+  },
+  {
+    "state": "Jammu and Kashmir",
+    "effective_from": "2022-10-17",
+    "patch": {
+      "note": "The UT schedule was last revised with effect from 17 October 2022. In February 2026 the J&K government told the Assembly that the central VDA revisions (from 1 October 2024, valid to October 2027) apply and that the Code on Wages is in force. Ministerial Rs. 11,674."
+    }
+  },
+  {
+    "state": "Mizoram",
+    "effective_from": "2023-04-01",
+    "patch": {
+      "note": "Last revised with effect from 1 April 2023."
+    }
+  },
+  {
+    "state": "Nagaland",
+    "effective_from": "2019-06-14",
+    "patch": {
+      "note": "Last revised with effect from June 2019."
+    }
+  },
+  {
+    "state": "Nagaland",
+    "effective_from": "2019-06-01",
+    "patch": {
+      "label": "In force",
+      "note": "Daily: Rs. 176, Rs. 210 and Rs. 235. The Nagaland State Human Rights Commission took up the absence of a revision in July 2024 (suo motu case 14/2024)."
+    }
+  },
+  {
+    "state": "Rajasthan",
+    "effective_from": "2023-01-01",
+    "patch": {
+      "note": "Last revised with effect from 1 January 2023."
+    }
+  },
+  {
+    "state": "Sikkim",
+    "effective_from": "2022-07-11",
+    "patch": {
+      "note": "Last revised with effect from 11 July 2022."
+    }
+  }
+]

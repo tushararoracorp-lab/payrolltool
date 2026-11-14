@@ -1,0 +1,19 @@
+{
+  "action": "REPLACE",
+  "kind": "lwf_rule",
+  "target_id": "3d2eaab5-acd7-4997-b303-00d6819a0f92",
+  "payload": {
+    "state": "West Bengal",
+    "effective_from": "2024-01-01",
+    "employee_amount": "Rs. 3 per half-year",
+    "employer_amount": "Rs. 30 per half-year",
+    "ratio": "1 : 10",
+    "frequency": "Half-yearly",
+    "due_text": "Deducted in June and December; deposit by 15 July and 15 January",
+    "act": "West Bengal Labour Welfare Fund Act, 1974; rates under Notification No. Labr/576641/2024/(LC-LW/MW) dated 19 November 2024",
+    "notes": "Employer Rs. 30 and employee Rs. 3 for each six-month period ending 30 June and 31 December, deemed in force from 1 January 2024. Payment is electronic since 1 December 2020.",
+    "official_url": "https://labour.gov.in/",
+    "explainer_en": "West Bengal's Labour Welfare Fund runs under the West Bengal Labour Welfare Fund Act, 1974, and is administered by the West Bengal Labour Welfare Board. The contributions are fixed by the State Government under section 9 of the Act, for each employee whose name is on the register of an establishment.\n\nThe rates in force come from Notification No. Labr/576641/2024/(LC-LW/MW), issued by the Labour Department on 19 November 2024 and published in the Kolkata Gazette Extraordinary on 2 December 2024. It set the employer's contribution at Rs. 30 and kept the employee's contribution unchanged at Rs. 3. The notification was deemed to have come into force from 1 January 2024, so it reached back almost a year before it was issued.\n\nThe contributions are payable every six months, for the half-years ending on 30 June and 31 December. For each employee, that is Rs. 6 a year from the employee and Rs. 60 a year from the employer.\n\nThe ratio is the widest of any state. The employer pays ten times what the employee pays, so the Fund is almost entirely an employer cost. A payroll system that works out the employer figure by multiplying the employee figure by two or three, as it might for Maharashtra or Gujarat, will under-pay badly in West Bengal.\n\nBecause the higher employer rate was backdated to January 2024, employers that had already paid for the half-years of 2024 at the old rate had a shortfall to make up for those periods.\n\nPayment to the Board has been electronic since 1 December 2020. The employer deducts the employee's Rs. 3 from salary for each half-year and pays it with its own Rs. 30 for every employee on the register.",
+    "explainer_hi": "पश्चिम बंगाल का श्रम कल्याण कोष पश्चिम बंगाल श्रम कल्याण कोष अधिनियम, 1974 के तहत चलता है, और इसका प्रशासन पश्चिम बंगाल श्रम कल्याण मंडल करता है। अंशदान राज्य सरकार अधिनियम की धारा 9 के तहत तय करती है, किसी प्रतिष्ठान के रजिस्टर में दर्ज हर कर्मचारी के लिए।\n\nलागू दरें श्रम विभाग की 19 नवंबर 2024 की अधिसूचना संख्या Labr/576641/2024/(LC-LW/MW) से आती हैं, जो 2 दिसंबर 2024 को कोलकाता राजपत्र असाधारण में प्रकाशित हुई। इसने नियोक्ता का अंशदान 30 रुपये तय किया और कर्मचारी का अंशदान 3 रुपये पर बिना बदलाव के रखा। अधिसूचना 1 जनवरी 2024 से लागू मानी गई, यानी यह जारी होने से लगभग एक साल पीछे तक गई।\n\nअंशदान हर छह महीने में, 30 जून और 31 दिसंबर को समाप्त होने वाली छमाहियों के लिए देय है। हर कर्मचारी के लिए यह कर्मचारी की ओर से साल में 6 रुपये और नियोक्ता की ओर से साल में 60 रुपये होता है।\n\nयह अनुपात किसी भी राज्य में सबसे बड़ा है। नियोक्ता कर्मचारी से दस गुना देता है, इसलिए कोष लगभग पूरी तरह नियोक्ता की लागत है। जो पेरोल सिस्टम नियोक्ता की राशि कर्मचारी की राशि को दो या तीन से गुणा करके निकालता है, जैसा वह महाराष्ट्र या गुजरात के लिए कर सकता है, वह पश्चिम बंगाल में काफ़ी कम भुगतान करेगा।\n\nचूँकि नियोक्ता की ऊँची दर जनवरी 2024 से पिछली तारीख से लागू हुई, जिन नियोक्ताओं ने 2024 की छमाहियों का भुगतान पुरानी दर पर कर दिया था, उन्हें उन अवधियों की कमी पूरी करनी पड़ी।\n\nमंडल को भुगतान 1 दिसंबर 2020 से इलेक्ट्रॉनिक है। नियोक्ता हर छमाही के लिए कर्मचारी के 3 रुपये वेतन से काटता है और रजिस्टर के हर कर्मचारी के लिए उसे अपने 30 रुपये के साथ जमा करता है।"
+  }
+}

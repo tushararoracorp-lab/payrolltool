@@ -1,0 +1,19 @@
+{
+  "action": "REPLACE",
+  "kind": "lwf_rule",
+  "target_id": "c0b9e360-6b08-484d-af28-d6b5fca2eec1",
+  "payload": {
+    "state": "Telangana",
+    "effective_from": "1987-08-19",
+    "employee_amount": "Rs. 2 a year",
+    "employer_amount": "Rs. 5 a year",
+    "ratio": "1 : 2.5",
+    "frequency": "Annual",
+    "due_text": "Deducted from the December salary; deposit by 31 January",
+    "act": "Telangana Labour Welfare Fund Act, 1987 (Act No. 34 of 1987, as adapted), section 10",
+    "notes": null,
+    "official_url": "https://labour.gov.in/",
+    "explainer_en": "Telangana's Labour Welfare Fund runs under the Labour Welfare Fund Act, 1987, Act No. 34 of 1987, which Andhra Pradesh enacted after the President's assent on 14 August 1987 and which Telangana adapted when it was formed in 2014. The Act set up a Welfare Fund and a Labour Welfare Board, on the pattern of the Maharashtra and Gujarat laws, to pay for welfare measures for workers and their families.\n\nThe contribution is set in section 10 of the Act itself. Every employee contributes Rs. 2 a year to the Fund, and every employer contributes Rs. 5 a year for each such employee. Section 10(2) lets the employer recover the employee's share by deduction from wages, and that deduction is treated as authorised under the Payment of Wages Act, 1936.\n\nThese are among the smallest contribution figures in the country, and they have stayed in the text of the Act since 1987. Andhra Pradesh, which started from the same 1987 Act, now sets its contributions separately, so a payroll should not assume that Hyderabad and Visakhapatnam branches share one Labour Welfare Fund rate.\n\nThe Fund is also fed by unpaid accumulations of wages and by fines realised from employees. Under section 8, an employer transfers unclaimed wages and other unpaid accumulations to the Board, which publishes a notice inviting claims. Under section 9, if an employer does not pay over fines realised from employees after a notice of demand, it pays simple interest of one per cent a month for the first three months and one and a half per cent a month after that.\n\nThe yearly contribution is small, but it applies to every employee covered by the Act.",
+    "explainer_hi": "तेलंगाना का श्रम कल्याण कोष श्रम कल्याण कोष अधिनियम, 1987, अधिनियम संख्या 34 of 1987 के तहत चलता है, जिसे आंध्र प्रदेश ने 14 अगस्त 1987 को राष्ट्रपति की स्वीकृति के बाद बनाया और तेलंगाना ने 2014 में अपने गठन पर अपनाया। अधिनियम ने महाराष्ट्र और गुजरात के कानूनों की तर्ज़ पर एक कल्याण कोष और श्रम कल्याण मंडल बनाया, ताकि कामगारों और उनके परिवारों के कल्याण कार्यों का खर्च उठाया जा सके।\n\nअंशदान स्वयं अधिनियम की धारा 10 में तय है। हर कर्मचारी कोष में साल में 2 रुपये देता है, और हर नियोक्ता हर ऐसे कर्मचारी के लिए साल में 5 रुपये देता है। धारा 10(2) नियोक्ता को कर्मचारी का हिस्सा वेतन से काटकर वसूलने देती है, और यह कटौती वेतन भुगतान अधिनियम, 1936 के तहत अधिकृत मानी जाती है।\n\nये देश में सबसे छोटी अंशदान राशियों में हैं, और 1987 से अधिनियम के पाठ में यही बनी हुई हैं। आंध्र प्रदेश, जो इसी 1987 के अधिनियम से शुरू हुआ था, अब अपने अंशदान अलग से तय करता है, इसलिए पेरोल को यह नहीं मानना चाहिए कि हैदराबाद और विशाखापत्तनम की शाखाओं की श्रम कल्याण कोष दर एक ही है।\n\nकोष में बिना दावे वाले वेतन और कर्मचारियों से वसूले गए जुर्माने भी आते हैं। धारा 8 के तहत नियोक्ता बिना दावे वाले वेतन और अन्य अदत्त संचय मंडल को सौंपता है, जो दावे आमंत्रित करने के लिए सूचना प्रकाशित करता है। धारा 9 के तहत यदि नियोक्ता माँग-सूचना के बाद भी कर्मचारियों से वसूले गए जुर्माने जमा नहीं करता, तो वह पहले तीन महीने एक प्रतिशत प्रति माह और उसके बाद डेढ़ प्रतिशत प्रति माह साधारण ब्याज देता है।\n\nसालाना अंशदान कम है, लेकिन यह अधिनियम के दायरे में आने वाले हर कर्मचारी पर लागू होता है।"
+  }
+}

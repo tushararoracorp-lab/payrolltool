@@ -1,0 +1,37 @@
+{
+  "act": "Punjab State Development Tax Act, 2018 (Punjab Act 11 of 2018), as amended in 2025",
+  "slab_tables": [
+    {
+      "rows": [
+        {
+          "amt": "Nil",
+          "band": "Up to Rs. 2,50,000"
+        },
+        {
+          "amt": "Rs. 200 a month",
+          "band": "Above Rs. 2,50,000"
+        }
+      ],
+      "unit": "Annual income",
+      "title": "Old tax regime"
+    },
+    {
+      "rows": [
+        {
+          "amt": "Nil",
+          "band": "Up to Rs. 4,00,000"
+        },
+        {
+          "amt": "Rs. 200 a month",
+          "band": "Above Rs. 4,00,000"
+        }
+      ],
+      "unit": "Annual income",
+      "title": "New tax regime"
+    }
+  ],
+  "notes": "The tax applies only above the income-tax basic exemption, so the threshold follows the employee's tax regime. Since 7 November 2025 employers and enrolled persons may opt for a yearly lump sum, paid by 30 April. Senior citizens are exempt.",
+  "official_url": "https://psdt.punjab.gov.in/",
+  "explainer_en": "Punjab does not call its levy professional tax. It is the State Development Tax, charged under the Punjab State Development Tax Act, 2018, Punjab Act 11 of 2018, and administered by the Department of Excise and Taxation. It works like professional tax: Rs. 200 a month on persons assessable under the head salaries, or under business or profession, collected for each employee by the employer.\n\nThe threshold is unusual. The Act does not set a salary band. It charges the tax only on persons whose taxable income for the year exceeds the maximum amount not chargeable to income tax, after allowing for this tax. In practice that is the income-tax basic exemption, so the threshold follows the employee's tax regime. Under the old regime the basic exemption is Rs. 2,50,000, and under the new regime it is Rs. 4,00,000. An employee on the new regime with taxable income of Rs. 4,00,000 or less pays nothing, even though a colleague with the same income on the old regime may pay. Senior citizens are exempt.\n\nUnder section 5 the employer deducts the tax from the salary before paying it, and is liable for it whether or not it was deducted. An employee with more than one employer can give each a declaration and pay the tax directly instead. An employer that fails to deduct or pay owes simple interest of 2% of the tax for each month or part of a month it stays unpaid.\n\nThe Act was amended in July 2025, when the Vidhan Sabha passed the Punjab State Development Tax (Amendment) Bill on 14 July 2025, and the rules followed on 7 November 2025 as G.S.R.174. They allow employers and enrolled persons to opt for a yearly lump sum, announced as Rs. 2,200 instead of Rs. 2,400, paid by 30 April, with new Forms PSDT-15 to PSDT-18 to opt in, opt out, cease or cancel.",
+  "explainer_hi": "पंजाब अपने कर को व्यवसाय कर नहीं कहता। यह राज्य विकास कर है, जो पंजाब राज्य विकास कर अधिनियम, 2018, पंजाब अधिनियम 11 of 2018 के तहत लगता है और जिसका प्रशासन आबकारी एवं कराधान विभाग करता है। यह व्यवसाय कर की तरह काम करता है: वेतन, या व्यवसाय या पेशे के शीर्ष के तहत कर योग्य व्यक्तियों पर 200 रुपये प्रति माह, जिसे नियोक्ता हर कर्मचारी के लिए वसूलता है।\n\nइसकी सीमा असामान्य है। अधिनियम कोई वेतन श्रेणी तय नहीं करता। यह कर केवल उन व्यक्तियों पर लगाता है जिनकी साल की कर योग्य आय, इस कर को ध्यान में रखने के बाद, आयकर से मुक्त अधिकतम राशि से अधिक हो। व्यवहार में यह आयकर की मूल छूट है, इसलिए सीमा कर्मचारी की कर व्यवस्था पर निर्भर करती है। पुरानी व्यवस्था में मूल छूट 2,50,000 रुपये है, और नई व्यवस्था में 4,00,000 रुपये। नई व्यवस्था वाला कर्मचारी जिसकी कर योग्य आय 4,00,000 रुपये या उससे कम है, कुछ नहीं देता, जबकि उतनी ही आय वाला पुरानी व्यवस्था का सहकर्मी कर दे सकता है। वरिष्ठ नागरिकों को छूट है।\n\nधारा 5 के तहत नियोक्ता वेतन देने से पहले उससे कर काटता है, और कटौती हुई हो या नहीं, उसके लिए उत्तरदायी होता है। एक से अधिक नियोक्ता वाला कर्मचारी हर नियोक्ता को घोषणा देकर कर सीधे स्वयं दे सकता है। जो नियोक्ता कर काटने या जमा करने में चूकता है, उस पर कर के बकाया रहने के हर महीने या उसके हिस्से के लिए 2% साधारण ब्याज लगता है।\n\nअधिनियम में जुलाई 2025 में संशोधन हुआ, जब विधानसभा ने 14 जुलाई 2025 को पंजाब राज्य विकास कर (संशोधन) विधेयक पारित किया, और नियम 7 नवंबर 2025 को G.S.R.174 के रूप में आए। ये नियोक्ताओं और नामांकित व्यक्तियों को सालाना एकमुश्त राशि का विकल्प देते हैं, जो 2,400 के बजाय 2,200 रुपये घोषित की गई, और 30 अप्रैल तक देय है, साथ ही विकल्प चुनने, छोड़ने, बंद करने या रद्द करने के लिए नए फॉर्म PSDT-15 से PSDT-18 हैं।"
+}

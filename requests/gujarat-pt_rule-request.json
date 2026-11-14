@@ -1,0 +1,35 @@
+{
+  "action": "REPLACE",
+  "kind": "pt_rule",
+  "target_id": "e91633f6-f5cf-4095-a9a3-839b93def686",
+  "payload": {
+    "state": "Gujarat",
+    "effective_from": "1970-01-01",
+    "frequency": "Monthly",
+    "cycle_text": "Monthly",
+    "basis": "Slab on monthly salary",
+    "due_text": "By the 15th of the following month",
+    "act": "Gujarat Panchayats, Municipal Corporations and State Tax on Professions, Trades, Callings and Employments Act, 1976",
+    "annual_cap": "Rs. 2,400 a year (Rs. 200 x 12)",
+    "slab_tables": [
+      {
+        "rows": [
+          {
+            "amt": "Nil",
+            "band": "Up to Rs. 12,000"
+          },
+          {
+            "amt": "Rs. 200 a month",
+            "band": "Above Rs. 12,000"
+          }
+        ],
+        "unit": "Monthly salary",
+        "title": ""
+      }
+    ],
+    "notes": "Low threshold relative to states that have moved recently, so most salaried employees remain within the net. The test is monthly salary, evaluated each month, not annual income.",
+    "official_url": "https://commercialtax.gujarat.gov.in/",
+    "explainer_en": "Gujarat levies professional tax under the Gujarat Panchayats, Municipal Corporations and State Tax on Professions, Trades, Callings and Employments Act, 1976. Employers register with the State Tax department and deduct the tax from salaries; businesses and many professionals also enrol and pay a yearly amount of their own.\n\nFor salary and wage earners there are just two slabs. A monthly salary up to Rs. 12,000 pays nothing, and anything more than Rs. 12,000 pays a flat Rs. 200 a month. There are no intermediate bands and no February step-up, so the yearly maximum on salary is Rs. 2,400, within the Rs. 2,500 that Article 276 of the Constitution allows. The same two slabs apply to government and private employees.\n\nThe two-slab structure dates from 1 April 2022. Before that, salaries from Rs. 6,000 paid Rs. 80, from Rs. 9,000 paid Rs. 150, and from Rs. 12,000 paid Rs. 200. Old ready reckoners with those bands overstate the tax for lower-paid staff.\n\nThe employer pays each month's deductions by the 15th of the following month. The slab is checked against the salary paid in each month, so an employee whose pay drops to Rs. 12,000 or below in a month, through loss of pay or a part month, is not deducted for that month. Where salary is paid for a period other than a month, it is converted to a monthly figure to apply the slab.\n\nGujarat's threshold is low next to Karnataka's Rs. 25,000 or West Bengal's Rs. 20,000, so most salaried employees in the State remain within the tax and pay the full Rs. 200 each month.",
+    "explainer_hi": "गुजरात व्यवसाय कर गुजरात पंचायत, नगर निगम और राज्य व्यवसाय, व्यापार, आजीविका और रोज़गार कर अधिनियम, 1976 के तहत लेता है। नियोक्ता राज्य कर विभाग में पंजीकरण कराकर वेतन से कर काटते हैं; व्यवसाय और कई पेशेवर भी नामांकन कराकर अपनी सालाना राशि देते हैं।\n\nवेतन और मज़दूरी पाने वालों के लिए केवल दो स्लैब हैं। 12,000 रुपये तक के मासिक वेतन पर कुछ नहीं देना होता, और 12,000 रुपये से अधिक पर एक समान 200 रुपये प्रति माह। बीच के कोई स्लैब नहीं हैं और फरवरी में कोई बढ़ोतरी नहीं होती, इसलिए वेतन पर सालाना अधिकतम 2,400 रुपये है, जो संविधान के अनुच्छेद 276 द्वारा अनुमत 2,500 रुपये के भीतर है। यही दो स्लैब सरकारी और निजी, दोनों कर्मचारियों पर लागू होते हैं।\n\nदो स्लैब वाली यह व्यवस्था 1 अप्रैल 2022 से है। उससे पहले 6,000 रुपये से वेतन पर 80 रुपये, 9,000 रुपये से 150 रुपये, और 12,000 रुपये से 200 रुपये लगते थे। उन पुराने स्लैबों वाले रेडी रेकनर कम वेतन वाले कर्मचारियों के कर को बढ़ाकर दिखाते हैं।\n\nनियोक्ता हर महीने की कटौती अगले महीने की 15 तारीख तक जमा करता है। स्लैब हर महीने दिए गए वेतन से जाँचा जाता है, इसलिए जिस कर्मचारी का वेतन किसी महीने वेतन कटौती (LOP) या अधूरे महीने के कारण 12,000 रुपये या उससे कम रह जाए, उससे उस महीने कटौती नहीं होती। जहाँ वेतन महीने के अलावा किसी अवधि के लिए दिया जाता है, वहाँ स्लैब लागू करने के लिए उसे मासिक राशि में बदला जाता है।\n\nगुजरात की सीमा कर्नाटक की 25,000 रुपये या पश्चिम बंगाल की 20,000 रुपये की सीमा की तुलना में कम है, इसलिए राज्य के ज़्यादातर वेतनभोगी कर्मचारी कर के दायरे में रहते हैं और हर महीने पूरे 200 रुपये देते हैं।"
+  }
+}

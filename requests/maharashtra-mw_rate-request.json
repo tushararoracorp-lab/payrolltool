@@ -1,0 +1,37 @@
+{
+  "action": "REPLACE",
+  "kind": "mw_rate",
+  "target_id": "18f02af1-f5f1-492e-92b7-b1950f0cc81f",
+  "payload": {
+    "state": "Maharashtra",
+    "effective_from": "2026-07-01",
+    "structure": "Basic + VDA (HRA extra)",
+    "flag": "current",
+    "cadence": "Half-yearly (1 Jan / 1 Jul)",
+    "zones": "Zone I/II/III",
+    "authority": "Labour Commissioner, Maharashtra",
+    "label": "In force",
+    "categories": [
+      {
+        "name": "Unskilled",
+        "per_day": 544,
+        "per_month": 14155
+      },
+      {
+        "name": "Semi-skilled",
+        "per_day": 577,
+        "per_month": 14990
+      },
+      {
+        "name": "Skilled",
+        "per_day": 606,
+        "per_month": 15766
+      }
+    ],
+    "reference": "No. 7997 dated 5 Aug 2026 (July-December 2026)",
+    "note": "Shops and commercial establishments, Zone I. Special allowance (VDA) Rs. 4,134 a month, up from Rs. 3,900. Basic: unskilled Rs. 10,021, semi-skilled Rs. 10,856, skilled Rs. 11,632. House rent allowance at 5% of basic plus VDA is shown separately (about Rs. 708 for unskilled). Zone III skilled total Rs. 14,574.",
+    "official_url": "https://mahakamgar.gov.in/",
+    "explainer_en": "Maharashtra's minimum wages are fixed by the Government for each scheduled employment and adjusted twice a year by the Labour Commissioner through a special allowance, the variable dearness allowance, from 1 January and 1 July. The State is divided into three zones, and the rate depends on the zone, the employment and the worker's skill.\n\nFor shops and commercial establishments in Zone I, the rates from 1 July 2026 are set by order No. 7997 dated 5 August 2026. The basic wage is Rs. 10,021 a month for unskilled workers, Rs. 10,856 for semi-skilled and Rs. 11,632 for skilled. The special allowance is Rs. 4,134 a month, up from Rs. 3,900 in the January to June 2026 period, so the monthly minimum is Rs. 14,155 for unskilled, Rs. 14,990 for semi-skilled and Rs. 15,766 for skilled workers. The daily rates are Rs. 544, Rs. 577 and Rs. 606.\n\nHouse rent allowance is a separate item in Maharashtra. It is payable at 5% of basic plus special allowance, about Rs. 708 a month for an unskilled worker in Zone I, on top of the minimum wage.\n\nThe special allowance is the part that moves. It went from Rs. 3,900 to Rs. 4,134 in July 2026, while the basic stayed the same. A payroll that updates only the basic once a year will fall behind twice a year. The orders also tend to be issued after the period starts: the July 2026 order is dated 5 August 2026, so July salaries may need an arrears adjustment.\n\nZones matter as well. In Zone III the skilled total for the same period is Rs. 14,574, more than Rs. 1,000 below Zone I, so a multi-site employer applies the zone of each establishment, not of its head office.",
+    "explainer_hi": "महाराष्ट्र में न्यूनतम मज़दूरी सरकार हर अनुसूचित रोज़गार के लिए तय करती है, और श्रम आयुक्त साल में दो बार, 1 जनवरी और 1 जुलाई से, एक विशेष भत्ते, यानी परिवर्तनशील महँगाई भत्ते, के ज़रिए इसे समायोजित करते हैं। राज्य तीन ज़ोन में बँटा है, और दर ज़ोन, रोज़गार और कामगार के कौशल पर निर्भर करती है।\n\nज़ोन I में दुकानों और वाणिज्यिक प्रतिष्ठानों के लिए 1 जुलाई 2026 से दरें 5 अगस्त 2026 के आदेश संख्या 7997 से तय हैं। मूल वेतन अकुशल कामगारों के लिए 10,021 रुपये प्रति माह, अर्धकुशल के लिए 10,856 रुपये और कुशल के लिए 11,632 रुपये है। विशेष भत्ता 4,134 रुपये प्रति माह है, जो जनवरी से जून 2026 की अवधि के 3,900 रुपये से बढ़ा, इसलिए मासिक न्यूनतम मज़दूरी अकुशल के लिए 14,155 रुपये, अर्धकुशल के लिए 14,990 रुपये और कुशल के लिए 15,766 रुपये है। दैनिक दरें 544, 577 और 606 रुपये हैं।\n\nमहाराष्ट्र में मकान किराया भत्ता अलग मद है। यह मूल वेतन और विशेष भत्ते के 5% पर देय है, ज़ोन I के अकुशल कामगार के लिए लगभग 708 रुपये प्रति माह, जो न्यूनतम मज़दूरी के ऊपर मिलता है।\n\nविशेष भत्ता वह हिस्सा है जो बदलता है। जुलाई 2026 में यह 3,900 से 4,134 रुपये हुआ, जबकि मूल वेतन वही रहा। जो पेरोल साल में केवल एक बार मूल वेतन अद्यतन करता है, वह साल में दो बार पीछे रह जाएगा। आदेश भी अक्सर अवधि शुरू होने के बाद जारी होते हैं: जुलाई 2026 का आदेश 5 अगस्त 2026 का है, इसलिए जुलाई के वेतन में बकाया समायोजन की ज़रूरत पड़ सकती है।\n\nज़ोन भी मायने रखते हैं। उसी अवधि में ज़ोन III में कुशल कामगार का कुल 14,574 रुपये है, जो ज़ोन I से 1,000 रुपये से अधिक कम है, इसलिए कई स्थलों वाला नियोक्ता अपने मुख्यालय का नहीं, बल्कि हर प्रतिष्ठान का ज़ोन लागू करता है।"
+  }
+}

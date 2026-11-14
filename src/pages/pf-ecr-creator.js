@@ -550,6 +550,29 @@ const ECR_INFO_CARDS = [
   },
 ];
 
+const ECR_MISTAKES = [
+  {
+    t: "Using the wrong EPS wage ceiling for the wage month",
+    d: "The ceiling was Rs. 15,000 up to 16 September 2026 and Rs. 25,000 from 17 September 2026. September 2026 is split across both; October 2026 onwards uses Rs. 25,000. Select the wage month before generating the file.",
+  },
+  {
+    t: "Paying EPS for members who are not in the pension scheme",
+    d: "Members who are not EPS members, for example those above 58, have no EPS wages. The full employer 12% goes to EPF for them.",
+  },
+  {
+    t: "NCP days that do not match LOP",
+    d: "NCP days in the ECR should equal the unpaid days in payroll. A mismatch makes the wages and contributions look wrong for the month.",
+  },
+  {
+    t: "Names that differ from the UAN record",
+    d: "A spelling difference between payroll and the UAN record can stop the upload. Correct the name in payroll to match the UAN, or update the UAN record through the proper process.",
+  },
+  {
+    t: "Editing the generated file by hand",
+    d: "The ECR text file has a fixed field order and separator. Opening and saving it in a spreadsheet can change both. Fix the source sheet and generate the file again instead.",
+  },
+];
+
 const ECR_FAQ = [
   {
     q: "Why does the EPFO portal keep rejecting my ECR file?",
@@ -1192,6 +1215,16 @@ export default function PfEcrCreator() {
               ECR errors - this tool applies the correct ceiling automatically based on the Wage
               Month and Year you select.
             </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto mt-6 bg-white border border-gray-100 rounded-2xl p-6">
+            <h4 className="text-sm font-bold text-gray-900 mb-4">Common mistakes</h4>
+            {ECR_MISTAKES.map((m, i) => (
+              <div key={m.t} className={`py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}>
+                <h5 className="text-sm font-semibold text-violet-700 mb-1.5">{m.t}</h5>
+                <p className="text-sm leading-relaxed text-gray-500">{m.d}</p>
+              </div>
+            ))}
           </div>
 
           <div className="max-w-3xl mx-auto mt-6 mb-10 bg-white border border-gray-100 rounded-2xl p-6">

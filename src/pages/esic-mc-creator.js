@@ -534,6 +534,29 @@ const MC_INFO_CARDS = [
   },
 ];
 
+const MC_MISTAKES = [
+  {
+    t: "Filing an exit without the last working day",
+    d: "A status such as Left Service or Retired needs the last working day. Without it the row is rejected.",
+  },
+  {
+    t: "Dropping an employee who crosses Rs. 21,000 mid-period",
+    d: "An employee covered at the start of a contribution period stays covered until the period ends, even if wages rise above Rs. 21,000. Keep filing for them until then.",
+  },
+  {
+    t: "Rounding the employer share per employee",
+    d: "The employee's 0.75% is rounded up for each person. The employer's 3.25% is summed first and rounded once on the total. Rounding both per person gives a different total from the portal.",
+  },
+  {
+    t: "Using a template from an old download",
+    d: "Upload the blank template downloaded from the ESIC portal for this period. A renamed or older copy is a common cause of rejection.",
+  },
+  {
+    t: "Zero days without a reason code",
+    d: "A row with zero payable days needs a reason code, such as on leave or left service. Without one the row is rejected.",
+  },
+];
+
 const MC_FAQ = [
   {
     q: "Why does the ESIC portal keep rejecting my MC file?",
@@ -1061,6 +1084,16 @@ export default function EsicMcCreator() {
               amounts first and rounds only the final total - exactly how the ESIC portal
               calculates it, and this tool applies both rules automatically.
             </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto mt-6 bg-white border border-gray-100 rounded-2xl p-6">
+            <h4 className="text-sm font-bold text-gray-900 mb-4">Common mistakes</h4>
+            {MC_MISTAKES.map((m, i) => (
+              <div key={m.t} className={`py-3 ${i > 0 ? "border-t border-gray-100" : "pt-0"}`}>
+                <h5 className="text-sm font-semibold text-violet-700 mb-1.5">{m.t}</h5>
+                <p className="text-sm leading-relaxed text-gray-500">{m.d}</p>
+              </div>
+            ))}
           </div>
 
           <div className="max-w-3xl mx-auto mt-6 mb-10 bg-white border border-gray-100 rounded-2xl p-6">

@@ -1,0 +1,27 @@
+{
+  "action": "REPLACE",
+  "kind": "mw_rate",
+  "target_id": "86268af5-77d3-42ce-ba2e-8a5df4f1dccd",
+  "payload": {
+    "state": "Tamil Nadu",
+    "effective_from": "2026-04-01",
+    "structure": "Basic + DA",
+    "flag": "current",
+    "cadence": "Annual (1 Apr)",
+    "zones": "Zone A/B/C/D",
+    "authority": "Commissioner of Labour, Chennai",
+    "label": "In force",
+    "categories": [
+      {
+        "name": "Unskilled",
+        "per_day": null,
+        "per_month": 13783
+      }
+    ],
+    "reference": "Z3/3459/2026 dated 18 February 2026",
+    "note": "Effective 1 Apr 2026 to 31 Mar 2027. Unusual annual cadence. S&CE DA Rs. 7,353/month. Each scheduled employment has its own DA/base index. Unskilled approx Rs. 13,783-14,004 across zones.",
+    "official_url": "https://labour.tn.gov.in/",
+    "explainer_en": "Tamil Nadu fixes minimum wages separately for each scheduled employment by Government Order, and then adjusts the dearness allowance once a year, from 1 April. The basic wage for an employment stays as notified until the Government revises it; the dearness allowance is what changes every year.\n\nFor employment in shops and commercial establishments, the basic rates were last revised by G.O. (2D) No. 65 of the Labour Welfare and Skill Development Department, dated 20 August 2024 and effective from 11 September 2024, with four zones, A to D. The dearness allowance for this employment is Rs. 40.18 a month for every point by which the Chennai city consumer price index exceeds the base of 161 points (2001 = 100).\n\nThe rate for 2026-27 comes from the Commissioner of Labour's statement Z3/3459/2026 dated 18 February 2026, which covers dearness allowance payable from 1 April 2026 for all scheduled employments. It uses the average Chennai index for calendar year 2025, which was 344 points. That is 183 points above the base, so the dearness allowance for shops and commercial establishments is Rs. 40.18 x 183, or Rs. 7,353 a month, from 1 April 2026 to 31 March 2027.\n\nBecause the allowance follows the previous year's average index, it can fall as well as rise. For 2026-27 the Zone A unskilled total is Rs. 13,783 a month, against Rs. 14,004 in 2025-26: the basic did not change, and the dearness allowance came down with the 2025 index. An employer should not cut existing pay to the lower figure, but a new hire's floor is the 2026-27 rate.\n\nEach employment has its own order, base index and rate per point. Shops use a monthly rate, while others, such as construction or rice mills, use a daily rate, so payroll must use the line for the right employment.",
+    "explainer_hi": "तमिलनाडु हर अनुसूचित रोज़गार के लिए न्यूनतम मज़दूरी सरकारी आदेश से अलग-अलग तय करता है, और फिर साल में एक बार, 1 अप्रैल से, महँगाई भत्ता समायोजित करता है। किसी रोज़गार की मूल मज़दूरी तब तक अधिसूचित रूप में रहती है जब तक सरकार उसे संशोधित न करे; हर साल बदलने वाला हिस्सा महँगाई भत्ता है।\n\nदुकानों और वाणिज्यिक प्रतिष्ठानों में रोज़गार के लिए मूल दरें पिछली बार श्रम कल्याण और कौशल विकास विभाग के 20 अगस्त 2024 के G.O. (2D) No. 65 से संशोधित हुईं, जो 11 सितंबर 2024 से लागू हैं, और इनमें A से D तक चार ज़ोन हैं। इस रोज़गार के लिए महँगाई भत्ता चेन्नई शहर का उपभोक्ता मूल्य सूचकांक 161 अंकों (2001 = 100) के आधार से जितने अंक ऊपर हो, हर अंक के लिए 40.18 रुपये प्रति माह है।\n\n2026-27 की दर श्रम आयुक्त के 18 फरवरी 2026 के विवरण Z3/3459/2026 से आती है, जो सभी अनुसूचित रोज़गारों के लिए 1 अप्रैल 2026 से देय महँगाई भत्ता बताता है। यह कैलेंडर वर्ष 2025 के चेन्नई के औसत सूचकांक का उपयोग करता है, जो 344 अंक था। यह आधार से 183 अंक ऊपर है, इसलिए दुकानों और वाणिज्यिक प्रतिष्ठानों का महँगाई भत्ता 40.18 x 183, यानी 7,353 रुपये प्रति माह है, जो 1 अप्रैल 2026 से 31 मार्च 2027 तक लागू है।\n\nचूँकि भत्ता पिछले साल के औसत सूचकांक पर चलता है, यह घट भी सकता है और बढ़ भी सकता है। 2026-27 के लिए ज़ोन A में अकुशल का कुल 13,783 रुपये प्रति माह है, जबकि 2025-26 में 14,004 रुपये था: मूल मज़दूरी नहीं बदली, और 2025 के सूचकांक के साथ महँगाई भत्ता कम हुआ। नियोक्ता को मौजूदा वेतन घटाकर कम राशि पर नहीं लाना चाहिए, लेकिन नए कर्मचारी के लिए न्यूनतम सीमा 2026-27 की दर है।\n\nहर रोज़गार का अपना आदेश, आधार सूचकांक और प्रति अंक दर है। दुकानें मासिक दर इस्तेमाल करती हैं, जबकि निर्माण या चावल मिल जैसे अन्य रोज़गार दैनिक दर, इसलिए पेरोल को सही रोज़गार की पंक्ति इस्तेमाल करनी चाहिए।"
+  }
+}

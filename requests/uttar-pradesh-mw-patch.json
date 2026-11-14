@@ -1,0 +1,61 @@
+{
+  "effective_from": "2026-10-01",
+  "flag": "current",
+  "structure": "Basic + VDA",
+  "cadence": "VDA revised each April and October",
+  "zones": "Category I (Gautam Buddha Nagar, Ghaziabad), Category II (districts with a Nagar Nigam), Category III (other districts)",
+  "authority": "Labour Department (Shram Anubhag-2), Government of Uttar Pradesh",
+  "label": "In force (1 Oct 2026 to 31 Mar 2027)",
+  "categories": [
+    {
+      "name": "Unskilled",
+      "per_month": 13883.59,
+      "per_day": 533.98
+    },
+    {
+      "name": "Semi-skilled",
+      "per_month": 15271.41,
+      "per_day": 587.36
+    },
+    {
+      "name": "Skilled",
+      "per_month": 17106.39,
+      "per_day": 657.94
+    },
+    {
+      "name": "Category II - Unskilled",
+      "per_month": 13189.68,
+      "per_day": 507.3
+    },
+    {
+      "name": "Category II - Semi-skilled",
+      "per_month": 14507.46,
+      "per_day": 557.98
+    },
+    {
+      "name": "Category II - Skilled",
+      "per_month": 16250.86,
+      "per_day": 625.03
+    },
+    {
+      "name": "Category III - Unskilled",
+      "per_month": 12530.25,
+      "per_day": 481.93
+    },
+    {
+      "name": "Category III - Semi-skilled",
+      "per_month": 13782.3,
+      "per_day": 530.09
+    },
+    {
+      "name": "Category III - Skilled",
+      "per_month": 15438.42,
+      "per_day": 593.79
+    }
+  ],
+  "reference": "Order No. I/1498869/2026-2041256 dated 21 October 2026 (VDA); basic wages under Notification No. 374/36-2-2026-2041256 dated 17 April 2026",
+  "note": "Headline rates are Category I (Gautam Buddha Nagar and Ghaziabad). Category I unskilled: basic Rs. 12,885 + VDA Rs. 998.59 = Rs. 13,883.59 a month (Rs. 533.98 a day). VDA = (431 - 400) / 400 x basic. Daily rate is 1/26 of the monthly wage.",
+  "official_url": "https://uplabour.gov.in/",
+  "explainer_en": "Uttar Pradesh rebuilt its minimum wages in 2026. By Notification No. 374/36-2-2026-2041256 dated 17 April 2026, the Labour Department fixed new basic wages for 74 scheduled employments from 1 April 2026, as interim relief under section 3(b) of the Uttar Pradesh Industrial Disputes Act, 1947, read with section 21 of the General Clauses Act, 1904, to keep industrial peace and production running. The order followed the wage protests in Noida that month.\n\nThe April order brought two changes. First, three categories of district: Category I is Gautam Buddha Nagar and Ghaziabad, Category II is every district with a Nagar Nigam, and Category III is the rest of the State. Second, much higher basic wages, neutralised to an all-India consumer price index of 400 points, the average for July to December 2023. In Category I the basic is Rs. 12,885 a month for unskilled, Rs. 14,173 for semi-skilled and Rs. 15,876 for skilled workers.\n\nA variable dearness allowance is added each April and October, at the full rise in the index above 400. By order No. I/1498869/2026-2041256 dated 21 October 2026, the average of 431 points for January to June 2026 gives a VDA of (431 - 400) / 400 of the basic, from 1 October 2026 to 31 March 2027. For Category I unskilled that is Rs. 998.59, a total of Rs. 13,883.59 a month or Rs. 533.98 a day. Category II unskilled is Rs. 13,189.68 and Category III Rs. 12,530.25.\n\nThe order also sets rules that payroll needs: the daily rate is at least 1/26 of the monthly wage; part-time work under six hours a day is paid at least one-eighth of the daily rate per hour; contract workers are treated as directly employed for these rates; and the rates include the weekly rest day. Because the October order came out on 21 October, the October difference is payable as arrears.",
+  "explainer_hi": "उत्तर प्रदेश ने 2026 में अपनी न्यूनतम मज़दूरी नए सिरे से बनाई। 17 अप्रैल 2026 की अधिसूचना संख्या 374/36-2-2026-2041256 से श्रम विभाग ने 74 अनुसूचित रोज़गारों के लिए 1 अप्रैल 2026 से नई मूल मज़दूरी तय की, जो औद्योगिक शांति और उत्पादन बनाए रखने के लिए साधारण खंड अधिनियम, 1904 की धारा 21 के साथ पठित उत्तर प्रदेश औद्योगिक विवाद अधिनियम, 1947 की धारा 3(ख) के तहत अंतरिम राहत के रूप में दी गई। यह आदेश उसी महीने नोएडा में हुए मज़दूरी आंदोलन के बाद आया।\n\nअप्रैल के आदेश ने दो बदलाव किए। पहला, ज़िलों की तीन श्रेणियाँ: श्रेणी प्रथम गौतमबुद्ध नगर और गाज़ियाबाद है, श्रेणी द्वितीय नगर निगम वाले सभी ज़िले हैं, और श्रेणी तृतीय राज्य के बाकी ज़िले। दूसरा, कहीं अधिक मूल मज़दूरी, जो अखिल भारतीय उपभोक्ता मूल्य सूचकांक के 400 अंकों, यानी जुलाई से दिसंबर 2023 के औसत, तक निष्प्रभावी की गई। श्रेणी प्रथम में मूल मज़दूरी अकुशल के लिए 12,885 रुपये प्रति माह, अर्धकुशल के लिए 14,173 रुपये और कुशल के लिए 15,876 रुपये है।\n\nहर अप्रैल और अक्टूबर में सूचकांक की 400 से ऊपर की पूरी बढ़ोतरी पर परिवर्तनशील महँगाई भत्ता जुड़ता है। 21 अक्टूबर 2026 के आदेश संख्या I/1498869/2026-2041256 से, जनवरी से जून 2026 के 431 अंकों के औसत पर 1 अक्टूबर 2026 से 31 मार्च 2027 तक महँगाई भत्ता मूल मज़दूरी का (431 - 400) / 400 है। श्रेणी प्रथम के अकुशल के लिए यह 998.59 रुपये है, यानी कुल 13,883.59 रुपये प्रति माह या 533.98 रुपये प्रति दिन। श्रेणी द्वितीय का अकुशल 13,189.68 रुपये और श्रेणी तृतीय का 12,530.25 रुपये है।\n\nआदेश पेरोल के लिए ज़रूरी नियम भी तय करता है: दैनिक दर मासिक मज़दूरी के 1/26 से कम नहीं होगी; दिन में छह घंटे से कम के अंशकालिक काम का प्रति घंटा भुगतान दैनिक दर के आठवें भाग से कम नहीं होगा; इन दरों के लिए ठेका कामगार सीधे नियोजित माने जाएँगे; और दरों में साप्ताहिक विश्राम दिवस शामिल है। चूँकि अक्टूबर का आदेश 21 अक्टूबर को आया, अक्टूबर का अंतर बकाया के रूप में देय है।"
+}

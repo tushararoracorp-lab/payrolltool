@@ -1,0 +1,51 @@
+{
+  "action": "REPLACE",
+  "kind": "pt_rule",
+  "target_id": "d4228f4a-ccd9-4b22-a3af-3a1d5d6a6169",
+  "payload": {
+    "state": "Tamil Nadu",
+    "effective_from": "2024-10-01",
+    "frequency": "Half-yearly",
+    "cycle_text": "Half-yearly",
+    "basis": "Slab on half-yearly income",
+    "due_text": "April to September: by 30 September. October to March: by 31 March",
+    "act": "Tamil Nadu Tax on Professions, Trades, Callings and Employments Act, 1992 (collected by local bodies)",
+    "annual_cap": "Rs. 2,500 a year (Rs. 1,250 per half-year)",
+    "slab_tables": [
+      {
+        "rows": [
+          {
+            "amt": "Nil",
+            "band": "Up to Rs. 21,000"
+          },
+          {
+            "amt": "Rs. 180",
+            "band": "Rs. 21,001 to Rs. 30,000"
+          },
+          {
+            "amt": "Rs. 425",
+            "band": "Rs. 30,001 to Rs. 45,000"
+          },
+          {
+            "amt": "Rs. 930",
+            "band": "Rs. 45,001 to Rs. 60,000"
+          },
+          {
+            "amt": "Rs. 1,025",
+            "band": "Rs. 60,001 to Rs. 75,000"
+          },
+          {
+            "amt": "Rs. 1,250",
+            "band": "Above Rs. 75,000"
+          }
+        ],
+        "unit": "Half-yearly income (amount per half-year)",
+        "title": "Greater Chennai Corporation"
+      }
+    ],
+    "notes": "Administered through local bodies: municipal corporations, municipalities and panchayats each collect within their area, and slabs can differ from the Greater Chennai table shown here. The Greater Chennai slab was revised with effect from the second half of 2024-25.",
+    "official_url": "https://www.tn.gov.in/dtp/professional-tax.htm",
+    "explainer_en": "Tamil Nadu levies professional tax under the Tamil Nadu Tax on Professions, Trades, Callings and Employments Act, 1992, but the tax is collected by local bodies, not by a state department. Municipal corporations, municipalities and panchayats each collect it within their own area, so the employer pays the local body where the establishment is located, and the slabs can differ from one local body to another.\n\nThe table shown here is the Greater Chennai Corporation schedule, revised with effect from the second half of 2024-25. Tax is charged on half-yearly income. Up to Rs. 21,000 for the half-year there is no tax. Above that the tax for the half-year is Rs. 180 up to Rs. 30,000, Rs. 425 up to Rs. 45,000, Rs. 930 up to Rs. 60,000, Rs. 1,025 up to Rs. 75,000, and Rs. 1,250 above Rs. 75,000.\n\nThe year has two halves: April to September and October to March. The tax for April to September is paid by 30 September, and the tax for October to March by 31 March. The highest slab, Rs. 1,250 for each half, gives Rs. 2,500 for the year, which is the constitutional ceiling on professional tax.\n\nBecause the slab depends on income for the whole half-year, the deduction is usually made once, in the last month of the half, after the half-year's salary is known. An employee who joins mid-way through a half-year is assessed on the salary actually earned in that half.\n\nWhat to do in payroll:\n- record the local body for each office and site, not just the state;\n- use the Greater Chennai slabs only for establishments within the Corporation's limits, and take the schedule of the other local body for other locations;\n- total each employee's income for April to September and October to March, and apply the slab to that total;\n- deduct and pay by 30 September and 31 March, and keep the local body's receipt.",
+    "explainer_hi": "तमिलनाडु में व्यवसाय कर तमिलनाडु व्यवसाय, व्यापार, आजीविका और रोज़गार कर अधिनियम, 1992 के तहत लगता है, लेकिन इसे कोई राज्य विभाग नहीं, बल्कि स्थानीय निकाय वसूलते हैं। नगर निगम, नगरपालिकाएँ और पंचायतें अपने-अपने क्षेत्र में इसे वसूलती हैं, इसलिए नियोक्ता उसी स्थानीय निकाय को भुगतान करता है जिसके क्षेत्र में प्रतिष्ठान है, और श्रेणियाँ एक स्थानीय निकाय से दूसरे में अलग हो सकती हैं।\n\nयहाँ दिखाई गई तालिका ग्रेटर चेन्नई कॉरपोरेशन की अनुसूची है, जो 2024-25 की दूसरी छमाही से संशोधित हुई। कर छमाही आय पर लगता है। छमाही में 21,000 रुपये तक कोई कर नहीं है। उसके ऊपर छमाही का कर 30,000 रुपये तक 180 रुपये, 45,000 रुपये तक 425 रुपये, 60,000 रुपये तक 930 रुपये, 75,000 रुपये तक 1,025 रुपये, और 75,000 रुपये से ऊपर 1,250 रुपये है।\n\nसाल की दो छमाहियाँ हैं: अप्रैल से सितंबर और अक्टूबर से मार्च। अप्रैल से सितंबर का कर 30 सितंबर तक, और अक्टूबर से मार्च का कर 31 मार्च तक चुकाया जाता है। सबसे ऊँची श्रेणी, हर छमाही 1,250 रुपये, से साल के 2,500 रुपये बनते हैं, जो व्यवसाय कर की संवैधानिक सीमा है।\n\nक्योंकि श्रेणी पूरी छमाही की आय पर निर्भर है, इसलिए कटौती आम तौर पर एक बार, छमाही के आख़िरी महीने में, छमाही का वेतन पता चलने के बाद होती है। छमाही के बीच में आने वाले कर्मचारी पर उस छमाही में असल में कमाए गए वेतन के आधार पर कर लगता है।\n\nपेरोल में क्या करें:\n- हर दफ़्तर और कार्यस्थल के लिए स्थानीय निकाय दर्ज करें, केवल राज्य नहीं;\n- ग्रेटर चेन्नई की श्रेणियाँ केवल कॉरपोरेशन की सीमा के भीतर के प्रतिष्ठानों पर लगाएँ, और दूसरी जगहों के लिए वहाँ के स्थानीय निकाय की अनुसूची लें;\n- हर कर्मचारी की अप्रैल से सितंबर और अक्टूबर से मार्च की आय जोड़ें, और श्रेणी उसी जोड़ पर लगाएँ;\n- 30 सितंबर और 31 मार्च तक कटौती और भुगतान करें, और स्थानीय निकाय की रसीद रखें।"
+  }
+}

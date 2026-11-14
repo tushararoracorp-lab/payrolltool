@@ -1,0 +1,55 @@
+{
+  "action": "REPLACE",
+  "kind": "pt_rule",
+  "target_id": "935ceef0-4729-4404-a8b2-83b3329ef1db",
+  "payload": {
+    "state": "Mizoram",
+    "effective_from": "2023-04-01",
+    "frequency": "Annual",
+    "cycle_text": "Deducted monthly, paid annually",
+    "basis": "Slab on monthly salary",
+    "due_text": "Annual payment by 30 June",
+    "act": "Mizoram Professions, Trades, Callings and Employments Taxation Act, 1995",
+    "annual_cap": "Rs. 208 a month (within the Rs. 2,500 annual ceiling)",
+    "slab_tables": [
+      {
+        "rows": [
+          {
+            "amt": "Nil",
+            "band": "Up to Rs. 5,000"
+          },
+          {
+            "amt": "Rs. 75",
+            "band": "Rs. 5,001 to Rs. 8,000"
+          },
+          {
+            "amt": "Rs. 120",
+            "band": "Rs. 8,001 to Rs. 10,000"
+          },
+          {
+            "amt": "Rs. 150",
+            "band": "Rs. 10,001 to Rs. 12,000"
+          },
+          {
+            "amt": "Rs. 180",
+            "band": "Rs. 12,001 to Rs. 15,000"
+          },
+          {
+            "amt": "Rs. 195",
+            "band": "Rs. 15,001 to Rs. 20,000"
+          },
+          {
+            "amt": "Rs. 208",
+            "band": "Above Rs. 20,000"
+          }
+        ],
+        "unit": "Monthly salary (amount per month)",
+        "title": ""
+      }
+    ],
+    "notes": "Schedule revised by Notification No. J.17011/1/2017-TAX dated 11 July 2024, effective from assessment year 2023-24.",
+    "official_url": "https://zotax.nic.in/files/tax_schedules/Final%20Profession%20Tax%20Slab%202024.pdf",
+    "explainer_en": "Mizoram levies professional tax under the Mizoram Professions, Trades, Callings and Employments Taxation Act, 1995 (Act No. 7 of 1995). The current schedule for salary and wage earners was set by Taxation Department Notification No. J.17011/1/2017-TAX dated 11 July 2024. It replaced the schedule of Notification No. J.17011/1/96-TAX dated 24 May 2013 and applies from assessment year 2023-24, with reference to gross income in the return period 2024-25.\n\nThe tax depends on gross monthly income. Up to Rs. 5,000 a month there is no tax. Above that the monthly tax is Rs. 75 up to Rs. 8,000, Rs. 120 up to Rs. 10,000, Rs. 150 up to Rs. 12,000, Rs. 180 up to Rs. 15,000, Rs. 195 up to Rs. 20,000, and Rs. 208 above Rs. 20,000.\n\nFor each slab the notification also gives a yearly lump sum that the assessee may pay instead of the monthly amount: Rs. 900, Rs. 1,440, Rs. 1,800, Rs. 2,160, Rs. 2,340 and Rs. 2,500 respectively. The top yearly figure, Rs. 2,500, is the constitutional ceiling on professional tax. Twelve months at Rs. 208 come to Rs. 2,496, just under it.\n\nThe slab is read from gross monthly income, so an employee whose salary crosses a slab boundary during the year moves to the new monthly amount from that month. Arrears or a bonus paid in one month can also push that month into a higher slab.\n\nWhat to do in payroll:\n- set up the seven Mizoram slabs exactly as the notification sets them, with the upper limits Rs. 5,000, Rs. 8,000, Rs. 10,000, Rs. 12,000, Rs. 15,000 and Rs. 20,000;\n- deduct the monthly amount for each employee's slab;\n- keep the deduction for the year within Rs. 2,500 for each employee;\n- keep a copy of the July 2024 notification with the payroll records, because older tables with different slabs are still in circulation.",
+    "explainer_hi": "मिज़ोरम में व्यवसाय कर मिज़ोरम व्यवसाय, व्यापार, आजीविका और रोज़गार कराधान अधिनियम, 1995 (अधिनियम संख्या 7, 1995) के तहत लगता है। वेतन और मज़दूरी पाने वालों के लिए मौजूदा अनुसूची कराधान विभाग की 11 जुलाई 2024 की अधिसूचना संख्या J.17011/1/2017-TAX से तय हुई है। इसने 24 मई 2013 की अधिसूचना संख्या J.17011/1/96-TAX की अनुसूची की जगह ली और यह निर्धारण वर्ष 2023-24 से, विवरणी अवधि 2024-25 की कुल आय के संदर्भ में, लागू है।\n\nकर कुल मासिक आय पर निर्भर है। 5,000 रुपये महीने तक कोई कर नहीं है। उसके ऊपर मासिक कर 8,000 रुपये तक 75 रुपये, 10,000 रुपये तक 120 रुपये, 12,000 रुपये तक 150 रुपये, 15,000 रुपये तक 180 रुपये, 20,000 रुपये तक 195 रुपये, और 20,000 रुपये से ऊपर 208 रुपये है।\n\nहर श्रेणी के लिए अधिसूचना एक सालाना एकमुश्त राशि भी देती है, जिसे करदाता मासिक राशि की जगह चुका सकता है: क्रमशः 900 रुपये, 1,440 रुपये, 1,800 रुपये, 2,160 रुपये, 2,340 रुपये और 2,500 रुपये। सबसे ऊँची सालाना राशि, 2,500 रुपये, व्यवसाय कर की संवैधानिक सीमा है। 208 रुपये के बारह महीने 2,496 रुपये होते हैं, जो इस सीमा से थोड़ा कम है।\n\nश्रेणी कुल मासिक आय से तय होती है, इसलिए जिस कर्मचारी का वेतन साल के बीच किसी श्रेणी की सीमा पार करता है, वह उसी महीने से नई मासिक राशि में आ जाता है। किसी एक महीने में दिया गया बकाया या बोनस भी उस महीने को ऊँची श्रेणी में ले जा सकता है।\n\nपेरोल में क्या करें:\n- मिज़ोरम की सातों श्रेणियाँ ठीक अधिसूचना के अनुसार रखें, जिनकी ऊपरी सीमाएँ 5,000, 8,000, 10,000, 12,000, 15,000 और 20,000 रुपये हैं;\n- हर कर्मचारी की श्रेणी के अनुसार मासिक राशि काटें;\n- हर कर्मचारी के लिए साल भर की कटौती 2,500 रुपये के भीतर रखें;\n- जुलाई 2024 की अधिसूचना की एक प्रति पेरोल रिकॉर्ड के साथ रखें, क्योंकि अलग श्रेणियों वाली पुरानी तालिकाएँ अब भी चलन में हैं।"
+  }
+}

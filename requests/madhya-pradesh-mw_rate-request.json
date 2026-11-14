@@ -1,0 +1,42 @@
+{
+  "action": "REPLACE",
+  "kind": "mw_rate",
+  "target_id": "2e26056c-0c8b-4507-bb7a-aec680840b2a",
+  "payload": {
+    "state": "Madhya Pradesh",
+    "effective_from": "2026-10-01",
+    "structure": "Basic + VDA",
+    "flag": "current",
+    "cadence": "Half-yearly (Apr/Oct)",
+    "zones": "Uniform",
+    "authority": "Labour Department, Madhya Pradesh",
+    "label": null,
+    "categories": [
+      {
+        "name": "Unskilled",
+        "per_day": null,
+        "per_month": 12575
+      },
+      {
+        "name": "Semi-skilled",
+        "per_day": null,
+        "per_month": 13571
+      },
+      {
+        "name": "Skilled",
+        "per_day": null,
+        "per_month": 15294
+      },
+      {
+        "name": "Highly skilled",
+        "per_day": null,
+        "per_month": 16919
+      }
+    ],
+    "reference": "Effective 1 October 2026 (half-year to 31 March 2027)",
+    "note": "Basic Rs. 9,575, 10,571, 12,294 and 13,919 plus VDA Rs. 3,000 a month.",
+    "official_url": "https://labour.mp.gov.in/",
+    "explainer_en": "Madhya Pradesh has one of the simplest minimum wage structures in the country. The rates apply uniformly across the State, without zones, and consist of a fixed basic wage for each skill level plus a variable dearness allowance that is revised twice a year, from 1 April and 1 October.\n\nThe basic monthly wage is Rs. 9,575 for unskilled workers, Rs. 10,571 for semi-skilled, Rs. 12,294 for skilled and Rs. 13,919 for highly skilled workers. From 1 October 2026 to 31 March 2027 the dearness allowance is Rs. 3,000 a month for every grade, so the monthly minimum is Rs. 12,575, Rs. 13,571, Rs. 15,294 and Rs. 16,919.\n\nThe allowance is the same flat amount for all four grades, which keeps the calculation easy: every revision moves each grade by the same number of rupees. From April to September 2026 the allowance was Rs. 2,850, so the October revision added Rs. 150 a month. From October 2025 the unskilled total was Rs. 12,150, meaning the allowance then was Rs. 2,575; over the year it has risen by Rs. 425.\n\nThe flat allowance also means the gap between grades never changes. Highly skilled workers earn Rs. 4,344 a month more than unskilled workers in every period, because the difference comes entirely from the basic wage.\n\nFor payroll, the practical step twice a year is to update one number, the dearness allowance, and check each grade's total pay against the new minimum. Employers that pay a consolidated salary should make sure the total, not just the basic component, meets the figure for the employee's grade.\n\nThe same Labour Department also runs the State's Labour Welfare Fund, where the employer's share rose to Rs. 50 a half-year from 30 January 2026.",
+    "explainer_hi": "मध्य प्रदेश की न्यूनतम मज़दूरी संरचना देश की सबसे सरल संरचनाओं में से एक है। दरें पूरे राज्य में बिना ज़ोन के एक समान लागू होती हैं, और इनमें हर कौशल स्तर की एक निश्चित मूल मज़दूरी और साल में दो बार, 1 अप्रैल और 1 अक्टूबर से, संशोधित होने वाला परिवर्तनशील महँगाई भत्ता शामिल है।\n\nमूल मासिक मज़दूरी अकुशल कामगारों के लिए 9,575 रुपये, अर्धकुशल के लिए 10,571 रुपये, कुशल के लिए 12,294 रुपये और अति-कुशल के लिए 13,919 रुपये है। 1 अक्टूबर 2026 से 31 मार्च 2027 तक महँगाई भत्ता हर श्रेणी के लिए 3,000 रुपये प्रति माह है, इसलिए मासिक न्यूनतम मज़दूरी 12,575, 13,571, 15,294 और 16,919 रुपये है।\n\nभत्ता चारों श्रेणियों के लिए एक ही राशि है, जिससे गणना आसान रहती है: हर संशोधन हर श्रेणी को उतने ही रुपये बढ़ाता है। अप्रैल से सितंबर 2026 तक भत्ता 2,850 रुपये था, इसलिए अक्टूबर के संशोधन ने 150 रुपये प्रति माह जोड़े। अक्टूबर 2025 से अकुशल का कुल 12,150 रुपये था, यानी तब भत्ता 2,575 रुपये था; एक साल में यह 425 रुपये बढ़ा है।\n\nएक समान भत्ते का यह भी अर्थ है कि श्रेणियों के बीच का अंतर कभी नहीं बदलता। हर अवधि में अति-कुशल कामगार अकुशल से 4,344 रुपये प्रति माह अधिक पाते हैं, क्योंकि अंतर पूरी तरह मूल मज़दूरी से आता है।\n\nपेरोल के लिए साल में दो बार व्यावहारिक कदम एक ही राशि, यानी महँगाई भत्ता, अद्यतन करना और हर श्रेणी के कुल वेतन की तुलना नई न्यूनतम मज़दूरी से करना है। समेकित वेतन देने वाले नियोक्ताओं को यह सुनिश्चित करना चाहिए कि केवल मूल घटक नहीं, बल्कि कुल राशि कर्मचारी की श्रेणी की राशि पूरी करे।\n\nयही श्रम विभाग राज्य का श्रम कल्याण कोष भी चलाता है, जिसमें नियोक्ता का हिस्सा 30 जनवरी 2026 से बढ़कर 50 रुपये प्रति छमाही हो गया।"
+  }
+}

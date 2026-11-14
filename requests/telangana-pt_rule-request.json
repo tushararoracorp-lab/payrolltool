@@ -1,0 +1,39 @@
+{
+  "action": "REPLACE",
+  "kind": "pt_rule",
+  "target_id": "b39962e6-2857-47d2-bcf4-b9123e6d72f4",
+  "payload": {
+    "state": "Telangana",
+    "effective_from": "1970-01-01",
+    "frequency": "Monthly",
+    "cycle_text": "Monthly",
+    "basis": "Slab on monthly salary",
+    "due_text": "By the 10th of the following month",
+    "act": "Telangana Tax on Professions, Trades, Callings and Employments Act (as adapted from the Andhra Pradesh Act, 1987)",
+    "annual_cap": "Rs. 2,400 a year",
+    "slab_tables": [
+      {
+        "rows": [
+          {
+            "amt": "Nil",
+            "band": "Up to Rs. 15,000"
+          },
+          {
+            "amt": "Rs. 150 a month",
+            "band": "Rs. 15,001 to Rs. 20,000"
+          },
+          {
+            "amt": "Rs. 200 a month",
+            "band": "Above Rs. 20,000"
+          }
+        ],
+        "unit": "Monthly salary",
+        "title": ""
+      }
+    ],
+    "notes": "Same salary slabs as Andhra Pradesh today, but under a separate Act and department since June 2014. Follow Telangana's own notifications if either state changes its rates.",
+    "official_url": "https://www.tgct.gov.in/",
+    "explainer_en": "Telangana's professional tax on salaries is collected by the Commercial Taxes Department under the State's Tax on Professions, Trades, Callings and Employments Act, the 1987 Andhra Pradesh law as adapted when Telangana was formed in June 2014. Every employer with staff in Telangana registers with the department and deducts the tax from salaries each month.\n\nThere are three slabs on monthly salary. An employee paid up to Rs. 15,000 in a month pays nothing for that month. Between Rs. 15,001 and Rs. 20,000 the deduction is Rs. 150, and above Rs. 20,000 it is Rs. 200. The yearly maximum is therefore Rs. 2,400, below the Rs. 2,500 that Article 276 of the Constitution allows, and there is no February step-up as in Maharashtra or Karnataka.\n\nThe employer pays each month's tax by the 10th of the following month, earlier than Maharashtra's 15th or Karnataka's 20th. A payroll that closes after the 10th has to treat the professional tax payment as a separate step, not part of the month-end close.\n\nThe slab is decided by the salary actually paid for the month, not the salary in the offer letter. A joiner paid for part of a month, an employee on loss of pay, or one whose pay rises through an arrear can each fall into a different slab for that month. Because Telangana and Andhra Pradesh share the same slabs today, a branch in each can use the same table, but each state's own notifications must be followed if either changes.",
+    "explainer_hi": "तेलंगाना में वेतन पर व्यवसाय कर वाणिज्यिक कर विभाग राज्य के व्यवसाय, व्यापार, आजीविका और रोज़गार कर अधिनियम के तहत वसूल करता है, जो 1987 का आंध्र प्रदेश कानून है और जून 2014 में तेलंगाना बनने पर अपनाया गया। तेलंगाना में कर्मचारी रखने वाला हर नियोक्ता विभाग में पंजीकरण कराता है और हर महीने वेतन से कर काटता है।\n\nमासिक वेतन पर तीन स्लैब हैं। किसी महीने 15,000 रुपये तक पाने वाला कर्मचारी उस महीने कुछ नहीं देता। 15,001 से 20,000 रुपये के बीच कटौती 150 रुपये है, और 20,000 रुपये से ऊपर 200 रुपये। इसलिए सालाना अधिकतम 2,400 रुपये है, जो संविधान के अनुच्छेद 276 द्वारा अनुमत 2,500 रुपये से कम है, और महाराष्ट्र या कर्नाटक की तरह फरवरी में कोई बढ़ोतरी नहीं होती।\n\nनियोक्ता हर महीने का कर अगले महीने की 10 तारीख तक जमा करता है, जो महाराष्ट्र की 15 तारीख या कर्नाटक की 20 तारीख से पहले है। जिस पेरोल का समापन 10 तारीख के बाद होता है, उसे व्यवसाय कर के भुगतान को महीने के अंत के समापन का हिस्सा नहीं, बल्कि एक अलग कदम मानना होता है।\n\nस्लैब उस महीने वास्तव में दिए गए वेतन से तय होता है, नियुक्ति पत्र के वेतन से नहीं। महीने के कुछ दिनों का वेतन पाने वाला नया कर्मचारी, वेतन कटौती (LOP) वाला कर्मचारी, या बकाया मिलने से जिसका वेतन बढ़ा हो, हर कोई उस महीने अलग स्लैब में आ सकता है। तेलंगाना और आंध्र प्रदेश के स्लैब आज एक जैसे हैं, इसलिए दोनों राज्यों की शाखाएँ एक ही तालिका इस्तेमाल कर सकती हैं, लेकिन किसी में भी बदलाव होने पर हर राज्य की अपनी अधिसूचनाओं का पालन करना होगा।"
+  }
+}

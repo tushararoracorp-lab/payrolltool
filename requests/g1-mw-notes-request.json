@@ -1,0 +1,540 @@
+[
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "3a1e595d-c239-45de-aa15-431326d396ed",
+    "payload": {
+      "state": "Jharkhand",
+      "effective_from": "2026-04-01",
+      "structure": "Basic + VDA",
+      "flag": "current",
+      "cadence": "Half-yearly",
+      "zones": "Area A/B/C",
+      "authority": "Dept. of Labour, Employment, Training & Skill Development",
+      "label": "Superseded by the 1 October 2026 VDA notification",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 13385
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 14043
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 18504
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 21336
+        }
+      ],
+      "reference": "No. 2/MW-2071/2010 (Part-3), Sr. No. 742",
+      "note": "Notification dated 25 May 2026. Area A unskilled Rs. 515 a day. Issued under section 6 of the Code on Wages, 2019. Scheduled employments are grouped into Category A (49) and Category B (41).",
+      "official_url": "https://shramadhan.jharkhand.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "eef8ff6f-15e1-4ce6-88d8-ac2a44604d48",
+    "payload": {
+      "state": "Karnataka",
+      "effective_from": "2026-05-22",
+      "structure": "Basic + VDA",
+      "flag": "sub_judice",
+      "cadence": "Irregular",
+      "zones": "Zone 1/2/3",
+      "authority": "Labour Department, Karnataka",
+      "label": "In force; challenge pending, not stayed",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 23376
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 31114
+        }
+      ],
+      "reference": "Notification KA 411 LWA 2023 dated 22 May 2026",
+      "note": "Zone 1 basic rates shown; VDA is payable on top. 81 scheduled employments in 3 zones. Challenged in WP 16145/2026: on 21 September 2026 the High Court declined interim relief and tagged the petitions with the Division Bench appeals, so the revision stays in force. The Court also stayed State circulars deferring the new rates for contract workers. Earlier Zone 1 unskilled rate: Rs. 15,701 (1 April 2025).",
+      "official_url": "https://labour.karnataka.gov.in/",
+      "explainer_en": "Karnataka made the largest minimum wage revision in recent years with Notification KA 411 LWA 2023 dated 22 May 2026. It covers 81 scheduled employments across three zones, with increases of up to about 60%, and is now being challenged in the High Court.\n\nFor Zone 1, which covers Greater Bengaluru, the basic monthly rate for unskilled workers under the 2026 notification is Rs. 23,376, and for highly skilled workers Rs. 31,114. A variable dearness allowance is payable on top; published calculations put it at about Rs. 1,031 a month, which takes the unskilled total to about Rs. 24,407. Under the previous schedule, effective 1 April 2025, the Zone 1 unskilled rate was Rs. 15,701, so the increase is large.\n\nThe revision had a long path. A draft was published on 11 April 2025, with a corrigendum on 19 April 2025. The State Advisory Board took a decision on 29 July 2025, but a High Court order of 28 July 2025 had barred it from being implemented. The final notification came on 22 May 2026.\n\nEmployers then challenged it in Writ Petition 16145/2026. On 21 September 2026 the High Court declined to grant interim relief and tagged the petitions with Division Bench appeals that were already pending, so the question of validity is still open. The Court also stayed State circulars that had deferred the new rates for contract workers.\n\nThe practical position is that the 22 May 2026 rates are in force and not stayed. An employer that pays below them carries the risk of arrears if the notification is upheld, and the earlier Rs. 15,701 schedule is no longer the operative floor. The dearness allowance resets each April.",
+      "explainer_hi": "कर्नाटक ने 22 मई 2026 की अधिसूचना KA 411 LWA 2023 से हाल के वर्षों का सबसे बड़ा न्यूनतम मज़दूरी संशोधन किया। यह तीन ज़ोन में 81 अनुसूचित रोज़गारों को कवर करता है, जिसमें लगभग 60% तक की बढ़ोतरी है, और अब उच्च न्यायालय में इसे चुनौती दी गई है।\n\nग्रेटर बेंगलुरु वाले ज़ोन 1 के लिए, 2026 की अधिसूचना के तहत अकुशल कामगारों की मूल मासिक दर 23,376 रुपये और अति-कुशल कामगारों की 31,114 रुपये है। इसके ऊपर परिवर्तनशील महँगाई भत्ता देय है; प्रकाशित गणनाएँ इसे लगभग 1,031 रुपये प्रति माह बताती हैं, जिससे अकुशल का कुल लगभग 24,407 रुपये होता है। 1 अप्रैल 2025 से लागू पिछली अनुसूची में ज़ोन 1 की अकुशल दर 15,701 रुपये थी, इसलिए बढ़ोतरी बड़ी है।\n\nइस संशोधन का रास्ता लंबा रहा। 11 अप्रैल 2025 को मसौदा प्रकाशित हुआ, और 19 अप्रैल 2025 को शुद्धि-पत्र। राज्य सलाहकार बोर्ड ने 29 जुलाई 2025 को निर्णय लिया, लेकिन उच्च न्यायालय के 28 जुलाई 2025 के आदेश ने उसे लागू करने से रोक दिया था। अंतिम अधिसूचना 22 मई 2026 को आई।\n\nइसके बाद नियोक्ताओं ने रिट याचिका 16145/2026 में इसे चुनौती दी। 21 सितंबर 2026 को उच्च न्यायालय ने अंतरिम राहत देने से इनकार किया और याचिकाओं को पहले से लंबित खंडपीठ अपीलों के साथ जोड़ दिया, इसलिए वैधता का प्रश्न अभी खुला है। न्यायालय ने उन राज्य परिपत्रों पर भी रोक लगाई जिन्होंने अनुबंध कामगारों के लिए नई दरें टाल दी थीं।\n\nव्यावहारिक स्थिति यह है कि 22 मई 2026 की दरें लागू हैं और उन पर रोक नहीं है। जो नियोक्ता इनसे कम भुगतान करता है, वह अधिसूचना बरकरार रहने पर बकाया का जोखिम उठाता है, और 15,701 रुपये वाली पुरानी अनुसूची अब लागू न्यूनतम सीमा नहीं है। महँगाई भत्ता हर अप्रैल फिर से तय होता है।"
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "50ac8670-1f33-437d-83db-87855e2a237e",
+    "payload": {
+      "state": "Karnataka",
+      "effective_from": "2025-04-11",
+      "structure": "Basic + VDA",
+      "flag": "current",
+      "cadence": "Irregular",
+      "zones": "Zone 1/2/3",
+      "authority": "Labour Department, Karnataka",
+      "label": "Draft, superseded by the 22 May 2026 final",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 23276
+        }
+      ],
+      "reference": "Draft 11 Apr 2025; corrigendum 19 Apr 2025",
+      "note": "Draft proposal: Zone 1 unskilled Rs. 23,276 to Rs. 23,410. The Advisory Board decision of 29 July 2025 was barred from implementation by the High Court order of 28 July 2025.",
+      "official_url": "https://labour.karnataka.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "efb6d2b3-3907-4449-aa1e-199be7ef28ef",
+    "payload": {
+      "state": "Karnataka",
+      "effective_from": "2025-04-01",
+      "structure": "Basic + VDA",
+      "flag": "current",
+      "cadence": "Irregular",
+      "zones": "Zone 1/2/3",
+      "authority": "Labour Department, Karnataka",
+      "label": "Superseded by the 22 May 2026 notification",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 15701
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 16860
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 18135
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 19537
+        }
+      ],
+      "reference": "Zone 1 schedule",
+      "note": "Zone 1 (Greater Bengaluru). Basic plus VDA at 4 paise a point above the 6537 base.",
+      "official_url": "https://labour.karnataka.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "d1fc26f1-78b1-424f-8d08-09ea145fcf20",
+    "payload": {
+      "state": "Central Sphere",
+      "effective_from": "2024-10-01",
+      "structure": "Basic + VDA",
+      "flag": "current",
+      "cadence": "Half-yearly (1 Apr / 1 Oct)",
+      "zones": "Area A/B/C",
+      "authority": "Chief Labour Commissioner (Central)",
+      "label": "Superseded",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 20358
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 22568
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 24804
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 26910
+        }
+      ],
+      "reference": "F.No. 1/27(2)/2024-LS-II",
+      "note": "CPI-IW 402.09 from 399.70 (+2.40 points). Area A daily: unskilled Rs. 783, semi-skilled Rs. 868, skilled and clerical Rs. 954, highly skilled Rs. 1,035. Area B unskilled Rs. 655 a day; Area C Rs. 526 a day.",
+      "official_url": "https://clc.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "15316779-d2e5-4175-aa76-d9a7203ec90e",
+    "payload": {
+      "state": "Central Sphere",
+      "effective_from": "2022-10-01",
+      "structure": "Basic + VDA",
+      "flag": "current",
+      "cadence": "Half-yearly (1 Apr / 1 Oct)",
+      "zones": "Area A/B/C",
+      "authority": "Chief Labour Commissioner (Central)",
+      "label": "Superseded",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 18486
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 20488
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 22516
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 24440
+        }
+      ],
+      "reference": null,
+      "note": "CPI-IW 365.76 from 357.65 (+8.11 points, base 2016=100). Area A daily: unskilled Rs. 711, semi-skilled Rs. 788, skilled Rs. 866, highly skilled Rs. 940. Area B unskilled Rs. 595 a day; Area C Rs. 477 a day.",
+      "official_url": "https://clc.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "9ebf419e-7f60-4b56-8525-5f15cd5aa50c",
+    "payload": {
+      "state": "Central Sphere",
+      "effective_from": "2021-10-01",
+      "structure": "Basic + VDA",
+      "flag": "current",
+      "cadence": "Half-yearly (1 Apr / 1 Oct)",
+      "zones": "Area A/B/C",
+      "authority": "Chief Labour Commissioner (Central)",
+      "label": "Superseded",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 17004
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 18824
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 20670
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 22464
+        }
+      ],
+      "reference": null,
+      "note": "Area A daily: unskilled Rs. 654, semi-skilled Rs. 724, skilled Rs. 795, highly skilled Rs. 864. Area B Rs. 546, 617, 724 and 795; Area C Rs. 437, 512, 617 and 724.",
+      "official_url": "https://clc.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "dd7a3d08-40b7-4ea8-a767-e32b0c73a06e",
+    "payload": {
+      "state": "Arunachal Pradesh",
+      "effective_from": "2016-04-01",
+      "structure": "Consolidated",
+      "flag": "dormant",
+      "cadence": "Irregular",
+      "zones": "Zone I/II",
+      "authority": "Labour & Employment Department",
+      "label": "In force",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 6000
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 6600
+        }
+      ],
+      "reference": null,
+      "note": "Last revised with effect from 1 April 2016. Zone I / Zone II: unskilled Rs. 6,000 / Rs. 6,600; skilled Rs. 6,600 / Rs. 7,200.",
+      "official_url": "https://arunachalpradesh.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "decb4512-2977-4bfd-890b-333830e64135",
+    "payload": {
+      "state": "Jammu and Kashmir",
+      "effective_from": "2022-10-17",
+      "structure": "Basic + VDA",
+      "flag": "dormant",
+      "cadence": "Irregular",
+      "zones": "Uniform",
+      "authority": "Labour & Employment Department, J&K",
+      "label": "In force",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 8086
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 12558
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 14352
+        }
+      ],
+      "reference": null,
+      "note": "The UT schedule was last revised with effect from 17 October 2022. In February 2026 the J&K government told the Assembly that the central VDA revisions (from 1 October 2024, valid to October 2027) apply and that the Code on Wages is in force. Ministerial Rs. 11,674.",
+      "official_url": "https://jklabour.jk.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "1564ef59-162f-418a-a40c-5d7216c1ca22",
+    "payload": {
+      "state": "Mizoram",
+      "effective_from": "2023-04-01",
+      "structure": "Basic + VDA",
+      "flag": "dormant",
+      "cadence": "Irregular",
+      "zones": "Uniform",
+      "authority": "Labour, Employment, Skill Dev. & Entrepreneurship Dept.",
+      "label": "In force",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 10920
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 11960
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 14820
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 18980
+        }
+      ],
+      "reference": null,
+      "note": "Last revised with effect from 1 April 2023.",
+      "official_url": "https://letes.mizoram.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "32c3ce30-fe3a-4d1c-bfaa-6ab4fe7a6ea7",
+    "payload": {
+      "state": "Nagaland",
+      "effective_from": "2019-06-14",
+      "structure": "Consolidated",
+      "flag": "dormant",
+      "cadence": "Irregular",
+      "zones": "Uniform",
+      "authority": "Labour Department, Nagaland",
+      "label": "In force",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 5280
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 6300
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 7050
+        }
+      ],
+      "reference": null,
+      "note": "Last revised with effect from June 2019.",
+      "official_url": "https://labour.nagaland.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "8b91df8a-cc6e-4525-9bca-99142cb0c73c",
+    "payload": {
+      "state": "Nagaland",
+      "effective_from": "2019-06-01",
+      "structure": "Consolidated",
+      "flag": "current",
+      "cadence": "Irregular",
+      "zones": "Uniform",
+      "authority": "Labour Department, Nagaland",
+      "label": "In force",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 5280
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 6300
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 7050
+        }
+      ],
+      "reference": null,
+      "note": "Daily: Rs. 176, Rs. 210 and Rs. 235. The Nagaland State Human Rights Commission took up the absence of a revision in July 2024 (suo motu case 14/2024).",
+      "official_url": "https://labour.nagaland.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "6c07bf72-0686-4419-acd8-c738c5cb9d98",
+    "payload": {
+      "state": "Rajasthan",
+      "effective_from": "2023-01-01",
+      "structure": "Basic + VDA",
+      "flag": "dormant",
+      "cadence": "Irregular",
+      "zones": "Uniform",
+      "authority": "Labour Department, Rajasthan",
+      "label": "In force",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 7410
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 7722
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 8034
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 9334
+        }
+      ],
+      "reference": null,
+      "note": "Last revised with effect from 1 January 2023.",
+      "official_url": "https://labour.rajasthan.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  },
+  {
+    "action": "REPLACE",
+    "kind": "mw_rate",
+    "target_id": "30efce04-2b1f-42a1-ab52-90ddd364c837",
+    "payload": {
+      "state": "Sikkim",
+      "effective_from": "2022-07-11",
+      "structure": "Consolidated",
+      "flag": "dormant",
+      "cadence": "Irregular",
+      "zones": "Uniform",
+      "authority": "Labour Department, Sikkim",
+      "label": "In force",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_day": null,
+          "per_month": 13000
+        },
+        {
+          "name": "Semi-skilled",
+          "per_day": null,
+          "per_month": 13520
+        },
+        {
+          "name": "Skilled",
+          "per_day": null,
+          "per_month": 13910
+        },
+        {
+          "name": "Highly skilled",
+          "per_day": null,
+          "per_month": 14690
+        }
+      ],
+      "reference": null,
+      "note": "Last revised with effect from 11 July 2022.",
+      "official_url": "https://sikkim.gov.in/",
+      "explainer_en": null,
+      "explainer_hi": null
+    }
+  }
+]

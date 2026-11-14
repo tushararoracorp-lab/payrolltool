@@ -1,6 +1,6 @@
 ---
-title: "LOP (Loss of Pay) Meaning & Calculation in India | Complete Formula Guide"
-description: "Understand Loss of Pay (LOP) meaning and calculation in Indian payroll. Learn formula, common mistakes, and how LOP affects EPF, ESI, and PT deductions."
+title: "LOP (Loss of Pay) in India: Meaning, Formula and Calculation"
+description: "Loss of pay explained: the LOP formula, per-day salary on calendar days, 30 or 26, worked examples, and how LOP days reduce EPF, ESI and professional tax."
 date: "2026-07-05"
 slug: "how-to-calculate-lop-in-india"
 ---

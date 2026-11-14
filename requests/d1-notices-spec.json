@@ -1,0 +1,89 @@
+[
+  {
+    "match": {
+      "state": "West Bengal",
+      "title_contains": "overhauls Professional Tax"
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "PT",
+      "state": "West Bengal",
+      "title": "West Bengal replaces its professional tax schedule from 1 October 2026: nil up to Rs. 20,000 a month for salaried employees",
+      "short_summary": "Notification No. 1607-F.T. of 16 September 2026 substituted the Schedule to the West Bengal professional tax Act. From 1 October 2026 salaries up to Rs. 20,000 a month pay nothing, and above that Rs. 100, Rs. 140, Rs. 170 or Rs. 208 a month. Professionals and traders move to new rates from 1 April 2027.",
+      "reference": "Notification No. 1607-F.T. dated 16 September 2026, Finance Department (Revenue), Government of West Bengal; draft published in August 2026",
+      "effective_date": "2026-10-01",
+      "published_date": "2026-09-16",
+      "flag": "current",
+      "status": "in_force",
+      "issued_by": "Finance Department (Revenue), Government of West Bengal",
+      "official_url": "https://www.wbcomtax.gov.in/",
+      "explainer_en": "West Bengal's Finance Department published a draft of a new professional tax schedule in August 2026 and invited objections for fourteen days. On 16 September 2026 it issued the final version as Notification No. 1607-F.T., which substitutes the Schedule to the West Bengal State Tax on Professions, Trades, Callings and Employments Act, 1979. The salary entries take effect from 1 October 2026; the entries for professionals, traders and other businesses take effect from 1 April 2027.\n\nFor salary and wage earners, the exemption doubles from Rs. 10,000 to Rs. 20,000 a month, and the slabs above it are reset. A monthly salary up to Rs. 20,000 pays nothing. From Rs. 20,001 to Rs. 30,000 the tax is Rs. 100 a month, from Rs. 30,001 to Rs. 50,000 it is Rs. 140, from Rs. 50,001 to Rs. 1,00,000 it is Rs. 170, and above Rs. 1,00,000 it is Rs. 208. The old schedule charged Rs. 110, Rs. 130, Rs. 150 and Rs. 200 from Rs. 10,001 upwards.\n\nThe effect is a lower deduction for almost everyone. An employee on Rs. 18,000 a month, who paid Rs. 130 before, now pays nothing, and one on Rs. 45,000 pays Rs. 140 instead of Rs. 200. Only salaries above Rs. 1,00,000 pay more, by Rs. 8 a month, taking the yearly total to Rs. 2,496.\n\nThe dates decide which table applies. Salary for September 2026, even if paid in October, uses the old slabs; salary for October 2026 onwards uses the new ones, and that month's deduction is due by 21 November 2026. An earlier version of this entry gave the August draft as the source; the rates above are those of the final notification.",
+      "explainer_hi": "पश्चिम बंगाल के वित्त विभाग ने अगस्त 2026 में व्यवसाय कर की नई अनुसूची का मसौदा प्रकाशित किया और चौदह दिनों में आपत्तियाँ माँगीं। 16 सितंबर 2026 को उसने अंतिम रूप अधिसूचना संख्या 1607-F.T. के रूप में जारी किया, जो पश्चिम बंगाल राज्य व्यवसाय, व्यापार, आजीविका और रोज़गार कर अधिनियम, 1979 की अनुसूची को बदल देती है। वेतन की प्रविष्टियाँ 1 अक्टूबर 2026 से लागू हैं; पेशेवरों, व्यापारियों और अन्य व्यवसायों की प्रविष्टियाँ 1 अप्रैल 2027 से लागू होंगी।\n\nवेतन और मज़दूरी पाने वालों के लिए छूट की सीमा 10,000 रुपये से दोगुनी होकर 20,000 रुपये प्रति माह हो गई है, और उसके ऊपर के स्लैब नए सिरे से तय हुए हैं। 20,000 रुपये तक के मासिक वेतन पर कुछ नहीं देना होता। 20,001 से 30,000 रुपये तक कर 100 रुपये प्रति माह है, 30,001 से 50,000 रुपये तक 140 रुपये, 50,001 से 1,00,000 रुपये तक 170 रुपये, और 1,00,000 रुपये से ऊपर 208 रुपये। पुरानी अनुसूची में 10,001 रुपये से ऊपर 110, 130, 150 और 200 रुपये लगते थे।\n\nइसका असर लगभग हर किसी के लिए कम कटौती है। 18,000 रुपये मासिक वेतन वाला कर्मचारी, जो पहले 130 रुपये देता था, अब कुछ नहीं देता, और 45,000 रुपये वाला 200 के बजाय 140 रुपये देता है। केवल 1,00,000 रुपये से ऊपर का वेतन 8 रुपये प्रति माह अधिक देता है, जिससे सालाना कुल 2,496 रुपये होता है।\n\nतारीखें तय करती हैं कि कौन-सी तालिका लागू होगी। सितंबर 2026 का वेतन, चाहे अक्टूबर में दिया जाए, पुराने स्लैब पर चलता है; अक्टूबर 2026 और उसके बाद का वेतन नए स्लैब पर, और उस महीने की कटौती 21 नवंबर 2026 तक देय है। इस प्रविष्टि के पिछले संस्करण में अगस्त के मसौदे को स्रोत बताया गया था; ऊपर दी गई दरें अंतिम अधिसूचना की हैं।"
+    }
+  },
+  {
+    "match": {
+      "state": "Karnataka",
+      "title_contains": "exemption for persons with disability"
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "PT",
+      "state": "Karnataka",
+      "title": "Karnataka professional tax exemptions consolidated by notification FD 09 CPT 2023 of 13 July 2023",
+      "short_summary": "Karnataka rescinded 14 earlier exemption notifications and issued one consolidated list. For payroll, the exempt include persons with at least 40% permanent disability of both upper and lower extremities, blind or deaf and dumb salaried employees, armed forces and Central Para-Military Force personnel, and approved foreign technicians for two years.",
+      "reference": "Notification-1 and Notification-2, FD 09 CPT 2023, Finance Department (C.T-1), dated 13 July 2023",
+      "effective_date": "2023-07-13",
+      "published_date": "2023-07-13",
+      "flag": "current",
+      "status": "in_force",
+      "issued_by": "Finance Department, Government of Karnataka",
+      "official_url": "https://gst.kar.nic.in/latestupdates/ptnotification217723.pdf",
+      "explainer_en": "On 13 July 2023 the Finance Department of Karnataka issued two notifications under section 29 of the Karnataka Tax on Professions, Trades, Callings and Employments Act, 1976. Notification-1 rescinded fourteen earlier exemption notifications. Notification-2, published in the Karnataka Gazette the same day, replaced them with one consolidated list of fourteen exemptions, effective from publication.\n\nFive of them matter for salary deductions. A person with a total permanent disability of not less than 40% of both upper and lower extremities is exempt, on producing a certificate from the Head of the Orthopaedic Department of a Government Civil Hospital in the State. A salary earner who is blind, or deaf and dumb, is exempt. Combatant and civilian non-combatant members of the armed forces governed by the Army, Navy and Air Force Acts are exempt, and so are Central Para-Military Force personnel. Foreign technicians employed in the State, whose appointments the Government of India has approved for income tax exemption, are exempt for up to two years from joining.\n\nEx-servicemen are exempt only outside the salary entry, so an ex-serviceman in salaried employment still pays. The other exemptions cover small transport operators, persons with one child who have undergone sterilisation, rural charitable hospitals, certain directors nominated by State financing agencies, and some educational institutions.\n\nFor payroll, a status-based exemption is not automatic: the employer needs the certificate on file, applies the exemption from the date eligibility is shown, and keeps the evidence in case the missing deduction is questioned later. An exemption recorded late does not make earlier deductions wrong by itself; it applies from the date the employee's eligibility is shown.",
+      "explainer_hi": "13 जुलाई 2023 को कर्नाटक के वित्त विभाग ने कर्नाटक व्यवसाय, व्यापार, आजीविका और रोज़गार कर अधिनियम, 1976 की धारा 29 के तहत दो अधिसूचनाएँ जारी कीं। अधिसूचना-1 ने छूट की चौदह पुरानी अधिसूचनाएँ रद्द कीं। अधिसूचना-2, जो उसी दिन कर्नाटक राजपत्र में प्रकाशित हुई, ने उनकी जगह चौदह छूटों की एक समेकित सूची दी, जो प्रकाशन से लागू हुई।\n\nइनमें से पाँच वेतन कटौती के लिए महत्वपूर्ण हैं। दोनों ऊपरी और निचले अंगों की कम से कम 40% स्थायी विकलांगता वाला व्यक्ति, राज्य के किसी सरकारी सिविल अस्पताल के अस्थि रोग विभाग के प्रमुख का प्रमाणपत्र देने पर, छूट में है। दृष्टिहीन या मूक-बधिर वेतनभोगी छूट में है। थल सेना, नौसेना और वायु सेना अधिनियमों के तहत आने वाले सशस्त्र बलों के लड़ाकू और असैनिक गैर-लड़ाकू सदस्य छूट में हैं, और केंद्रीय अर्धसैनिक बलों के कर्मी भी। राज्य में कार्यरत वे विदेशी तकनीशियन, जिनकी नियुक्ति भारत सरकार ने आयकर छूट के लिए स्वीकृत की है, जुड़ने से अधिकतम दो वर्ष तक छूट में हैं।\n\nपूर्व सैनिक केवल वेतन वाली प्रविष्टि के बाहर छूट में हैं, इसलिए वेतनभोगी नौकरी करने वाला पूर्व सैनिक कर देता है। अन्य छूटें छोटे परिवहन संचालकों, एक संतान के बाद नसबंदी कराने वाले व्यक्तियों, ग्रामीण धर्मार्थ अस्पतालों, राज्य वित्तीय एजेंसियों द्वारा नामित कुछ निदेशकों और कुछ शैक्षणिक संस्थानों से जुड़ी हैं।\n\nपेरोल के लिए स्थिति पर आधारित छूट अपने आप लागू नहीं होती: नियोक्ता को प्रमाणपत्र रिकॉर्ड में रखना होता है, पात्रता दिखाए जाने की तारीख से छूट लागू करनी होती है, और बाद में कटौती न होने पर सवाल उठे तो उसके लिए साक्ष्य रखना होता है। देर से दर्ज की गई छूट अपने आप पिछली कटौतियों को गलत नहीं बनाती; यह उस तारीख से लागू होती है जब कर्मचारी की पात्रता दिखाई जाती है।"
+    }
+  },
+  {
+    "match": {
+      "state": "Gujarat",
+      "title_contains": "up to Rs 12,000"
+    },
+    "action": "REPLACE",
+    "payload": {
+      "category": "PT",
+      "state": "Gujarat",
+      "title": "Gujarat exempts monthly salaries up to Rs. 12,000 from professional tax from 1 April 2022",
+      "short_summary": "Notification GHN-35-PFT-2022 of 8 April 2022 replaced Gujarat's salary slabs with two from 1 April 2022: nil up to Rs. 12,000 a month and Rs. 200 a month above it, removing the Rs. 80 and Rs. 150 bands.",
+      "reference": "Finance Department notification GHN-35-PFT-2022-S.3(2)(10)-Th dated 8 April 2022",
+      "effective_date": "2022-04-01",
+      "published_date": "2022-04-08",
+      "flag": "current",
+      "status": "in_force",
+      "issued_by": "Finance Department, Government of Gujarat",
+      "official_url": "https://commercialtax.gujarat.gov.in/",
+      "explainer_en": "By notification GHN-35-PFT-2022-S.3(2)(10)-Th dated 8 April 2022, the Finance Department of Gujarat amended the salary entry of the Schedule to the Gujarat Panchayats, Municipal Corporations and State Tax on Professions, Trades, Callings and Employments Act, 1976, with effect from 1 April 2022. The change carried out the Finance Minister's budget announcement for 2022-23 that persons earning salary or wages up to Rs. 12,000 would be fully exempt.\n\nBefore it, monthly salaries up to Rs. 5,999 paid nothing, salaries from Rs. 6,000 to Rs. 8,999 paid Rs. 80 a month, salaries from Rs. 9,000 to Rs. 11,999 paid Rs. 150, and salaries of Rs. 12,000 and above paid Rs. 200. From 1 April 2022 there are two slabs only: a monthly salary up to Rs. 12,000 pays nothing, and more than Rs. 12,000 pays Rs. 200 a month.\n\nThe notification applies the same two slabs to employees of the State and Central Governments, panchayats, public sector undertakings and grant-in-aid institutions, and to all other salary and wage earners. It also provides that where salary is paid for a period other than a month, it is converted to a monthly figure for the slab.\n\nThe effect was to take every employee earning Rs. 12,000 or less a month out of the tax, and to leave the Rs. 200 rate unchanged for everyone above. The yearly maximum on salary stays Rs. 2,400. Payrolls that kept the old Rs. 80 and Rs. 150 bands after April 2022 over-deducted from lower-paid staff for every month they did so.",
+      "explainer_hi": "8 अप्रैल 2022 की अधिसूचना GHN-35-PFT-2022-S.3(2)(10)-Th से गुजरात के वित्त विभाग ने गुजरात पंचायत, नगर निगम और राज्य व्यवसाय, व्यापार, आजीविका और रोज़गार कर अधिनियम, 1976 की अनुसूची की वेतन प्रविष्टि में 1 अप्रैल 2022 से संशोधन किया। यह बदलाव वित्त मंत्री की 2022-23 के बजट की उस घोषणा को लागू करता था कि 12,000 रुपये तक वेतन या मज़दूरी पाने वाले पूरी तरह छूट में होंगे।\n\nइससे पहले 5,999 रुपये तक के मासिक वेतन पर कुछ नहीं, 6,000 से 8,999 रुपये पर 80 रुपये प्रति माह, 9,000 से 11,999 रुपये पर 150 रुपये, और 12,000 रुपये व उससे अधिक पर 200 रुपये लगते थे। 1 अप्रैल 2022 से केवल दो स्लैब हैं: 12,000 रुपये तक के मासिक वेतन पर कुछ नहीं, और 12,000 रुपये से अधिक पर 200 रुपये प्रति माह।\n\nअधिसूचना यही दो स्लैब राज्य और केंद्र सरकार, पंचायतों, सार्वजनिक उपक्रमों और अनुदान प्राप्त संस्थानों के कर्मचारियों पर, और अन्य सभी वेतन व मज़दूरी पाने वालों पर लागू करती है। यह भी प्रावधान है कि जहाँ वेतन महीने के अलावा किसी अवधि के लिए दिया जाता है, वहाँ स्लैब के लिए उसे मासिक राशि में बदला जाता है।\n\nइसका असर यह हुआ कि 12,000 रुपये या उससे कम कमाने वाला हर कर्मचारी कर से बाहर हो गया, और उससे ऊपर वालों के लिए 200 रुपये की दर वही रही। वेतन पर सालाना अधिकतम 2,400 रुपये ही है। जिन पेरोल ने अप्रैल 2022 के बाद भी 80 और 150 रुपये वाले पुराने स्लैब रखे, उन्होंने ऐसे हर महीने कम वेतन वाले कर्मचारियों से अधिक कटौती की।"
+    }
+  },
+  {
+    "match": {
+      "state": "Karnataka",
+      "title_contains": "digitises PT registration"
+    },
+    "action": "REMOVE"
+  },
+  {
+    "match": {
+      "state": "Andhra Pradesh",
+      "title_contains": "enterprise-turnover"
+    },
+    "action": "REMOVE"
+  },
+  {
+    "match": {
+      "state": "Maharashtra",
+      "title_contains": "omnibus Tax Laws"
+    },
+    "action": "REMOVE"
+  }
+]

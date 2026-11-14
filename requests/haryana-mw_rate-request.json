@@ -1,0 +1,42 @@
+{
+  "action": "REPLACE",
+  "kind": "mw_rate",
+  "target_id": "6ce81c30-fe58-4ff9-aa5d-d9072597d0bf",
+  "payload": {
+    "state": "Haryana",
+    "effective_from": "2026-04-01",
+    "structure": "Consolidated (Code on Wages)",
+    "flag": "current",
+    "cadence": "Half-yearly",
+    "zones": "Uniform",
+    "authority": "Labour Department, Haryana",
+    "label": "In force",
+    "categories": [
+      {
+        "name": "Unskilled",
+        "per_day": 585,
+        "per_month": 15221
+      },
+      {
+        "name": "Semi-skilled",
+        "per_day": 645,
+        "per_month": 16781
+      },
+      {
+        "name": "Skilled",
+        "per_day": 712,
+        "per_month": 18501
+      },
+      {
+        "name": "Highly skilled",
+        "per_day": 747,
+        "per_month": 19426
+      }
+    ],
+    "reference": "No. 2/25/26-2 Lab./914/2026 dated 9 Apr 2026, Gazette Extraordinary No. 51-2026",
+    "note": "Exact monthly rates: Rs. 15,220.71, 16,780.74, 18,500.81 and 19,425.85. First revision under section 8(3) of the Code on Wages, after October 2015. One basic wage that cannot be split into allowances; CPI neutralisation as per the Rules; daily rate is the monthly wage divided by 26. Trainees at 75%, never below the unskilled rate.",
+    "official_url": "https://hrylabour.gov.in/",
+    "explainer_en": "Haryana revised its minimum wages from 1 April 2026 by notification No. 2/25/26-2 Lab./914/2026 dated 9 April 2026, published in the Haryana Government Gazette Extraordinary No. 51-2026. It was the first revision under section 8(3) of the Code on Wages, 2019, and the first full revision of the basic rates since October 2015; in between, only the dearness allowance had moved with the consumer price index.\n\nThe new rates are a single consolidated wage, the same across the State. The monthly minimum is Rs. 15,220.71 for unskilled workers, Rs. 16,780.74 for semi-skilled, Rs. 18,500.81 for skilled and Rs. 19,425.85 for highly skilled workers. The daily rate is the monthly wage divided by 26: Rs. 585, Rs. 645, Rs. 712 and Rs. 747 when rounded.\n\nThe size of the jump is the headline. In the July to December 2025 period the unskilled rate was Rs. 11,275.12 a month, so the April 2026 rate is about 35% higher. Any wage structure built on the 2025 figures is now below the floor.\n\nThe notification also changes how the wage is described. The minimum is one basic wage that cannot be split into allowances, so an employer cannot meet it by adding up basic, house rent and other allowances. Dearness neutralisation continues under the Rules, in line with the consumer price index. Trainees are paid 75% of the rate for their category, but never less than the unskilled rate.\n\nHaryana confirmed in October 2026 that the April rates remain in force, so there was no October revision in 2026. Payroll in Haryana should check each employee's total fixed pay against these consolidated figures rather than against basic pay alone.",
+    "explainer_hi": "हरियाणा ने 9 अप्रैल 2026 की अधिसूचना संख्या 2/25/26-2 Lab./914/2026 से, जो हरियाणा सरकार राजपत्र असाधारण संख्या 51-2026 में प्रकाशित हुई, 1 अप्रैल 2026 से न्यूनतम मज़दूरी संशोधित की। यह वेतन संहिता, 2019 की धारा 8(3) के तहत पहला संशोधन था, और अक्टूबर 2015 के बाद मूल दरों का पहला पूरा संशोधन; बीच में केवल महँगाई भत्ता उपभोक्ता मूल्य सूचकांक के साथ बदला था।\n\nनई दरें एक समेकित मज़दूरी हैं, जो पूरे राज्य में एक जैसी है। मासिक न्यूनतम मज़दूरी अकुशल कामगारों के लिए 15,220.71 रुपये, अर्धकुशल के लिए 16,780.74 रुपये, कुशल के लिए 18,500.81 रुपये और अति-कुशल के लिए 19,425.85 रुपये है। दैनिक दर मासिक मज़दूरी को 26 से भाग देकर निकलती है: पूर्णांकित करने पर 585, 645, 712 और 747 रुपये।\n\nबढ़ोतरी का आकार सबसे बड़ी बात है। जुलाई से दिसंबर 2025 की अवधि में अकुशल दर 11,275.12 रुपये प्रति माह थी, इसलिए अप्रैल 2026 की दर लगभग 35% अधिक है। 2025 की राशियों पर बना कोई भी वेतन ढाँचा अब न्यूनतम सीमा से नीचे है।\n\nअधिसूचना मज़दूरी को बताने का तरीका भी बदलती है। न्यूनतम मज़दूरी एक मूल मज़दूरी है जिसे भत्तों में नहीं बाँटा जा सकता, इसलिए नियोक्ता मूल वेतन, मकान किराया और अन्य भत्ते जोड़कर इसे पूरा नहीं कर सकता। महँगाई का समायोजन नियमों के तहत उपभोक्ता मूल्य सूचकांक के अनुसार जारी रहता है। प्रशिक्षुओं को उनकी श्रेणी की दर का 75% मिलता है, लेकिन कभी भी अकुशल दर से कम नहीं।\n\nहरियाणा ने अक्टूबर 2026 में पुष्टि की कि अप्रैल की दरें लागू रहेंगी, इसलिए 2026 में अक्टूबर का कोई संशोधन नहीं हुआ। हरियाणा में पेरोल को हर कर्मचारी के कुल निश्चित वेतन की तुलना केवल मूल वेतन से नहीं, बल्कि इन समेकित राशियों से करनी चाहिए।"
+  }
+}

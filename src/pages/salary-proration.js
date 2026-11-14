@@ -33,6 +33,147 @@ const INFO_CARDS = [
   },
 ];
 
+const SP_MISTAKES = [
+  {
+    t: "Changing the divisor between joiners and leavers",
+    d: "If the policy prorates on calendar days, use calendar days for every part month. Using 30 for joiners and calendar days for leavers, or the reverse, pays two people with the same salary and days differently.",
+  },
+  {
+    t: "Leaving out the joining day or the last day",
+    d: "Payable days include both the first and the last working day. A joiner on 15 August has 17 payable days in a 31-day month, not 16.",
+  },
+  {
+    t: "Calculating PF on the full-month basic",
+    d: "EPF is 12% of the basic actually paid for the month. For a part month that is the prorated basic, not the monthly figure.",
+  },
+  {
+    t: "Testing ESI coverage on the part-month amount",
+    d: "ESI coverage depends on the monthly wage rate, Rs. 21,000 or less. A Rs. 30,000 employee who joins late does not become covered because the first month's pay is below Rs. 21,000.",
+  },
+  {
+    t: "Applying the full PT slab to a part month",
+    d: "Most monthly PT slabs are read against the salary paid for that month, so a short first or last month can fall into a lower slab or below the threshold.",
+  },
+  {
+    t: "Prorating items that are paid in full",
+    d: "Some items, such as a fixed monthly reimbursement or a one-time joining bonus, are paid in full or not at all under the policy. Prorate only the heads the policy prorates.",
+  },
+];
+
+const SP_FAQ = [
+  {
+    q: "What divisor should be used to prorate salary?",
+    a: "The one your policy or appointment letter names. This calculator uses calendar days in the month (28 to 31), which is the most common choice. Some employers use a fixed 30 or 26 days. Whichever you use, apply it the same way to every joiner and leaver.",
+  },
+  {
+    q: "Are the joining day and the last working day both paid?",
+    a: "Yes. Payable days are counted inclusive of both dates. A joiner on 15 August is paid for 17 days of a 31-day month, and a leaver whose last day is 10 June is paid for 10 days.",
+  },
+  {
+    q: "Is PF calculated on the prorated basic?",
+    a: "Yes. EPF is 12% of the basic (and DA) actually paid for the month, so in a part month it is 12% of the prorated basic. The EPS share is limited by the wage ceiling of Rs. 25,000 from 17 September 2026.",
+  },
+  {
+    q: "Does a part month change ESI coverage?",
+    a: "No. ESI coverage depends on the monthly wage rate: an employee whose monthly wages are Rs. 21,000 or less is covered. The contribution is then 0.75% (employee) and 3.25% (employer) of the wages actually paid in the part month.",
+  },
+  {
+    q: "How is TDS handled for a mid-year joiner?",
+    a: "The employer estimates tax for the year on the salary for the remaining months, plus any income from a previous employer that the employee declares, and spreads it over the months left in the year. The TDS figure in this calculator is an estimate for the month on that basis.",
+  },
+  {
+    q: "Is professional tax prorated?",
+    a: "Professional tax is not prorated like salary. Where a state's slab depends on monthly salary, the slab is read against the salary paid for the month, so a short month can fall into a lower slab. Half-yearly and annual states deduct in their own months.",
+  },
+];
+
+const SP_EXAMPLES = [
+  {
+    "h": "Example 1 - joiner covered by ESI",
+    "setup": "Joins on 15 August 2026. Monthly gross Rs. 18,000: basic Rs. 9,000, HRA Rs. 4,500, other allowances Rs. 4,500. August has 31 days, so 17 days are payable.",
+    "rows": [
+      [
+        "Basic",
+        "9,000 / 31 x 17",
+        "Rs. 4,935"
+      ],
+      [
+        "HRA",
+        "4,500 / 31 x 17",
+        "Rs. 2,468"
+      ],
+      [
+        "Other allowances",
+        "4,500 / 31 x 17",
+        "Rs. 2,468"
+      ],
+      [
+        "Gross for August",
+        "",
+        "Rs. 9,871"
+      ],
+      [
+        "Employee EPF (12% of basic)",
+        "4,935 x 12%",
+        "Rs. 592"
+      ],
+      [
+        "Employee ESI (0.75%, rounded up)",
+        "9,871 x 0.75% = 74.03",
+        "Rs. 75"
+      ],
+      [
+        "Employer ESI (3.25%)",
+        "9,871 x 3.25%",
+        "Rs. 320.81"
+      ]
+    ],
+    "note": "ESI applies because the monthly wage rate, Rs. 18,000, is within Rs. 21,000. The contribution is worked out on the Rs. 9,871 actually paid."
+  },
+  {
+    "h": "Example 2 - leaver above the ESI limit",
+    "setup": "Last working day 10 June 2026. Monthly gross Rs. 50,000: basic Rs. 25,000, HRA Rs. 12,500, special allowance Rs. 12,500. June has 30 days, so 10 days are payable.",
+    "rows": [
+      [
+        "Basic",
+        "25,000 / 30 x 10",
+        "Rs. 8,333"
+      ],
+      [
+        "HRA",
+        "12,500 / 30 x 10",
+        "Rs. 4,167"
+      ],
+      [
+        "Special allowance",
+        "12,500 / 30 x 10",
+        "Rs. 4,167"
+      ],
+      [
+        "Gross for June",
+        "",
+        "Rs. 16,667"
+      ],
+      [
+        "Employee EPF (12% of basic)",
+        "8,333 x 12%",
+        "Rs. 1,000"
+      ],
+      [
+        "Employer EPS (8.33%)",
+        "8,333 x 8.33%",
+        "Rs. 694"
+      ],
+      [
+        "Employer EPF (3.67%)",
+        "1,000 - 694",
+        "Rs. 306"
+      ]
+    ],
+    "note": "ESI does not apply: the monthly wage rate is Rs. 50,000, above Rs. 21,000, even though the June payment is lower. Professional tax depends on the state of work; the calculator applies that state's rule to the June salary."
+  }
+];
+
 // Markup for the calculator itself, mounted into a Shadow DOM so its
 // standalone CSS (resets, custom properties, etc.) and its ~1500-line
 // vanilla-JS engine (PF/VPF/NPS/ESI/PT/LWF/TDS + PDF extraction/payslip
@@ -707,7 +848,7 @@ export default function SalaryProration() {
         <title>Salary Proration Calculator | PayrollTool.in</title>
         <meta
           name="description"
-          content="Calculate precise prorated salary for partial months, mid-month joining or exit. EPF, ESI, PT, LWF, NPS, TDS included."
+          content="Calculate prorated salary for a part month: mid-month joining, exit or salary change, with EPF, ESI, PT, LWF, NPS and TDS on the prorated figures, plus worked examples."
         />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Salary Proration Calculator | PayrollTool.in" />
@@ -733,6 +874,35 @@ export default function SalaryProration() {
             time the Shadow DOM's own <link> requests the same file, it's
             typically already cached and applies near-instantly. */}
         <link rel="preload" as="style" href="/salary-proration-tool.css" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "Salary Proration Calculator",
+              url: "https://www.payrolltool.in/salary-proration",
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Any (browser-based)",
+              description: "Calculates prorated salary for a part month, with EPF, ESI, professional tax, LWF, NPS and a TDS estimate on the prorated figures.",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: SP_FAQ.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }),
+          }}
+        />
       </Head>
 
       <div className="sp-wrapper" data-theme={theme}>
@@ -749,6 +919,65 @@ export default function SalaryProration() {
             </div>
           ))}
         </div>
+
+        <section className="sp-guide">
+          <h2>How salary proration works</h2>
+          <p>
+            Salary is prorated whenever an employee is paid for only part of a month: joining after the 1st, leaving
+            before the month ends, or changing salary part-way through. The calculation is the same in each case.
+            Divide each monthly pay head by the number of days in the month, then multiply by the payable days.
+            This calculator uses calendar days, so the divisor is 28, 29, 30 or 31 depending on the month. Payable
+            days count both the first and the last day.
+          </p>
+          <p>
+            Each pay head is prorated on its own: basic, HRA, special allowance and any other monthly component. The
+            prorated heads add up to the gross for the month, and every statutory deduction is then worked out on those
+            prorated figures, not on the full monthly salary. That is where most part-month errors come from: the
+            gross is prorated correctly, but PF, ESI or professional tax is still taken on the full month.
+          </p>
+          <h3>What changes in a part month, and what does not</h3>
+          <ul>
+            <li><b>EPF</b> is 12% of the basic actually paid, so it falls in proportion. The employer&apos;s EPS share is limited by the wage ceiling, Rs. 25,000 from 17 September 2026.</li>
+            <li><b>ESI coverage</b> does not change. It depends on the monthly wage rate (Rs. 21,000 or less). The contribution, 0.75% from the employee and 3.25% from the employer, is taken on the wages actually paid.</li>
+            <li><b>Professional tax</b> follows the state of work. Where the slab depends on monthly salary, the slab is read against the salary paid for the month, so a short month can fall into a lower slab.</li>
+            <li><b>Labour welfare fund</b> is deducted only in the months the state collects it, such as June and December in half-yearly states.</li>
+            <li><b>TDS</b> for a joiner is estimated on the salary for the rest of the year, plus any declared income from a previous employer, and spread over the remaining months.</li>
+          </ul>
+          {SP_EXAMPLES.map((ex) => (
+            <div className="sp-example" key={ex.h}>
+              <h3>{ex.h}</h3>
+              <p>{ex.setup}</p>
+              <div className="sp-table-wrap">
+                <table>
+                  <tbody>
+                    {ex.rows.map((r) => (
+                      <tr key={r[0]}>
+                        <td>{r[0]}</td>
+                        <td className="sp-calc">{r[1]}</td>
+                        <td className="sp-amt">{r[2]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="sp-note">{ex.note}</p>
+            </div>
+          ))}
+          <h3>Common mistakes</h3>
+          {SP_MISTAKES.map((m) => (
+            <div className="sp-item" key={m.t}>
+              <h4>{m.t}</h4>
+              <p>{m.d}</p>
+            </div>
+          ))}
+          <h3>Frequently asked questions</h3>
+          {SP_FAQ.map((f) => (
+            <div className="sp-item" key={f.q}>
+              <h4>{f.q}</h4>
+              <p>{f.a}</p>
+            </div>
+          ))}
+        </section>
 
         <div className="max-w-3xl mx-auto px-4">
           <FeedbackWidget toolName="Salary Proration" />
@@ -816,6 +1045,117 @@ export default function SalaryProration() {
         }
         .sp-wrapper[data-theme="dark"] .sp-info-card p {
           color: #b3aac7;
+        }
+
+
+        .sp-guide {
+          max-width: 860px;
+          margin: 0 auto 32px;
+          padding: 28px 28px 20px;
+          background: #fff;
+          border-radius: 16px;
+          color: #4b4563;
+          font-size: 14.5px;
+          line-height: 1.7;
+        }
+        .sp-guide h2 {
+          font-family: "Sora", sans-serif;
+          font-size: 20px;
+          color: #1e1b29;
+          margin: 0 0 12px;
+        }
+        .sp-guide h3 {
+          font-family: "Sora", sans-serif;
+          font-size: 16px;
+          color: #5b21b6;
+          margin: 26px 0 10px;
+        }
+        .sp-guide h4 {
+          font-size: 14.5px;
+          color: #1e1b29;
+          margin: 0 0 4px;
+        }
+        .sp-guide p {
+          margin: 0 0 12px;
+        }
+        .sp-guide ul {
+          margin: 0 0 12px;
+          padding-left: 20px;
+        }
+        .sp-guide li {
+          margin-bottom: 8px;
+        }
+        .sp-guide b {
+          color: #1e1b29;
+        }
+        .sp-example {
+          background: #f5f3ff;
+          border-radius: 12px;
+          padding: 4px 18px 8px;
+          margin-top: 18px;
+        }
+        .sp-table-wrap {
+          overflow-x: auto;
+        }
+        .sp-guide table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 13.5px;
+          margin-bottom: 10px;
+        }
+        .sp-guide td {
+          padding: 7px 8px;
+          border-bottom: 1px solid #e4dbfb;
+        }
+        .sp-guide td.sp-calc {
+          color: #726c87;
+        }
+        .sp-guide td.sp-amt {
+          text-align: right;
+          font-weight: 600;
+          color: #1e1b29;
+          white-space: nowrap;
+        }
+        .sp-note {
+          font-size: 13.5px;
+        }
+        .sp-item {
+          padding: 10px 0;
+          border-top: 1px solid #ece9f5;
+        }
+        .sp-item:first-of-type {
+          border-top: 0;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-guide {
+          background: #1c1730;
+          color: #b3aac7;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-guide h2,
+        .sp-wrapper[data-theme="dark"] .sp-guide h4,
+        .sp-wrapper[data-theme="dark"] .sp-guide b,
+        .sp-wrapper[data-theme="dark"] .sp-guide td.sp-amt {
+          color: #f3f0fa;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-guide h3 {
+          color: #a47df5;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-example {
+          background: #2c2147;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-guide td {
+          border-bottom-color: #3d3654;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-guide td.sp-calc {
+          color: #b3aac7;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-item {
+          border-top-color: #2a2536;
+        }
+        @media (max-width: 560px) {
+          .sp-guide {
+            margin: 0 16px 28px;
+            padding: 20px 16px 12px;
+          }
         }
 
         @media (max-width: 980px) {

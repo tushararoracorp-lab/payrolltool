@@ -1,80 +1,90 @@
 ---
 title: "Professional Tax in India: State-Wise Rates and Rules for 2026-27"
-description: "A complete guide to Professional Tax in India: which states levy it, the Rs. 2,500 annual cap, recent slab changes in Karnataka and Maharashtra, and the work-location mistake that costs multi-state employers the most."
+description: "Which states levy professional tax in 2026-27, the Rs. 2,500 annual cap, the recent changes in West Bengal, Karnataka, Assam, Punjab, Maharashtra and Odisha, and the work-location mistake that costs multi-state employers most."
 date: "2026-08-30"
 slug: "professional-tax-india-state-wise-guide"
 ---
 
-Professional Tax looks like the smallest, most boring line item on an Indian payslip - a few hundred rupees a month, capped at Rs. 2,500 a year. For a single-state employer that's usually true. For anyone running payroll across more than one state, it's one of the more common ways to get a genuine compliance finding wrong.
+Professional tax looks like the smallest line on an Indian payslip: a few hundred rupees a month, capped at Rs. 2,500 a year. For a single-state employer that is usually true. For anyone running payroll across more than one state, it is one of the most common sources of compliance findings, because every state writes its own rules and changes them on its own timetable.
 
-## What Professional Tax actually is
+## What professional tax is
 
-Professional Tax (PT) is a **state-level** tax on income earned through employment, trade, or a profession - not a central tax like income tax. It's levied under Article 276 of the Constitution, which specifically caps it at **Rs. 2,500 per person per year**, regardless of income. Above a certain salary, everyone in a PT state pays the same annual maximum - the slabs only decide how quickly you get there.
+Professional tax (PT) is a **state** tax on income from employment, a trade or a profession. It is levied under Article 276 of the Constitution, which caps it at **Rs. 2,500 per person per year**. Within that ceiling each state sets its own slabs, exemption threshold, payment cycle and due date.
 
-Employers deduct it every payroll cycle and remit it to the state; self-employed professionals register and pay it directly.
+Employers deduct it from salary and pay it to the state, or in some states to the local body. Self-employed professionals register and pay it themselves.
 
-## Not every state levies it
+## Which states levy it
 
-This is the fact that trips people up most. PT isn't a uniform, all-India deduction - a meaningful number of states don't charge it at all.
+**States and UTs that levy professional tax on salaries (2026-27):** Andhra Pradesh, Assam, Bihar, Gujarat, Jharkhand, Karnataka, Kerala, Madhya Pradesh, Maharashtra, Manipur, Meghalaya, Mizoram, Nagaland, Puducherry, Punjab, Sikkim, Tamil Nadu, Telangana, Tripura and West Bengal.
 
-**States and UTs that do levy PT** (as of 2026): Maharashtra, Karnataka, West Bengal, Andhra Pradesh, Telangana, Tamil Nadu, Gujarat, Madhya Pradesh, Kerala, Assam, Jharkhand, Bihar, and several northeastern states. Odisha abolished Professional Tax from 1 April 2026.
+Punjab's levy is called the **State Development Tax**, under the Punjab State Development Tax Act, 2018. It is Rs. 200 a month, and it applies only above the income-tax basic exemption, so the threshold depends on the employee's tax regime: Rs. 2,50,000 a year under the old regime and Rs. 4,00,000 under the new regime.
 
-**States that don't**: Delhi, Uttar Pradesh, Haryana, Rajasthan, Punjab, Himachal Pradesh, and Uttarakhand, among others.
+**States and UTs that do not levy it:** Delhi, Haryana, Uttar Pradesh, Rajasthan, Himachal Pradesh, Uttarakhand, Chhattisgarh, Jammu and Kashmir, Ladakh, Chandigarh, Dadra and Nagar Haveli and Daman and Diu, Andaman and Nicobar Islands, Lakshadweep, Arunachal Pradesh and, from 1 April 2026, **Odisha**.
 
-That second list matters more than it looks. A large share of India's IT and services workforce sits in the Delhi NCR belt - and Delhi itself doesn't levy PT, while Uttar Pradesh (Noida) and Haryana (Gurugram) sit right next to it with different rules again.
+Odisha repealed its professional tax by Ordinance No. 02 of 2026, promulgated on 21 April 2026, with effect from 1 April 2026. No professional tax is deducted from Odisha salaries for April 2026 onwards. Tax for earlier periods stays payable.
 
-## The mistake that actually costs money: work location, not registered office
+## The mistake that costs money: work location, not registered office
 
-PT applies based on **where the employee actually works**, not where the company is registered. This is the single most common real-world error in multi-state payroll.
+PT follows **where the employee works**, not where the company is registered. This is the most common real error in multi-state payroll.
 
-A Delhi-registered company with a Noida office is a textbook case. Delhi doesn't levy PT, so it's easy to assume no PT applies company-wide - but every employee working from the Noida office is subject to **Uttar Pradesh's** rules, not Delhi's. Get this backwards and you either under-deduct for years (a real, back-dated liability with interest once it's caught) or apply a deduction to people who were never actually liable for it.
+A Delhi-registered company with an office in Bengaluru is a typical case. Delhi has no professional tax, so it is easy to assume none applies anywhere in the company. But every employee working from the Bengaluru office is under **Karnataka's** rules. Get this backwards and you either under-deduct for years, which becomes a back-dated liability with interest, or deduct from people who were never liable.
 
-The same logic runs in reverse for a Gurugram (Haryana) office attached to a Delhi-registered entity - Haryana doesn't levy PT at all, so nothing should be deducted there regardless of what's happening at head office.
+The same logic works the other way. A Gurugram office of a Mumbai-registered company deducts nothing, because Haryana has no professional tax, whatever happens at head office.
 
-**The practical rule:** map PT by each employee's actual work location, not by where the company's registration sits. For a genuinely multi-state workforce, this has to be checked per employee, not assumed at the company level.
+**The rule:** map PT to each employee's actual work location. For a multi-state workforce, check it per employee, not once for the company.
 
-## What actually changed recently
+## What changed recently
 
-Professional Tax slabs aren't static, and two recent changes are worth knowing specifically because they're easy to miss if a payroll sheet was built once and never revisited.
+Slabs are not static. These are the changes most likely to be missing from a payroll sheet built a year or two ago.
 
-**Karnataka simplified its structure.** The old four-tier slab system was scrapped - Karnataka now exempts salaries below a much higher threshold than before, and applies a flat monthly rate above it (stepping up slightly in February, the same "true-up to the annual cap" pattern most PT states use). An employee who was paying a small monthly PT amount under the old slabs may now owe nothing at all, or may be taxed under a completely different structure than a payroll sheet built even a year or two ago assumes.
+**West Bengal replaced its schedule from 1 October 2026.** Notification No. 1607-F.T. of 16 September 2026 substituted the Schedule to the Act. Salaries up to Rs. 20,000 a month now pay nothing. Above that the tax is Rs. 100 a month up to Rs. 30,000, Rs. 140 up to Rs. 50,000, Rs. 170 up to Rs. 1,00,000 and Rs. 208 above Rs. 1,00,000. The new rates for professionals, traders and businesses apply from 1 April 2027.
 
-**Maharashtra moved its due date.** The payment deadline shifted from the last day of the month to the middle of the following month, under a 2026 state notification. This doesn't change how much anyone owes, but it changes the compliance calendar - a filing schedule still keyed to the old date is running against the wrong deadline.
+**Karnataka raised its February amount.** The threshold has been Rs. 25,000 a month since 1 April 2023. From 1 April 2025, under Karnataka Act No. 33 of 2025, salaries of Rs. 25,000 and above pay Rs. 200 a month and Rs. 300 in February, so the year comes to exactly Rs. 2,500. Payment is due by the 20th of the following month.
 
-Neither of these is a dramatic rewrite of PT as a concept. Both are exactly the kind of small, state-specific update that a payroll sheet maintained by hand tends to miss, because nothing about the *formula* looks wrong until a state notification is actually checked.
+**Assam raised its exemption from 1 April 2025.** Salaries up to Rs. 15,000 a month pay nothing, Rs. 15,001 to Rs. 24,999 pay Rs. 180 a month, and Rs. 25,000 and above pay Rs. 208 a month.
+
+**Punjab added a yearly lump-sum option.** From 7 November 2025, employers and enrolled persons may pay the year's State Development Tax as one lump sum by 30 April instead of monthly.
+
+**Maharashtra moved its due date.** From March 2026 the monthly payment is due by the 15th of each month. The amounts are unchanged.
+
+**Odisha stopped levying it** from 1 April 2026, as above.
+
+None of these changes the idea of professional tax. Each is exactly the kind of small, state-specific update that a hand-maintained payroll sheet misses, because nothing in the formula looks wrong until someone reads the notification.
 
 ## A worked example: Maharashtra
 
-Maharashtra is a useful example because its structure - a flat monthly rate with a February adjustment to land exactly on the annual cap - is the same basic pattern most PT states converge on, just with different numbers.
+Maharashtra shows the pattern several states use: a flat monthly amount with a February adjustment that lands the year exactly on the cap.
 
-For a salaried employee above Maharashtra's exemption threshold:
+For a salaried employee above the exemption threshold:
 
-- **April through January** (10 months): a fixed monthly amount
-- **February**: a slightly higher amount, specifically to make the annual total land exactly on Rs. 2,500
-- **March**: no deduction, since the annual cap is already reached
+- **March to January** (11 months): Rs. 200 a month
+- **February**: Rs. 300
+- **Total for the year**: Rs. 2,500
 
-Maharashtra also applies **different exemption thresholds for men and women** - women are exempt up to a meaningfully higher monthly salary than men before PT applies at all. This is one of the few places gender enters into an Indian payroll calculation directly, and it's specific to Maharashtra's own Act, not a general rule.
+Maharashtra also has **different thresholds for men and women**. Men pay nothing up to Rs. 7,500 a month and Rs. 175 between Rs. 7,501 and Rs. 10,000. Women pay nothing up to Rs. 25,000 a month. Persons above 65 pay no professional tax. This is one of the few places where gender enters an Indian payroll calculation directly, and it comes from Maharashtra's own Act, not a national rule.
 
-## How it interacts with your tax regime
+## How it interacts with the tax regime
 
-Professional Tax paid is deductible from salary income under **Section 19** of the Income Tax Act, 2025 (the renumbered successor to the old Section 16(iii)) - but **only under the old tax regime**. If an employee has opted into the new regime, PT is still deducted from their salary as a statutory matter, but it doesn't reduce their taxable income the way it does under the old regime.
+Professional tax paid is deductible from salary income under **section 19** of the Income-tax Act, 2025 (the successor to the old section 16(iii)), but **only under the old regime**. Under the new regime it is still deducted from salary, because the state levies it, but it does not reduce taxable income.
 
-This is a small deduction in absolute terms - a maximum of Rs. 2,500 a year, worth a few hundred rupees in actual tax saved even at the highest slab - but it's one more data point in the old-vs-new regime comparison, and it's easy to get backwards when building a comparison sheet by hand.
+The amount is small, at most Rs. 2,500 a year, but it is one more line in an old-versus-new comparison and an easy one to get backwards.
 
-## Common mistakes, beyond the work-location trap
+## Common mistakes beyond work location
 
-**Assuming one slab structure applies everywhere.** Each state's Professional Tax Act is its own legislation, with its own slabs, thresholds, and exemptions. A structure copied from one state's rules doesn't transfer to another, even between neighboring states.
+**Assuming one slab structure applies everywhere.** Each state's Act is separate legislation. A structure copied from one state does not carry over to a neighbour.
 
-**Missing gender-based differences where they exist.** Maharashtra isn't the only state with a distinction here - checking a state's specific Act rather than assuming a uniform structure matters.
+**Treating Rs. 2,500 as Rs. 208.33 a month.** The cap is annual. States reach it through a February true-up (Maharashtra, Karnataka), a flat Rs. 208 that stops at Rs. 2,496 (Assam, West Bengal), half-yearly amounts (Tamil Nadu, Kerala, Puducherry) or an annual deduction (Bihar).
 
-**Treating the Rs. 2,500 cap as a flat monthly rate.** The cap is annual. Most states reach it through eleven months of one rate and a final "true-up" month at a slightly higher rate - not through a flat Rs. 2,500 ÷ 12 monthly deduction.
+**Using the wrong cycle.** Tamil Nadu, Kerala and Puducherry work half-yearly through local bodies. Bihar deducts once a year from the September salary. Jharkhand is an annual tax paid quarterly. A monthly deduction in these states is wrong even when the yearly total is right.
 
-**Not rechecking slabs after a state notification.** As the Karnataka change shows, slabs do get revised - sometimes substantially. A formula that was correct two years ago isn't guaranteed to still be correct today.
+**Missing gender or age exemptions.** Maharashtra's women's threshold and its exemption above 65 are the best-known, but check each state's own exemptions.
 
-## Getting this right without tracking every state by hand
+**Not rechecking after a notification.** West Bengal's 2026 schedule changed the amount for almost every salaried employee in the state. A formula that was right last year is not guaranteed to be right this year.
 
-Between Rs. 2,500 caps, February true-ups, gender-specific thresholds in some states, and slabs that occasionally get rewritten entirely, doing multi-state Professional Tax by hand in a spreadsheet is exactly the kind of repetitive, rule-heavy work that's easy to get slightly wrong. Our [Salary Proration Calculator](/salary-proration) applies state-specific PT rules alongside EPF, ESI, and TDS for partial-month calculations, so the statutory deductions stay correct even when someone joins or exits mid-month.
+## Getting it right without tracking every state by hand
+
+Between annual caps, February true-ups, gender thresholds and schedules that get replaced outright, multi-state professional tax is repetitive, rule-heavy work that is easy to get slightly wrong by hand. The [Salary Proration Calculator](/salary-proration) applies each state's PT rule alongside EPF, ESI and TDS for part-month salaries, and the [professional tax pages by state](/updates/professional-tax) carry the current slabs, cycles and due dates with links to the official notifications.
 
 ## Key takeaway
 
-Professional Tax is small in absolute terms but genuinely state-specific in a way that catches multi-state employers more often than the amount involved would suggest. The two things worth checking today: whether your payroll is mapping PT to actual work location rather than registered office, and whether your slabs reflect the most recent state notification rather than whatever was correct when the sheet was first built.
+Professional tax is small but strictly state-specific. Two checks matter most: that payroll maps PT to each employee's actual work location, and that the slabs match the latest state notification, including West Bengal's October 2026 schedule and Odisha's repeal.

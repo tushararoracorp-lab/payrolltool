@@ -211,6 +211,29 @@ const TC_INFO_CARDS = [
   },
 ];
 
+const TC_MISTAKES = [
+  {
+    t: "Claiming old-regime deductions in the new regime",
+    d: "HRA, Section 123 and health insurance deductions do not apply under the new regime. Entering them in a new-regime estimate makes the new regime look worse than it is.",
+  },
+  {
+    t: "Using the wrong standard deduction",
+    d: "The standard deduction is Rs. 75,000 in the new regime and Rs. 50,000 in the old regime. Mixing them shifts the comparison by up to Rs. 25,000 of income.",
+  },
+  {
+    t: "Treating the TDS choice as final",
+    d: "The regime chosen with the employer only decides monthly TDS. A salaried employee with no business income chooses again when filing the return.",
+  },
+  {
+    t: "Deducting professional tax in the new regime",
+    d: "Professional tax reduces taxable salary only under the old regime. It is still deducted from salary in the new regime, but it does not lower taxable income.",
+  },
+  {
+    t: "Leaving out employer NPS",
+    d: "The employer's NPS contribution is deductible in the new regime as well. Leaving it out overstates new-regime tax for employees who have it.",
+  },
+];
+
 const TC_FAQ = [
   {
     q: "Which is better, the old tax regime or the new tax regime?",
@@ -1096,6 +1119,16 @@ export default function TaxCalculator() {
               Rs. 7,64,000 even after the HRA and Section 123 claims. Enter your own numbers above to
               see which side wins for you.
             </p>
+          </div>
+
+          <div className="tc-faq">
+            <h4>Common mistakes</h4>
+            {TC_MISTAKES.map((m) => (
+              <div className="tc-faq-item" key={m.t}>
+                <h5>{m.t}</h5>
+                <p>{m.d}</p>
+              </div>
+            ))}
           </div>
 
           <div className="tc-faq">

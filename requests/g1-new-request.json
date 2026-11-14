@@ -1,0 +1,83 @@
+[
+  {
+    "action": "ADD",
+    "kind": "mw_rate",
+    "payload": {
+      "state": "Jharkhand",
+      "effective_from": "2026-10-01",
+      "structure": "Basic + VDA",
+      "flag": "current",
+      "cadence": "Half-yearly",
+      "zones": "Area A/B/C",
+      "authority": "Dept. of Labour, Employment, Training & Skill Development",
+      "label": "In force",
+      "categories": [
+        {
+          "name": "Unskilled",
+          "per_month": 13586,
+          "per_day": 523
+        },
+        {
+          "name": "Semi-skilled",
+          "per_month": 14253,
+          "per_day": 548
+        },
+        {
+          "name": "Skilled",
+          "per_month": 18782,
+          "per_day": 722
+        },
+        {
+          "name": "Highly skilled",
+          "per_month": 21656,
+          "per_day": 833
+        },
+        {
+          "name": "Area B - Unskilled",
+          "per_month": 12947,
+          "per_day": 498
+        },
+        {
+          "name": "Area B - Semi-skilled",
+          "per_month": 13586,
+          "per_day": 523
+        },
+        {
+          "name": "Area B - Skilled",
+          "per_month": 17911,
+          "per_day": 689
+        },
+        {
+          "name": "Area B - Highly skilled",
+          "per_month": 20669,
+          "per_day": 795
+        },
+        {
+          "name": "Area C - Unskilled",
+          "per_month": 12337,
+          "per_day": 475
+        },
+        {
+          "name": "Area C - Semi-skilled",
+          "per_month": 12947,
+          "per_day": 498
+        },
+        {
+          "name": "Area C - Skilled",
+          "per_month": 17069,
+          "per_day": 657
+        },
+        {
+          "name": "Area C - Highly skilled",
+          "per_month": 19682,
+          "per_day": 757
+        }
+      ],
+      "reference": "No. 2/MW-2071/2010 (Part-3) Shr.Ni. 1603 dated 15 October 2026",
+      "note": "Area A shown in the headline. Basic rates fixed from 11 March 2024 plus VDA payable from 1 October 2026, based on the January to June 2026 index of 431 (2001 base) against the base of 386. Daily rate = monthly rate divided by 26.",
+      "official_url": "https://shramadhan.jharkhand.gov.in/ftp/WebAdmin/documents/VDA_Notification_01-10-2026.pdf",
+      "explainer_en": "Jharkhand revised the variable dearness allowance (VDA) on its minimum wages with effect from 1 October 2026, by notification No. 2/MW-2071/2010 (Part-3) Shr.Ni. 1603 dated 15 October 2026 of the Labour Commissioner's office, issued under section 6 of the Code on Wages, 2019. The basic rates are those fixed with effect from 11 March 2024; only the VDA has changed.\n\nThe State is divided into three areas. Area A covers the Ranchi, Chas, Dhanbad, Deoghar and Hazaribagh municipal corporations, the Jamshedpur notified area, the Mango municipal corporation, the Jugsalai municipal council and the Adityapur municipal corporation. Area B covers the urban local bodies of all other districts. Area C covers the rest of the State.\n\nFrom 1 October 2026 the monthly rates, including VDA, are:\n- Area A: Rs. 13,586 unskilled, Rs. 14,253 semi-skilled, Rs. 18,782 skilled and Rs. 21,656 highly skilled (Rs. 523, Rs. 548, Rs. 722 and Rs. 833 a day);\n- Area B: Rs. 12,947, Rs. 13,586, Rs. 17,911 and Rs. 20,669 (Rs. 498, Rs. 523, Rs. 689 and Rs. 795 a day);\n- Area C: Rs. 12,337, Rs. 12,947, Rs. 17,069 and Rs. 19,682 (Rs. 475, Rs. 498, Rs. 657 and Rs. 757 a day).\n\nThe VDA is based on the All India Consumer Price Index. The average for January to June 2026 was 149.8 on the 2016 base, which the notification converts to 431 on the 2001 base. The basic rates were fixed at index 386, so the rise is 45 points, or 11.65 per cent. The VDA is rounded off. If the index falls, the VDA does not reduce.\n\nMonthly and daily rates convert at 26 days: the daily rate is the monthly rate divided by 26.\n\nWhat to do in payroll:\n- map each establishment to Area A, B or C using the list above;\n- apply the 1 October 2026 rate for each grade and pay arrears for October where the old rate was used;\n- check skilled and highly skilled staff as well as unskilled, since the gap between grades is wide in Jharkhand.",
+      "explainer_hi": "झारखंड ने न्यूनतम मज़दूरी पर परिवर्तनशील महँगाई भत्ता (वीडीए) 1 अक्टूबर 2026 से संशोधित किया है। यह श्रमायुक्त कार्यालय की 15 अक्टूबर 2026 की अधिसूचना संख्या 2/एम0डब्लू0-2071/2010 (भाग-3) श्र0नि0 1603 से हुआ, जो मज़दूरी संहिता, 2019 की धारा 6 के तहत जारी हुई। मूल दरें वही हैं जो 11 मार्च 2024 से तय हुई थीं; केवल वीडीए बदला है।\n\nराज्य तीन क्षेत्रों में बँटा है। क्षेत्र ए में राँची, चास, धनबाद, देवघर और हज़ारीबाग नगर निगम, जमशेदपुर अधिसूचित क्षेत्र, मानगो नगर निगम, जुगसलाई नगर परिषद और आदित्यपुर नगर निगम आते हैं। क्षेत्र बी में बाक़ी सभी ज़िलों के नगर निकाय क्षेत्र आते हैं। क्षेत्र सी में राज्य के बाक़ी क्षेत्र आते हैं।\n\n1 अक्टूबर 2026 से वीडीए सहित मासिक दरें इस प्रकार हैं:\n- क्षेत्र ए: अकुशल 13,586 रुपये, अर्ध-कुशल 14,253 रुपये, कुशल 18,782 रुपये और अति-कुशल 21,656 रुपये (रोज़ 523, 548, 722 और 833 रुपये);\n- क्षेत्र बी: 12,947, 13,586, 17,911 और 20,669 रुपये (रोज़ 498, 523, 689 और 795 रुपये);\n- क्षेत्र सी: 12,337, 12,947, 17,069 और 19,682 रुपये (रोज़ 475, 498, 657 और 757 रुपये)।\n\nवीडीए अखिल भारतीय उपभोक्ता मूल्य सूचकांक पर आधारित है। जनवरी से जून 2026 का औसत 2016 के आधार पर 149.8 रहा, जिसे अधिसूचना 2001 के आधार पर 431 में बदलती है। मूल दरें सूचकांक 386 पर तय हुई थीं, इसलिए बढ़त 45 अंक, यानी 11.65 प्रतिशत है। वीडीए को पूर्णांक में बदला गया है। अगर सूचकांक गिरता है, तो वीडीए कम नहीं होता।\n\nमासिक और दैनिक दरें 26 दिनों के आधार पर बदली जाती हैं: दैनिक दर मासिक दर को 26 से भाग देकर निकलती है।\n\nपेरोल में क्या करें:\n- ऊपर की सूची से हर प्रतिष्ठान को क्षेत्र ए, बी या सी से जोड़ें;\n- हर श्रेणी के लिए 1 अक्टूबर 2026 की दर लागू करें और जहाँ अक्टूबर में पुरानी दर लगी थी, वहाँ बकाया दें;\n- केवल अकुशल ही नहीं, कुशल और अति-कुशल कर्मचारियों की भी जाँच करें, क्योंकि झारखंड में श्रेणियों के बीच का अंतर बड़ा है।"
+    }
+  }
+]

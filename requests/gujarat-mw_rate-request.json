@@ -1,0 +1,27 @@
+{
+  "action": "REPLACE",
+  "kind": "mw_rate",
+  "target_id": "91fec34e-6185-44a8-bd41-d6874f0a57ee",
+  "payload": {
+    "state": "Gujarat",
+    "effective_from": "2026-10-01",
+    "structure": "Basic + DA",
+    "flag": "current",
+    "cadence": "Half-yearly",
+    "zones": "Zone I / Zone II",
+    "authority": "Labour, Skill Development & Employment Dept.",
+    "label": null,
+    "categories": [
+      {
+        "name": "Unskilled",
+        "per_day": null,
+        "per_month": 13637
+      }
+    ],
+    "reference": "Effective 1 October 2026 (half-year to 31 March 2027)",
+    "note": "Shops and establishments. Zone I unskilled: basic Rs. 452 + DA Rs. 72.50 = Rs. 524.50 a day. Zone I monthly rates by grade: Rs. 14,209, Rs. 13,897 and Rs. 13,637. Zone II: Rs. 13,897, Rs. 13,637 and Rs. 13,351.",
+    "official_url": "https://labour.gujarat.gov.in/",
+    "explainer_en": "Gujarat sets minimum wages for each scheduled employment as a daily basic rate, and adds a special allowance that the Labour Commissioner revises twice a year, from 1 April and 1 October, in line with the cost of living. The State has two zones, with Zone I at the higher rate.\n\nThe basic rates in force were fixed by notification KHR/2023/28/LVD/10/2022/18/M2 dated 27 March 2023. For shops and commercial establishments in Zone I, the unskilled basic is Rs. 452 a day. The special allowance from 1 October 2026 to 31 March 2027 is Rs. 72.50 a day, announced by the Labour Commissioner's circular of 5 October 2026, so the unskilled total is Rs. 524.50 a day. Monthly, on 26 working days, that is Rs. 13,637.\n\nThe three grades in Zone I are Rs. 14,209, Rs. 13,897 and Rs. 13,637 a month. Zone II runs one step lower, at Rs. 13,897, Rs. 13,637 and Rs. 13,351, so the lowest Zone I grade equals the middle Zone II grade.\n\nOnly the allowance moves between revisions. It was Rs. 48.50 a day from October 2025, Rs. 60.50 from April 2026 and Rs. 72.50 from October 2026, a rise of Rs. 24 a day over a year while the basic stayed at Rs. 452. In monthly terms the Zone I unskilled rate went from Rs. 13,013 to Rs. 13,325 and then Rs. 13,637.\n\nBecause Gujarat states its rates per day, the monthly figure depends on the 26-day convention. An employer paying a monthly salary checks that it is at least 26 times the daily rate, and pays the daily rate for any part month. The circular for each half-year is usually issued a few days after the period starts, so the first month may need an arrears adjustment.",
+    "explainer_hi": "गुजरात हर अनुसूचित रोज़गार के लिए न्यूनतम मज़दूरी दैनिक मूल दर के रूप में तय करता है, और उसमें एक विशेष भत्ता जोड़ता है जिसे श्रम आयुक्त जीवन-यापन की लागत के अनुसार साल में दो बार, 1 अप्रैल और 1 अक्टूबर से, संशोधित करते हैं। राज्य में दो ज़ोन हैं, जिनमें ज़ोन I की दर ऊँची है।\n\nलागू मूल दरें 27 मार्च 2023 की अधिसूचना KHR/2023/28/LVD/10/2022/18/M2 से तय हुईं। ज़ोन I में दुकानों और वाणिज्यिक प्रतिष्ठानों के लिए अकुशल की मूल दर 452 रुपये प्रति दिन है। 1 अक्टूबर 2026 से 31 मार्च 2027 तक विशेष भत्ता 72.50 रुपये प्रति दिन है, जिसकी घोषणा श्रम आयुक्त के 5 अक्टूबर 2026 के परिपत्र से हुई, इसलिए अकुशल का कुल 524.50 रुपये प्रति दिन है। 26 कार्य दिवसों पर मासिक रूप से यह 13,637 रुपये होता है।\n\nज़ोन I की तीन श्रेणियाँ 14,209, 13,897 और 13,637 रुपये प्रति माह हैं। ज़ोन II एक कदम नीचे है, 13,897, 13,637 और 13,351 रुपये पर, इसलिए ज़ोन I की सबसे निचली श्रेणी ज़ोन II की बीच वाली श्रेणी के बराबर है।\n\nसंशोधनों के बीच केवल भत्ता बदलता है। यह अक्टूबर 2025 से 48.50 रुपये प्रति दिन, अप्रैल 2026 से 60.50 रुपये और अक्टूबर 2026 से 72.50 रुपये रहा, यानी एक साल में 24 रुपये प्रति दिन की बढ़ोतरी, जबकि मूल दर 452 रुपये पर रही। मासिक हिसाब से ज़ोन I की अकुशल दर 13,013 से 13,325 और फिर 13,637 रुपये हुई।\n\nचूँकि गुजरात अपनी दरें प्रति दिन बताता है, मासिक राशि 26 दिनों की परिपाटी पर निर्भर है। मासिक वेतन देने वाला नियोक्ता जाँचता है कि वह दैनिक दर के कम से कम 26 गुना हो, और अधूरे महीने के लिए दैनिक दर देता है। हर छमाही का परिपत्र आमतौर पर अवधि शुरू होने के कुछ दिन बाद जारी होता है, इसलिए पहले महीने में बकाया समायोजन की ज़रूरत पड़ सकती है।"
+  }
+}

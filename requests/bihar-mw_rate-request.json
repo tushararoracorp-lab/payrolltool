@@ -1,0 +1,42 @@
+{
+  "action": "REPLACE",
+  "kind": "mw_rate",
+  "target_id": "8e138bd6-293d-4a30-ac58-b7b7aacfc751",
+  "payload": {
+    "state": "Bihar",
+    "effective_from": "2026-04-01",
+    "structure": "Basic + VDA",
+    "flag": "current",
+    "cadence": "Half-yearly",
+    "zones": "Uniform",
+    "authority": "Labour Resources Department",
+    "label": "In force",
+    "categories": [
+      {
+        "name": "Unskilled",
+        "per_month": 11336,
+        "per_day": 436
+      },
+      {
+        "name": "Semi-skilled",
+        "per_month": 11752,
+        "per_day": 452
+      },
+      {
+        "name": "Skilled",
+        "per_month": 14326,
+        "per_day": 551
+      },
+      {
+        "name": "Highly skilled",
+        "per_month": 17472,
+        "per_day": 672
+      }
+    ],
+    "reference": "S.O. 92 dated 6 April 2026, Bihar Gazette (Extraordinary)",
+    "note": "Daily rates including VDA: Rs. 436, 452, 551 and 672. The VDA added from 1 April 2026 is Rs. 8, 8, 10 and 12 a day. Monthly figures are the daily rate multiplied by 26.",
+    "official_url": "https://egazette.bihar.gov.in/GazettePrinting/GazettePublished/308_2_2026.pdf",
+    "explainer_en": "Bihar's minimum wages from 1 April 2026 were set by S.O. 92 dated 6 April 2026 of the Labour Resources Department, published in the Bihar Gazette (Extraordinary). The order adds a variable dearness allowance (VDA) to the minimum rates fixed under the Minimum Wages Act, 1948.\n\nThe total daily rates from 1 April 2026 are Rs. 436 for unskilled workers, Rs. 452 for semi-skilled, Rs. 551 for skilled and Rs. 672 for highly skilled. Each is made up of the rate fixed with effect from 1 September 2022 plus the VDA instalments added since, plus a new VDA of Rs. 8, Rs. 8, Rs. 10 and Rs. 12 a day from 1 April 2026. The monthly figures shown here are the daily rate multiplied by 26: Rs. 11,336, Rs. 11,752, Rs. 14,326 and Rs. 17,472.\n\nThe VDA is linked to the All India Consumer Price Index. The April 2026 instalment is based on the average index for July to December 2025, which the order converts to 9,696.43 on the 1960 base. After that, the order says any rise or fall in the VDA takes effect three months after the end of each half-year, based on the average index for that half-year. If the index falls, the rates do not go below the level already fixed.\n\nThe order also gives piece rates for twelve employments, such as stone breaking and crushing, and an hourly rate for domestic work equal to the daily rate divided by eight.\n\nWhat to do in payroll:\n- apply the 1 April 2026 daily rate for each grade, and the monthly equivalent for monthly-paid staff;\n- pay arrears from 1 April 2026 where April or later salaries used the earlier rate;\n- for piece-rated work, take the rate from the schedule for that employment;\n- watch for the next VDA order, which applies from 1 October on the January to June index.",
+    "explainer_hi": "बिहार की 1 अप्रैल 2026 से लागू न्यूनतम मज़दूरी श्रम संसाधन विभाग के 6 अप्रैल 2026 के एस.ओ. 92 से तय हुई, जो बिहार के असाधारण राजपत्र में छपा। यह आदेश न्यूनतम मज़दूरी अधिनियम, 1948 के तहत तय दरों में परिवर्तनशील महँगाई भत्ता (वीडीए) जोड़ता है।\n\n1 अप्रैल 2026 से कुल दैनिक दरें अकुशल कामगारों के लिए 436 रुपये, अर्ध-कुशल के लिए 452 रुपये, कुशल के लिए 551 रुपये और अति-कुशल के लिए 672 रुपये हैं। हर दर में 1 सितंबर 2022 से तय दर, उसके बाद जुड़ी वीडीए की किस्तें, और 1 अप्रैल 2026 से नया वीडीए शामिल है, जो क्रमशः 8, 8, 10 और 12 रुपये रोज़ है। यहाँ दिखाए गए मासिक आँकड़े दैनिक दर को 26 से गुणा करके बने हैं: 11,336 रुपये, 11,752 रुपये, 14,326 रुपये और 17,472 रुपये।\n\nवीडीए अखिल भारतीय उपभोक्ता मूल्य सूचकांक से जुड़ा है। अप्रैल 2026 की किस्त जुलाई से दिसंबर 2025 के औसत सूचकांक पर आधारित है, जिसे आदेश 1960 के आधार पर 9,696.43 में बदलता है। उसके बाद, आदेश के अनुसार, वीडीए में कोई भी बढ़त या कमी हर छमाही ख़त्म होने के तीन महीने बाद, उस छमाही के औसत सूचकांक के आधार पर लागू होगी। अगर सूचकांक गिरता है, तो दरें पहले से तय स्तर से नीचे नहीं जातीं।\n\nआदेश पत्थर तोड़ने और पीसने जैसे बारह रोज़गारों के लिए कार्यानुसार दरें भी देता है, और घरेलू काम के लिए प्रति घंटा दर, जो दैनिक दर को आठ से भाग देकर निकलती है।\n\nपेरोल में क्या करें:\n- हर श्रेणी के लिए 1 अप्रैल 2026 की दैनिक दर, और मासिक वेतन वाले कर्मचारियों के लिए उसका मासिक रूप लागू करें;\n- जहाँ अप्रैल या बाद का वेतन पुरानी दर पर बना था, वहाँ 1 अप्रैल 2026 से बकाया दें;\n- कार्यानुसार काम के लिए दर उस रोज़गार की अनुसूची से लें;\n- अगले वीडीए आदेश पर नज़र रखें, जो जनवरी से जून के सूचकांक के आधार पर 1 अक्टूबर से लागू होता है।"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "action": "REPLACE",
+  "kind": "pt_rule",
+  "target_id": "01330a0b-a551-44ae-a10a-a528e3410b4e",
+  "payload": {
+    "state": "Bihar",
+    "effective_from": "1970-01-01",
+    "frequency": "Annual",
+    "cycle_text": "Annual",
+    "basis": "Slab on annual income",
+    "due_text": "Deducted from the September salary and paid by 15 November; annual return in Form PT-VIII by the end of November. For employees who become liable after September, deducted from the February salary and paid by 15 April (Rules 5 and 6)",
+    "act": "Bihar Tax on Professions, Trades, Callings and Employments Act, 2011",
+    "annual_cap": "Rs. 2,500 a year",
+    "slab_tables": [
+      {
+        "rows": [
+          {
+            "amt": "Nil",
+            "band": "Up to Rs. 3,00,000"
+          },
+          {
+            "amt": "Rs. 1,000 a year",
+            "band": "Rs. 3,00,001 to Rs. 5,00,000"
+          },
+          {
+            "amt": "Rs. 2,000 a year",
+            "band": "Rs. 5,00,001 to Rs. 10,00,000"
+          },
+          {
+            "amt": "Rs. 2,500 a year",
+            "band": "Above Rs. 10,00,000"
+          }
+        ],
+        "unit": "Annual income",
+        "title": ""
+      }
+    ],
+    "notes": "The registration amendment of 2021 is a separate procedural change, not a rate change.",
+    "official_url": "https://labour.gov.in/",
+    "explainer_en": "Bihar levies professional tax under the Bihar Tax on Professions, Trades, Callings and Employments Act, 2011 (Bihar Act 10 of 2011), administered by the Commercial Taxes Department. Unlike most states, Bihar does not tax salary month by month. The Act fixes one yearly amount on a person's annual income, and the employer deducts it in a single instalment.\n\nThe Schedule has four bands. Annual income up to Rs. 3,00,000 pays nothing. From Rs. 3,00,001 to Rs. 5,00,000 the tax is Rs. 1,000 a year. From Rs. 5,00,001 to Rs. 10,00,000 it is Rs. 2,000 a year. Above Rs. 10,00,000 it is Rs. 2,500 a year, the limit in Article 276 of the Constitution.\n\nThe timing comes from the Bihar Professional Tax Rules, 2011. Under rule 5(1) the employer deducts the tax from the salary for the month of September, and under rule 5(2) pays it into the treasury on or before 15 November. Under rule 6(1) a registered employer files the annual return in Form PT-VIII by the end of November. An employee who becomes liable after the September salary has been paid, such as a joiner in October or later, is deducted from the following February salary, and that tax is deposited by 15 April under rule 5(5).\n\nSection 5 of the Act makes the employer liable for the tax whether or not it was deducted. An employee with two employers can give each a certificate and pay the tax directly instead.\n\nFor payroll, this means a single deduction in September for most staff, sized on the expected annual income, and a catch-up deduction in February for late joiners. A payroll that deducts every month, or only in November, does not match the rules.",
+    "explainer_hi": "बिहार व्यवसाय कर बिहार व्यवसाय, व्यापार, आजीविका और रोज़गार कर अधिनियम, 2011 (बिहार अधिनियम 10, 2011) के तहत लेता है, जिसका प्रशासन वाणिज्यिक कर विभाग करता है। ज़्यादातर राज्यों से अलग, बिहार हर महीने के वेतन पर कर नहीं लेता। अधिनियम व्यक्ति की सालाना आय पर एक सालाना राशि तय करता है, और नियोक्ता उसे एक ही किस्त में काटता है।\n\nअनुसूची में चार श्रेणियाँ हैं। 3,00,000 रुपये तक की सालाना आय पर कुछ नहीं देना होता। 3,00,001 से 5,00,000 रुपये तक कर 1,000 रुपये प्रति वर्ष है। 5,00,001 से 10,00,000 रुपये तक 2,000 रुपये प्रति वर्ष है। 10,00,000 रुपये से ऊपर 2,500 रुपये प्रति वर्ष है, जो संविधान के अनुच्छेद 276 की सीमा है।\n\nसमय बिहार व्यवसाय कर नियमावली, 2011 से तय होता है। नियम 5(1) के तहत नियोक्ता सितंबर महीने के वेतन से कर काटता है, और नियम 5(2) के तहत उसे 15 नवंबर तक कोषागार में जमा करता है। नियम 6(1) के तहत पंजीकृत नियोक्ता वार्षिक विवरणी फॉर्म PT-VIII में नवंबर के अंत तक दाखिल करता है। जो कर्मचारी सितंबर का वेतन दिए जाने के बाद कर के दायरे में आता है, जैसे अक्टूबर या उसके बाद जुड़ने वाला, उससे अगले फरवरी के वेतन से कटौती होती है, और वह कर नियम 5(5) के तहत 15 अप्रैल तक जमा होता है।\n\nअधिनियम की धारा 5 नियोक्ता को कर के लिए उत्तरदायी बनाती है, चाहे कटौती हुई हो या नहीं। दो नियोक्ताओं वाला कर्मचारी हर नियोक्ता को प्रमाणपत्र देकर कर सीधे स्वयं जमा कर सकता है।\n\nपेरोल के लिए इसका अर्थ है कि ज़्यादातर कर्मचारियों से सितंबर में अपेक्षित सालाना आय के आधार पर एक कटौती होती है, और देर से जुड़ने वालों से फरवरी में। जो पेरोल हर महीने या केवल नवंबर में कटौती करता है, वह नियमों से मेल नहीं खाता।"
+  }
+}

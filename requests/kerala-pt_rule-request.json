@@ -1,0 +1,55 @@
+{
+  "action": "REPLACE",
+  "kind": "pt_rule",
+  "target_id": "88a6f5a3-f0bd-4186-a359-ab68d64779ba",
+  "payload": {
+    "state": "Kerala",
+    "effective_from": "2024-10-01",
+    "frequency": "Half-yearly",
+    "cycle_text": "Half-yearly",
+    "basis": "Slab on half-yearly income",
+    "due_text": "For each half-year (April to September and October to March), recovered from the August and February salaries and remitted to the local body within 10 days of deduction (Rule 20)",
+    "act": "Kerala Municipality and Panchayat Raj Acts (levied by local bodies)",
+    "annual_cap": "Rs. 2,500 a year (both halves combined)",
+    "slab_tables": [
+      {
+        "rows": [
+          {
+            "amt": "Nil",
+            "band": "Up to Rs. 11,999"
+          },
+          {
+            "amt": "Rs. 320",
+            "band": "Rs. 12,000 to Rs. 17,999"
+          },
+          {
+            "amt": "Rs. 450",
+            "band": "Rs. 18,000 to Rs. 29,999"
+          },
+          {
+            "amt": "Rs. 600",
+            "band": "Rs. 30,000 to Rs. 44,999"
+          },
+          {
+            "amt": "Rs. 750",
+            "band": "Rs. 45,000 to Rs. 99,999"
+          },
+          {
+            "amt": "Rs. 1,000",
+            "band": "Rs. 1,00,000 to Rs. 1,24,999"
+          },
+          {
+            "amt": "Rs. 1,250",
+            "band": "Rs. 1,25,000 and above"
+          }
+        ],
+        "unit": "Half-yearly income (amount per half-year)",
+        "title": ""
+      }
+    ],
+    "notes": "Levied at local body level. The applicable rate and remitting authority depend on where the establishment sits. A multi-district employer may be registered with several local bodies. Slabs revised with effect from 1 October 2024.",
+    "official_url": "https://labour.gov.in/",
+    "explainer_en": "In Kerala, professional tax is a local body tax. It is levied by panchayats under the Kerala Panchayat Raj Act, 1994 and by municipalities and corporations under the Kerala Municipality Act, 1994, and the employer pays it to the local body where the office or establishment is located. An employer with offices in several towns deals with each local body separately.\n\nThe tax is charged per half-year, on the salary earned in that half-year: April to September and October to March. The rates were revised from 1 October 2024 by G.O.(Ord) No. 1149/2024/LSGD dated 27 June 2024, on the recommendation of the Sixth State Finance Commission. Half-yearly salary up to Rs. 11,999 pays nothing. From Rs. 12,000 to Rs. 17,999 the tax is Rs. 320, up to Rs. 29,999 it is Rs. 450, up to Rs. 44,999 it is Rs. 600, up to Rs. 99,999 it is Rs. 750, up to Rs. 1,24,999 it is Rs. 1,000, and Rs. 1,25,000 and above pays Rs. 1,250. Two half-years at the top slab make Rs. 2,500, the yearly limit in Article 276 of the Constitution.\n\nThe lower slabs rose sharply in 2024: Rs. 120 became Rs. 320, Rs. 180 became Rs. 450, Rs. 300 became Rs. 600 and Rs. 450 became Rs. 750. The two top slabs did not change.\n\nAn employee is liable for a half-year only after working an aggregate of at least 60 days in it, so a joiner in the last weeks of a half-year pays nothing for that half. The employer reports the salaries to the local body on its requisition, deducts the tax for each half-year from the August and February salaries, and remits it within 10 days of deduction under rule 20 of the Profession Tax Rules, 1996. An employer who fails to deduct becomes liable for the amount as an arrear.",
+    "explainer_hi": "केरल में व्यवसाय कर स्थानीय निकाय का कर है। पंचायतें इसे केरल पंचायत राज अधिनियम, 1994 के तहत और नगरपालिकाएँ व नगर निगम केरल नगरपालिका अधिनियम, 1994 के तहत लेते हैं, और नियोक्ता इसे उस स्थानीय निकाय को देता है जहाँ उसका कार्यालय या प्रतिष्ठान है। कई शहरों में कार्यालय वाला नियोक्ता हर स्थानीय निकाय से अलग-अलग व्यवहार करता है।\n\nकर हर छमाही पर, उस छमाही में अर्जित वेतन पर लगता है: अप्रैल से सितंबर और अक्टूबर से मार्च। दरें 27 जून 2024 के G.O.(Ord) No. 1149/2024/LSGD से छठे राज्य वित्त आयोग की सिफ़ारिश पर 1 अक्टूबर 2024 से संशोधित हुईं। 11,999 रुपये तक के छमाही वेतन पर कुछ नहीं देना होता। 12,000 से 17,999 रुपये तक कर 320 रुपये है, 29,999 रुपये तक 450 रुपये, 44,999 रुपये तक 600 रुपये, 99,999 रुपये तक 750 रुपये, 1,24,999 रुपये तक 1,000 रुपये, और 1,25,000 रुपये व उससे अधिक पर 1,250 रुपये। सबसे ऊँचे स्लैब पर दो छमाहियाँ मिलाकर 2,500 रुपये होते हैं, जो संविधान के अनुच्छेद 276 की सालाना सीमा है।\n\n2024 में निचले स्लैब काफ़ी बढ़े: 120 रुपये 320 रुपये हुए, 180 रुपये 450 रुपये, 300 रुपये 600 रुपये और 450 रुपये 750 रुपये हुए। सबसे ऊपर के दो स्लैब नहीं बदले।\n\nकोई कर्मचारी किसी छमाही के लिए तभी कर देता है जब उसने उस छमाही में कुल मिलाकर कम से कम 60 दिन काम किया हो, इसलिए छमाही के आख़िरी हफ़्तों में जुड़ने वाला उस छमाही के लिए कुछ नहीं देता। नियोक्ता स्थानीय निकाय की माँग पर वेतन का ब्योरा देता है, हर छमाही का कर अगस्त और फरवरी के वेतन से काटता है, और व्यवसाय कर नियमावली, 1996 के नियम 20 के तहत कटौती के 10 दिनों के भीतर जमा करता है। जो नियोक्ता कटौती नहीं करता, उससे वह राशि बकाया के रूप में वसूल होती है।"
+  }
+}
