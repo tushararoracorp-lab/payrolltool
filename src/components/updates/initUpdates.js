@@ -36,14 +36,37 @@ uniq(DATA.feed.map(yearOf)).reverse().forEach(y=>$('#fyear').insertAdjacentHTML(
   ].map(([k,v])=>`<div class="stat"><b>${v}</b>${k}</div>`).join('');
 })();
 
+// ---------- search: every word must match, in any order; short forms and one-letter slips are allowed ----------
+const ALIAS={
+  'PT':'professional tax ptax profession tax','LWF':'labour labor welfare fund','Min Wages':'minimum wage wages mw',
+  'EPF':'provident fund pf epfo','ESI':'esic employees state insurance','TDS':'income tax','NPS':'national pension system',
+  'Wage Codes':'labour labor codes code on wages social security'};
+const STOP=new Set(['in','of','the','for','and','to','a','an','on','by','with']);
+const words=(t)=>String(t==null?'':t).toLowerCase().replace(/[^a-z0-9ऀ-ॿ]+/g,' ').split(' ').filter(Boolean);
+// at most one letter added, dropped, changed or two neighbours swapped
+function near(a,b){
+  if(a===b) return true; const la=a.length, lb=b.length; if(Math.abs(la-lb)>1) return false;
+  let i=0; while(i<la&&i<lb&&a[i]===b[i]) i++;
+  if(la===lb){ if(a.slice(i+1)===b.slice(i+1)) return true; return a[i]===b[i+1]&&a[i+1]===b[i]&&a.slice(i+2)===b.slice(i+2); }
+  return la>lb ? a.slice(i+1)===b.slice(i) : a.slice(i)===b.slice(i+1);
+}
+const tokenHits=(tok,hay)=>hay.some(w=>w.startsWith(tok)||(tok.length>=5&&(near(tok,w)||(w.length>tok.length&&near(tok,w.slice(0,tok.length))))));
+function matcher(q){
+  const toks=words(q).filter(t=>!STOP.has(t));
+  if(!toks.length) return null;
+  return (text)=>{const hay=words(text); return toks.every(t=>tokenHits(t,hay));};
+}
+const HAY=new Map();
+const feedText=(f)=>{ if(!HAY.has(f)) HAY.set(f,[f.title,f.short,f.ref,f.state,f.cat,ALIAS[f.cat]||'',f.src].join(' ')); return HAY.get(f); };
+
 function filtered(){
-  const q=$('#q').value.toLowerCase(),c=$('#fcat').value,s=$('#fstate').value,st=$('#fstatus').value,y=$('#fyear').value;
+  const m=matcher($('#q').value),c=$('#fcat').value,s=$('#fstate').value,st=$('#fstatus').value,y=$('#fyear').value;
   return DATA.feed.filter(f=>{
     if(c&&f.cat!==c) return false;
     if(s&&f.state!==s) return false;
     if(st&&f.status!==st) return false;
     if(y&&yearOf(f)!==y) return false;
-    if(q&&![f.title,f.short,f.ref,f.state,f.cat,f.src].join(' ').toLowerCase().includes(q)) return false;
+    if(m&&!m(feedText(f))) return false;
     return true;});
 }
 function renderFeed(){
@@ -77,11 +100,11 @@ $('#more').onclick=()=>{PAGE+=12;renderFeed();track('updates_show_more',{shown:P
 })();
 const MWSEG={v:'all'};
 function renderRates(){
-  const q=$('#rq').value.toLowerCase(), seg=MWSEG.v;
+  const m=matcher($('#rq').value), seg=MWSEG.v;
   const rows=DATA.mw.filter(r=>{
     if(seg==='current'&&r.flag!=='current') return false;
     if(seg==='attn'&&!['dormant','sub_judice'].includes(r.flag)) return false;
-    if(q&&!(r.name+' '+(r.notes||'')).toLowerCase().includes(q)) return false;
+    if(m&&!m(r.name+' '+(r.notes||''))) return false;
     return true;});
   $('#rcount').textContent=`${rows.length} of ${DATA.mw.length} jurisdictions`;
   $('#rgrid').innerHTML=rows.map(mwCardHtml).join('');

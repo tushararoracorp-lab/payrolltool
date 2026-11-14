@@ -80,4 +80,36 @@ async function getNotification(slug) {
   return plain({ n, canonical: notifSlug(n), related, stateLink });
 }
 
-module.exports = { TOPICS, slugify, notifSlug, listStatePaths, listNotificationPaths, getHub, getStatePage, getNotification };
+// Old address of a notice that is no longer live. A replaced notice points to the notice that replaced it (following
+// later replacements too); one removed without a replacement points to its state page, or to /updates.
+// Uses the request ids: a REPLACE removes the old row and adds the new one under the same request.
+async function successorPath(slug) {
+  const key8 = String(slug).slice(-8);
+  if (!/^[0-9a-f]{8}$/.test(key8)) return null;
+  const db = require('./db');
+  let last = (await db.query(
+    `SELECT category, state, removed_by_request FROM notifications
+      WHERE removed_at IS NOT NULL AND left(dedupe_key, 8) = $1 ORDER BY removed_at DESC LIMIT 1`, [key8]))[0];
+  if (!last) return null;
+  const d = await loadAll();
+  for (let hop = 0; hop < 5 && last.removed_by_request; hop++) {
+    const next = (await db.query(
+      `SELECT dedupe_key, category, state, removed_at, removed_by_request FROM notifications WHERE created_by_request = $1 LIMIT 1`,
+      [last.removed_by_request]))[0];
+    if (!next) break;
+    if (!next.removed_at) {
+      const live = d.feed.find((f) => String(f.key).slice(0, 8) === String(next.dedupe_key).slice(0, 8));
+      if (live) return '/updates/notifications/' + notifSlug(live);
+      break;
+    }
+    last = next;
+  }
+  const entry = Object.entries(TOPICS).find(([, t]) => t.cat === last.category);
+  if (entry && last.state) {
+    const [ts, t] = entry;
+    if (rowsOf(d, t.key).some((r) => r.name === last.state)) return '/updates/' + ts + '/' + slugify(last.state);
+  }
+  return '/updates';
+}
+
+module.exports = { TOPICS, slugify, notifSlug, listStatePaths, listNotificationPaths, getHub, getStatePage, getNotification, successorPath };

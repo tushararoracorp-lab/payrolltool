@@ -3,7 +3,7 @@ import Footer from '../../../components/Footer';
 import UpdatesStyles from '../../../components/updates/UpdatesStyles';
 import Seo from '../../../components/updates/Seo';
 import NotificationPage from '../../../components/updates/NotificationPage';
-import { getNotification, listNotificationPaths } from '../../../lib/updates/pageData';
+import { getNotification, listNotificationPaths, successorPath } from '../../../lib/updates/pageData';
 import { isIndexable } from '../../../lib/updates/flags';
 
 // Every notification gets a page. One added later (after an approval) is built the first time it is opened.
@@ -15,7 +15,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const page = await getNotification(params.slug);
-  if (!page) return { notFound: true, revalidate: 3600 };
+  if (!page) {
+    // a notice that was replaced or removed: its old address goes to the replacement, or to the state page
+    const to = await successorPath(params.slug);
+    if (to) return { redirect: { destination: to, permanent: true }, revalidate: 86400 };
+    return { notFound: true, revalidate: 3600 };
+  }
   // an old or hand-typed address that still carries the right id goes to the canonical one
   if (page.canonical !== params.slug) return { redirect: { destination: '/updates/notifications/' + page.canonical, permanent: true } };
   return { props: { ...page, indexable: isIndexable() }, revalidate: 86400 };

@@ -39,25 +39,26 @@ function pfSeries(pfRes,startYY,n){ // totals for the n wage months AFTER startY
 const INF=Infinity;
 const PT_RULES = {
   AP:{cycle:'monthly',bands:[[15000,0],[20000,150],[INF,200]]},
-  AS:{cycle:'monthly',bands:[[15000,0],[25000,180],[INF,208]]},
+  AS:{cycle:'monthly',bands:[[15000,0],[24999,180],[INF,208]]},   // Rs. 25,000 is in the Rs. 208 slab
   GJ:{cycle:'monthly',bands:[[12000,0],[INF,200]]},
   KA:{cycle:'monthly',bands:[[24999,0],[INF,200]],feb300:true},
   MP:{cycle:'monthly',bands:[[18750,0],[25000,125],[33333,166],[INF,208]],lastMonth:{166:174,208:212}},
   MH:{cycle:'monthly',bands:[[7500,0],[10000,175],[INF,200]],women:[[25000,0],[INF,200]],feb300:true},
   MZ:{cycle:'monthly',bands:[[5000,0],[8000,75],[10000,120],[12000,150],[15000,180],[20000,195],[INF,208]]},
-  NL:{cycle:'monthly',bands:[[4000,0],[5000,35],[7000,75],[9000,110],[12000,180],[INF,208]]},
+  NL:{cycle:'monthly',bands:[[3999,0],[4999,35],[6999,75],[8999,110],[11999,180],[INF,208]]},   // below Rs. 4,000 nil; Rs. 12,000 and above Rs. 208
   SK:{cycle:'monthly',bands:[[20000,0],[30000,125],[40000,150],[INF,200]]},
   TG:{cycle:'monthly',bands:[[15000,0],[20000,150],[INF,200]]},
   TR:{cycle:'monthly',bands:[[7500,0],[15000,150],[INF,208]]},
   WB:{cycle:'monthly',bands:[[20000,0],[30000,100],[50000,140],[100000,170],[INF,208]]},
-  PB:{cycle:'monthly',punjab:true}, // Rs. 200 a month above the annual-income limit of the chosen tax regime
-  BR:{cycle:'annual',bands:[[300000,0],[500000,1000],[1000000,2000],[INF,2500]],due:'by 30 November',deduct:[11]},
-  JH:{cycle:'annual',bands:[[300000,0],[500000,1200],[800000,1800],[1000000,2100],[INF,2500]],due:'quarterly by 15 May, 15 August, 15 November and 15 February'},
+  PB:{cycle:'monthly',punjab:true}, // Rs. 200 a month above the income-tax basic exemption of the chosen regime (Rs. 2,50,000 old, Rs. 4,00,000 new)
+  // Bihar Rules 5 and 6: deducted from the September salary, paid by 15 November; liable after September: February salary, paid by 15 April
+  BR:{cycle:'annual',bands:[[300000,0],[500000,1000],[1000000,2000],[INF,2500]],due:'from the September salary by 15 November (joiners after September: from the February salary, by 15 April)',deduct:[9],lateDeduct:2},
+  JH:{cycle:'annual',bands:[[300000,0],[500000,1200],[800000,1800],[1000000,2100],[INF,2500]],due:'quarterly online in Form JPT-03'},
   MN:{cycle:'annual',bands:[[50000,0],[75000,1200],[100000,2000],[125000,2400],[INF,2500]],due:'by 30 March',deduct:[3]},
   ML:{cycle:'annual',bands:[[180000,0],[300000,500],[500000,1000],[750000,1500],[INF,2500]],due:'by the 28th of every month'},
   // Kerala: liable only when employed 60 days or more in the half-year (Kerala Panchayat Raj Act, s.204; Municipality Act likewise)
-  KL:{cycle:'halfyearly',bands:[[11999,0],[17999,320],[29999,450],[44999,600],[99999,750],[124999,1000],[INF,1250]],due:'by 31 August (April to September) and by the end of February (October to March)',deduct:[8,2],minDays:60},
-  PY:{cycle:'halfyearly',bands:[[99999,0],[200000,250],[300000,500],[400000,750],[500000,1000],[INF,1250]],due:'by 31 July and 31 January',deduct:[7,1]},
+  KL:{cycle:'halfyearly',bands:[[11999,0],[17999,320],[29999,450],[44999,600],[99999,750],[124999,1000],[INF,1250]],due:'from the August salary (April to September) and the February salary (October to March)',deduct:[8,2],minDays:60},
+  PY:{cycle:'halfyearly',bands:[[99999,0],[200000,250],[300000,500],[400000,750],[500000,1000],[INF,1250]],due:'each half-year, on the municipality\'s requisition',deduct:[7,1]},
   TN:{cycle:'halfyearly',bands:[[21000,0],[30000,180],[45000,425],[60000,930],[75000,1025],[INF,1250]],due:'by 30 September and 31 March',deduct:[9,3]},
 };
 // Every other state and union territory levies no professional tax.
@@ -353,7 +354,7 @@ function calcESI(wageM, wageP){
 // ══════════════════════════════════════════════════════
 function ptBand(bands,x){for(const[u,a]of bands){if(x<=u)return a;}return 0;}
 function ptMonthAmt(rule,monthNum,amountBase,gender,annualIncome){
-  if(rule.punjab){const lim=regime==='old'?250000:300000;return annualIncome>lim?200:0;}
+  if(rule.punjab){const lim=regime==='old'?250000:400000;return annualIncome>lim?200:0;}
   const bands=(rule.women&&gender==='F')?rule.women:rule.bands;
   let a=ptBand(bands,amountBase);
   if(rule.feb300&&monthNum===2&&a===200)a=300;
@@ -392,7 +393,8 @@ function getPT(state, monthlyGross, proratedGross, month, gender, ctx){
   if(rule.cycle==='annual'){
     out.liability=ptBand(rule.bands,c.annualIncome||monthlyGross*12);
     if(rule.deduct){
-      const dm=rule.deduct[0];
+      // joined after the main deduction month: the later deduction month applies (Bihar: February)
+      const dm=(rule.lateDeduct&&fyPos(mo)>fyPos(rule.deduct[0]))?rule.lateDeduct:rule.deduct[0];
       if(mo===dm){out.ptMonthly=out.ptThisMonth=out.liability;}
       else if(fyPos(dm)>fyPos(mo))out.next={month:dm,year:yearOfNext(dm,mo,yr),amount:out.liability};
     }

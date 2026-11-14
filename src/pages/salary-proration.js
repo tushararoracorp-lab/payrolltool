@@ -692,7 +692,7 @@ export default function SalaryProration() {
       "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
       "__spPdfJsLoaded"
     )
-      .then(() => loadScriptOnce("/salary-proration-tool.js?v=20261114", "__spToolLoaded"))
+      .then(() => loadScriptOnce("/salary-proration-tool.js?v=20261114b", "__spToolLoaded"))
       .then(() => {
         window.__spRoot = shadow;
         if (typeof window.__spInitTool === "function") {

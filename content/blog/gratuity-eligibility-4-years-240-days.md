@@ -1,5 +1,5 @@
 ---
-title: "Gratuity Eligibility Before 5 Years: The 4 Years 240 Days Rule Explained"
+title: "Gratuity After 4 Years 240 Days: The Eligibility Rule Explained"
 description: "Does 4 years 8 months of service qualify for gratuity in India? The Madras High Court's 240-day rule, forfeiture provisions, the death/disability exception, and how the new Labour Codes changed eligibility for fixed-term employees."
 date: "2026-08-30"
 slug: "gratuity-eligibility-4-years-240-days"

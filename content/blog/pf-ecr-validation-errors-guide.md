@@ -1,5 +1,5 @@
 ---
-title: "PF ECR Validation Errors: Why Your File Got Rejected (and How to Fix Each One)"
+title: "PF ECR Upload Errors: Causes and Fixes for Each EPFO Rejection"
 description: "The exact EPFO ECR validation errors that reject a filing - UAN not seeded, KYC not approved, wage limit exceeded, structure mismatch - and how to fix each one before the 15th deadline."
 date: "2026-08-30"
 slug: "pf-ecr-validation-errors-guide"

@@ -1,6 +1,6 @@
 ---
-title: "What is Prorated CTC? Meaning & Calculation Guide India"
-description: "Prorated CTC is your CTC adjusted for actual days worked in a partial month. Learn what it means, how EPF, ESI, PT, and TDS are each treated differently, with a full worked example."
+title: "Prorated Salary in India: EPF, ESI, PT and TDS in a Part Month"
+description: "How to prorate salary for a joining or exit month in India: the per-day formula, and how EPF, ESI, Professional Tax and TDS each follow their own rule for a part month."
 date: "2026-07-05"
 slug: "salary-proration-india"
 ---
@@ -33,7 +33,7 @@ EPF contribution is calculated on prorated EPF wages, not the full monthly EPF w
 ESI eligibility and contribution depend on gross wages for the period. A partial month can sometimes push an employee's prorated gross below or above the ESI wage threshold, which affects eligibility for that month specifically.
 
 **Professional Tax**
-Professional Tax (PT) is state-specific and, importantly, is usually **not prorated** - most states apply PT based on the salary slab for the month regardless of days worked, though a few states have specific rules (for example, Tamil Nadu applies PT half-yearly rather than monthly, which creates confusion during proration).
+Professional Tax (PT) is state-specific. In the states that charge it monthly, the slab follows the salary actually paid for the month, so a joiner's prorated salary can fall into a lower slab, or below the threshold, for that month. A few states work differently: Kerala, Tamil Nadu and Puducherry charge PT per half-year, and Bihar and Jharkhand fix one yearly amount, so a part month there changes the timing more than the amount.
 
 **TDS**
 Income tax is annualized, not calculated purely on the prorated month's income. Payroll systems typically annualize projected income for the full financial year (based on CTC and expected working months), calculate tax liability with applicable slab rates, and deduct a proportional monthly amount - which means TDS on a joining month's prorated salary depends on assumptions about the rest of the year's income.
