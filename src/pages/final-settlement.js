@@ -75,7 +75,9 @@ function calculate(f) {
 
   const lines = [];
   let gratuity = 0;
-  const gratuityCap = f.sector === "government" ? 2500000 : 2000000;
+  // Rs. 20 lakh: the ceiling under S.O. 1420(E) of 29 March 2018, continued under the Code on Social Security.
+  // (Central Government servants under the CCS (Pension) Rules have their own Rs. 25 lakh ceiling and formula.)
+  const gratuityCap = 2000000;
   let tenureLine = "Enter the dates and press Calculate";
 
   if (!datesValid) {
@@ -108,22 +110,28 @@ function calculate(f) {
     const serviceEnd = new Date(dol);
     serviceEnd.setDate(serviceEnd.getDate() + 1);
     const overSixMonths = serviceEnd > sixMonthMark;
-    if (years >= minYears) {
-      const gratuityYears = years + (overSixMonths ? 1 : 0);
+    // Section 54: a year of continuous service is counted once 240 days are worked in it,
+    // so 4 completed years plus 240 days in the fifth year counts as 5 years.
+    const fifthYearDays = extraDays + 1;
+    const by240 = !isFte && years === 4 && fifthYearDays >= 240;
+    if (years >= minYears || by240) {
+      const gratuityYears = by240 ? 5 : years + (overSixMonths ? 1 : 0);
       gratuity = (wages * 15) / 26 * gratuityYears;
-      let explain = `${isFte ? `Fixed-term employee (qualifies after 1 year): ${years} completed year(s) under the contract` : `Qualifies at ${years} completed year(s) of service`}${
-        overSixMonths ? `, rounded up to ${gratuityYears} for the payout (a final part-year of more than six months counts as a full year)` : ""
-      }.`;
+      let explain = by240
+        ? `Qualifies: 4 completed years plus ${fifthYearDays} days in the fifth year (240 or more), so service counts as 5 years under section 54.`
+        : `${isFte ? `Fixed-term employee (qualifies after 1 year): ${years} completed year(s) under the contract` : `Qualifies at ${years} completed year(s) of service`}${
+            overSixMonths ? `, rounded up to ${gratuityYears} for the payout (a final part-year of more than six months counts as a full year)` : ""
+          }.`;
       if (gratuity > gratuityCap) {
         gratuity = gratuityCap;
-        explain += ` Capped at the statutory ${f.sector === "government" ? "Rs. 25L" : "Rs. 20L"} limit.`;
+        explain += ` Capped at the statutory Rs. 20L limit.`;
       }
       lines.push({ label: "Gratuity", amount: gratuity, explain });
     } else {
       const shortMsg = isFte
-        ? `Not applicable yet - a fixed-term employee qualifies after 1 year of service under the contract, and the service is ${daysUntilNext} day(s) short of that.`
+        ? `Not applicable yet - a fixed-term employee qualifies after 1 year of service under the contract, and the service is ${Math.max(0, daysUntilNext - 1)} day(s) short of that.`
         : years === 4
-          ? `Not eligible yet - ${daysUntilNext} more day(s) of service were needed to qualify for gratuity.`
+          ? `Not eligible yet - 4 completed years plus ${fifthYearDays} days in the fifth year; ${240 - fifthYearDays} more day(s) were needed to reach 240 days (section 54).`
           : `Not eligible - gratuity applies after 5 completed years of service; this service has ${years}.`;
       lines.push({ label: "Gratuity", amount: 0, explain: shortMsg });
     }
@@ -349,17 +357,17 @@ export default function FinalSettlement() {
   return (
     <>
       <Head>
-        <title>Final Settlement Calculator – Gratuity, Leave Encashment | PayrollTool.in</title>
+        <title>Full and Final Settlement Calculator | PayrollTool.in</title>
         <meta
           name="description"
-          content="Calculate full and final settlement for regular and fixed-term employees - gratuity, notice pay and leave encashment under the Code on Social Security. Browser-based, no login required."
+          content="Calculate full and final settlement for regular and fixed-term employees: gratuity, notice pay and leave encashment under the Code on Social Security."
         />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="PayrollTool.in" />
         <meta property="og:title" content="Final Settlement Calculator – PayrollTool.in" />
         <meta
           property="og:description"
-          content="Calculate full and final settlement for regular and fixed-term employees - gratuity, notice pay and leave encashment under the Code on Social Security. Browser-based, no login required."
+          content="Calculate full and final settlement for regular and fixed-term employees: gratuity, notice pay and leave encashment under the Code on Social Security."
         />
         <meta property="og:url" content="https://www.payrolltool.in/final-settlement" />
         <meta property="og:image" content="https://www.payrolltool.in/og-homepage.jpg" />
@@ -372,7 +380,7 @@ export default function FinalSettlement() {
         <meta name="twitter:title" content="Final Settlement Calculator – PayrollTool.in" />
         <meta
           name="twitter:description"
-          content="Calculate full and final settlement for regular and fixed-term employees - gratuity, notice pay and leave encashment under the Code on Social Security. Browser-based, no login required."
+          content="Calculate full and final settlement for regular and fixed-term employees: gratuity, notice pay and leave encashment under the Code on Social Security."
         />
         <link rel="canonical" href="https://www.payrolltool.in/final-settlement" />
         <script
@@ -463,12 +471,10 @@ export default function FinalSettlement() {
                     </div>
                   </div>
                   <div className="field field-full">
-                    <label htmlFor="sector">Sector</label>
-                    <select id="sector" value={fields.sector} onChange={set("sector")}>
-                      <option value="private">Private (gratuity capped at Rs. 20L)</option>
-                      <option value="government">Government (gratuity capped at Rs. 25L)</option>
-                    </select>
-                    <div className="help">Not sure? Most salaried company jobs count as Private.</div>
+                    <div className="help">
+                      Gratuity here follows the Code on Social Security, capped at Rs. 20 lakh. Central Government servants under the CCS (Pension)
+                      Rules follow those rules instead.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -638,8 +644,9 @@ export default function FinalSettlement() {
                 <div className="rules-box">
                   <p>
                     <b>Gratuity</b> - <code>Wages × 15 ÷ 26 × years worked</code>, after 5 years of continuous service for a regular employee or
-                    1 year under the contract for a fixed-term employee (Code on Social Security, 2020). A period of 6+ months in the final year rounds up
-                    to a full year. Capped at Rs. 20 lakh (private sector) or Rs. 25 lakh (government).
+                    1 year under the contract for a fixed-term employee (Code on Social Security, 2020). Four years plus 240 days worked in the fifth year
+                    counts as 5 years (section 54). A final part-year of more than six months counts as a full year. Capped at Rs. 20 lakh. Central
+                    Government servants under the CCS (Pension) Rules follow those rules instead, with a Rs. 25 lakh ceiling from 1 January 2024.
                   </p>
                   <p>
                     <b>Leave encashment</b> - <code>Wages ÷ 30 × unused leave days</code>. Only Earned/Privilege Leave is encashable in most

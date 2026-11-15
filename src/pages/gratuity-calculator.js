@@ -7,9 +7,9 @@ import { signalResult } from "../lib/resultPrompt";
 
 const TOOL_NAME = "Gratuity Calculator";
 const PAGE_URL = "https://www.payrolltool.in/gratuity-calculator";
-const PAGE_TITLE = "Gratuity Calculator under the Code on Social Security | PayrollTool.in";
+const PAGE_TITLE = "Gratuity Calculator under the Social Security Code | PayrollTool.in";
 const PAGE_DESC =
-  "Calculate gratuity from the actual dates of service for regular and fixed-term employees under the Code on Social Security, 2020: the 240-day rule, the 50% wage rule, the Rs. 20 lakh limit and the tax-exempt amount, with every step shown.";
+  "Calculate gratuity from dates of service under the Code on Social Security: 240-day rule, fixed-term employees, 50% wage rule and the Rs. 20 lakh limit.";
 
 const CODE_START = Date.UTC(2025, 10, 21); // 21 November 2025
 const CAP = 2000000;
@@ -148,7 +148,7 @@ const GC_MISTAKES = [
 const GC_FAQ = [
   { q: "How is gratuity calculated?", a: "Gratuity = wages × 15 ÷ 26 × years of service, for an establishment covered by the Code on Social Security, 2020. A final part-year of more than six months counts as a full year. The amount payable is capped at Rs. 20 lakh." },
   { q: "Is an employee with 4 years and 240 days eligible?", a: "Yes. Under section 54 of the Code, a year of continuous service is counted once 240 days are worked in it, or 190 days in an establishment that works fewer than six days a week. 4 years plus 240 days worked in the fifth year counts as 5 years, which meets the requirement." },
-  { q: "When does a fixed-term employee get gratuity?", a: "After 1 year of service under the contract. The same formula applies: wages × 15 ÷ 26 × years, with a final part-year of more than six months counted as a full year." },
+  { q: "When does a fixed-term employee get gratuity?", a: "After 1 year of service under the contract, on a pro-rata basis, under section 53 of the Code on Social Security, 2020, as set out in the Ministry of Labour and Employment release of 21 November 2025. The same formula applies: wages × 15 ÷ 26 × years, with a final part-year of more than six months counted as a full year." },
   { q: "Which wages are used under the Code?", a: "Basic pay, dearness allowance and retaining allowance. HRA, conveyance, bonus, overtime, commission and employer PF and NPS contributions are excluded, but if the excluded items are more than half of total pay, the excess is added back to wages. The calculator does this when you fill in total pay and excluded items." },
   { q: "What applies to an exit before 21 November 2025?", a: "The Payment of Gratuity Act, 1972, under which wages mean basic pay plus dearness allowance. The calculator switches to that basis when the last working day is before 21 November 2025." },
   { q: "How much of the gratuity is tax-free?", a: "For a private employer, the least of the gratuity received, the formula amount and the unused part of the Rs. 20 lakh lifetime limit is exempt under section 19 of the Income-tax Act, 2025. The rest is taxed as salary. Gratuity from a government employer is fully exempt." },
@@ -321,6 +321,7 @@ export default function GratuityCalculator() {
                     <div className="gc-f"><label htmlFor="unpaid">Unpaid days in final year</label><input type="text" id="unpaid" inputMode="numeric" placeholder="0" value={f.unpaid} onChange={set("unpaid")} /></div>
                     <div className="gc-f"><label htmlFor="prior">Gratuity exempted earlier (Rs.)</label><input type="text" id="prior" inputMode="decimal" placeholder="0" value={f.prior} onChange={set("prior")} /></div>
                   </div>
+                  <div className="gc-help gc-help-top">Paid leave, lay-off and maternity leave count as days worked under section 54. Enter only other unpaid absences in the final year.</div>
                   <label className="gc-check"><input type="checkbox" checked={f.fiveday} onChange={set("fiveday")} /> The establishment works fewer than six days a week (190-day test)</label>
                 </div>
               </details>
@@ -583,6 +584,9 @@ export default function GratuityCalculator() {
           font-size: 12px;
           color: var(--ink-soft);
           margin-top: 5px;
+        }
+        .gc-help-top {
+          margin: -4px 0 12px;
         }
         .gc-sum {
           font-size: 12px;

@@ -445,13 +445,13 @@ export default function TaxCalculator() {
   return (
     <>
       <Head>
-        <title>Income Tax Calculator 2026‑27 – Old vs New Regime | PayrollTool.in</title>
+        <title>Income Tax Calculator 2026-27: Old vs New Regime | PayrollTool.in</title>
         <meta
           name="description"
-          content="Compare Old and New Tax Regime for FY 2026‑27 under the Income Tax Act, 2025. Browser-based calculator with HRA, Section 123, NPS and health insurance deductions. No login."
+          content="Compare the old and new tax regimes for FY 2026-27 under the Income Tax Act, 2025, with HRA, Section 123, NPS and health insurance deductions."
         />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Income Tax Calculator 2026‑27 – Old vs New Regime | PayrollTool.in" />
+        <meta property="og:title" content="Income Tax Calculator 2026-27: Old vs New Regime | PayrollTool.in" />
         <meta
           property="og:description"
           content="Compare Old and New Tax Regime for FY 2026‑27 instantly. Private, no sign-up."
@@ -464,7 +464,7 @@ export default function TaxCalculator() {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Income Tax Calculator 2026‑27 – Old vs New Regime | PayrollTool.in" />
+        <meta name="twitter:title" content="Income Tax Calculator 2026-27: Old vs New Regime | PayrollTool.in" />
         <meta
           name="twitter:description"
           content="Compare Old and New Tax Regime for FY 2026‑27 instantly. Private, no sign-up."

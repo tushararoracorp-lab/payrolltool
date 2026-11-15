@@ -848,7 +848,7 @@ export default function SalaryProration() {
         <title>Salary Proration Calculator | PayrollTool.in</title>
         <meta
           name="description"
-          content="Calculate prorated salary for a part month: mid-month joining, exit or salary change, with EPF, ESI, PT, LWF, NPS and TDS on the prorated figures, plus worked examples."
+          content="Calculate prorated salary for mid-month joining, exit or salary change, with EPF, ESI, PT, LWF, NPS and TDS on the prorated figures."
         />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Salary Proration Calculator | PayrollTool.in" />

@@ -209,7 +209,7 @@ export default function Home({ initialStats = null }) {
   // continuously, pauses when the tab isn't visible.
   const HERO_SCENES = [
     { panel: 1, typed: true },
-    { panel: 2, duration: 4500 },
+    { panel: 2, duration: 5000 },
     { panel: 4, duration: 2600 },
   ];
   const HERO_TYPE_LINES = [
@@ -221,8 +221,8 @@ export default function Home({ initialStats = null }) {
   const [heroScene, setHeroScene] = useState(0);
   const [heroTyped, setHeroTyped] = useState({ q1: "", a1: "", q2: "", a2: "" });
   const [heroTypingLine, setHeroTypingLine] = useState(-1);
-  const [heroToolsIn, setHeroToolsIn] = useState([false, false, false, false, false, false]);
-  const [heroToolsStamped, setHeroToolsStamped] = useState([false, false, false, false, false, false]);
+  const [heroToolsIn, setHeroToolsIn] = useState(Array(8).fill(false));
+  const [heroToolsStamped, setHeroToolsStamped] = useState(Array(8).fill(false));
   const [heroCalloutsIn, setHeroCalloutsIn] = useState([false, false, false]);
   const [heroOutroIn, setHeroOutroIn] = useState(false);
   const [heroEcgKey, setHeroEcgKey] = useState(0); // bump to force the SVG draw/dot animations to restart each loop
@@ -241,8 +241,8 @@ export default function Home({ initialStats = null }) {
       return () => { cancelled = true; timers.forEach(clearTimeout); };
     }
 
-    setHeroToolsIn([false, false, false, false, false, false]);
-    setHeroToolsStamped([false, false, false, false, false, false]);
+    setHeroToolsIn(Array(8).fill(false));
+    setHeroToolsStamped(Array(8).fill(false));
     setHeroCalloutsIn([false, false, false]);
     setHeroOutroIn(false);
 
@@ -286,8 +286,8 @@ export default function Home({ initialStats = null }) {
     }
 
     if (scene.panel === 2) {
-      for (let ti = 0; ti < 6; ti++) {
-        const delay = 200 + ti * 650;   // 6 cards: tighter stagger so the last "Live" stamp lands before the scene ends
+      for (let ti = 0; ti < 8; ti++) {
+        const delay = 200 + ti * 520;   // 8 cards: stagger so the last "Live" stamp lands before the scene ends
         timers.push(setTimeout(() => {
           setHeroToolsIn((prev) => { const next = [...prev]; next[ti] = true; return next; });
         }, delay));
@@ -696,7 +696,7 @@ export default function Home({ initialStats = null }) {
                     </div>
                   )}
 
-                  {/* Panel 2: 6-tool grid */}
+                  {/* Panel 2: tool grid */}
                   {HERO_SCENES[heroScene].panel === 2 && (
                     <div className="hero-panel">
                       <div className="hero-tools-caption">Then came more - each built, then shipped.</div>
@@ -708,6 +708,8 @@ export default function Home({ initialStats = null }) {
                           { name: "Final Settlement", icon: Icon.check },
                           { name: "Tax Calculator", icon: Icon.bolt },
                           { name: "ESI File Creator", icon: Icon.esicMc },
+                          { name: "Gratuity Calculator", icon: Icon.gratuity },
+                          { name: "Date Calculator", icon: Icon.dateCalc },
                         ].map((tool, i) => (
                           <div className={`hero-tool-card${heroToolsIn[i] ? " in" : ""}`} key={tool.name}>
                             <div className="hero-tool-icon">{tool.icon}</div>
@@ -1084,7 +1086,7 @@ export default function Home({ initialStats = null }) {
         @keyframes heroBlink { 50% { opacity: 0; } }
 
         .hero-tools-caption { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 10px; text-align: center; }
-        .hero-tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+        .hero-tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
         .hero-tool-card { background: var(--card-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 5px; text-align: center; opacity: 0; transform: scale(.88); transition: all .45s cubic-bezier(.34,1.4,.64,1); min-height: 76px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .hero-tool-card.in { opacity: 1; transform: scale(1); }
         .hero-tool-center { grid-column: 2 / 3; }

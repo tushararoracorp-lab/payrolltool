@@ -7,9 +7,9 @@ import { signalResult } from "../lib/resultPrompt";
 
 const TOOL_NAME = "Date Calculator";
 const PAGE_URL = "https://www.payrolltool.in/date-calculator";
-const PAGE_TITLE = "Payroll Date Calculator: Days, Notice Period, Working Days | PayrollTool.in";
+const PAGE_TITLE = "Date Calculator for Payroll and Notice Period | PayrollTool.in";
 const PAGE_DESC =
-  "Count days between dates, add months with the month-end rule, find the last working day of a notice period, count working days with Saturday offs and holidays, and work out retirement dates, the way payroll counts them.";
+  "Count days between dates, find the notice period end date, count working days with holidays and work out retirement dates, the way payroll counts them.";
 
 const DAY = 86400000;
 
@@ -248,7 +248,7 @@ const WEEKLY_OFFS = {
 };
 
 const DC_INFO_CARDS = [
-  { icon: "📅", title: "Both days count", body: "Payroll counts the first and the last day. An absence from 28 March to 3 April is 7 days of loss of pay, not 6." },
+  { icon: "📅", title: "Counting both days", body: "For leave, loss of pay, notice served and service, both the first and the last day count: 28 March to 3 April is 7 days. Untick the option to count only the gap." },
   { icon: "📆", title: "The month-end rule", body: "When a day does not exist in the result month, its last day is used: one month from 31 January is 28 February, or 29 in a leap year." },
   { icon: "⏳", title: "Notice in months", body: "Two months from 15 January ends on 14 March. Two months and 60 days are not the same over February." },
   { icon: "🎂", title: "Retirement age", body: "An age is attained on the day before the birthday, so someone born on the 1st of a month retires at the end of the previous month." },
@@ -424,7 +424,7 @@ export default function DateCalculator() {
           <div className="dc-col">
             {mode === "between" && (
               <section className="dc-card">
-                <div className="dc-ch"><span>1</span><h2>Dates</h2></div>
+                <div className="dc-ch"><h2>Dates</h2></div>
                 <div className="dc-row">
                   <div className="dc-f"><label htmlFor="b1">From</label><input type="date" id="b1" value={f.b1} onChange={set("b1")} /></div>
                   <div className="dc-f"><label htmlFor="b2">To</label><input type="date" id="b2" value={f.b2} onChange={set("b2")} /></div>
@@ -435,7 +435,7 @@ export default function DateCalculator() {
 
             {mode === "add" && (
               <section className="dc-card">
-                <div className="dc-ch"><span>1</span><h2>Start date and period</h2></div>
+                <div className="dc-ch"><h2>Start date and period</h2></div>
                 <div className="dc-f"><label htmlFor="a1">Start date</label><input type="date" id="a1" value={f.a1} onChange={set("a1")} /></div>
                 <div className="dc-row">
                   <div className="dc-f"><label htmlFor="aN">Add (use - to subtract)</label><input type="text" id="aN" placeholder="e.g. 6" value={f.aN} onChange={set("aN")} /></div>
@@ -450,7 +450,7 @@ export default function DateCalculator() {
 
             {mode === "notice" && (
               <section className="dc-card">
-                <div className="dc-ch"><span>1</span><h2>Resignation and notice</h2></div>
+                <div className="dc-ch"><h2>Resignation and notice</h2></div>
                 <div className="dc-f"><label htmlFor="n1">Resignation date</label><input type="date" id="n1" value={f.n1} onChange={set("n1")} /></div>
                 <div className="dc-row">
                   <div className="dc-f"><label htmlFor="nN">Notice period</label><input type="text" id="nN" inputMode="numeric" placeholder="e.g. 60" value={f.nN} onChange={set("nN")} /></div>
@@ -472,7 +472,7 @@ export default function DateCalculator() {
 
             {mode === "work" && (
               <section className="dc-card">
-                <div className="dc-ch"><span>1</span><h2>Period and offs</h2></div>
+                <div className="dc-ch"><h2>Period and offs</h2></div>
                 <div className="dc-row">
                   <div className="dc-f"><label htmlFor="w1">From</label><input type="date" id="w1" value={f.w1} onChange={set("w1")} /></div>
                   <div className="dc-f"><label htmlFor="w2">To</label><input type="date" id="w2" value={f.w2} onChange={set("w2")} /></div>
@@ -492,7 +492,7 @@ export default function DateCalculator() {
 
             {mode === "retire" && (
               <section className="dc-card">
-                <div className="dc-ch"><span>1</span><h2>Date of birth and policy</h2></div>
+                <div className="dc-ch"><h2>Date of birth and policy</h2></div>
                 <div className="dc-row">
                   <div className="dc-f"><label htmlFor="r1">Date of birth</label><input type="date" id="r1" value={f.r1} onChange={set("r1")} /></div>
                   <div className="dc-f">
@@ -691,17 +691,6 @@ export default function DateCalculator() {
           align-items: center;
           gap: 10px;
           margin-bottom: 14px;
-        }
-        .dc-ch span {
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: var(--brand-tint);
-          color: var(--brand-deep);
-          display: grid;
-          place-items: center;
-          font-size: 12px;
-          font-weight: 600;
         }
         .dc-ch h2 {
           font-family: "Sora", sans-serif;
