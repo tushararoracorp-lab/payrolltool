@@ -1,7 +1,7 @@
 ---
 title: "Minimum Wages from 1 October 2026: State-Wise Rates and What Changed"
 seoTitle: "Minimum Wages from 1 October 2026: State-Wise Rates"
-description: "Minimum wage revisions from 1 October 2026 for the central sphere and seven states, with monthly rates, how VDA moved them and what payroll should do."
+description: "Minimum wage revisions from 1 October 2026 for the central sphere and nine states, with monthly rates, how VDA moved them and what payroll should do."
 date: "2026-11-14"
 slug: "minimum-wages-october-2026"
 ---
@@ -22,6 +22,8 @@ Monthly rates including VDA. Where a state has zones, the highest-paid zone is s
 - **Andhra Pradesh (Zone I, shops)**: unskilled Rs. 12,871, semi-skilled Rs. 13,273, skilled Rs. 13,893, highly skilled Rs. 14,728
 - **Madhya Pradesh**: unskilled Rs. 12,575, semi-skilled Rs. 13,571, skilled Rs. 15,294, highly skilled Rs. 16,919
 - **Odisha**: unskilled Rs. 12,428, semi-skilled Rs. 13,728, skilled Rs. 15,028, highly skilled Rs. 16,328
+- **Bihar**: unskilled Rs. 11,518, semi-skilled Rs. 11,934, skilled Rs. 14,560, highly skilled Rs. 17,732
+- **Chhattisgarh (Zone A)**: unskilled Rs. 11,534.48, semi-skilled Rs. 12,184.48, skilled Rs. 12,964.48, highly skilled Rs. 13,744.48
 
 Where a grade is missing, the order sets no separate rate for it.
 
@@ -43,6 +45,10 @@ Where a grade is missing, the order sets no separate rate for it.
 
 **Odisha.** The Labour Commissioner's notification of 8 October 2026 added Rs. 6 a day to every grade. Daily rates are Rs. 478, Rs. 528, Rs. 578 and Rs. 628. The skilled grade includes clerical work.
 
+**Bihar.** S.O. 252 dated 4 November 2026, issued under section 6 of the Code on Wages, 2019, raised the daily rates by Rs. 7, Rs. 7, Rs. 9 and Rs. 10 to Rs. 443, Rs. 459, Rs. 560 and Rs. 682 from 1 October 2026. Monthly figures are the daily rate multiplied by 26, as the notification itself provides. It was published more than a month after the date it applies from, so most employers will owe October arrears.
+
+**Chhattisgarh.** Notification No. Eight/N.W./L.C./2026/2661 of 8 October 2026 raised the VDA by Rs. 132.48 a month to Rs. 3,214.48 for 1 October 2026 to 31 March 2027. The index average rose from 424.80 to 431.42, and each point is worth Rs. 20 a month. Zone B unskilled is Rs. 11,274.48 and Zone C unskilled is Rs. 11,014.48.
+
 ## States on other cycles
 
 Not every state revises in October, so a revision calendar built only on April and October misses several.
@@ -50,7 +56,6 @@ Not every state revises in October, so a revision calendar built only on April a
 - **Maharashtra and West Bengal** revise on 1 January and 1 July.
 - **Tamil Nadu** adjusts the dearness allowance once a year, from 1 April.
 - **Punjab** revised its basic rates from 1 May 2026 under the Code on Wages: Rs. 13,486 a month for unskilled work.
-- **Bihar** set rates from 1 April 2026 by S.O. 92 of 6 April 2026: Rs. 436 a day, or Rs. 11,336 a month, for unskilled work. The order provides for the next VDA change three months after each half-year.
 - **Telangana** fixed new rates from 1 June 2026 under G.O.Ms.No.6.
 - **Karnataka** notified its revision on 22 May 2026; it is under challenge in the High Court but has not been stayed.
 
@@ -64,7 +69,7 @@ Two consequences matter for payroll. First, the rate changes even when nobody an
 
 ## What to do in payroll
 
-1. **Map each establishment to the right zone or area.** Jharkhand, Uttar Pradesh, Gujarat, Andhra Pradesh and the central sphere all have more than one rate for the same grade.
+1. **Map each establishment to the right zone or area.** Jharkhand, Uttar Pradesh, Gujarat, Andhra Pradesh, Chhattisgarh and the central sphere all have more than one rate for the same grade.
 2. **Check every grade, not only unskilled.** In Jharkhand the gap between semi-skilled and skilled Area A is more than Rs. 4,500 a month.
 3. **Pay arrears from 1 October 2026** where October salaries used the April rate. Orders issued after the payroll cut-off still apply from 1 October.
 4. **Compare the right figure.** Minimum wage is compared with the wages the order defines, usually basic plus dearness allowance. Allowances such as HRA do not count towards it.
