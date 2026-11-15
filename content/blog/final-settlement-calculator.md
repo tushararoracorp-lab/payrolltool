@@ -94,3 +94,5 @@ Both the gratuity and the leave encashment fall within their exempt limits here,
 ## Run the numbers
 
 Our [Final Settlement calculator](/final-settlement) works out gratuity, leave encashment and notice pay recovery together from the employee's dates and salary, in your browser.
+
+For gratuity on its own, with every step shown, including the 240-day test, the 50% wage rule and the tax-exempt amount, use the [Gratuity Calculator](/gratuity-calculator). To find the last working day from the resignation date and the notice period, use the [Date Calculator](/date-calculator#notice-period).

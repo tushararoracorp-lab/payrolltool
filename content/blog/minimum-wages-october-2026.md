@@ -1,6 +1,7 @@
 ---
 title: "Minimum Wages from 1 October 2026: State-Wise Rates and What Changed"
-description: "The minimum wage revisions from 1 October 2026 for the central sphere, Jharkhand, Uttar Pradesh, Madhya Pradesh, Gujarat, Andhra Pradesh, Odisha and Meghalaya, with monthly rates, how VDA moved them, and what payroll should do."
+seoTitle: "Minimum Wages from 1 October 2026: State-Wise Rates"
+description: "Minimum wage revisions from 1 October 2026 for the central sphere and seven states, with monthly rates, how VDA moved them and what payroll should do."
 date: "2026-11-14"
 slug: "minimum-wages-october-2026"
 ---

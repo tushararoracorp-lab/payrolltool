@@ -49,6 +49,8 @@ Most LOP-related employee complaints aren't about the concept - they're about *t
 
 The part most likely to go wrong before the deduction is even calculated is an absence that crosses a month boundary. An absence from 28 March to 3 April has to be split into two entries, one for each payroll month, so that each month's LOP uses that month's own day count. Our [LOP Splitter](/lop-splitter) does exactly this: it splits each employee's LOP period into HRMS-ready date rows by month, and flags overlapping absence records so the same day is never deducted twice. The deduction itself, and the EPF, ESI and PT recalculation that follows it, stay with your payroll system.
 
+To count the days in an absence, with both the first and the last day included, or the working days in a month after weekly offs and holidays, use the [Date Calculator](/date-calculator#days-between).
+
 ## Key takeaway
 
 LOP itself is simple math - the complexity comes from consistency (calendar days, 30 or 26), correctly identifying which salary components it applies to, and remembering its downstream effect on statutory deductions.

@@ -1,6 +1,7 @@
 ---
 title: "Professional Tax Due Dates by State: 2026-27 Payment Calendar"
-description: "When professional tax deducted from salaries has to be paid in each Indian state for 2026-27: monthly, quarterly, half-yearly and annual cycles, return dates, and how to build one PT calendar for a multi-state payroll."
+seoTitle: "Professional Tax Due Dates by State: 2026-27 Calendar"
+description: "When professional tax deducted from salaries is due in each state for 2026-27: monthly, quarterly, half-yearly and annual cycles, and the return dates."
 date: "2026-11-14"
 slug: "professional-tax-due-dates-by-state"
 ---

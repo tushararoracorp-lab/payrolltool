@@ -54,6 +54,8 @@ Even then, forfeiture is capped at the actual loss caused - an employer cannot f
 
 Calculate the exact number of days worked in your final, incomplete year - including paid leave and weekly offs you remained on the rolls for, not just days physically worked. If that figure clears 240, the legal basis for eligibility is strong, even though your employer's HR system may not automatically flag it. This is worth raising in writing, with the specific day count, rather than accepting a verbal "you need exactly 5 years" without checking the math yourself.
 
+The [Gratuity Calculator](/gratuity-calculator) does this check from the joining date and the last working day: it counts the days in the fifth year, applies the 240-day test (or 190 days for a five-day establishment), shows the date the employee qualifies, and works out the gratuity and the tax-exempt amount.
+
 ## Getting the full settlement right, not just gratuity in isolation
 
 Gratuity is rarely the only number in play when someone leaves - leave encashment, notice-period shortfall, and any pending dues usually need calculating in the same settlement. Our [Final Settlement Calculator](/final-settlement) handles gratuity (including the statutory cap and rounding), leave encashment, and notice-period recovery together, so you can check your own numbers against whatever your employer's HR team provides.

@@ -1,6 +1,7 @@
 ---
 title: "Labour Welfare Fund in India: State-Wise Contributions and Cycles for 2026"
-description: "What the Labour Welfare Fund is, which states collect it, the employee and employer contribution in each state for 2026, the monthly, half-yearly and annual cycles, and the payroll mistakes that cause LWF defaults."
+seoTitle: "Labour Welfare Fund: State-Wise Contributions 2026"
+description: "Which states collect the Labour Welfare Fund, the employee and employer share in each for 2026, the half-yearly and annual cycles, and common mistakes."
 date: "2026-11-14"
 slug: "labour-welfare-fund-india"
 ---

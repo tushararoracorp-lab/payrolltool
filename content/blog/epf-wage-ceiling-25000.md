@@ -1,6 +1,7 @@
 ---
 title: "EPF Wage Ceiling Hike 2026: Rs. 15,000 to Rs. 25,000 - What Changed, and How to File September's ECR"
-description: "EPFO's EPF wage ceiling rose to Rs. 25,000 on 17 September 2026 (S.O. 5109(E)). What it changes for PF, EPS and EDLI, plus exactly how to file the split September ECR by the extended 31 October deadline."
+seoTitle: "EPF Wage Ceiling Rs. 25,000: Changes and September ECR"
+description: "The EPF wage ceiling rose to Rs. 25,000 on 17 September 2026 (S.O. 5109(E)): what changes for PF, EPS and EDLI, and how to file the split September ECR."
 date: "2026-09-26"
 slug: "epf-wage-ceiling-25000"
 ---

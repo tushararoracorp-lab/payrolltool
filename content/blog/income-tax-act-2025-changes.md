@@ -1,6 +1,7 @@
 ---
 title: "Income Tax Act 2025: What Changes for Salaried Employees and Payroll Teams"
-description: "The Income Tax Act, 2025 replaces the 1961 Act from 1 April 2026. A guide to the section renumbering, what stays the same, and what payroll teams need to update."
+seoTitle: "Income Tax Act 2025: Changes for Salaried and Payroll"
+description: "The Income Tax Act, 2025 replaces the 1961 Act from 1 April 2026: the section renumbering, what stays the same and what payroll teams need to update."
 date: "2026-08-15"
 slug: "income-tax-act-2025-changes"
 ---

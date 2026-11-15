@@ -1,6 +1,7 @@
 ---
 title: "ESI Calculation in India: Wage Ceiling, Contribution Rates and the Mid-Year Rule Everyone Gets Wrong"
-description: "How ESI eligibility and contribution actually works in India: the Rs. 21,000 wage ceiling, the 4% contribution split, what happens when a raise pushes someone over the ceiling mid-year, and how the new Labour Codes changed what counts as wages."
+seoTitle: "ESI Calculation: Wage Ceiling, Rates and Mid-Year Rule"
+description: "How ESI works in India: the Rs. 21,000 wage ceiling, the 4% contribution split, and what happens when a raise takes an employee over the ceiling mid-year."
 date: "2026-08-30"
 slug: "esi-calculation-guide-india"
 ---

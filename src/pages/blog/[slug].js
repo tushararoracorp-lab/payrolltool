@@ -34,6 +34,8 @@ export default function BlogPost({ frontmatter, contentHtml, slug }) {
   // links from there. Every other post keeps the front-matter title exactly as before.
   const seo = SEO_PAGES[`/blog/${slug}`]
   const publishedIso = toIsoDate(frontmatter.date)
+  // seoTitle (optional) is the short search-result title; title stays the on-page heading.
+  const pageTitle = frontmatter.seoTitle || `${frontmatter.title} | PayrollTool.in Blog`
 
   // Mirror <html data-theme> onto this page - same pattern as every other
   // page in this project. The article body uses Tailwind's typography
@@ -84,14 +86,14 @@ export default function BlogPost({ frontmatter, contentHtml, slug }) {
         />
       ) : (
       <Head>
-        <title>{frontmatter.title} | PayrollTool.in Blog</title>
+        <title>{pageTitle}</title>
         <meta name="description" content={frontmatter.description} />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="PayrollTool.in" />
         <link rel="canonical" href={canonicalUrl} />
 
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={frontmatter.title} />
+        <meta property="og:title" content={frontmatter.seoTitle || frontmatter.title} />
         <meta property="og:description" content={frontmatter.description} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content="https://www.payrolltool.in/icon.png" />
@@ -100,7 +102,7 @@ export default function BlogPost({ frontmatter, contentHtml, slug }) {
         {publishedIso ? <meta property="article:published_time" content={publishedIso} /> : null}
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={frontmatter.title} />
+        <meta name="twitter:title" content={frontmatter.seoTitle || frontmatter.title} />
         <meta name="twitter:description" content={frontmatter.description} />
 
         <script

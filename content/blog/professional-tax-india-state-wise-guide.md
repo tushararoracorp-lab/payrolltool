@@ -1,6 +1,7 @@
 ---
 title: "Professional Tax in India: State-Wise Rates and Rules for 2026-27"
-description: "Which states levy professional tax in 2026-27, the Rs. 2,500 annual cap, the recent changes in West Bengal, Karnataka, Assam, Punjab, Maharashtra and Odisha, and the work-location mistake that costs multi-state employers most."
+seoTitle: "Professional Tax in India: State-Wise Rates 2026-27"
+description: "Which states levy professional tax in 2026-27, the Rs. 2,500 annual cap, recent changes by state, and the work-location mistake multi-state employers make."
 date: "2026-08-30"
 slug: "professional-tax-india-state-wise-guide"
 ---

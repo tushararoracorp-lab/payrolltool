@@ -1,6 +1,7 @@
 ---
 title: "Code on Wages 50% Rule Explained (2026-27) | The Special Allowance Mistake Almost Everyone Makes"
-description: "The 50% wage rule under Section 2(y) of the Code on Wages, with a corrected worked example - why Special Allowance usually isn't excluded at all, and what actually moves PF, ESI and gratuity."
+seoTitle: "Code on Wages 50% Rule: Wage Definition Explained"
+description: "The 50% wage rule under section 2(y) of the Code on Wages, with a worked example: why special allowance is usually not excluded, and what moves PF and ESI."
 date: "2026-09-26"
 slug: "code-on-wages-50-percent-rule"
 ---
