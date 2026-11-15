@@ -180,11 +180,6 @@ const SP_EXAMPLES = [
 // generation, ported from the original tool) can't leak into or collide
 // with the rest of the site.
 const TOOL_BODY_HTML = `
-<div class="hero">
-  <h1>Salary <em>Proration</em> Calculator</h1>
-  <p>Fill in your salary structure and get a precise prorated salary - with EPF, ESI, PT and TDS computed automatically.</p>
-</div>
-
 <div class="grid">
 <!-- ═══════════════ LEFT ═══════════════ -->
 <div id="leftPanel">
@@ -908,6 +903,11 @@ export default function SalaryProration() {
       <div className="sp-wrapper" data-theme={theme}>
         <Header />
 
+        <div className="sp-hero">
+          <h1>Salary <em>Proration</em> Calculator</h1>
+          <p>Fill in your salary structure and get a precise prorated salary - with EPF, ESI, PT and TDS computed automatically.</p>
+        </div>
+
         <div className="sp-host" ref={hostRef} />
 
         <div className="sp-cards-row">
@@ -995,6 +995,41 @@ export default function SalaryProration() {
         }
         .sp-wrapper[data-theme="dark"] {
           background: #15111f;
+        }
+
+        .sp-hero {
+          text-align: center;
+          padding: 28px 20px 18px;
+          background: linear-gradient(135deg, rgba(124, 58, 237, 0.07) 0%, transparent 100%);
+        }
+        .sp-hero h1 {
+          font-family: "Sora", sans-serif;
+          font-size: clamp(1.5rem, 3vw, 2rem);
+          font-weight: 800;
+          color: #1e1b4b;
+          letter-spacing: -1px;
+          line-height: 1.12;
+          margin: 0 0 6px;
+        }
+        .sp-hero h1 em {
+          color: #7c3aed;
+          font-style: normal;
+        }
+        .sp-hero p {
+          font-size: 0.8rem;
+          color: #7c74b0;
+          max-width: 500px;
+          margin: 0 auto;
+          line-height: 1.6;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-hero h1 {
+          color: #f3f0fa;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-hero h1 em {
+          color: #9163f2;
+        }
+        .sp-wrapper[data-theme="dark"] .sp-hero p {
+          color: #b3aac7;
         }
 
         .sp-host {
