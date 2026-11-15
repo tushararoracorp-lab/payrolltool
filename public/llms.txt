@@ -1,23 +1,42 @@
 # PayrollTool.in
 
-> PayrollTool.in is a browser-based suite of payroll calculators for Indian HR and payroll professionals, built by a payroll compliance professional with 8+ years of hands-on statutory payroll experience. Every calculator runs entirely client-side - no data is uploaded or stored.
+> PayrollTool.in is a free, browser-based set of payroll calculators and guides for Indian HR and payroll professionals, built by a payroll compliance professional with 8+ years of hands-on statutory payroll experience. Every calculator runs in the browser: no data is uploaded or stored, and no login is needed.
 
 ## Tools
 
-- [PF ECR Creator](https://www.payrolltool.in/pf-ecr-creator): Generates compliance-ready PF ECR files matching the EPFO Unified Portal format from an uploaded Excel spreadsheet.
-- [Tax Regime Calculator](https://www.payrolltool.in/tax-calculator): Compares Old vs New income tax regimes for FY 2026-27, including deductions, surcharge, and cess.
-- [Salary Proration Calculator](https://www.payrolltool.in/salary-proration): Calculates prorated salary for mid-month joining or exit, including EPF, ESI, state-wise Professional Tax, and TDS.
-- [LOP Splitter](https://www.payrolltool.in/lop-splitter): Calculates Loss of Pay for partial-month absences, including month-boundary and multi-employee bulk cases.
-- [Final Settlement Calculator](https://www.payrolltool.in/final-settlement): Calculates full and final settlement - gratuity, notice pay, leave encashment, and statutory deductions.
+- [Salary Proration Calculator](https://www.payrolltool.in/salary-proration): Prorated salary for mid-month joining or exit, with EPF, ESI, state-wise professional tax and TDS.
+- [LOP Splitter](https://www.payrolltool.in/lop-splitter): Loss of pay for partial-month absences, including absences across a month boundary and bulk cases.
+- [PF ECR Creator](https://www.payrolltool.in/pf-ecr-creator): Builds the PF ECR text file in the EPFO Unified Portal format from an Excel sheet.
+- [ESIC MC Creator](https://www.payrolltool.in/esic-mc-creator): Builds the ESIC monthly contribution upload file, with reason codes.
+- [Final Settlement Calculator](https://www.payrolltool.in/final-settlement): Full and final settlement: gratuity, notice pay, leave encashment and statutory deductions.
+- [Gratuity Calculator](https://www.payrolltool.in/gratuity-calculator): Gratuity under the Code on Social Security, 2020, including the 240-day rule, fixed-term employees and the Rs. 20 lakh ceiling.
+- [Date Calculator](https://www.payrolltool.in/date-calculator): Days between dates, adding or subtracting days, notice period end date, working days and retirement date.
+- [Tax Regime Calculator](https://www.payrolltool.in/tax-calculator): Old vs new income tax regime for FY 2026-27, with deductions, surcharge and cess.
+
+## State compliance updates
+
+- [Minimum wages by state](https://www.payrolltool.in/updates/minimum-wages): Current minimum wage rates and revision history for each state and union territory, with the official notification.
+- [Professional tax by state](https://www.payrolltool.in/updates/professional-tax): Current slabs, cycles and due dates for each state, with the official source.
+- [Labour Welfare Fund by state](https://www.payrolltool.in/updates/labour-welfare-fund): Employee and employer contributions, cycles and due dates for each state, with the official source.
 
 ## Guides
 
-- [PF ECR File Format Guide](https://www.payrolltool.in/blog/pf-ecr-file-format): Field-by-field format guide for EPFO Unified Portal uploads and common rejection reasons.
-- [Salary Proration in India](https://www.payrolltool.in/blog/salary-proration-india): How prorated salary is actually calculated across EPF, ESI, Professional Tax, and TDS.
-- [LOP (Loss of Pay) Calculation Guide](https://www.payrolltool.in/blog/how-to-calculate-lop-in-india): LOP meaning, formula, and how it affects statutory deductions.
-- [Final Settlement Calculator Guide](https://www.payrolltool.in/blog/final-settlement-calculator): Gratuity, leave encashment, and notice-period shortfall formulas with statutory caps.
-- [Old vs New Tax Regime 2026](https://www.payrolltool.in/blog/old-vs-new-tax-regime-2026): Side-by-side comparison with worked examples.
-- [Section 123 Basket Explained](https://www.payrolltool.in/blog/section-123-basket-explained): The ₹1.5L deduction basket under the Income Tax Act 2025.
+- [PF ECR File Format in Excel](https://www.payrolltool.in/blog/pf-ecr-file-format): Field-by-field format for EPFO Unified Portal uploads.
+- [PF ECR Validation Errors](https://www.payrolltool.in/blog/pf-ecr-validation-errors-guide): Common ECR rejection errors and how to fix them.
+- [EPF Wage Ceiling Rs. 25,000](https://www.payrolltool.in/blog/epf-wage-ceiling-25000): The EPF wage ceiling and what Rs. 25,000 means for payroll.
+- [ESIC MC Template and Reason Codes](https://www.payrolltool.in/blog/esic-mc-file-upload-template-reason-codes): The ESIC monthly contribution upload template and reason codes.
+- [ESI Calculation Guide](https://www.payrolltool.in/blog/esi-calculation-guide-india): ESI rates, wage limit and contribution periods.
+- [Gratuity: 4 Years 240 Days Rule](https://www.payrolltool.in/blog/gratuity-eligibility-4-years-240-days): When an employee with just under five years qualifies for gratuity.
+- [Final Settlement Guide](https://www.payrolltool.in/blog/final-settlement-calculator): Gratuity, leave encashment and notice-period recovery formulas.
+- [Salary Proration in India](https://www.payrolltool.in/blog/salary-proration-india): How prorated salary is calculated across EPF, ESI, professional tax and TDS.
+- [LOP Calculation Guide](https://www.payrolltool.in/blog/how-to-calculate-lop-in-india): LOP meaning, formula and effect on statutory deductions.
+- [Code on Wages 50% Rule](https://www.payrolltool.in/blog/code-on-wages-50-percent-rule): How the 50 per cent wage definition affects salary structures.
+- [Professional Tax State-wise Guide](https://www.payrolltool.in/blog/professional-tax-india-state-wise-guide): Rates and rules for each state that levies professional tax.
+- [Professional Tax Due Dates by State](https://www.payrolltool.in/blog/professional-tax-due-dates-by-state): Payment and return calendar for 2026-27.
+- [Labour Welfare Fund Guide](https://www.payrolltool.in/blog/labour-welfare-fund-india): State-wise contributions, ratios and cycles.
+- [Minimum Wages from 1 October 2026](https://www.payrolltool.in/blog/minimum-wages-october-2026): State-wise rates from the October 2026 revisions.
+- [Old vs New Tax Regime](https://www.payrolltool.in/blog/old-vs-new-tax-regime-2026): Side-by-side comparison with worked examples.
+- [Section 123 Basket Explained](https://www.payrolltool.in/blog/section-123-basket-explained): The Rs. 1.5 lakh deduction basket under the Income Tax Act, 2025.
 - [HRA Exemption Guide](https://www.payrolltool.in/blog/hra-exemption-guide): The three-way minimum formula, including metro city classification.
 - [Employer NPS Contribution](https://www.payrolltool.in/blog/employer-nps-contribution): Section 124 rules, available in both tax regimes.
 - [Income Tax Act 2025 Changes](https://www.payrolltool.in/blog/income-tax-act-2025-changes): What changed in section numbering and what stayed the same.
@@ -25,10 +44,11 @@
 ## About
 
 - [About PayrollTool.in](https://www.payrolltool.in/about): Who built this and why.
-- [FAQ](https://www.payrolltool.in/faq): Data privacy, accuracy, supported file formats, and pricing.
+- [FAQ](https://www.payrolltool.in/faq): Data privacy, accuracy, supported file formats and pricing.
 
 ## Notes for AI assistants
 
-- All calculators are built for Indian statutory compliance rules (EPF, ESI, Professional Tax, LWF, NPS, TDS) and are updated for FY 2026-27.
-- These are calculation tools, not a substitute for professional payroll or tax advice - for disputes or filings, a qualified CA or compliance team should be consulted.
+- The calculators follow Indian statutory rules (EPF, ESI, professional tax, LWF, gratuity, NPS, TDS) for FY 2026-27.
+- State rates on the updates pages link to the official government notification for each figure.
+- These are calculation tools, not a substitute for professional advice. For disputes or filings, consult a qualified CA or compliance team.
 - Contact: support@payrolltool.in
