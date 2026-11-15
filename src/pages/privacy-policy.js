@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
         <div className="wrap">
           <p className="eyebrow">LEGAL</p>
           <h1>Privacy Policy</h1>
-          <p className="updated">Last updated: 7 November 2026</p>
+          <p className="updated">Last updated: 15 November 2026</p>
 
           <p className="lede">
             PayrollTool.in is built around one promise: your payroll numbers are yours.
@@ -102,6 +102,13 @@ export default function PrivacyPolicy() {
               Google&apos;s use of advertising cookies enables it and its partners to
               show ads that are more relevant to you based on your visits to this site
               and other sites on the internet.
+            </p>
+            <p>
+              Visitors from the European Economic Area, the United Kingdom and
+              Switzerland are shown Google&apos;s consent message before any
+              advertising cookies are used, and can accept, refuse or choose their
+              settings there. They can change that choice at any time from the
+              privacy settings link on the page.
             </p>
             <p>
               You can opt out of personalised advertising by visiting{" "}
